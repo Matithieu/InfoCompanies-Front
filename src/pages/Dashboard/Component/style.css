@@ -1,0 +1,35 @@
+/* style.css */
+
+/* Animation pour développer le menu */
+.search-menu {
+  transition: height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  display: block;
+}
+
+/* Ajoutez une classe "show" pour afficher le menu développé */
+.search-menu.show {
+  height: auto; /* Utilisation de "auto" pour permettre une hauteur variable */
+  opacity: 1;
+  overflow: visible;
+  display: block;
+}
+
+.buttonlist {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-size: 17px;
+  font-size: 17;
+  font-family: 'Poppins';
+  border-radius: 5;
+  border: 1px solid ;
+  margin: 7px;
+  padding: 5;
+  color: #5A6ACF;
+  border-color: #5A6ACF ;
+  min-width: 100%;
+  max-width: 100%;
+}
