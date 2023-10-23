@@ -9,13 +9,15 @@ import Leaders from './pages/Leaders/leaders';
 import Error404 from './pages/404/Account/404';
 import { Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import LoginPage from './pages/Login/login';
 
 
 function App() {
   return (
     <HelmetProvider>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/account" element={<Account />} />

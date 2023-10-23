@@ -139,7 +139,6 @@ export default function Home() {
                                         borderRadius: 3
                                     }}
                                 >
-                                    {/* <GoogleTrends searchTerm={selectedCompanyDetails} /> */}
                                 </Paper>
                             </Grid>
 

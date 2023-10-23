@@ -9,6 +9,27 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
+import { Link } from 'react-router-dom';
+
+async function deleteSessionAPI() {
+  const VITE_SERVER_ENDPOINT = import.meta.env.VITE_SERVER_ENDPOINT;
+
+  const response = await fetch(`${VITE_SERVER_ENDPOINT}/logout`, {
+    method: 'DELETE',
+    credentials: 'include',
+  })
+    .then((response) => {
+      if (response.status === 200) {
+        window.location.href = '/';
+      } else {
+        console.log('Erreur : ' + response.status);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -21,7 +42,7 @@ export default function AccountMenu() {
   };
   return (
     <React.Fragment>
-      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' , justifyContent:'flex-end'}}>
+      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', justifyContent: 'flex-end' }}>
         <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}
@@ -75,19 +96,26 @@ export default function AccountMenu() {
         </MenuItem>
 
         <Divider />
-        
+
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
-        </MenuItem>
+        <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>
+          <MenuItem onClick={
+            () => {
+              handleClose();
+              deleteSessionAPI();
+            }
+          } /* Need to add function to clear session cache */ >  
+            <ListItemIcon>
+              <Logout fontSize="small" />
+            </ListItemIcon>
+            Logout
+          </MenuItem>
+        </Link>
       </Menu>
     </React.Fragment>
   );

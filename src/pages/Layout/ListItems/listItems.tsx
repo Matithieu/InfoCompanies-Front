@@ -31,7 +31,7 @@ export const mainListItems = (
       <Typography style={{ fontFamily: 'Poppins', marginTop: '10px', marginBottom: '10px' }}>MENU</Typography>
     </ListSubheader>
 
-    <Link to="/" style={linkStyles}>
+    <Link to="/dashboard" style={linkStyles}>
       <ListItemButton >
         <ListItemIcon>
           <DashboardIcon />

@@ -104,6 +104,9 @@ const darkTheme = createTheme({
       secondary: '#CCCCCC', // Couleur du texte secondaire (gris clair)
     },
   },
+  typography: {
+    fontFamily: 'Poppins',
+  },
 });
 
 const lightTheme = createTheme({
@@ -123,6 +126,9 @@ const lightTheme = createTheme({
       primary: '#000000', // Couleur : noir
       secondary: '#555555', // Couleur du texte secondaire (gris)
     },
+  },
+  typography: {
+    fontFamily: 'Poppins',
   },
 });
 
