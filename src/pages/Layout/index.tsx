@@ -21,20 +21,32 @@ import SearchBar from '../../components/SearchBar/index.tsx';
 // Importez un nouvel icône pour le mode sombre et le mode clair
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { Paper } from '@mui/material';
 
 function Copyright(props: any) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
+    <Paper
+      sx={{
+        marginTop: 'calc(10% + 60px)',
+        bottom: 0,
+        width: '100%',
+        position: 'fixed',
+      }}
+      component="footer"
+      square
+      variant="outlined"
+    >
+      <Typography variant="body2" color="text.secondary" align="center" {...props} component={"footer"}>
+        {'Copyright © '}
+        <Link color="inherit" href="https://mui.com/">
+          Your Website
+        </Link>{' '}
+        {new Date().getFullYear()}
+        {'.'}
+      </Typography>
+    </Paper>
   );
 }
-
 const drawerWidth: number = 240;
 
 interface AppBarProps extends MuiAppBarProps {

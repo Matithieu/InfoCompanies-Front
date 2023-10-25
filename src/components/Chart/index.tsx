@@ -34,7 +34,7 @@ export default function Chart({ companyCharts }) {
 
   if (companyCharts === null) {
     return (
-      <Text style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Veuillez sélectionner une entreprise</Text>
+      <a style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Veuillez sélectionner une entreprise</a>
     );
   } else {
     return (

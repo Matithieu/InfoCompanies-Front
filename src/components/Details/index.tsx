@@ -16,7 +16,7 @@ import { Tooltip } from '@mui/material';
 export default function Details({ companyDetails }) {
     if (companyDetails === null) {
         return (
-            <Text style={{ fontSize: '19px', fontFamily: 'Poppins', marginTop:5 }}>Veuillez sélectionner une entreprise</Text>
+            <a style={{ fontSize: '19px', fontFamily: 'Poppins', marginTop:5 }}>Veuillez sélectionner une entreprise</a>
         );
     } else {
         return (

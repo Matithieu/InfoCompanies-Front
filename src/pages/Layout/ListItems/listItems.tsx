@@ -118,5 +118,18 @@ export const secondaryListItems = (
           primary={<Typography style={{ fontFamily: 'Poppins' }}>Aide</Typography>} />
       </ListItemButton>
     </Link>
+
+      <ListItemButton onClick={
+        () => {
+          localStorage.clear();
+          window.location.reload();
+        }
+      }>
+        <ListItemIcon>
+          <HelpIcon />
+        </ListItemIcon>
+        <ListItemText disableTypography
+          primary={<Typography style={{ fontFamily: 'Poppins' }}>CLEAR CACHE</Typography>} />
+      </ListItemButton>
   </React.Fragment>
 );

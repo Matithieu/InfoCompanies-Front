@@ -36,12 +36,12 @@ export default function ListOfLeaders({ companyLeaders }) {
 
     if (companyLeaders === null) {
         return (
-            <Text style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Veuillez sélectionner une entreprise</Text>
+            <a style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Veuillez sélectionner une entreprise</a>
         );
     } else {
         return (
             <TableContainer component={Paper} style={{ borderRadius: 9 }} >
-                <Text style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center', marginTop:5 }}>Liste des dirigeants</Text>
+                <a style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center', marginTop:5 }}>Liste des dirigeants</a>
                 <Table sx={{ minWidth: 220 }} aria-label="List Of Leaders">
                     <TableBody>
                         {rows.map((row) => (
