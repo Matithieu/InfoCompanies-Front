@@ -278,7 +278,7 @@ const LegalStatus = ({ onLegalStatusChange, selectedValue }) => {
                 onChange={handleFilterChange}
                 list="legalStatusList" // Lier l'input à la datalist
             />
-            <datalist id="legalStatusList"> {/* Créez la datalist */}
+            <datalist id="legalStatusList">
                 {legalStatus.map((status, index) => (
                     <option key={index} value={status}>
                         {status}

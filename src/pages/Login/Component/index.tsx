@@ -11,6 +11,8 @@ import { toast } from "react-toastify";
 import { useEffect } from "react";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Avatar, Box, Button, Container, CssBaseline, Divider, Grid, Link, Paper, TextField, Typography } from "@mui/material";
+import Cookies from "js-cookie";
+import axiosInstance from "../../../utils/axios";
 
 const loginSchema = object({
   email: string()
@@ -34,21 +36,27 @@ const LoginPage = () => {
     try {
       store.setRequestLoading(true);
       const VITE_SERVER_ENDPOINT = import.meta.env.VITE_SERVER_ENDPOINT;
-      console.log(VITE_SERVER_ENDPOINT);
-      const response = await fetch(`${VITE_SERVER_ENDPOINT}/login`, {
-        method: "POST",
-        credentials: "include",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
+      const response = await axiosInstance.post("/login", {
+        email: data.email,
+        password: data.password,
       });
-      if (!response.ok) {
-        throw await response.json();
-      }
+
+      console.log("Good response ");
+      const oui = await response.data;
+      Cookies.set("user-jwt", oui.token, {
+        //expires: 1 / 24,
+        secure: true,
+        sameSite: "strict",
+      });
+      Cookies.set("refresh-token", oui.refreshToken, {
+        //expires: 1 / 24,
+        secure: true,
+        sameSite: "strict",
+      });
 
       store.setRequestLoading(false);
       console.log("login successful");
+      console.log(response);
       navigate("/dashboard");
     } catch (error: any) {
       store.setRequestLoading(false);
@@ -96,7 +104,7 @@ const LoginPage = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs" style={{paddingTop:"4rem"}}>
+    <Container component="main" maxWidth="xs" style={{ paddingTop: "4rem" }}>
       <CssBaseline />
       <Box sx={{
         marginTop: 8,

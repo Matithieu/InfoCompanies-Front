@@ -8,7 +8,13 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+
 import { Box } from '@mui/material';
+import CompanyData from '../../data/company.tsx';
 
 interface Column {
   id: string;
@@ -20,65 +26,25 @@ interface Column {
 const columns: readonly Column[] = [
   { id: 'favoris', label: 'Favoris', minWidth: 100, align: 'right' },
   { id: 'denomination', label: 'Denomination', minWidth: 170 },
-  { id: 'forme_juridique', label: 'Forme Juridique', minWidth: 170 },
+  { id: 'phone', label: 'Téléphone', minWidth: 170 },
+  { id: 'email', label: 'Email', minWidth: 170 },
+  { id: 'website', label: 'Site Web', minWidth: 170 },
+
+  { id: 'social', label: 'Réseaux Sociaux', minWidth: 170 },
+
   { id: 'secteur_d_activite', label: 'Secteur d\'Activité', minWidth: 170 },
+  { id: 'forme_juridique', label: 'Forme Juridique', minWidth: 170 },
   { id: 'adresse', label: 'Adresse', minWidth: 170 },
   { id: 'code_postal', label: 'Code Postal', minWidth: 170 },
   { id: 'ville', label: 'Ville', minWidth: 170 },
   { id: 'num_dept', label: 'Numéro Département', minWidth: 170 },
   { id: 'departement', label: 'Département', minWidth: 170 },
   { id: 'region', label: 'Région', minWidth: 170 },
-  { id: 'code_greffe', label: 'Code Greffe', minWidth: 170 },
-  { id: 'greffe', label: 'Greffe', minWidth: 170 },
   { id: 'date_immatriculation', label: 'Date Immatriculation', minWidth: 170 },
-  { id: 'date_radiation', label: 'Date Radiation', minWidth: 170 },
-  { id: 'statut', label: 'Statut', minWidth: 170 },
-  { id: 'geolocalisation', label: 'Geolocalisation', minWidth: 170 },
-  { id: 'phone', label: 'Téléphone', minWidth: 170 },
-  { id: 'email', label: 'Email', minWidth: 170 },
-  { id: 'website', label: 'Site Web', minWidth: 170 },
   { id: 'address', label: 'Adresse', minWidth: 170 },
   { id: 'creationDate', label: 'Date de création', minWidth: 170 },
 
 ];
-
-interface CompanyData {
-  favoris: boolean;
-  denomination: string;
-  siren: string;
-  nic: string;
-  forme_juridique: string;
-  code_ape: string;
-  secteur_d_activite: string;
-  adresse: string;
-  code_postal: string;
-  ville: string;
-  num_dept: string;
-  departement: string;
-  region: string;
-  code_greffe: string;
-  greffe: string;
-  date_immatriculation: string;
-  date_radiation: string | null;
-  statut: string;
-  geolocalisation: {
-    lon: number;
-    lat: number;
-  };
-  phone: string,
-  email: string,
-  website: string,
-  address: string,
-  creationDate: string,
-  chiffreAffaire: {
-    date: string[],
-    chiffreAffaire: string[],
-  }
-  leaders: {
-    nom: string[],
-    dateNaissance: string[],
-  }
-}
 
 const initialCompanyData: CompanyData[] = [
   {
@@ -108,6 +74,10 @@ const initialCompanyData: CompanyData[] = [
     email: "email@email.com",
     website: "www.website.com",
     address: "1 rue de la rue",
+    youtube: "www.youtube.com",
+    facebook: '',
+    twitter: "www.twitter.com",
+    linkedin: '',
     creationDate: "01/01/2021",
     chiffreAffaire: {
       date: ["01/01/2021", "01/01/2022", "01/01/2023"],
@@ -144,6 +114,10 @@ const initialCompanyData: CompanyData[] = [
     phone: '06 00 00 00 00',
     email: "email@gmail.com",
     website: "www.website.com",
+    youtube: "www.youtube.com",
+    facebook: "www.facebook.com",
+    twitter: "www.twitter.com",
+    linkedin: "www.linkedin.com",
     address: "1 rue de la rue",
     creationDate: "01/01/2021",
     chiffreAffaire: {
@@ -212,7 +186,7 @@ export default function TableCompany({ onDetailsClick }) {
 
   return (
     <Box sx={{ width: '100%', height: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ width: '100%', minHeight: 380, height: '100%', borderRadius:3 }}>
+      <TableContainer sx={{ width: '100%', minHeight: 380, height: '100%', borderRadius: 3 }}>
         <Table stickyHeader aria-label="sticky table" style={{}}>
           <TableHead>
             <TableRow>
@@ -220,7 +194,7 @@ export default function TableCompany({ onDetailsClick }) {
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth, fontFamily: 'Poppins', fontSize: 16,  }}
+                  style={{ minWidth: column.minWidth, fontFamily: 'Poppins', fontSize: 16, }}
                 >
                   {column.label}
                 </TableCell>
@@ -233,7 +207,6 @@ export default function TableCompany({ onDetailsClick }) {
               .map((row, index) => {
                 return (
                   //Afficher les details de l'entreprise en cliquant dessus
-
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.siren} onClick={() => handleDetailsClick(row)} style={{ cursor: 'pointer' }}>
                     <TableCell key="favoris" align="center">
                       <button style={{ border: 'none', backgroundColor: 'transparent' }}
@@ -245,14 +218,25 @@ export default function TableCompany({ onDetailsClick }) {
                       </button>
                     </TableCell>
                     {columns.slice(1).map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align} style={{ fontFamily: 'Poppins' }}>
-                          {column.id === 'geolocalisation'
-                            ? `Lon: ${row.geolocalisation.lon}, Lat: ${row.geolocalisation.lat}`
-                            : value}
-                        </TableCell>
-                      );
+                      if (column.id === 'social') {
+                        return (
+                          <TableCell key={column.id} align={column.align} style={{ fontFamily: 'Poppins' }}>
+                            {row.facebook && <FacebookIcon />}
+                            {row.twitter && <TwitterIcon />}
+                            {row.linkedin && <LinkedInIcon />}
+                            {row.youtube && <YouTubeIcon />}
+                          </TableCell>
+                        );
+                      } else {
+                        const value = row[column.id];
+                        return (
+                          <TableCell key={column.id} align={column.align} style={{ fontFamily: 'Poppins' }}>
+                            {column.id === 'geolocalisation'
+                              ? `Lon: ${row.geolocalisation.lon}, Lat: ${row.geolocalisation.lat}`
+                              : value}
+                          </TableCell>
+                        );
+                      }
                     })}
                   </TableRow>
                 );

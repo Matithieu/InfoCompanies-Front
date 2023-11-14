@@ -6,13 +6,15 @@ import ListSubheader from '@mui/material/ListSubheader';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import HelpIcon from '@mui/icons-material/Help';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import { Typography } from '@mui/material';
+import Cookies from 'js-cookie';
 
 // Styles CSS pour supprimer le surlignage bleu des liens
 const linkStyles = {
@@ -121,12 +123,13 @@ export const secondaryListItems = (
 
       <ListItemButton onClick={
         () => {
-          localStorage.clear();
+          Cookies.remove("user-jwt");
+          Cookies.remove("refresh-token");
           window.location.reload();
         }
       }>
         <ListItemIcon>
-          <HelpIcon />
+          <RefreshIcon />
         </ListItemIcon>
         <ListItemText disableTypography
           primary={<Typography style={{ fontFamily: 'Poppins' }}>CLEAR CACHE</Typography>} />
