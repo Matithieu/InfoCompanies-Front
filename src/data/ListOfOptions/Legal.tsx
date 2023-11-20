@@ -1,9 +1,6 @@
-import React, { useState } from 'react';
-import "@fontsource/poppins"; // Defaults to weight 400
-
-
-const LegalStatus = ({ onLegalStatusChange, selectedValue }) => {
-    const legalStatus = ["Société d'assurances mutuelles",
+export const legalStatus =
+    [
+        "Société d'assurances mutuelles",
         "Société coopérative à responsabilité limitée",
         "Société coopérative de consommation par actions simplifiée",
         "Société civile de placement immobilier à capital variable",
@@ -248,45 +245,3 @@ const LegalStatus = ({ onLegalStatusChange, selectedValue }) => {
         "Union de coopératives agricoles à capital variable",
         "Union d'économie sociale - Société coopérative par actions simplifiée à capital variable"
     ];
-
-    const [selectedStatus, setSelectedStatus] = useState('');
-
-    const handleFilterChange = (e) => {
-        setSelectedStatus(e.target.value);
-        onLegalStatusChange(e.target.value);
-    };
-
-    return (
-        <div>
-            <input
-                style={{
-                    borderRadius: 5,
-                    fontSize: 17,
-                    padding: 5,
-                    fontFamily: 'Poppins',
-                    textAlign: 'center',
-                    border: '1px solid #5A6ACF',
-                    color: '#5A6ACF',
-                    backgroundColor: 'white',
-                    margin: 7,
-                    minWidth: '150%',
-                    maxWidth: '150%',
-                }}
-                type="text"
-                placeholder="Filtrer par statut légal"
-                value={selectedStatus}
-                onChange={handleFilterChange}
-                list="legalStatusList" // Lier l'input à la datalist
-            />
-            <datalist id="legalStatusList">
-                {legalStatus.map((status, index) => (
-                    <option key={index} value={status}>
-                        {status}
-                    </option>
-                ))}
-            </datalist>
-        </div>
-    );
-};
-
-export default LegalStatus;

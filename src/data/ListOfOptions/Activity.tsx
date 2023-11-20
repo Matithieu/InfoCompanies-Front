@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-
-const ActivityArea = ({ onActivityAreaChange, selectedValue }) => {
-    const activityArea = [
+export const activityArea =
+    [
         "Agriculture",
         "Agroalimentaire",
         "Automobile",
@@ -103,45 +101,3 @@ const ActivityArea = ({ onActivityAreaChange, selectedValue }) => {
         "Location de voitures",
         "Musique et divertissement en ligne"
     ];
-
-    const [filterText, setFilterText] = useState('');
-
-    const handleFilterChange = (e) => {
-        setFilterText(e.target.value);
-        onActivityAreaChange(e.target.value);
-    };
-
-    return (
-        <div>
-            <input
-                style={{
-                    borderRadius: 5,
-                    fontSize: 17,
-                    padding: 5,
-                    fontFamily: 'Poppins',
-                    textAlign: 'center',
-                    border: '1px solid #5A6ACF',
-                    color: '#5A6ACF',
-                    backgroundColor: 'white',
-                    margin: 7,
-                    minWidth: '150%',
-                    maxWidth: '150%'
-                }}
-                type="text"
-                placeholder="Secteur d'activité"
-                value={filterText}
-                onChange={handleFilterChange}
-                list="activityAreaList" // Lier l'input à la datalist
-            />
-            <datalist id="activityAreaList"> {/* Créez la datalist */}
-                {activityArea.map((status, index) => (
-                    <option key={index} value={status}>
-                        {status}
-                    </option>
-                ))}
-            </datalist>
-        </div>
-    );
-};
-
-export default ActivityArea;

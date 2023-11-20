@@ -9,12 +9,13 @@ import TableCompany from '../../../components/TableCompany/index.tsx';
 import ListOfLeaders from '../../../components/ListOfLeaders/index.tsx';
 import Details from '../../../components/Details/index.tsx';
 import { useState } from 'react';
-import RegionsList from '../../../components/SortedBy/Regions/index.tsx';
-import LegalStatus from '../../../components/SortedBy/LegalStatus/index.tsx';
-import ActivityArea from '../../../components/SortedBy/ActivityArea/index.tsx';
 import { useEffect } from 'react';
 import SEO from '../../../components/SEO/index.tsx';
 import './style.css';
+import CustomSelect from '../../../components/CustomSelect/index.tsx';
+import { activityArea } from '../../../data/ListOfOptions/Activity.tsx';
+import { legalStatus } from '../../../data/ListOfOptions/Legal.tsx';
+import { regions } from '../../../data/ListOfOptions/Regions.tsx';
 
 const AdvancedSearch = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -26,7 +27,7 @@ const AdvancedSearch = () => {
     region: '',
   });
 
-  const [legalStatusValue, setLegalStatusValue] = useState('');
+  const [legalStatusValue, setLegalStatusValue] = useState('' || []);
   const [activityAreaValue, setActivityAreaValue] = useState('');
   const [regionValue, setRegionValue] = useState('');
 
@@ -63,9 +64,11 @@ const AdvancedSearch = () => {
     <div style={{ marginLeft: 25, marginTop: 20, marginBottom: 20 }}>
       <button className="buttonlist" onClick={toggleMenu} style={{ borderRadius: 5 }}>Recherche avancée</button>
       <div className={`search-menu ${showMenu ? 'show' : ''}`}>
-        <LegalStatus onLegalStatusChange={handleLegalStatusChange} selectedValue={legalStatusValue} />
-        <ActivityArea onActivityAreaChange={handleActivityAreaChange} selectedValue={activityAreaValue} />
-        <RegionsList onRegionsListChange={handleRegionChange} selectedValue={regionValue} />
+        <div style={{ justifyContent: 'center', alignItems:'center' }}>
+          <CustomSelect options={legalStatus} onSelectionChange={handleLegalStatusChange} label="Status légaux" placeholder="Status légaux" selectedValues={legalStatusValue} />
+          <CustomSelect options={activityArea} onSelectionChange={handleActivityAreaChange} label="Secteur d'activité" placeholder="Secteur d'activité" selectedValues={activityAreaValue} />
+          <CustomSelect options={regions} onSelectionChange={handleRegionChange} label="Région" placeholder="Région" selectedValues={regionValue} />
+        </div>
         <br />
         <button onClick={handleSearch} style={{ borderRadius: 5, fontSize: 17, padding: 5, fontFamily: 'Poppins', textAlign: 'center', border: '1px solid #5A6ACF', color: '#5A6ACF', backgroundColor: 'white', margin: 7, minWidth: '150%', minHeight: '150%' }}>
           Rechercher
@@ -74,7 +77,6 @@ const AdvancedSearch = () => {
     </div>
   );
 };
-
 
 export default function Company() {
 
@@ -101,7 +103,6 @@ export default function Company() {
   };
 
   return (
-
     <Box sx={{ display: 'flex' }}>
       <SEO
         title="Dashboard"
