@@ -20,7 +20,7 @@ export default function Details({ companyDetails }) {
     } else {
         return (
             <TableContainer component={Paper} style={{ borderRadius: 9 }}>
-                <text style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center' }}>Détails</text>
+                <a style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center' }}>Détails</a>
                 <Table sx={{ minWidth: 150 }} aria-label="List Of Leaders">
                     <TableBody>
                         <TableRow key={companyDetails.phone} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -29,7 +29,7 @@ export default function Details({ companyDetails }) {
                                     <PhoneIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <text style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{companyDetails.phone}</text>
+                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{companyDetails.phone}</a>
                             </TableCell>
                         </TableRow>
                         <TableRow key={companyDetails.email} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -38,7 +38,7 @@ export default function Details({ companyDetails }) {
                                     <EmailIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <text style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{companyDetails.email}</text>
+                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{companyDetails.email}</a>
                             </TableCell>
                         </TableRow>
                         <TableRow key={companyDetails.website} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -47,7 +47,7 @@ export default function Details({ companyDetails }) {
                                     <WebAssetIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <text style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{companyDetails.website}</text>
+                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{companyDetails.website}</a>
                             </TableCell>
                         </TableRow>
                         <TableRow key={companyDetails.address} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -56,7 +56,7 @@ export default function Details({ companyDetails }) {
                                     <BusinessIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <text style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{companyDetails.address}</text>
+                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{companyDetails.address}</a>
                             </TableCell>
                         </TableRow>
                         <TableRow key={companyDetails.creationDate} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -65,7 +65,7 @@ export default function Details({ companyDetails }) {
                                     <CalendarTodayOutlinedIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <text style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{companyDetails.creationDate}</text>
+                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{companyDetails.creationDate}</a>
                             </TableCell>
                         </TableRow>
                     </TableBody>

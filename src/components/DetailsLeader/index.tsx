@@ -15,19 +15,17 @@ import { useNavigate } from 'react-router-dom';
 
 export default function DetailsLeader({ leaderDetails }) {
 
-
     const navigate = useNavigate();
-
 
     if (leaderDetails === null) {
         return (
-            <text style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Veuillez sélectionner une entreprise</text>
+            <a style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Veuillez sélectionner une entreprise</a>
         );
     } else {
         return (
             <TableContainer component={Paper} style={{}}>
                 <Table sx={{ minWidth: 150 }} aria-label="List Of Leaders">
-                    <text style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center' }}>Détails</text>
+                    <a style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center' }}>Détails</a>
                     <TableBody>
                         <TableRow key={leaderDetails.phone} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                             <TableCell component="th" scope="row">
@@ -35,7 +33,7 @@ export default function DetailsLeader({ leaderDetails }) {
                                     <PhoneIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <text style={{ fontSize: '18px' }}>{leaderDetails.phone}</text>
+                                <a style={{ fontSize: '18px' }}>{leaderDetails.phone}</a>
                             </TableCell>
                         </TableRow>
                         <TableRow key={leaderDetails.email} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -44,7 +42,7 @@ export default function DetailsLeader({ leaderDetails }) {
                                     <EmailIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <text style={{ fontSize: '18px' }}>{leaderDetails.email}</text>
+                                <a style={{ fontSize: '18px' }}>{leaderDetails.email}</a>
                             </TableCell>
                         </TableRow>
                         <TableRow key={leaderDetails.website} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -53,7 +51,7 @@ export default function DetailsLeader({ leaderDetails }) {
                                     <CakeIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <text style={{ fontSize: '18px' }}>{leaderDetails.age + " ans"}</text>
+                                <a style={{ fontSize: '18px' }}>{leaderDetails.age + " ans"}</a>
                             </TableCell>
                         </TableRow>
                         <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -65,7 +63,7 @@ export default function DetailsLeader({ leaderDetails }) {
                                 {leaderDetails.company.company.map((entreprise, index) => (
                                     <span key={index} style={{ fontSize: '18px', cursor: 'pointer' }}>
                                         {index > 0 ? ', ' : ''}
-                                        <text
+                                        <a
                                             onClick={() => {
                                                 navigate(`/search/${entreprise}`, {
                                                     state: {
@@ -75,7 +73,7 @@ export default function DetailsLeader({ leaderDetails }) {
                                             }}
                                         >
                                             {entreprise}
-                                        </text>
+                                        </a>
                                     </span>
                                 ))}
                             </TableCell>

@@ -100,7 +100,7 @@ const CustomSelect = ({ options, onSelectionChange, selectedValues, label, place
           </ListSubheader>
           <FixedSizeList
             height={250}
-            width={300}
+            width="100%"
             itemSize={46}
             itemCount={displayedOptions.length}
             itemData={{

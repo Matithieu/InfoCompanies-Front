@@ -14,7 +14,9 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 
 import { Box } from '@mui/material';
-import CompanyData from '../../data/company.tsx';
+import Company from '../../data/company.ts';
+import ChiffreAffaire from '../../data/chiffreDaffaire.tsx';
+import Leader from '../../data/leader.tsx';
 
 interface Column {
   id: string;
@@ -46,90 +48,82 @@ const columns: readonly Column[] = [
 
 ];
 
-const initialCompanyData: CompanyData[] = [
+const company1 = new Company(
+  false,
+  "LA MIE'STERIEUSE",
+  "948404819",
+  "00013",
+  "Société par actions simplifiée",
+  "0000Z",
+  "EN INSTANCE DE CHIFFREMENT",
+  "213 ROUTE DE MACORNAY",
+  "39000",
+  "LONS LE SAUNIER",
+  "39",
+  "Jura",
+  "Bourgogne-Franche-Comté",
+  "3902",
+  "LONS-LE-SAUNIER",
+  "2023-02-13",
+  "2024",
+  "B",
   {
-    favoris: false,
-    denomination: "LA MIE'STERIEUSE",
-    siren: "948404819",
-    nic: "00013",
-    forme_juridique: "Société par actions simplifiée",
-    code_ape: "0000Z",
-    secteur_d_activite: "EN INSTANCE DE CHIFFREMENT",
-    adresse: "213 ROUTE DE MACORNAY",
-    code_postal: "39000",
-    ville: "LONS LE SAUNIER",
-    num_dept: "39",
-    departement: "Jura",
-    region: "Bourgogne-Franche-Comté",
-    code_greffe: "3902",
-    greffe: "LONS-LE-SAUNIER",
-    date_immatriculation: "2023-02-13",
-    date_radiation: null,
-    statut: "B",
-    geolocalisation: {
-      lon: 5.545786,
-      lat: 46.667538,
-    },
-    phone: '06 00 00 00 00',
-    email: "email@email.com",
-    website: "www.website.com",
-    address: "1 rue de la rue",
-    youtube: "www.youtube.com",
-    facebook: '',
-    twitter: "www.twitter.com",
-    linkedin: '',
-    creationDate: "01/01/2021",
-    chiffreAffaire: {
-      date: ["01/01/2021", "01/01/2022", "01/01/2023"],
-      chiffreAffaire: ["10000", "20000", "30000"]
-    },
-    leaders: {
-      nom: ["Jean", "Paul", "Jacques", "Pierre"],
-      dateNaissance: ["01/01/2000", "02/02/2000", "03/03/2000", "04/04/2000"],
-    }
+    "lon": 5.545786,
+    "lat": 46.667538
   },
+  '06 00 00 00 00',
+  "email@email.com",
+  "www.website.com",
+  "",
+  "facebook.com",
+  "",
+  "linkdin",
+  '',
+  "01/01/2021",
+  new ChiffreAffaire(["01/01/2021", "01/01/2022", "01/01/2023"], ["10000", "20000", "30000"]),
+  new Leader(["Jean", "Paul", "Jacques", "Pierre"], ["01/01/2000", "02/02/2000", "03/03/2000", "04/04/2000"])
+);
+
+
+const company2 = new Company(
+  false,
+  "Nom de l'entreprise 2",
+  "123456789",
+  "00001",
+  "Société anonyme",
+  "1234A",
+  "Service informatique",
+  "123 Rue de l'Entreprise",
+  "12345",
+  "Ville Entreprise",
+  "12",
+  "Département Entreprise",
+  "Région Entreprise",
+  "6789",
+  "Greffe Entreprise",
+  "2022-01-01",
+  "2023-03-03",
+  "A",
   {
-    favoris: false,
-    denomination: "Nom de l'entreprise 2",
-    siren: "123456789",
-    nic: "00001",
-    forme_juridique: "Société anonyme",
-    code_ape: "1234A",
-    secteur_d_activite: "Service informatique",
-    adresse: "123 Rue de l'Entreprise",
-    code_postal: "12345",
-    ville: "Ville Entreprise",
-    num_dept: "12",
-    departement: "Département Entreprise",
-    region: "Région Entreprise",
-    code_greffe: "6789",
-    greffe: "Greffe Entreprise",
-    date_immatriculation: "2022-01-01",
-    date_radiation: "2023-03-03",
-    statut: "A",
-    geolocalisation: {
-      lon: 12.345678,
-      lat: 34.567890,
-    },
-    phone: '06 00 00 00 00',
-    email: "email@gmail.com",
-    website: "www.website.com",
-    youtube: "www.youtube.com",
-    facebook: "www.facebook.com",
-    twitter: "www.twitter.com",
-    linkedin: "www.linkedin.com",
-    address: "1 rue de la rue",
-    creationDate: "01/01/2021",
-    chiffreAffaire: {
-      date: ["01/01/2021", "01/01/2022", "01/01/2023"],
-      chiffreAffaire: ["10000", "1000", "30000"]
-    },
-    leaders: {
-      nom: ["Clément", "Mathieu", "Pierre"],
-      dateNaissance: ["01/01/2000", "02/02/2000", "03/03/2000"],
-    }
+    "lon": 12.345678,
+    "lat": 34.567890
   },
-  // Add more company data as needed...
+  '06 00 00 00 00',
+  "email@gmail.com",
+  "www.website.com",
+  "1 rue de la rue",
+  "www.youtube.com",
+  "www.facebook.com",
+  "www.twitter.com",
+  "www.linkedin.com",
+  "01/01/2021",
+  new ChiffreAffaire(["01/01/2021", "01/01/2022", "01/01/2023"], ["10000", "1000", "30000"]),
+  new Leader(["Clément", "Mathieu", "Pierre"], ["01/01/2000", "02/02/2000", "03/03/2000"])
+);
+
+const initialCompanyData: Company[] = [
+  company1,
+  company2
 ];
 
 export default function TableCompany({ onDetailsClick }) {
@@ -138,14 +132,15 @@ export default function TableCompany({ onDetailsClick }) {
   const [companyData, setCompanyData] = React.useState(initialCompanyData);
 
   React.useEffect(() => {
-    // Chargement initial des données d'entreprise depuis le localStorage
     const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-    const updatedCompanyData = initialCompanyData.map((company) => ({
-      ...company,
-      favoris: favorites.includes(company.denomination),
-    }));
+    const updatedCompanyData = initialCompanyData.map((company) => {
+      // Update 'favoris' property for each company
+      const isFavorite = favorites.includes(company.getDenomination());
+      company.setFavoris(isFavorite);
+      return company; // Return the updated company object
+    });
     setCompanyData(updatedCompanyData);
-  }, []); // Exécutez cela une seule fois lors du chargement initial du composant
+  }, []);
 
   const manageFavorites = (companyName: string) => {
     const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
@@ -161,10 +156,12 @@ export default function TableCompany({ onDetailsClick }) {
     console.log('Favoris mis à jour:', favorites);
 
     // Mettez à jour l'état local companyData avec l'information des favoris
-    const updatedCompanyData = companyData.map((company) => ({
-      ...company,
-      favoris: favorites.includes(company.denomination),
-    }));
+    const updatedCompanyData = initialCompanyData.map((company) => {
+      // Update 'favoris' property for each company
+      const isFavorite = favorites.includes(company.getDenomination());
+      company.setFavoris(isFavorite);
+      return company; // Return the updated company object
+    });
     setCompanyData(updatedCompanyData);
   };
 
@@ -207,24 +204,24 @@ export default function TableCompany({ onDetailsClick }) {
               .map((row, index) => {
                 return (
                   //Afficher les details de l'entreprise en cliquant dessus
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.siren} onClick={() => handleDetailsClick(row)} style={{ cursor: 'pointer' }}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.getSiren()} onClick={() => handleDetailsClick(row)} style={{ cursor: 'pointer' }}>
                     <TableCell key="favoris" align="center">
                       <button style={{ border: 'none', backgroundColor: 'transparent' }}
                         onClick={() => {
-                          manageFavorites(row.denomination);
+                          manageFavorites(row.getDenomination());
                         }}
                       >
-                        {row.favoris ? <StarIcon /> : <StarBorderOutlinedIcon />}
+                        {row.getFavoris() ? <StarIcon /> : <StarBorderOutlinedIcon />}
                       </button>
                     </TableCell>
                     {columns.slice(1).map((column) => {
                       if (column.id === 'social') {
                         return (
                           <TableCell key={column.id} align={column.align} style={{ fontFamily: 'Poppins' }}>
-                            {row.facebook && <FacebookIcon />}
-                            {row.twitter && <TwitterIcon />}
-                            {row.linkedin && <LinkedInIcon />}
-                            {row.youtube && <YouTubeIcon />}
+                            {row.getFacebook() && <FacebookIcon />}
+                            {row.getTwitter() && <TwitterIcon />}
+                            {row.getLinkedin() && <LinkedInIcon />}
+                            {row.getYoutube() && <YouTubeIcon />}
                           </TableCell>
                         );
                       } else {
@@ -232,7 +229,7 @@ export default function TableCompany({ onDetailsClick }) {
                         return (
                           <TableCell key={column.id} align={column.align} style={{ fontFamily: 'Poppins' }}>
                             {column.id === 'geolocalisation'
-                              ? `Lon: ${row.geolocalisation.lon}, Lat: ${row.geolocalisation.lat}`
+                              ? `Lon: ${row.getGeolocalisation[0]}, Lat: ${row.getGeolocalisation[1]}`
                               : value}
                           </TableCell>
                         );

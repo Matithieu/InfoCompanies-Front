@@ -38,7 +38,7 @@ export default function Chart({ companyCharts }) {
   } else {
     return (
       <React.Fragment>
-        <text style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center', marginTop:5 }}>Chiffre d'affaire</text>
+        <a style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center', marginTop:5 }}>Chiffre d'affaire</a>
         <ResponsiveContainer>
           <LineChart
             data={insertData(companyCharts)}

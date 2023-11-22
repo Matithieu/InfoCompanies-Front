@@ -7,7 +7,6 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useNavigate } from 'react-router-dom';
-import { Text } from 'recharts';
 
 export default function ListOfLeaders({ companyLeaders }) {
     const navigate = useNavigate();

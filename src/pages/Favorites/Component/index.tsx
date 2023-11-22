@@ -19,7 +19,6 @@ export default function Home() {
     const [selectedCompanyDetails, setSelectedCompanyDetails] = useState(null);
 
     useEffect(() => {
-
         const savedCompanyDetails = JSON.parse(localStorage.getItem("companyDetailsFavorites") || "null");
         if (savedCompanyDetails) {
             setSelectedCompanyDetails(savedCompanyDetails);
@@ -58,33 +57,40 @@ export default function Home() {
                 </Typography>
 
                 <Grid container spacing={3} paddingBottom={10} paddingLeft={10} paddingRight={10}>
-                    {/* List Of Companies */}
-                    <Grid item xs={8} md={8} lg={8}>
-                        <Paper
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                borderRadius: 3
-                            }}
-                        >
-                            <TableCompany onDetailsClick={handleDetailsClick} />
-                        </Paper>
-                    </Grid>
+                    <Grid item xs={12} md={12} lg={12}>
 
-                    {/* Details of the company */}
-                    <Grid item xs={4} md={4}>
-                        <Paper
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                minHeight: 200,
-                                borderRadius: 3
-                            }}
-                        >
-                            <Details companyDetails={selectedCompanyDetails} />
-                        </Paper>
+                        {/* Container des éléments sur la première ligne */}
+                        <Grid container spacing={6} justifyContent="space-between" wrap="wrap">
+
+                            {/* List Of Companies */}
+                            <Grid item xs={12} md={8}>
+                                <Paper
+                                    sx={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        borderRadius: 3
+                                    }}
+                                >
+                                    <TableCompany onDetailsClick={handleDetailsClick} />
+                                </Paper>
+                            </Grid>
+
+                            {/* Details of the company */}
+                            <Grid item xs={12} md={4}>
+                                <Paper
+                                    sx={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        minHeight: 200,
+                                        borderRadius: 3
+                                    }}
+                                >
+                                    <Details companyDetails={selectedCompanyDetails} />
+                                </Paper>
+                            </Grid>
+                        </Grid>
                     </Grid>
 
                     {/* Container des éléments sur la deuxième ligne */}

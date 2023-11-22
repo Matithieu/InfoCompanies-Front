@@ -95,7 +95,6 @@ const initialCompanyData = [
 ];
 
 function TableOfDetails() {
-
   const navigate = useNavigate();
   const location = useLocation();
   const searchTerm = location.state.searchTerm.toString();
@@ -104,7 +103,7 @@ function TableOfDetails() {
 
     <TableContainer component={Paper} style={{ minWidth: 220, minHeight: 220, width: '100%', height: '100%', borderRadius: 10 }}>
       <Title>
-        <text style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center' }}>Liste entreprises pour {searchTerm}</text>
+        <a style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center' }}>Liste entreprises pour {searchTerm}</a>
       </Title>
       <Table sx={{ borderRadius: 10 }} aria-label="List Of Leaders">
         <TableHead>
