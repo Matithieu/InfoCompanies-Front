@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
 import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
-import { Text } from 'recharts';
 
 export default function Chart({ companyCharts }) {
   const theme = useTheme();
@@ -39,7 +38,7 @@ export default function Chart({ companyCharts }) {
   } else {
     return (
       <React.Fragment>
-        <Text style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center', marginTop:5 }}>Chiffre d'affaire</Text>
+        <text style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center', marginTop:5 }}>Chiffre d'affaire</text>
         <ResponsiveContainer>
           <LineChart
             data={insertData(companyCharts)}

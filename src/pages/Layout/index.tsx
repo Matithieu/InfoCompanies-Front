@@ -144,7 +144,6 @@ const lightTheme = createTheme({
   },
 });
 
-
 // Composant DarkModeToggle
 function DarkModeToggle({ darkMode, toggleDarkMode }: { darkMode: boolean; toggleDarkMode: () => void }) {
   return (

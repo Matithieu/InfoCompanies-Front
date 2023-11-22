@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Text } from 'recharts';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -21,7 +20,7 @@ export default function Details({ companyDetails }) {
     } else {
         return (
             <TableContainer component={Paper} style={{ borderRadius: 9 }}>
-                <Text style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center' }}>Détails</Text>
+                <text style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center' }}>Détails</text>
                 <Table sx={{ minWidth: 150 }} aria-label="List Of Leaders">
                     <TableBody>
                         <TableRow key={companyDetails.phone} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -30,7 +29,7 @@ export default function Details({ companyDetails }) {
                                     <PhoneIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <Text style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{companyDetails.phone}</Text>
+                                <text style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{companyDetails.phone}</text>
                             </TableCell>
                         </TableRow>
                         <TableRow key={companyDetails.email} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -39,7 +38,7 @@ export default function Details({ companyDetails }) {
                                     <EmailIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <Text style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{companyDetails.email}</Text>
+                                <text style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{companyDetails.email}</text>
                             </TableCell>
                         </TableRow>
                         <TableRow key={companyDetails.website} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -48,7 +47,7 @@ export default function Details({ companyDetails }) {
                                     <WebAssetIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <Text style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{companyDetails.website}</Text>
+                                <text style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{companyDetails.website}</text>
                             </TableCell>
                         </TableRow>
                         <TableRow key={companyDetails.address} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -57,7 +56,7 @@ export default function Details({ companyDetails }) {
                                     <BusinessIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <Text style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{companyDetails.address}</Text>
+                                <text style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{companyDetails.address}</text>
                             </TableCell>
                         </TableRow>
                         <TableRow key={companyDetails.creationDate} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -66,7 +65,7 @@ export default function Details({ companyDetails }) {
                                     <CalendarTodayOutlinedIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <Text style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{companyDetails.creationDate}</Text>
+                                <text style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{companyDetails.creationDate}</text>
                             </TableCell>
                         </TableRow>
                     </TableBody>

@@ -163,11 +163,3 @@ export default function Home() {
         </Box>
     );
 }
-
-
-/*
-<Text>Salut</Text>
-            {getFavorites().map((companyName) => (
-                <Text>{companyName}</Text>
-            ))}
-            */

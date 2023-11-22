@@ -15,7 +15,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import ApartmentOutlinedIcon from '@mui/icons-material/ApartmentOutlined';
 import { useNavigate } from 'react-router-dom'; // Import from 'react-router-dom'
 import { useLocation } from 'react-router-dom';
-import { Text } from 'recharts';
 
 const initialCompanyData = [
   {
@@ -105,7 +104,7 @@ function TableOfDetails() {
 
     <TableContainer component={Paper} style={{ minWidth: 220, minHeight: 220, width: '100%', height: '100%', borderRadius: 10 }}>
       <Title>
-        <Text style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center' }}>Liste entreprises pour {searchTerm}</Text>
+        <text style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center' }}>Liste entreprises pour {searchTerm}</text>
       </Title>
       <Table sx={{ borderRadius: 10 }} aria-label="List Of Leaders">
         <TableHead>

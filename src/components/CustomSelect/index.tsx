@@ -61,7 +61,7 @@ const CustomSelect = ({ options, onSelectionChange, selectedValues, label, place
   };
 
   return (
-    <Box sx={{ m: 10 }}>
+    <Box sx={{ m: 0 }}>
       <FormControl fullWidth>
         <InputLabel id="universal-select-label">{label}</InputLabel>
         <Select

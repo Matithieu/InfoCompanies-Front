@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Text } from 'recharts';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -22,13 +21,13 @@ export default function DetailsLeader({ leaderDetails }) {
 
     if (leaderDetails === null) {
         return (
-            <Text style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Veuillez sélectionner une entreprise</Text>
+            <text style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Veuillez sélectionner une entreprise</text>
         );
     } else {
         return (
             <TableContainer component={Paper} style={{}}>
                 <Table sx={{ minWidth: 150 }} aria-label="List Of Leaders">
-                    <Text style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center' }}>Détails</Text>
+                    <text style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center' }}>Détails</text>
                     <TableBody>
                         <TableRow key={leaderDetails.phone} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                             <TableCell component="th" scope="row">
@@ -36,7 +35,7 @@ export default function DetailsLeader({ leaderDetails }) {
                                     <PhoneIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <Text style={{ fontSize: '18px' }}>{leaderDetails.phone}</Text>
+                                <text style={{ fontSize: '18px' }}>{leaderDetails.phone}</text>
                             </TableCell>
                         </TableRow>
                         <TableRow key={leaderDetails.email} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -45,7 +44,7 @@ export default function DetailsLeader({ leaderDetails }) {
                                     <EmailIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <Text style={{ fontSize: '18px' }}>{leaderDetails.email}</Text>
+                                <text style={{ fontSize: '18px' }}>{leaderDetails.email}</text>
                             </TableCell>
                         </TableRow>
                         <TableRow key={leaderDetails.website} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -54,7 +53,7 @@ export default function DetailsLeader({ leaderDetails }) {
                                     <CakeIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <Text style={{ fontSize: '18px' }}>{leaderDetails.age + " ans"}</Text>
+                                <text style={{ fontSize: '18px' }}>{leaderDetails.age + " ans"}</text>
                             </TableCell>
                         </TableRow>
                         <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -66,7 +65,7 @@ export default function DetailsLeader({ leaderDetails }) {
                                 {leaderDetails.company.company.map((entreprise, index) => (
                                     <span key={index} style={{ fontSize: '18px', cursor: 'pointer' }}>
                                         {index > 0 ? ', ' : ''}
-                                        <Text
+                                        <text
                                             onClick={() => {
                                                 navigate(`/search/${entreprise}`, {
                                                     state: {
@@ -76,7 +75,7 @@ export default function DetailsLeader({ leaderDetails }) {
                                             }}
                                         >
                                             {entreprise}
-                                        </Text>
+                                        </text>
                                     </span>
                                 ))}
                             </TableCell>

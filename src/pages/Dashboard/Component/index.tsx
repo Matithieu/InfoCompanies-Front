@@ -8,6 +8,7 @@ import Chart from '../../../components/Chart/index.tsx';
 import TableCompany from '../../../components/TableCompany/index.tsx';
 import ListOfLeaders from '../../../components/ListOfLeaders/index.tsx';
 import Details from '../../../components/Details/index.tsx';
+import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import SEO from '../../../components/SEO/index.tsx';
@@ -16,6 +17,7 @@ import CustomSelect from '../../../components/CustomSelect/index.tsx';
 import { activityArea } from '../../../data/ListOfOptions/Activity.tsx';
 import { legalStatus } from '../../../data/ListOfOptions/Legal.tsx';
 import { regions } from '../../../data/ListOfOptions/Regions.tsx';
+import { Button, Stack } from '@mui/material';
 
 const AdvancedSearch = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -62,19 +64,45 @@ const AdvancedSearch = () => {
 
   return (
     <div style={{ marginLeft: 25, marginTop: 20, marginBottom: 20 }}>
-      <button className="buttonlist" onClick={toggleMenu} style={{ borderRadius: 5 }}>Recherche avancée</button>
+      <Button className="buttonlist" variant='outlined' onClick={toggleMenu} style={{ borderRadius: 5, marginBottom: 30 }}>Recherche avancée</Button>
       <div className={`search-menu ${showMenu ? 'show' : ''}`}>
-        <div style={{ justifyContent: 'center', alignItems:'center' }}>
-          <CustomSelect options={legalStatus} onSelectionChange={handleLegalStatusChange} label="Status légaux" placeholder="Status légaux" selectedValues={legalStatusValue} />
-          <CustomSelect options={activityArea} onSelectionChange={handleActivityAreaChange} label="Secteur d'activité" placeholder="Secteur d'activité" selectedValues={activityAreaValue} />
-          <CustomSelect options={regions} onSelectionChange={handleRegionChange} label="Région" placeholder="Région" selectedValues={regionValue} />
-        </div>
-        <br />
-        <button onClick={handleSearch} style={{ borderRadius: 5, fontSize: 17, padding: 5, fontFamily: 'Poppins', textAlign: 'center', border: '1px solid #5A6ACF', color: '#5A6ACF', backgroundColor: 'white', margin: 7, minWidth: '150%', minHeight: '150%' }}>
-          Rechercher
-        </button>
+        <Grid container spacing={1} alignItems="center" justifyContent="flex-start" width="100%" padding="10px">
+          <Grid item xs={12} sm={6} md={4}>
+            <CustomSelect
+              options={legalStatus}
+              onSelectionChange={handleLegalStatusChange}
+              label="Status légaux"
+              placeholder="Status légaux"
+              selectedValues={legalStatusValue}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <CustomSelect
+              options={activityArea}
+              onSelectionChange={handleActivityAreaChange}
+              label="Secteur d'activité"
+              placeholder="Secteur d'activité"
+              selectedValues={activityAreaValue}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <CustomSelect
+              options={regions}
+              onSelectionChange={handleRegionChange}
+              label="Région"
+              placeholder="Région"
+              selectedValues={regionValue}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <Button onClick={handleSearch} variant='outlined'>
+              Valider
+            </Button>
+          </Grid>
+        </Grid>
       </div>
     </div>
+
   );
 };
 
