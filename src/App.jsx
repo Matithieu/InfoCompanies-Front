@@ -5,7 +5,7 @@ import Settings from './pages/Settings/settings';
 import Account from './pages/Account/account';
 import Search from './pages/Search/search';
 import Company from './pages/Company/company';
-import Leaders from './pages/Leaders/leaders';
+import Leader from './pages/Leaders/leaders';
 import Error404 from './pages/404/Account/404';
 import { Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
@@ -27,7 +27,7 @@ function App() {
           <Route path="/account" element={<Account />} />
           <Route path="/search/*" element={<Search />} />
           <Route path="/company/*" element={<Company />} />
-          <Route path="/leaders/*" element={<Leaders />} />
+          <Route path="/leaders/*" element={<Leader />} />
         </Route>
 
       </Routes>

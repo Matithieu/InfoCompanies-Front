@@ -35,7 +35,7 @@ export default class Company {
     private address: string;
     private creationDate: string;
     private chiffreAffaire: ChiffreAffaire
-    private leaders: Leader
+    private leaders: Leader[]
 
     constructor(
         favoris: boolean,
@@ -70,7 +70,7 @@ export default class Company {
         address: string,
         creationDate: string,
         chiffreAffaire: ChiffreAffaire,
-        leaders: Leader
+        leaders: Leader[]
     ) {
         this.favoris = favoris;
         this.denomination = denomination;
@@ -101,7 +101,7 @@ export default class Company {
         this.address = address;
         this.creationDate = creationDate;
         this.chiffreAffaire = chiffreAffaire;
-        this.leaders = leaders;
+        this.leaders = [];
     }
 
     getFavoris(): boolean {
@@ -336,11 +336,21 @@ export default class Company {
         this.chiffreAffaire = value;
     }
 
-    getLeaders(): Leader {
-        return this.leaders;
+    addLeader(leader: Leader): void {
+        if (this.leaders.find(l => l.getId() === leader.getId())) {
+            throw new Error("Leader already exists");
+        }
+        this.leaders.push(leader);
     }
 
-    setLeaders(value: Leader) {
-        this.leaders = value;
+    removeLeader(leaderId: number): void {
+        if (!this.leaders.find(leader => leader.getId() === leaderId)) {
+            throw new Error("Leader doesn't exists");
+        }
+        this.leaders = this.leaders.filter(leader => leader.getId() !== leaderId);
+    }
+
+    getLeaders(): Leader[] {
+        return this.leaders;
     }
 }

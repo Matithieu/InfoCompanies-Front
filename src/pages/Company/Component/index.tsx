@@ -117,7 +117,7 @@ export default function Company() {
                       minHeight: 220,
                     }}
                   >
-                    <ListOfLeaders companyLeaders={company} />
+                    <ListOfLeaders companyDetails={company} />
                   </Paper>
                 </Grid>
 

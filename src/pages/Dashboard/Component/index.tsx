@@ -18,7 +18,12 @@ import { activityArea } from '../../../data/ListOfOptions/Activity.tsx';
 import { legalStatus } from '../../../data/ListOfOptions/Legal.tsx';
 import { regions } from '../../../data/ListOfOptions/Regions.tsx';
 import { Button, Stack } from '@mui/material';
+import Company from '../../../data/company.ts';
 
+/**
+ * 
+ * @returns Multiple components to filter the list of companies
+ */
 const AdvancedSearch = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [searchParams, setSearchParams] = useState({
@@ -106,12 +111,14 @@ const AdvancedSearch = () => {
   );
 };
 
-export default function Company() {
-
-  const [selectedCompanyDetails, setSelectedCompanyDetails] = useState(null);
+/**
+ * 
+ * @returns The dashboard page
+ */
+export default function Dashboard() {
+  const [selectedCompanyDetails, setSelectedCompanyDetails] = useState<Company | null>(null);
 
   useEffect(() => {
-
     const savedCompanyDetails = JSON.parse(localStorage.getItem("companyDetailsDashboard") || "null");
     if (savedCompanyDetails) {
       setSelectedCompanyDetails(savedCompanyDetails);
@@ -123,9 +130,11 @@ export default function Company() {
     localStorage.setItem('companyDetailsDashboard', JSON.stringify(selectedCompanyDetails));
   }, [selectedCompanyDetails]);
 
+  /**
+   * 
+   * @param companyDetails When the user clicks on a company, this function is called
+   */
   const handleDetailsClick = (companyDetails) => {
-    // Faites quelque chose avec les détails de l'entreprise, par exemple :
-    // Mettez à jour l'état local pour afficher les détails dans le composant "Details"
     setSelectedCompanyDetails(companyDetails);
     console.log(companyDetails);
   };
@@ -207,7 +216,7 @@ export default function Company() {
                     borderRadius: 3
                   }}
                 >
-                  <ListOfLeaders companyLeaders={selectedCompanyDetails} />
+                  <ListOfLeaders companyDetails={selectedCompanyDetails} />
                 </Paper>
               </Grid>
 

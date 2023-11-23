@@ -1,30 +1,34 @@
-import React from 'react';
-
-
+import React, { useEffect } from 'react';
 import Paper from '@mui/material/Paper';
-
 import Box from '@mui/material/Box';
 import { Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import CssBaseline from '@mui/material/CssBaseline';
 import DetailsLeaders from '../../../components/DetailsLeader/index.tsx';
+import Leader from '../../../data/leader.tsx';
 
 
-const initialLeaderData = {
-    id: 1,
-    nom : 'Jean',
-    prenom: 'Dupont',
-    phone: '06 12 34 56 78',
-    email: 'email@email.com',
-    age: 45,
-    company: {
-      company: ["Entreprise 1", "Entreprise 2", "Entreprise 3"],
-      siren: [123456789, 987654321, 123456789],
-    },
+const idTest = window.location.pathname.split("/")[2];
+console.log(idTest);
 
-};
+// TODO: Replace this with the data from the API
+// Fetch at /api/leaders/{id}
 
-export default function Search() {
+const leader1 = new Leader(
+  1,
+  "DUPONT",
+  "Jean",
+  new Date("1990-01-01"),
+  " 06 00 00 00 00",
+  "email@email.com",
+  [
+    { id: 1, denomination: "Entreprise 1" },
+  ]
+);
+
+const initialLeaderData: Leader = leader1;
+
+export default function LeaderDetails() {
   if (initialLeaderData == null) {
     return <div>Aucunes données trouvées</div>;
   }
@@ -45,7 +49,7 @@ export default function Search() {
           }}
         >
           <Typography fontFamily={"Poppins"} variant="h4" component="div" align="left" marginTop={10} marginLeft={7} marginBottom={5}>
-            {initialLeaderData.prenom} {initialLeaderData.nom}
+            {initialLeaderData.getNom()} {initialLeaderData.getPrenom()}
           </Typography>
 
           <Grid container spacing={'3vh'} paddingBottom={'10vh'} paddingLeft={'10vh'} paddingRight={'10vh'} justifyContent="center">

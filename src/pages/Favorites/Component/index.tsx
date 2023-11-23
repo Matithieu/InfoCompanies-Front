@@ -124,7 +124,7 @@ export default function Home() {
                                         borderRadius: 3
                                     }}
                                 >
-                                    <ListOfLeaders companyLeaders={selectedCompanyDetails} />
+                                    <ListOfLeaders companyDetails={selectedCompanyDetails} />
                                 </Paper>
                             </Grid>
                         </Grid>

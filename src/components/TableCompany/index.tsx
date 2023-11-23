@@ -48,7 +48,9 @@ const columns: readonly Column[] = [
 
 ];
 
-const company1 = new Company(
+// TODO: Replace this with the data from the API
+
+export const company1 = new Company(
   false,
   "LA MIE'STERIEUSE",
   "948404819",
@@ -81,11 +83,13 @@ const company1 = new Company(
   '',
   "01/01/2021",
   new ChiffreAffaire(["01/01/2021", "01/01/2022", "01/01/2023"], ["10000", "20000", "30000"]),
-  new Leader(["Jean", "Paul", "Jacques", "Pierre"], ["01/01/2000", "02/02/2000", "03/03/2000", "04/04/2000"])
+  []
 );
 
+company1.addLeader(new Leader(1, "MARIE", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 1, denomination: "Entreprise 1"}]));
+company1.addLeader(new Leader(2, "JOSEPHE", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 2, denomination: "Entreprise 1"}]));
 
-const company2 = new Company(
+export const company2 = new Company(
   false,
   "Nom de l'entreprise 2",
   "123456789",
@@ -118,14 +122,23 @@ const company2 = new Company(
   "www.linkedin.com",
   "01/01/2021",
   new ChiffreAffaire(["01/01/2021", "01/01/2022", "01/01/2023"], ["10000", "1000", "30000"]),
-  new Leader(["Clément", "Mathieu", "Pierre"], ["01/01/2000", "02/02/2000", "03/03/2000"])
+  []
 );
+
+company2.addLeader(new Leader(3, "HENRI", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 4, denomination: "Entreprise 4"}]));
+company2.addLeader(new Leader(4, "EUDES", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 5, denomination: "Entreprise 5"}]));
+company2.addLeader(new Leader(5, "HERCULES", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 6, denomination: "Entreprise 6"}]));
 
 const initialCompanyData: Company[] = [
   company1,
   company2
 ];
 
+/**
+ * 
+ * @param param0 Takes a callback function as a parameter and displays a table of companies
+ * @returns A table of companies with their details
+ */
 export default function TableCompany({ onDetailsClick }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
