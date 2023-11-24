@@ -1,6 +1,11 @@
 import ChiffreAffaire from "./chiffreDaffaire";
 import Leader from "./leader";
 
+/**
+ * Company class is the main class of the application.
+ * It contains all the information about a company like 
+ * its name, its address, its leaders, etc.
+ */
 export default class Company {
 
     private favoris: boolean;
@@ -101,7 +106,7 @@ export default class Company {
         this.address = address;
         this.creationDate = creationDate;
         this.chiffreAffaire = chiffreAffaire;
-        this.leaders = [];
+        this.leaders = leaders;
     }
 
     getFavoris(): boolean {

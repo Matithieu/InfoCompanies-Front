@@ -26,19 +26,24 @@ export function toAgeFromDate(date: Date) {
     return age;
 }
 
+/**
+ * 
+ * @param leaderDetails Takes a leader as a parameter and displays his details in a table when selected
+ * @returns A table of details for a leader
+ */
 export default function DetailsLeader({ leaderDetails }: { leaderDetails: Leader | null }) {
 
     const navigate = useNavigate();
 
     if (leaderDetails === null) {
         return (
-            <tr style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Veuillez sélectionner une entreprise</tr>
+            <div style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Veuillez sélectionner une entreprise</div>
         );
     } else {
         return (
             <TableContainer component={Paper} style={{}}>
                 <Table sx={{ minWidth: 150 }} aria-label="List Of Leaders">
-                    <a style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center' }}>Détails</a>
+                    <div style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center' }}>Détails</div>
                     <TableBody>
                         <TableRow key={leaderDetails.getPhone()} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                             <TableCell component="th" scope="row">

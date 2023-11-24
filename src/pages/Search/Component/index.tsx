@@ -15,9 +15,10 @@ import ApartmentOutlinedIcon from '@mui/icons-material/ApartmentOutlined';
 import { useNavigate } from 'react-router-dom'; // Import from 'react-router-dom'
 import { useLocation } from 'react-router-dom';
 import { company1, company2 } from '../../../components/TableCompany/index.tsx';
+import Company from '../../../data/company.ts';
 
 // TODO: Replace this with the data from the API
-const initialCompanyData = [
+const initialCompanyData : Array<Company> = [
   company1,
   company2,
 ];
@@ -30,10 +31,11 @@ function TableOfDetails() {
   const navigate = useNavigate();
   const location = useLocation();
   const searchTerm = location.state.searchTerm.toString();
+  console.log("Search term: ", searchTerm);
 
   return (
 
-    <TableContainer component={Paper} style={{ minWidth: 220, minHeight: 220, width: '100%', height: '100%', borderRadius: 10 }}>
+    <TableContainer style={{ minWidth: 220, minHeight: 220, width: '100%', height: '100%', borderRadius: 10 }}>
       <Title>
         <a style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center' }}>Liste entreprises pour {searchTerm}</a>
       </Title>
@@ -68,7 +70,7 @@ function TableOfDetails() {
                 <ApartmentOutlinedIcon />
               </TableCell>
               <TableCell component="th" scope="row">
-                {row.getDenomination()} {/* Change 'name' to 'nom' */}
+                {row.getDenomination()}
               </TableCell>
               <TableCell align="center">{row.getSecteurDActivite()}</TableCell>
               <TableCell align="center">{row.getVille()}</TableCell>

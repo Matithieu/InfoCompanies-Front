@@ -49,6 +49,13 @@ const columns: readonly Column[] = [
 ];
 
 // TODO: Replace this with the data from the API
+const leader1 = new Leader(1, "JEAN", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 1, denomination: "Entreprise 1" }])
+const leader2 = new Leader(2, "JOSEPHE", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 2, denomination: "Entreprise 1" }])
+const leader3 = new Leader(3, "HENRI", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 4, denomination: "Entreprise 4" }])
+const leader4 = new Leader(4, "EUDES", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 5, denomination: "Entreprise 5" }])
+const leader5 = new Leader(5, "HERCUL", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 6, denomination: "Entreprise 6" }])
+
+console.log(leader1);
 
 export const company1 = new Company(
   false,
@@ -83,11 +90,11 @@ export const company1 = new Company(
   '',
   "01/01/2021",
   new ChiffreAffaire(["01/01/2021", "01/01/2022", "01/01/2023"], ["10000", "20000", "30000"]),
-  []
+  [
+    leader1,
+    leader2
+  ]
 );
-
-company1.addLeader(new Leader(1, "MARIE", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 1, denomination: "Entreprise 1"}]));
-company1.addLeader(new Leader(2, "JOSEPHE", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 2, denomination: "Entreprise 1"}]));
 
 export const company2 = new Company(
   false,
@@ -122,12 +129,12 @@ export const company2 = new Company(
   "www.linkedin.com",
   "01/01/2021",
   new ChiffreAffaire(["01/01/2021", "01/01/2022", "01/01/2023"], ["10000", "1000", "30000"]),
-  []
+  [
+    leader3,
+    leader4,
+    leader5
+  ]
 );
-
-company2.addLeader(new Leader(3, "HENRI", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 4, denomination: "Entreprise 4"}]));
-company2.addLeader(new Leader(4, "EUDES", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 5, denomination: "Entreprise 5"}]));
-company2.addLeader(new Leader(5, "HERCULES", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 6, denomination: "Entreprise 6"}]));
 
 const initialCompanyData: Company[] = [
   company1,
@@ -155,12 +162,13 @@ export default function TableCompany({ onDetailsClick }) {
     setCompanyData(updatedCompanyData);
   }, []);
 
-  const manageFavorites = (companyName: string) => {
+  // TODO : Another function is in the file src/pages/Company/Component/index.tsx
+  const manageFavorites = (companySiren: string) => {
     const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-    const index = favorites.indexOf(companyName);
+    const index = favorites.indexOf(companySiren);
     if (index === -1) {
       // Si l'entreprise n'est pas encore enregistrée en tant que favori, ajoutez-la
-      favorites.push(companyName);
+      favorites.push(companySiren);
     } else {
       // Sinon, supprimez-la
       favorites.splice(index, 1);
@@ -171,7 +179,7 @@ export default function TableCompany({ onDetailsClick }) {
     // Mettez à jour l'état local companyData avec l'information des favoris
     const updatedCompanyData = initialCompanyData.map((company) => {
       // Update 'favoris' property for each company
-      const isFavorite = favorites.includes(company.getDenomination());
+      const isFavorite = favorites.includes(company.getSiren());
       company.setFavoris(isFavorite);
       return company; // Return the updated company object
     });
@@ -221,7 +229,7 @@ export default function TableCompany({ onDetailsClick }) {
                     <TableCell key="favoris" align="center">
                       <button style={{ border: 'none', backgroundColor: 'transparent' }}
                         onClick={() => {
-                          manageFavorites(row.getDenomination());
+                          manageFavorites(row.getSiren());
                         }}
                       >
                         {row.getFavoris() ? <StarIcon /> : <StarBorderOutlinedIcon />}
