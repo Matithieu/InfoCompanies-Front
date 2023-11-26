@@ -55,8 +55,6 @@ const leader3 = new Leader(3, "HENRI", "Dupont", new Date("1990-01-01"), "06 00 
 const leader4 = new Leader(4, "EUDES", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 5, denomination: "Entreprise 5" }])
 const leader5 = new Leader(5, "HERCUL", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 6, denomination: "Entreprise 6" }])
 
-console.log(leader1);
-
 export const company1 = new Company(
   false,
   "LA MIE'STERIEUSE",

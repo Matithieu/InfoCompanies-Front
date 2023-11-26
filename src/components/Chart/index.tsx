@@ -32,7 +32,6 @@ export default function Chart({ company }: { company: Company | null }) {
         }
       }
     }
-    console.log('Data:', data);
     return data;
   }
 
