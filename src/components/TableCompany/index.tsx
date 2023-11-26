@@ -18,6 +18,7 @@ import Company from '../../data/company.ts';
 import ChiffreAffaire from '../../data/chiffreDaffaire.tsx';
 import Leader from '../../data/leader.tsx';
 import { useCompanyContext } from '../../context/CompanyContext.tsx';
+import { loadCompanyFromLocalStorage } from '../../utils/loadCompany.tsx';
 
 interface Column {
   id: string;
@@ -131,7 +132,11 @@ export const company2 = new Company(
   []
 );
 
-const initialCompanyData: Company[] = [
+const initialCompanyData : Company[] = [
+  ...(loadCompanyFromLocalStorage("companyDetailsDashboard") || []),
+];
+
+export const listOfCompanies: Company[] = [
   company1,
   company2
 ];

@@ -19,6 +19,8 @@ import { legalStatus } from '../../../data/ListOfOptions/Legal.tsx';
 import { regions } from '../../../data/ListOfOptions/Regions.tsx';
 import { Button, Stack } from '@mui/material';
 import { useCompanyContext } from '../../../context/CompanyContext.tsx';
+import { listOfCompanies } from '../../../components/TableCompany/index.tsx';
+import { loadCompanyFromLocalStorage } from '../../../utils/loadCompany.tsx';
 
 /**
  * 
@@ -121,14 +123,15 @@ export default function Dashboard() {
   useEffect(() => {
     const savedCompanyDetails = JSON.parse(localStorage.getItem("companyDetailsDashboard") || "null");
     if (savedCompanyDetails) {
+      console.log("SALUT", loadCompanyFromLocalStorage("companyDetailsDashboard"));
       setSelectedCompany(savedCompanyDetails);
     }
   }, []);
 
   // Enregistrer les données dans localStorage chaque fois qu'elles changent
   useEffect(() => {
-    localStorage.setItem('companyDetailsDashboard', JSON.stringify(selectedCompany));
-  }, [selectedCompany]);
+    localStorage.setItem('companyDetailsDashboard', JSON.stringify(listOfCompanies));
+  }, [listOfCompanies]);
 
   /**
    * 
