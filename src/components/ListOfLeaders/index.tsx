@@ -9,31 +9,38 @@ import { useNavigate } from 'react-router-dom';
 import Leader from '../../data/leader';
 import Company from '../../data/company';
 import { useState } from 'react';
+import { useCompanyContext } from '../../context/CompanyContext';
 
 /**
  * 
  * @param companyDetails Takes a company as a parameter and displays its leaders in a table when selected
  * @returns A table of leaders
  */
-export default function ListOfLeaders({ companyDetails }: { companyDetails: Company | null }) {
+export default function ListOfLeaders() {
     const navigate = useNavigate();
+
+    const { selectedCompany } = useCompanyContext();
+
     const [leaders, setLeaders] = useState<Leader[]>(null as unknown as Leader[]);
     const [isLoading, setIsLoading] = useState(true);
 
+
     React.useEffect(() => {
-        if (companyDetails !== null && companyDetails instanceof Company && typeof companyDetails.getLeaders === 'function') {
-            setLeaders(companyDetails.getLeaders());
+        if (selectedCompany !== null && selectedCompany instanceof Company && typeof selectedCompany.getLeaders === 'function') {
+            setLeaders(selectedCompany.getLeaders());
         } else {
             setLeaders(null as unknown as Leader[]);
         }
         setIsLoading(false);
-    }, [companyDetails]);
+    }, [selectedCompany]);
 
-    if (isLoading) {
-        return <a style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Chargement des données...</a>;
-    } else if (leaders?.length === 0) {
+    if (leaders === null) {
         return <a style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Veuillez sélectionner une entreprise</a>;
-    } else {
+    }
+    if(leaders.length === 0) {
+        return <a style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Pas de données pour cette entreprise</a>;
+    }
+     else {
         return (
             <TableContainer style={{ borderRadius: 9 }} >
                 <div style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center', marginTop: 5, top: '0' }}>Liste des dirigeants</div>

@@ -18,7 +18,7 @@ import { activityArea } from '../../../data/ListOfOptions/Activity.tsx';
 import { legalStatus } from '../../../data/ListOfOptions/Legal.tsx';
 import { regions } from '../../../data/ListOfOptions/Regions.tsx';
 import { Button, Stack } from '@mui/material';
-import Company from '../../../data/company.ts';
+import { useCompanyContext } from '../../../context/CompanyContext.tsx';
 
 /**
  * 
@@ -116,26 +116,26 @@ const AdvancedSearch = () => {
  * @returns The dashboard page
  */
 export default function Dashboard() {
-  const [selectedCompanyDetails, setSelectedCompanyDetails] = useState<Company | null>(null);
+  const { selectedCompany, setSelectedCompany } = useCompanyContext();
 
   useEffect(() => {
     const savedCompanyDetails = JSON.parse(localStorage.getItem("companyDetailsDashboard") || "null");
     if (savedCompanyDetails) {
-      setSelectedCompanyDetails(savedCompanyDetails);
+      setSelectedCompany(savedCompanyDetails);
     }
   }, []);
 
   // Enregistrer les données dans localStorage chaque fois qu'elles changent
   useEffect(() => {
-    localStorage.setItem('companyDetailsDashboard', JSON.stringify(selectedCompanyDetails));
-  }, [selectedCompanyDetails]);
+    localStorage.setItem('companyDetailsDashboard', JSON.stringify(selectedCompany));
+  }, [selectedCompany]);
 
   /**
    * 
    * @param companyDetails When the user clicks on a company, this function is called
    */
   const handleDetailsClick = (companyDetails) => {
-    setSelectedCompanyDetails(companyDetails);
+    setSelectedCompany(companyDetails);
     console.log(companyDetails);
   };
 
@@ -200,7 +200,7 @@ export default function Dashboard() {
 
                   }}
                 >
-                  <Chart company={selectedCompanyDetails} />
+                  <Chart />
                 </Paper>
               </Grid>
 
@@ -216,7 +216,7 @@ export default function Dashboard() {
                     borderRadius: 3
                   }}
                 >
-                  <ListOfLeaders companyDetails={selectedCompanyDetails} />
+                  <ListOfLeaders />
                 </Paper>
               </Grid>
 
@@ -232,7 +232,7 @@ export default function Dashboard() {
                     borderRadius: 3
                   }}
                 >
-                  <Details companyDetails={selectedCompanyDetails} />
+                  <Details />
                 </Paper>
               </Grid>
             </Grid>

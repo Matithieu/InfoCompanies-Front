@@ -11,26 +11,29 @@ import BusinessIcon from '@mui/icons-material/Business';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import { Tooltip } from '@mui/material';
 import Company from '../../data/company';
+import { useCompanyContext } from '../../context/CompanyContext';
+import { useState } from 'react';
 
-export default function Details({ companyDetails } : { companyDetails: Company | null }) {
-    const [details, setDetails] = React.useState<Company | null>(null);
-    const [isLoading, setIsLoading] = React.useState(true);
+export default function Details() {
+    const { selectedCompany } = useCompanyContext();
+    const [company, setCompany] = useState<Company>(null as unknown as Company);
 
     React.useEffect(() => {
-        if (companyDetails !== null && companyDetails instanceof Company) {
-            setDetails(companyDetails);
+        // Use getChiffreAffaire() to test if the company is valid
+        if (selectedCompany !== null && selectedCompany instanceof Company && typeof selectedCompany.getChiffreAffaire=== 'function') {
+            setCompany(selectedCompany);
         } else {
-            setDetails(null as unknown as Company);
+            setCompany(null as unknown as Company);
         }
-        setIsLoading(false);
-    }, [companyDetails]);
-    
-    if (isLoading) {
-        return <a style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Chargement des données...</a>;
-    }
-    else if (details === null) {
+    }, [selectedCompany]);
+
+    if (company === null) {
         return <a style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Veuillez sélectionner une entreprise</a>;
-    } else {
+    }
+    if(company.getSiren().length === 0) {
+        return <a style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Pas de données pour cette entreprise</a>;
+    } 
+    else {
         return (
             <TableContainer style={{ borderRadius: 9 }}>
                 <a style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center' }}>Détails</a>
@@ -42,7 +45,7 @@ export default function Details({ companyDetails } : { companyDetails: Company |
                                     <PhoneIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{details?.getPhone()}</a>
+                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{company?.getPhone()}</a>
                             </TableCell>
                         </TableRow>
                         <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -51,7 +54,7 @@ export default function Details({ companyDetails } : { companyDetails: Company |
                                     <EmailIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{details?.getEmail()}</a>
+                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{company?.getEmail()}</a>
                             </TableCell>
                         </TableRow>
                         <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -60,7 +63,7 @@ export default function Details({ companyDetails } : { companyDetails: Company |
                                     <WebAssetIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{details?.getWebsite()}</a>
+                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{company?.getWebsite()}</a>
                             </TableCell>
                         </TableRow>
                         <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -69,7 +72,7 @@ export default function Details({ companyDetails } : { companyDetails: Company |
                                     <BusinessIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{details?.getAddress()}</a>
+                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{company?.getAddress()}</a>
                             </TableCell>
                         </TableRow>
                         <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -78,7 +81,7 @@ export default function Details({ companyDetails } : { companyDetails: Company |
                                     <CalendarTodayOutlinedIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{details?.getCreationDate()}</a>
+                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{company?.getCreationDate()}</a>
                             </TableCell>
                         </TableRow>
                     </TableBody>

@@ -17,6 +17,7 @@ import { Box } from '@mui/material';
 import Company from '../../data/company.ts';
 import ChiffreAffaire from '../../data/chiffreDaffaire.tsx';
 import Leader from '../../data/leader.tsx';
+import { useCompanyContext } from '../../context/CompanyContext.tsx';
 
 interface Column {
   id: string;
@@ -127,11 +128,7 @@ export const company2 = new Company(
   "www.linkedin.com",
   "01/01/2021",
   new ChiffreAffaire(["01/01/2021", "01/01/2022", "01/01/2023"], ["10000", "1000", "30000"]),
-  [
-    leader3,
-    leader4,
-    leader5
-  ]
+  []
 );
 
 const initialCompanyData: Company[] = [
@@ -148,6 +145,9 @@ export default function TableCompany({ onDetailsClick }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [companyData, setCompanyData] = React.useState(initialCompanyData);
+
+  const { selectedCompany, setSelectedCompany } = useCompanyContext();
+
 
   React.useEffect(() => {
     const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
@@ -197,6 +197,8 @@ export default function TableCompany({ onDetailsClick }) {
     // Appelez la fonction de rappel lorsque l'utilisateur clique sur une ligne
     if (onDetailsClick) {
       onDetailsClick(company);
+      setSelectedCompany(company);
+      console.log('Company selected: ', selectedCompany);
     }
   };
 
@@ -220,7 +222,7 @@ export default function TableCompany({ onDetailsClick }) {
           <TableBody>
             {companyData
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => {
+              .map((row) => {
                 return (
                   //Afficher les details de l'entreprise en cliquant dessus
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.getSiren()} onClick={() => handleDetailsClick(row)} style={{ cursor: 'pointer' }}>

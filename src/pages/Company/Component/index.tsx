@@ -1,32 +1,26 @@
 import React, { useState } from 'react';
 import { CssBaseline, Typography, Grid, Paper, Box, Button } from '@mui/material';
-import { useLocation } from 'react-router-dom';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import Chart from '../../../components/Chart/index.tsx';
 import ListOfLeaders from '../../../components/ListOfLeaders/index.tsx';
 import Details from '../../../components/Details/index.tsx';
-import Company from '../../../data/company.ts';
+import { useCompanyContext } from '../../../context/CompanyContext.tsx';
 
 export default function CompanyPage() {
-  const location = useLocation();
-  const initialCompanyData: Array<Company> = location.state.initialCompanyData;
-  const [companyData, setCompanyData] = useState<Array<Company>>(initialCompanyData);
+  const { selectedCompany, setSelectedCompany } = useCompanyContext();
 
   React.useEffect(() => {
     const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-    const updatedCompanyData = initialCompanyData.map((company) => {
-      // Update 'favoris' property for each company
-      const isFavorite = favorites.includes(company.getSiren());
-      company.setFavoris(isFavorite);
-      return company; // Return the updated company object
-    });
-    setCompanyData(updatedCompanyData);
+    // Update 'favoris' property for each company
+    const isFavorite = favorites.includes(selectedCompany?.getSiren());
+    selectedCompany?.setFavoris(isFavorite);
+    setSelectedCompany(selectedCompany);
   }, []);
 
 
   // TODO : Another function is in the file src/components/TableCompany/index.tsx
-  const manageFavorites = (companySiren: string) => {
+  const manageFavorites = (companySiren: string | undefined) => {
     const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
     const index = favorites.indexOf(companySiren);
     if (index === -1) {
@@ -40,13 +34,9 @@ export default function CompanyPage() {
     console.log('Favoris mis à jour:', favorites);
 
     // Mettez à jour l'état local companyData avec l'information des favoris
-    const updatedCompanyData = initialCompanyData.map((company) => {
-      // Update 'favoris' property for each company
-      const isFavorite = favorites.includes(company.getSiren());
-      company.setFavoris(isFavorite);
-      return company; // Return the updated company object
-    });
-    setCompanyData(updatedCompanyData);
+    const isFavorite = favorites.includes(selectedCompany?.getSiren());
+    selectedCompany?.setFavoris(isFavorite);
+    setSelectedCompany(selectedCompany);
   };
 
   return (
@@ -64,8 +54,7 @@ export default function CompanyPage() {
           overflow: 'auto',
         }}
       >
-        {companyData.map((company) => (
-          <div key={company.getSiren()} style={{}}>
+          <div key={selectedCompany?.getSiren()} style={{}}>
             <div
               style={{
                 display: 'flex',
@@ -82,10 +71,10 @@ export default function CompanyPage() {
                   marginBottom: -30,
                 }}
                 onClick={() => {
-                  manageFavorites(company.getSiren());
+                  manageFavorites(selectedCompany?.getSiren());
                 }}
               >
-                {company.getFavoris() ? <StarIcon /> : <StarBorderOutlinedIcon />}
+                {selectedCompany?.getFavoris() ? <StarIcon /> : <StarBorderOutlinedIcon />}
               </Button>
               <Typography
                 fontFamily="Poppins"
@@ -95,7 +84,7 @@ export default function CompanyPage() {
                 marginLeft={0}
                 marginBottom={5}
               >
-                {company.getDenomination()}
+                {selectedCompany?.getDenomination()}
               </Typography>
             </div>
 
@@ -111,7 +100,7 @@ export default function CompanyPage() {
                       minHeight: 220,
                     }}
                   >
-                    <Details companyDetails={company} />
+                    <Details />
 
                   </Paper>
                 </Grid>
@@ -125,7 +114,7 @@ export default function CompanyPage() {
                       minHeight: 220,
                     }}
                   >
-                    <ListOfLeaders companyDetails={company} />
+                    <ListOfLeaders />
                   </Paper>
                 </Grid>
 
@@ -141,7 +130,7 @@ export default function CompanyPage() {
                       height: 220,
                     }}
                   >
-                    <Chart company={company} />
+                    <Chart />
                   </Paper>
                 </Grid>
                 <Grid item xs={8} md={4}>
@@ -159,7 +148,6 @@ export default function CompanyPage() {
               </Grid>
             </Grid>
           </div>
-        ))}
       </Box>
     </Box >
 

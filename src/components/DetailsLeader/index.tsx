@@ -12,6 +12,7 @@ import { Tooltip } from '@mui/material';
 import CakeIcon from '@mui/icons-material/Cake';
 import { useNavigate } from 'react-router-dom';
 import Leader from '../../data/leader';
+import { useCompanyContext } from '../../context/CompanyContext';
 
 export function toAgeFromDate(date: Date) {
     var today = new Date();
@@ -32,6 +33,8 @@ export function toAgeFromDate(date: Date) {
  * @returns A table of details for a leader
  */
 export default function DetailsLeader({ leaderDetails }: { leaderDetails: Leader | null }) {
+
+    const { selectedCompany, setSelectedCompany } = useCompanyContext();
 
     const navigate = useNavigate();
 
