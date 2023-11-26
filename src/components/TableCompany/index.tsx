@@ -89,7 +89,7 @@ export const company1 = new Company(
   "linkdin",
   '',
   "01/01/2021",
-  new ChiffreAffaire(["01/01/2021", "01/01/2022", "01/01/2023"], ["10000", "20000", "30000"]),
+  new ChiffreAffaire(["01/01/2021", "01/01/2022", "01/01/2023"], ["100", "200", "300"]),
   [
     leader1,
     leader2

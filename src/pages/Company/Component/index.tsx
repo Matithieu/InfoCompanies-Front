@@ -141,7 +141,7 @@ export default function CompanyPage() {
                       height: 220,
                     }}
                   >
-                    <Chart companyCharts={company} />
+                    <Chart company={company} />
                   </Paper>
                 </Grid>
                 <Grid item xs={8} md={4}>

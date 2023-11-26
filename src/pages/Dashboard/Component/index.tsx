@@ -200,7 +200,7 @@ export default function Dashboard() {
 
                   }}
                 >
-                  <Chart companyCharts={selectedCompanyDetails} />
+                  <Chart company={selectedCompanyDetails} />
                 </Paper>
               </Grid>
 
