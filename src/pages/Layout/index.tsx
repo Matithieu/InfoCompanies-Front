@@ -202,11 +202,11 @@ export default function Home({ renderComponent }: { renderComponent: () => JSX.E
             {/* Utilisez le composant DarkModeToggle */}
             <DarkModeToggle darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
 
-            <IconButton color="inherit" style={{ marginLeft: 'auto' }}>
+            <div style={{ marginLeft: 'auto' }}>
               <Badge badgeContent={0} color="secondary">
                 <AccountMenu />
               </Badge>
-            </IconButton>
+            </div>
 
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">

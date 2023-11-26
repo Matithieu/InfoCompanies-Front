@@ -4,7 +4,6 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import WebAssetIcon from '@mui/icons-material/WebAsset';
@@ -16,8 +15,6 @@ import Company from '../../data/company';
 export default function Details({ companyDetails } : { companyDetails: Company | null }) {
     const [details, setDetails] = React.useState<Company | null>(null);
     const [isLoading, setIsLoading] = React.useState(true);
-
-    console.log("Details: ", companyDetails);
 
     React.useEffect(() => {
         if (companyDetails !== null && companyDetails instanceof Company) {
