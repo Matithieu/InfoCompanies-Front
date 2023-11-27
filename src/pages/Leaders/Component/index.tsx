@@ -9,7 +9,7 @@ import Leader from '../../../data/leader.tsx';
 
 
 const idTest = window.location.pathname.split("/")[2];
-console.log(idTest);
+console.log("Leader id : " + idTest);
 
 // TODO: Replace this with the data from the API
 // Fetch at /api/leaders/{id}

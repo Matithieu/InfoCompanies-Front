@@ -21,6 +21,7 @@ import { Button, Stack } from '@mui/material';
 import { useCompanyContext } from '../../../context/CompanyContext.tsx';
 import { listOfCompanies } from '../../../components/TableCompany/index.tsx';
 import { loadCompanyFromLocalStorage } from '../../../utils/loadCompany.tsx';
+import { loadCompaniesFilterFromLocalStorage } from '../../../utils/loadFilter.tsx';
 
 /**
  * 
@@ -36,14 +37,25 @@ const AdvancedSearch = () => {
     region: '',
   });
 
-  const [legalStatusValue, setLegalStatusValue] = useState('' || []);
-  const [activityAreaValue, setActivityAreaValue] = useState('');
-  const [regionValue, setRegionValue] = useState('');
+  const [legalStatusValue, setLegalStatusValue] = useState(searchParams.legalStatus);
+  const [activityAreaValue, setActivityAreaValue] = useState(searchParams.activityArea);
+  const [regionValue, setRegionValue] = useState(searchParams.region);
+
+  useEffect(() => {
+    const storedFilters = loadCompaniesFilterFromLocalStorage('companiesFilter');
+    if (storedFilters) {
+      setSearchParams(storedFilters);
+      console.log('searchParams', searchParams);
+      console.log('storedFilters', storedFilters);
+      setLegalStatusValue(storedFilters.legalStatus);
+      setActivityAreaValue(storedFilters.activityArea);
+      setRegionValue(storedFilters.region);
+    }
+  }, []);
 
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
-    //Garde en mémoire les valeurs de handleLegalStatusChange, handleActivityAreaChange et handleRegionChange
   };
 
   const handleLegalStatusChange = (selectedValue) => {
@@ -67,6 +79,10 @@ const AdvancedSearch = () => {
   const handleSearch = () => {
     // Ici, vous pouvez envoyer les paramètres de recherche au backend
     console.log('Paramètres de recherche:', searchParams);
+    const companiesFilter = loadCompaniesFilterFromLocalStorage('companiesFilter');
+    if (companiesFilter) {
+      localStorage.setItem('companiesFilter', JSON.stringify(searchParams));
+    }
   };
 
   return (
@@ -81,6 +97,7 @@ const AdvancedSearch = () => {
               label="Status légaux"
               placeholder="Status légaux"
               selectedValues={legalStatusValue}
+              value={legalStatusValue}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -90,6 +107,7 @@ const AdvancedSearch = () => {
               label="Secteur d'activité"
               placeholder="Secteur d'activité"
               selectedValues={activityAreaValue}
+              value={activityAreaValue}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -99,6 +117,7 @@ const AdvancedSearch = () => {
               label="Région"
               placeholder="Région"
               selectedValues={regionValue}
+              value={regionValue}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -118,12 +137,11 @@ const AdvancedSearch = () => {
  * @returns The dashboard page
  */
 export default function Dashboard() {
-  const { selectedCompany, setSelectedCompany } = useCompanyContext();
+  const { setSelectedCompany } = useCompanyContext();
 
   useEffect(() => {
     const savedCompanyDetails = JSON.parse(localStorage.getItem("companyDetailsDashboard") || "null");
     if (savedCompanyDetails) {
-      console.log("SALUT", loadCompanyFromLocalStorage("companyDetailsDashboard"));
       setSelectedCompany(savedCompanyDetails);
     }
   }, []);

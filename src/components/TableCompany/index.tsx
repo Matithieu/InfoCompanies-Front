@@ -132,13 +132,14 @@ export const company2 = new Company(
   []
 );
 
-const initialCompanyData : Company[] = [
-  ...(loadCompanyFromLocalStorage("companyDetailsDashboard") || []),
-];
-
 export const listOfCompanies: Company[] = [
   company1,
   company2
+];
+
+// TODO: Replace this with a message saying that no data was found
+const initialCompanyData : Company[] = [
+  ...(loadCompanyFromLocalStorage("companyDetailsDashboard") || listOfCompanies),
 ];
 
 /**

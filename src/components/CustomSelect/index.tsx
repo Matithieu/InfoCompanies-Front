@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { FixedSizeList } from "react-window";
 import {
   Box, FormControl, Select, InputLabel, ListSubheader,
@@ -37,9 +37,13 @@ const RenderRow = ({ index, style, data }) => {
   );
 };
 
-const CustomSelect = ({ options, onSelectionChange, selectedValues, label, placeholder }) => {
+const CustomSelect = ({ options, onSelectionChange, selectedValues, label, placeholder, value }) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>(selectedValues || []);
   const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    setSelectedOptions(value || []);
+  }, [value]);
 
   const displayedOptions = useMemo(
     () => options.filter((option) => containsText(option, searchText)),
