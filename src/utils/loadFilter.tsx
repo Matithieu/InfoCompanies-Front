@@ -6,7 +6,6 @@ export function loadCompaniesFilterFromLocalStorage(key) {
   
     try {
       const companyFilterObjs = JSON.parse(companiesFilter);
-      console.log('companyFilterObjs', companyFilterObjs);
       return companyFilterObjs;
     } catch (error) {
       console.error('Error parsing companies filters from localStorage', error);

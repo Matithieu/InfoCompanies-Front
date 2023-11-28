@@ -45,14 +45,25 @@ const AdvancedSearch = () => {
     const storedFilters = loadCompaniesFilterFromLocalStorage('companiesFilter');
     if (storedFilters) {
       setSearchParams(storedFilters);
-      console.log('searchParams', searchParams);
-      console.log('storedFilters', storedFilters);
       setLegalStatusValue(storedFilters.legalStatus);
       setActivityAreaValue(storedFilters.activityArea);
       setRegionValue(storedFilters.region);
     }
   }, []);
 
+  const resetSearchParams = () => {
+    setSearchParams({
+      legalStatus: '',
+      activityArea: '',
+      region: '',
+    });
+    setLegalStatusValue('');
+    setActivityAreaValue('');
+    setRegionValue('');
+
+    // Resetting localStorage
+    localStorage.setItem('companiesFilter', JSON.stringify({}));
+  };
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -121,8 +132,14 @@ const AdvancedSearch = () => {
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <Button onClick={handleSearch} variant='outlined'>
-              Valider
+            <Button onClick={resetSearchParams} variant='outlined' style={{marginTop: '20px'}}>
+              Réinitialiser
+            </Button>
+
+            <span style={{ marginRight: '20px' }}></span>
+
+            <Button onClick={handleSearch} variant='contained' style={{marginTop: '20px'}}>
+              Rechercher <SearchIcon style={{marginLeft: '6px'}} />
             </Button>
           </Grid>
         </Grid>
