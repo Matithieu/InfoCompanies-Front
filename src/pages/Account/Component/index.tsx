@@ -1,70 +1,65 @@
-import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Payments from '../../../components/Payments/index.tsx';
-import Invoices from '../../../components/Invoices/index.tsx';
+import React, { useState } from 'react';
+import { Container, Grid, TextField, Typography, Paper, Button, CircularProgress } from '@mui/material';
+import Account from '../../../data/account';
 
+export default function AccountPage() {
+  const account = new Account("username", "password", "email", "firstName", "lastName", "dateOfBirth", "address", "city", "postalCode", "country", "phoneNumber", "dateOfCreation");
+  const [editMode, setEditMode] = useState(false);
+  const [accountData, setAccountData] = useState({ ...account });
+  const [isSaving, setIsSaving] = useState(false);
 
-export default function Account() {
-
-  const [language, setLanguage] = React.useState('en');
-  const [currentTab, setCurrentTab] = React.useState(0);
-
-  const handleLanguageChange = (event) => {
-    setLanguage(event.target.value);
+  const handleEdit = () => {
+    setEditMode(true);
   };
 
-  const handleTabChange = (event, newValue) => {
-    setCurrentTab(newValue);
+  const handleSave = () => {
+    setIsSaving(true);
+    setEditMode(false);
+    // Ajoutez ici la logique pour enregistrer les modifications
+    // Exemple: simuler un enregistrement
+    setTimeout(() => setIsSaving(false), 2000);
+  };
+
+  const handleChange = (e, key) => {
+    setAccountData({ ...accountData, [key]: e.target.value });
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <Box
-        component="main"
-        sx={{
-          backgroundColor: (theme) =>
-            theme.palette.mode === 'light'
-              ? theme.palette.grey[100]
-              : theme.palette.grey[900],
-          flexGrow: 1,
-          height: '100vh',
-          overflow: 'auto',
-        }}
-      >
-        <Typography
-          fontFamily="Poppins"
-          variant="h4"
-          component="div"
-          align="left"
-          marginTop={10}
-          marginLeft={10}
-          marginBottom={5}
-        >
-          Account
+    <Container maxWidth="lg">
+      <Paper style={{ padding: '20px', marginTop: '20px', boxShadow: '0 3px 10px rgba(0,0,0,0.2)' }}>
+        <Typography variant="h4" gutterBottom>
+          Account Details
         </Typography>
-
-        <Tabs
-          value={currentTab}
-          onChange={handleTabChange}
-          indicatorColor="primary"
-          textColor="primary"
-          centered
-        >
-          <Tab label="Payments" />
-          <Tab label="Invoices" />
-          {/* Ajoutez d'autres onglets ici */}
-        </Tabs>
-
-        {currentTab === 0 && <Payments />} {/* Afficher le composant Paiements */}
-        {currentTab === 1 && <Invoices />} {/* Afficher le composant Factures */}
-        
-        {/* Ajoutez le contenu pour d'autres onglets ici */}
-      </Box>
-    </Box>
+        <Grid container spacing={3}>
+          {Object.keys(accountData).map((key) => (
+            <Grid item xs={12} sm={6} key={key}>
+              <TextField
+                fullWidth
+                label={key.charAt(0).toUpperCase() + key.slice(1)}
+                value={accountData[key]}
+                variant="outlined"
+                InputProps={{
+                  readOnly: !editMode,
+                }}
+                onChange={(e) => handleChange(e, key)}
+              />
+            </Grid>
+          ))}
+        </Grid>
+        <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'flex-end' }}>
+          {isSaving ? (
+            <CircularProgress />
+          ) : !editMode ? (
+            <Button variant="contained" color="primary" onClick={handleEdit}>
+              Edit
+            </Button>
+          ) : (
+            <Button variant="contained" color="secondary" onClick={handleSave}>
+              Save
+            </Button>
+          )}
+        </div>
+      </Paper>
+    </Container>
   );
 }
