@@ -251,7 +251,6 @@ export default function Home({ renderComponent }: { renderComponent: () => JSX.E
 
           {renderComponent()}
 
-          <Copyright />
         </Box>
       </Box>
     </ThemeProvider>

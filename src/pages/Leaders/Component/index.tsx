@@ -30,7 +30,7 @@ const initialLeaderData: Leader = leader1;
 
 export default function LeaderDetails() {
   if (initialLeaderData == null) {
-    return <div>Aucunes données trouvées</div>;
+    return <a>Aucunes données trouvées</a>;
   }
   else {
     return (

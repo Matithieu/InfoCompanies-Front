@@ -8,7 +8,7 @@ import Paper from '@mui/material/Paper';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import BusinessIcon from '@mui/icons-material/Business';
-import { Tooltip } from '@mui/material';
+import { Tooltip, Typography } from '@mui/material';
 import CakeIcon from '@mui/icons-material/Cake';
 import { useNavigate } from 'react-router-dom';
 import Leader from '../../data/leader';
@@ -40,13 +40,13 @@ export default function DetailsLeader({ leaderDetails }: { leaderDetails: Leader
 
     if (leaderDetails === null) {
         return (
-            <div style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Veuillez sélectionner une entreprise</div>
+            <a style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Veuillez sélectionner une entreprise</a>
         );
     } else {
         return (
             <TableContainer component={Paper} style={{}}>
+                <h2 style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center' }}>Détails</h2>
                 <Table sx={{ minWidth: 150 }} aria-label="List Of Leaders">
-                    <div style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center' }}>Détails</div>
                     <TableBody>
                         <TableRow key={leaderDetails.getPhone()} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                             <TableCell component="th" scope="row">

@@ -5,7 +5,7 @@ import Settings from './pages/Settings/settings';
 import Account from './pages/Account/account';
 import Search from './pages/Search/search';
 import Company from './pages/Company/company';
-import Leader from './pages/Leaders/leaders';
+import Leader from './pages/Leaders/leader';
 import Error404 from './pages/404/Account/404';
 import { Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';

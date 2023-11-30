@@ -17,7 +17,7 @@ import CustomSelect from '../../../components/CustomSelect/index.tsx';
 import { activityArea } from '../../../data/ListOfOptions/Activity.tsx';
 import { legalStatus } from '../../../data/ListOfOptions/Legal.tsx';
 import { regions } from '../../../data/ListOfOptions/Regions.tsx';
-import { Button, Stack } from '@mui/material';
+import { Button, Container, Stack } from '@mui/material';
 import { useCompanyContext } from '../../../context/CompanyContext.tsx';
 import { listOfCompanies } from '../../../components/TableCompany/index.tsx';
 import { loadCompanyFromLocalStorage } from '../../../utils/loadCompany.tsx';
@@ -132,14 +132,14 @@ const AdvancedSearch = () => {
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <Button onClick={resetSearchParams} variant='outlined' style={{marginTop: '20px'}}>
+            <Button onClick={resetSearchParams} variant='outlined' style={{ marginTop: '20px' }}>
               Réinitialiser
             </Button>
 
             <span style={{ marginRight: '20px' }}></span>
 
-            <Button onClick={handleSearch} variant='contained' style={{marginTop: '20px'}}>
-              Rechercher <SearchIcon style={{marginLeft: '6px'}} />
+            <Button onClick={handleSearch} variant='contained' style={{ marginTop: '20px' }}>
+              Rechercher <SearchIcon style={{ marginLeft: '6px' }} />
             </Button>
           </Grid>
         </Grid>
@@ -178,7 +178,7 @@ export default function Dashboard() {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Grid>
       <SEO
         title="Dashboard"
         description="Dashboard"
@@ -188,95 +188,82 @@ export default function Dashboard() {
 
       <CssBaseline />
 
-      <Box
-        component="main"
-        sx={{
-          backgroundColor: (theme) =>
-            theme.palette.mode === 'light'
-              ? theme.palette.grey[100]
-              : theme.palette.grey[900],
-          flexGrow: 1,
-          height: '100vh',
-          overflow: 'auto',
-        }}
-      >
-        <Typography fontFamily={"Poppins"} variant="h4" component="div" align="left" marginTop={5} marginLeft={10} marginBottom={5}>
-          Dashboard
-        </Typography>
+      <Typography fontFamily={"Poppins"} variant="h4" component="div" align="left" marginTop={5} marginLeft={10} marginBottom={5}>
+        Dashboard
+      </Typography>
 
-        <Grid container spacing={3} paddingBottom={10} paddingLeft={10} paddingRight={10}>
-          <AdvancedSearch />
-          {/* List Of Companies */}
-          <Grid item xs={12} md={12} lg={12} >
-            <Paper
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                width: 'auto',
-                borderRadius: 3,
-                // Modifier aussi la valeur dans TableCompany/index.tsx
-              }}
-            >
-              <TableCompany onDetailsClick={handleDetailsClick} />
-            </Paper>
-          </Grid>
+      <Grid container spacing={3} paddingBottom={10} paddingLeft={10} paddingRight={10}>
+        <AdvancedSearch />
+        {/* List Of Companies */}
+        <Grid item xs={12} md={12} lg={12} >
+          <Paper
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: 'auto',
+              borderRadius: 3,
+              // Modifier aussi la valeur dans TableCompany/index.tsx
+            }}
+          >
+            <TableCompany onDetailsClick={handleDetailsClick} />
+          </Paper>
+        </Grid>
 
-          {/* Container des éléments sur la deuxième ligne */}
-          <Grid item xs={12} md={12} lg={12}>
-            <Grid container spacing={3} justifyContent="center" marginTop={5}>
+        {/* Container des éléments sur la deuxième ligne */}
+        <Grid item xs={12} md={12} lg={12}>
+          <Grid container spacing={3} justifyContent="center" marginTop={5}>
 
-              {/* Chart of the company */}
-              <Grid item xs={12} md={4}>
-                <Paper
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    height: 220,
-                    borderRadius: 3,
+            {/* Chart of the company */}
+            <Grid item xs={12} md={4}>
+              <Paper
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: 220,
+                  borderRadius: 3,
 
-                  }}
-                >
-                  <Chart />
-                </Paper>
-              </Grid>
+                }}
+              >
+                <Chart />
+              </Paper>
+            </Grid>
 
-              {/* Leaders of the company */}
-              <Grid item xs={12} md={4}>
-                <Paper
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    minHeight: 220,
-                    borderRadius: 3
-                  }}
-                >
-                  <ListOfLeaders />
-                </Paper>
-              </Grid>
+            {/* Leaders of the company */}
+            <Grid item xs={12} md={4}>
+              <Paper
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  minHeight: 220,
+                  borderRadius: 3
+                }}
+              >
+                <ListOfLeaders />
+              </Paper>
+            </Grid>
 
-              {/* Details of the company */}
-              <Grid item xs={12} md={4}>
-                <Paper
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    minHeight: 220,
-                    borderRadius: 3
-                  }}
-                >
-                  <Details />
-                </Paper>
-              </Grid>
+            {/* Details of the company */}
+            <Grid item xs={12} md={4}>
+              <Paper
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  minHeight: 220,
+                  borderRadius: 3
+                }}
+              >
+                <Details />
+              </Paper>
             </Grid>
           </Grid>
         </Grid>
-      </Box>
-    </Box>
+      </Grid>
+    </Grid>
   );
 }
