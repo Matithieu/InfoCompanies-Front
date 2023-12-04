@@ -138,7 +138,7 @@ export const listOfCompanies: Company[] = [
 ];
 
 // TODO: Replace this with a message saying that no data was found
-const initialCompanyData : Company[] = [
+const initialCompanyData: Company[] = [
   ...(loadCompanyFromLocalStorage("companyDetailsDashboard") || listOfCompanies),
 ];
 
@@ -245,10 +245,10 @@ export default function TableCompany({ onDetailsClick }) {
                       if (column.id === 'social') {
                         return (
                           <TableCell key={column.id} align={column.align} style={{ fontFamily: 'Poppins' }}>
-                            {row.getFacebook() && <FacebookIcon />}
-                            {row.getTwitter() && <TwitterIcon />}
-                            {row.getLinkedin() && <LinkedInIcon />}
-                            {row.getYoutube() && <YouTubeIcon />}
+                            {row.getFacebook() && <FacebookIcon style={{ color: "#3b5998" }} />}
+                            {row.getTwitter() && <TwitterIcon style={{ color: "#1DA1F2" }} />}
+                            {row.getLinkedin() && <LinkedInIcon style={{ color: "#0e76a8" }} />}
+                            {row.getYoutube() && <YouTubeIcon style={{ color: 'red' }} />}
                           </TableCell>
                         );
                       } else {
