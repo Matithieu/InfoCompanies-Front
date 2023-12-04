@@ -4,6 +4,7 @@ import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recha
 import Company from '../../data/company';
 import ChiffreAffaire from '../../data/chiffreDaffaire';
 import { useCompanyContext } from '../../context/CompanyContext';
+import { Tooltip } from 'recharts';
 
 export default function Chart() {
   const theme = useTheme();
@@ -81,6 +82,11 @@ export default function Chart() {
                 En Euro (€)
               </Label>
             </YAxis>
+            <Tooltip
+              cursor={{ strokeDasharray: '3 3' }}
+              contentStyle={{ backgroundColor: '#f5f5f5', border: 'none', borderRadius: 3 }}
+              formatter={(value, name, props) => [`${value} €`, 'Chiffre d\'affaire']}
+            />
             <Line
               isAnimationActive={true}
               type="monotone"
