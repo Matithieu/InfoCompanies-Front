@@ -10,6 +10,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom';
+import { linkStyles } from '../../pages/Layout/ListItems/listItems';
 
 async function deleteSessionAPI() {
   const VITE_SERVER_ENDPOINT = import.meta.env.VITE_SERVER_ENDPOINT;
@@ -44,7 +45,7 @@ export default function AccountMenu() {
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', justifyContent: 'flex-end' }}>
         <Tooltip title="Account settings">
-        {/*ts-ignore*/}
+          {/*ts-ignore*/}
           <IconButton
             onClick={handleClick}
             size="small"
@@ -92,25 +93,29 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose}>
-          <Avatar /> Profile
-        </MenuItem>
+        <Link to="/account" style={linkStyles}>
+          <MenuItem onClick={handleClose}>
+            <Avatar /> Profile
+          </MenuItem>
+        </Link>
 
         <Divider />
 
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
-        <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>
+        <Link to="/settings" style={linkStyles}>
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <Settings fontSize="small" />
+            </ListItemIcon>
+            Settings
+          </MenuItem>
+        </Link>
+        <Link to="/login" style={linkStyles}>
           <MenuItem onClick={
             () => {
               handleClose();
               deleteSessionAPI();
             }
-          } /* Need to add function to clear session cache */ >  
+          } /* Need to add function to clear session cache */ >
             <ListItemIcon>
               <Logout fontSize="small" />
             </ListItemIcon>
