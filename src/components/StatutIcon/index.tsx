@@ -9,19 +9,19 @@ export const StatutIcon = ({ statut }: { statut?: CheckedStatus }) => {
     switch (statut) {
         case CheckedStatus.NotDone || "":
             return (
-                <Tooltip key={"NotDoneTooltip"} title="Not Done">
+                <Tooltip arrow key={"NotDoneTooltip"} title="Not Done">
                     <RadioButtonUncheckedIcon style={{ color: 'grey' }} />
                 </Tooltip>
             );
         case CheckedStatus.Done:
             return (
-                <Tooltip key={"DoneTooltip"} title="Done">
+                <Tooltip arrow key={"DoneTooltip"} title="Done">
                     <CheckCircleIcon style={{ color: 'green' }} />
                 </Tooltip>
             );
         case CheckedStatus.ToDo:
             return (
-                <Tooltip key={"ToDoTooltip"} title="To Do">
+                <Tooltip arrow key={"ToDoTooltip"} title="To Do">
                     <PendingIcon style={{ color: 'orange' }} />
                 </Tooltip>
             );

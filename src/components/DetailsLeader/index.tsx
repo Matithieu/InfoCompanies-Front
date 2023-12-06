@@ -47,7 +47,7 @@ export default function DetailsLeader({ leaderDetails }: { leaderDetails: Leader
                     <TableBody>
                         <TableRow key={leaderDetails.getPhone()} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                             <TableCell component="th" scope="row">
-                                <Tooltip title="Numéro de téléphone" placement="top">
+                                <Tooltip arrow title="Numéro de téléphone" placement="top">
                                     <PhoneIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
@@ -56,7 +56,7 @@ export default function DetailsLeader({ leaderDetails }: { leaderDetails: Leader
                         </TableRow>
                         <TableRow key={leaderDetails.getEmail()} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                             <TableCell component="th" scope="row">
-                                <Tooltip title="Adresse email" placement="top">
+                                <Tooltip arrow title="Adresse email" placement="top">
                                     <EmailIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
@@ -65,7 +65,7 @@ export default function DetailsLeader({ leaderDetails }: { leaderDetails: Leader
                         </TableRow>
                         <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                             <TableCell component="th" scope="row">
-                                <Tooltip title="Age" placement="top">
+                                <Tooltip arrow title="Age" placement="top">
                                     <CakeIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
@@ -74,7 +74,7 @@ export default function DetailsLeader({ leaderDetails }: { leaderDetails: Leader
                         </TableRow>
                         <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                             <TableCell component="th" scope="row">
-                                <Tooltip title="Entreprises" placement="top">
+                                <Tooltip arrow title="Entreprises" placement="top">
                                     <BusinessIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>

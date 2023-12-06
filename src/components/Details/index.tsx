@@ -41,7 +41,7 @@ export default function Details() {
                     <TableBody>
                         <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                             <TableCell component="th" scope="row" style={{ fontFamily: 'Poppins' }}>
-                                <Tooltip title="Numéro de téléphone" placement="top">
+                                <Tooltip arrow title="Numéro de téléphone" placement="top">
                                     <PhoneIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
@@ -50,7 +50,7 @@ export default function Details() {
                         </TableRow>
                         <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                             <TableCell component="th" scope="row" style={{ fontFamily: 'Poppins' }}>
-                                <Tooltip title="Adresse email" placement="top">
+                                <Tooltip arrow title="Adresse email" placement="top">
                                     <EmailIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
@@ -59,7 +59,7 @@ export default function Details() {
                         </TableRow>
                         <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                             <TableCell component="th" scope="row" style={{ fontFamily: 'Poppins' }}>
-                                <Tooltip title="Site web" placement="top">
+                                <Tooltip arrow title="Site web" placement="top">
                                     <WebAssetIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
@@ -68,7 +68,7 @@ export default function Details() {
                         </TableRow>
                         <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                             <TableCell component="th" scope="row" style={{ fontFamily: 'Poppins' }}>
-                                <Tooltip title="Adresse" placement="top">
+                                <Tooltip arrow title="Adresse" placement="top">
                                     <BusinessIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
@@ -77,7 +77,7 @@ export default function Details() {
                         </TableRow>
                         <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                             <TableCell component="th" scope="row" style={{ fontFamily: 'Poppins' }}>
-                                <Tooltip title="Date de création" placement="top">
+                                <Tooltip arrow title="Date de création" placement="top">
                                     <CalendarTodayOutlinedIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
