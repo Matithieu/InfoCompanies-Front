@@ -3,36 +3,42 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
 import Paper from '@mui/material/Paper';
-import TableCompany from '../../../components/TableCompany/index.tsx';
+import TableCompany, { initialCompanyData } from '../../../components/TableCompany/index.tsx';
 import Details from '../../../components/Details/index.tsx';
 import { useState } from 'react';
 import Chart from '../../../components/Chart/index.tsx';
 import ListOfLeaders from '../../../components/ListOfLeaders/index.tsx';
 import ChatGPT from '../../../components/ChatGPT/index.tsx';
 import { useEffect } from 'react';
+import Company from '../../../data/company.ts';
+import { loadCompaniesFilterFromLocalStorage } from '../../../utils/loadFilter.tsx';
+import { useCompanyContext } from '../../../context/CompanyContext.tsx';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
-export default function Home() {
-
-    const [selectedCompanyDetails, setSelectedCompanyDetails] = useState(null);
+export default function Favorites() {
+    const { selectedCompanyChecked, setSelectedCompanyChecked } = useCompanyContext();
+    const [listOfCompanies, setListOfCompanies] = useState<Company[]>([]);
 
     useEffect(() => {
-        const savedCompanyDetails = JSON.parse(localStorage.getItem("companyDetailsFavorites") || "null");
+        const sirensOfCheckedCompanies = loadCompaniesFilterFromLocalStorage('checkedToDo') || [];
+        //TODO: fetch the list of companies from the api using the sirensOfCheckedCompanies and then put it in setListOfCompanies
+
+        const savedCompanyDetails = JSON.parse(localStorage.getItem("companyDetailsChecked") || "null");
         if (savedCompanyDetails) {
-            setSelectedCompanyDetails(savedCompanyDetails);
+            setSelectedCompanyChecked(savedCompanyDetails);
         }
     }, []);
 
     // Enregistrer les données dans localStorage chaque fois qu'elles changent
     useEffect(() => {
-        localStorage.setItem("companyDetailsFavorites", JSON.stringify(selectedCompanyDetails));
-    }, [selectedCompanyDetails]);
+        localStorage.setItem("companyDetailsChecked", JSON.stringify(selectedCompanyChecked));
+    }, [selectedCompanyChecked]);
 
     const handleDetailsClick = (companyDetails) => {
         // Faites quelque chose avec les détails de l'entreprise, par exemple :
         // Mettez à jour l'état local pour afficher les détails dans le composant "Details"
-        setSelectedCompanyDetails(companyDetails);
+        setSelectedCompanyChecked(companyDetails);
     };
 
     return (
@@ -58,7 +64,7 @@ export default function Home() {
                                     borderRadius: 3
                                 }}
                             >
-                                <TableCompany onDetailsClick={handleDetailsClick} />
+                                <TableCompany onDetailsClick={handleDetailsClick} listOfCompanies={initialCompanyData} />
                             </Paper>
                         </Grid>
 
@@ -146,7 +152,7 @@ export default function Home() {
                                     borderRadius: 3
                                 }}
                             >
-                                <ChatGPT selectedValue={selectedCompanyDetails} />
+                                <ChatGPT selectedValue={selectedCompanyChecked} />
                             </Paper>
                         </Grid>
                     </Grid>

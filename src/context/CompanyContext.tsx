@@ -4,6 +4,8 @@ import Company from '../data/company';
 interface CompanyContextType {
   selectedCompany: Company | null;
   setSelectedCompany: (company: Company | null) => void;
+  selectedCompanyChecked: Company | null;
+  setSelectedCompanyChecked: (company: Company | null) => void;
 }
 
 // Create a context with a default undefined value
@@ -16,9 +18,10 @@ interface CompanyProviderProps {
 
 export const CompanyProvider = ({ children }: CompanyProviderProps) => {
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
+  const [selectedCompanyChecked, setSelectedCompanyChecked] = useState<Company | null>(null);
 
   return (
-    <CompanyContext.Provider value={{ selectedCompany, setSelectedCompany }}>
+    <CompanyContext.Provider value={{ selectedCompany, setSelectedCompany, selectedCompanyChecked, setSelectedCompanyChecked }}>
       {children}
     </CompanyContext.Provider>
   );

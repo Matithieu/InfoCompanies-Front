@@ -139,7 +139,7 @@ export const listOfCompanies: Company[] = [
 ];
 
 // TODO: Replace this with a message saying that no data was found
-const initialCompanyData: Company[] = [
+export const initialCompanyData: Company[] = [
   ...(loadCompanyFromLocalStorage("companyDetailsDashboard") || listOfCompanies),
 ];
 
@@ -148,10 +148,10 @@ const initialCompanyData: Company[] = [
  * @param param0 Takes a callback function as a parameter and displays a table of companies
  * @returns A table of companies with their details
  */
-export default function TableCompany({ onDetailsClick }) {
+export default function TableCompany({ onDetailsClick, listOfCompanies }: { onDetailsClick: (company: Company) => void, listOfCompanies: Company[]  }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [companyData, setCompanyData] = React.useState(initialCompanyData);
+  const [companyData, setCompanyData] = React.useState(listOfCompanies);
 
   const { selectedCompany, setSelectedCompany } = useCompanyContext();
 

@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Chart from '../../../components/Chart/index.tsx';
-import TableCompany from '../../../components/TableCompany/index.tsx';
+import TableCompany, { initialCompanyData } from '../../../components/TableCompany/index.tsx';
 import ListOfLeaders from '../../../components/ListOfLeaders/index.tsx';
 import Details from '../../../components/Details/index.tsx';
 import SearchIcon from '@mui/icons-material/Search';
@@ -205,7 +205,7 @@ export default function Dashboard() {
               // Modifier aussi la valeur dans TableCompany/index.tsx
             }}
           >
-            <TableCompany onDetailsClick={handleDetailsClick} />
+            <TableCompany onDetailsClick={handleDetailsClick} listOfCompanies={initialCompanyData}/>
           </Paper>
         </Grid>
 
