@@ -1,6 +1,13 @@
 import ChiffreAffaire from "./chiffreDaffaire";
 import Leader from "./leader";
 
+export enum CheckedStatus {
+    NotDone = "NOT_DONE",
+    Done = "DONE",
+    ToDo = "TO_DO",
+    // Ajoutez d'autres statuts si nécessaire
+}
+
 /**
  * Company class is the main class of the application.
  * It contains all the information about a company like 
@@ -9,6 +16,7 @@ import Leader from "./leader";
 export default class Company {
 
     private favoris: boolean;
+    private checked: CheckedStatus;
     private denomination: string;
     private siren: string;
     private nic: string;
@@ -44,6 +52,7 @@ export default class Company {
 
     constructor(
         favoris: boolean,
+        checked: CheckedStatus,
         denomination: string,
         siren: string,
         nic: string,
@@ -78,6 +87,7 @@ export default class Company {
         leaders: Leader[]
     ) {
         this.favoris = favoris;
+        this.checked = checked;
         this.denomination = denomination;
         this.siren = siren;
         this.nic = nic;
@@ -115,6 +125,14 @@ export default class Company {
 
     setFavoris(value: boolean) {
         this.favoris = value;
+    }
+
+    getChecked(): CheckedStatus {
+        return this.checked;
+    }
+
+    setChecked(newStatus: CheckedStatus) {
+        this.checked = newStatus;
     }
 
     getDenomination(): string {

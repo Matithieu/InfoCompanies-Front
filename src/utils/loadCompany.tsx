@@ -11,6 +11,7 @@ export function loadCompanyFromLocalStorage(key : any) {
     const companyObjs : any[] = JSON.parse(companyData);
     return companyObjs.map(companyObj => new Company(
         companyObj.favoris,
+        companyObj.checked,
         companyObj.denomination,
         companyObj.siren,
         companyObj.nic,

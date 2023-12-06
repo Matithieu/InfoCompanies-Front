@@ -45,7 +45,7 @@ export default function Details() {
                                     <PhoneIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{company?.getPhone()}</a>
+                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{company?.getPhone() ?? "No company found"}</a>
                             </TableCell>
                         </TableRow>
                         <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>

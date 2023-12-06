@@ -6,29 +6,28 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import StarIcon from '@mui/icons-material/Star';
-import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import YouTubeIcon from '@mui/icons-material/YouTube';
-
 import { Box } from '@mui/material';
-import Company from '../../data/company.ts';
+import Company, { CheckedStatus } from '../../data/company.ts';
 import ChiffreAffaire from '../../data/chiffreDaffaire.tsx';
 import Leader from '../../data/leader.tsx';
 import { useCompanyContext } from '../../context/CompanyContext.tsx';
 import { loadCompanyFromLocalStorage } from '../../utils/loadCompany.tsx';
+import { StatutIcon, manageIsChecked } from '../StatutIcon/index.tsx';
+
 
 interface Column {
   id: string;
   label: string;
   minWidth?: number;
-  align?: 'right';
+  align?: 'right' | 'center' | 'left';
 }
 
 const columns: readonly Column[] = [
-  { id: 'favoris', label: 'Favoris', minWidth: 100, align: 'right' },
+  { id: 'checked', label: 'O', minWidth: 100, align: 'center' },
   { id: 'denomination', label: 'Denomination', minWidth: 170 },
   { id: 'phone', label: 'Téléphone', minWidth: 170 },
   { id: 'email', label: 'Email', minWidth: 170 },
@@ -59,6 +58,7 @@ const leader5 = new Leader(5, "HERCUL", "Dupont", new Date("1990-01-01"), "06 00
 
 export const company1 = new Company(
   false,
+  CheckedStatus.Done,
   "LA MIE'STERIEUSE",
   "948404819",
   "00013",
@@ -98,6 +98,7 @@ export const company1 = new Company(
 
 export const company2 = new Company(
   false,
+  CheckedStatus.ToDo,
   "Nom de l'entreprise 2",
   "123456789",
   "00001",
@@ -156,39 +157,24 @@ export default function TableCompany({ onDetailsClick }) {
 
 
   React.useEffect(() => {
-    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    // Charger les listes pour les statuts "Done" et "ToDo" depuis le localStorage
+    const checkedDone = JSON.parse(localStorage.getItem('checkedDone') || '[]');
+    const checkedToDo = JSON.parse(localStorage.getItem('checkedToDo') || '[]');
+
+    // Mettre à jour l'état des entreprises en fonction des listes "Done" et "ToDo"
     const updatedCompanyData = initialCompanyData.map((company) => {
-      // Update 'favoris' property for each company
-      const isFavorite = favorites.includes(company.getDenomination());
-      company.setFavoris(isFavorite);
-      return company; // Return the updated company object
+      if (checkedDone.includes(company.getSiren())) {
+        company.setChecked(CheckedStatus.Done);
+      } else if (checkedToDo.includes(company.getSiren())) {
+        company.setChecked(CheckedStatus.ToDo);
+      } else {
+        company.setChecked(CheckedStatus.NotDone);
+      }
+      return company; // Retourner l'objet entreprise mis à jour
     });
+
     setCompanyData(updatedCompanyData);
   }, []);
-
-  // TODO : Another function is in the file src/pages/Company/Component/index.tsx
-  const manageFavorites = (companySiren: string) => {
-    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-    const index = favorites.indexOf(companySiren);
-    if (index === -1) {
-      // Si l'entreprise n'est pas encore enregistrée en tant que favori, ajoutez-la
-      favorites.push(companySiren);
-    } else {
-      // Sinon, supprimez-la
-      favorites.splice(index, 1);
-    }
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-    console.log('Favoris mis à jour:', favorites);
-
-    // Mettez à jour l'état local companyData avec l'information des favoris
-    const updatedCompanyData = initialCompanyData.map((company) => {
-      // Update 'favoris' property for each company
-      const isFavorite = favorites.includes(company.getSiren());
-      company.setFavoris(isFavorite);
-      return company; // Return the updated company object
-    });
-    setCompanyData(updatedCompanyData);
-  };
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -206,6 +192,30 @@ export default function TableCompany({ onDetailsClick }) {
       setSelectedCompany(company);
       console.log('Company selected: ', selectedCompany);
     }
+  };
+
+  // TODO : Another function is in the file src/pages/Company/Component/index.tsx
+
+
+  const handleChangeStatut = (company: Company) => {
+    let newStatus: CheckedStatus;
+
+    if (company.getChecked() === CheckedStatus.NotDone) {
+      newStatus = CheckedStatus.ToDo;
+    } else if (company.getChecked() === CheckedStatus.ToDo) {
+      newStatus = CheckedStatus.Done;
+    } else {
+      newStatus = CheckedStatus.NotDone;
+    }
+
+    company.setChecked(newStatus);
+    manageIsChecked(company.getSiren(), newStatus);
+
+    setCompanyData(companyData.map((item) =>
+      item.getSiren() === company.getSiren() ? company : item
+    ));
+
+    return newStatus;
   };
 
   return (
@@ -232,15 +242,17 @@ export default function TableCompany({ onDetailsClick }) {
                 return (
                   //Afficher les details de l'entreprise en cliquant dessus
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.getSiren()} onClick={() => handleDetailsClick(row)} style={{ cursor: 'pointer' }}>
-                    <TableCell key="favoris" align="center">
-                      <button style={{ border: 'none', backgroundColor: 'transparent' }}
-                        onClick={() => {
-                          manageFavorites(row.getSiren());
+                    <TableCell key="statut" align="center">
+                      <button style={{ border: 'none', backgroundColor: 'transparent', cursor: 'pointer' }}
+                        onClick={(e) => {
+                          e.stopPropagation(); // Pour éviter de déclencher handleDetailsClick
+                          row.setChecked(handleChangeStatut(row));
                         }}
                       >
-                        {row.getFavoris() ? <StarIcon /> : <StarBorderOutlinedIcon />}
+                        <StatutIcon statut={row.getChecked()} />
                       </button>
                     </TableCell>
+                    {/* Slice to exclude favorites */}
                     {columns.slice(1).map((column) => {
                       if (column.id === 'social') {
                         return (
