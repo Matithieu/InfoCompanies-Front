@@ -84,7 +84,11 @@ export default class Account {
     }
 
     public setEmail(email: string): void {
-        this.email = email;
+        if (validateEmail(email)) { // Example validation function
+            this.email = email;
+        } else {
+            throw new Error('Invalid email format');
+        }
     }
 
     public setFirstName(firstName: string): void {
@@ -122,4 +126,9 @@ export default class Account {
     public setDateOfCreation(dateOfCreation: string): void {
         this.dateOfCreation = dateOfCreation;
     }
+}
+
+function validateEmail(email: string): boolean {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email.toLowerCase());
 }

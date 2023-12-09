@@ -12,30 +12,32 @@ import { HelmetProvider } from 'react-helmet-async';
 import LoginPage from './pages/Login/login';
 import ProtectedRoute from './utils/protectedRoute.tsx'
 import { CompanyProvider } from './context/CompanyContext.tsx';
-
+import { AuthProvider } from './context/AuthContext.tsx';
 
 function App() {
   return (
     <HelmetProvider>
-      <CompanyProvider>
+      <AuthProvider>
+        <CompanyProvider>
 
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="*" element={<Error404 />} />
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="*" element={<Error404 />} />
 
-          <Route element={<ProtectedRoute />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/favorites" element={<Favorites />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/account" element={<Account />} />
-            <Route path="/search/*" element={<Search />} />
-            <Route path="/company/*" element={<Company />} />
-            <Route path="/leaders/*" element={<Leader />} />
-          </Route>
+            <Route element={<ProtectedRoute />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/favorites" element={<Favorites />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/account" element={<Account />} />
+              <Route path="/search/*" element={<Search />} />
+              <Route path="/company/*" element={<Company />} />
+              <Route path="/leaders/*" element={<Leader />} />
+            </Route>
 
-        </Routes>
-        
-      </CompanyProvider>
+          </Routes>
+
+        </CompanyProvider>
+      </AuthProvider>
     </HelmetProvider>
   );
 }

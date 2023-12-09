@@ -1,27 +1,14 @@
-import React from "react";
-import { useNavigate, Outlet } from "react-router-dom";
-import { useEffect } from "react";
+// utils/ProtectedRoute.tsx
+import React from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
+import useStore from '../store'; // Import your Zustand store
 
+const ProtectedRoute: React.FC = () => {
+  const { authUser } = useStore(); // Use authUser to determine if user is authenticated
 
-const ProtectedRoute = () => {
-    const navigate = useNavigate();
-    const hasAccess = true;
+  const isAuthenticated = !!authUser; // Check if authUser is not null
 
-    useEffect(() => {
-        if (!hasAccess) {
-            navigate("/login");
-        }
-    }, [hasAccess, navigate]);
-
-    return hasAccess ? (
-        <div>
-            <Outlet />
-        </div>
-    ) : null;
-}
-
-
-
-
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+};
 
 export default ProtectedRoute;

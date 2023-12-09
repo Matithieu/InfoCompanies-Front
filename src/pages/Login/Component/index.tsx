@@ -1,25 +1,23 @@
-import React from "react";
-
-import { useLocation, useNavigate } from "react-router-dom";
-import GoogleLogo from "../../../assets/google.svg";
-import { getGoogleUrl } from "../../../utils/getGoogleUrl";
-import { object, string, TypeOf } from "zod";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import useStore from "../../../store";
-import { toast } from "react-toastify";
-import { useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { object, string, TypeOf } from 'zod';
+import axiosInstance from '../../../utils/axios';
+import Cookies from 'js-cookie';
+import { toast } from 'react-toastify';
+import { Avatar, Box, Button, Container, CssBaseline, Divider, Grid, Link, TextField, Typography, CircularProgress } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Avatar, Box, Button, Container, CssBaseline, Divider, Grid, Link, Paper, TextField, Typography } from "@mui/material";
-import Cookies from "js-cookie";
-import axiosInstance from "../../../utils/axios";
+import GoogleLogo from '../../../assets/google.svg';
+import { getGoogleUrl } from '../../../utils/getGoogleUrl';
+import useStore from '../../../store';
+import { IUser } from '../../../store/types';
 
 const loginSchema = object({
   email: string()
     .min(1, "Email address is required")
     .email("Email Address is invalid"),
   password: string()
-    .min(1, "Password is required")
     .min(8, "Password must be more than 8 characters")
     .max(32, "Password must be less than 32 characters"),
 });
@@ -27,77 +25,64 @@ const loginSchema = object({
 export type LoginInput = TypeOf<typeof loginSchema>;
 
 const LoginPage = () => {
+  const [loading, setLoading] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const store = useStore();
-  const from = ((location.state as any)?.from.pathname as string) || "/profile";
+  const from = ((location.state as any)?.from.pathname as string) || '/dashboard'; // Redirect to dashboard by default
+  const { setAuthUser, setRequestLoading } = useStore();
 
-  const loginUser = async (data: LoginInput) => {
-    try {
-      store.setRequestLoading(true);
-      const VITE_SERVER_ENDPOINT = import.meta.env.VITE_SERVER_ENDPOINT;
-      const response = await axiosInstance.post("/login", {
-        email: data.email,
-        password: data.password,
-      });
-
-      console.log("Good response ");
-      const oui = await response.data;
-      Cookies.set("user-jwt", oui.token, {
-        //expires: 1 / 24,
-        secure: true,
-        sameSite: "strict",
-      });
-      Cookies.set("refresh-token", oui.refreshToken, {
-        //expires: 1 / 24,
-        secure: true,
-        sameSite: "strict",
-      });
-
-      store.setRequestLoading(false);
-      console.log("login successful");
-      console.log(response);
-      navigate("/dashboard");
-    } catch (error: any) {
-      store.setRequestLoading(false);
-      if (error.error) {
-        error.error.forEach((err: any) => {
-          toast.error(err.message, {
-            position: "top-right",
-          });
-        });
-        return;
-      }
-      const resMessage =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-
-      toast.error(resMessage, {
-        position: "top-right",
-      });
-    }
+  // Create a new IUser object for testing. Remove this when you have implemented the login logic with the API
+  const newIUser : IUser = {
+    id: "",
+    name: "",
+    email: "",
+    role: "",
+    photo: "",
+    provider: "",
+    verified: "",
   };
 
   const methods = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
   });
 
-  const {
-    reset,
-    handleSubmit,
-    register,
-    formState: { isSubmitSuccessful, errors },
-  } = methods;
+  const { handleSubmit, register, formState: { errors } } = methods;
+
+  const loginUser: SubmitHandler<LoginInput> = async (data) => {
+    try {
+      setLoading(true);
+      store.setRequestLoading(true);
+
+      
+      // Test the protected route
+      setAuthUser(newIUser);
+      setRequestLoading(false);
+      console.log("authUser", store.authUser);
+
+      // TODO: Should return a IUser object from the API
+      /*
+      const response = await axiosInstance.post('/login', data);
+      const { token, refreshToken } = response.data;
+
+      Cookies.set('user-jwt', token, { secure: true, sameSite: 'strict' });
+      Cookies.set('refresh-token', refreshToken, { secure: true, sameSite: 'strict' });
+      */
+
+      navigate(from);
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || 'Login failed', {
+        position: 'top-right',
+      });
+    } finally {
+      setLoading(false);
+      store.setRequestLoading(false);
+    }
+  };
 
   useEffect(() => {
-    if (isSubmitSuccessful) {
-      reset();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSubmitSuccessful]);
+    if (store.authUser) navigate(from); // If authUser is not null, navigate to the 'from' route
+  }, [store.authUser, navigate, from]);
 
   const onSubmitHandler: SubmitHandler<LoginInput> = (values) => {
     loginUser(values);
