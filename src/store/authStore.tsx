@@ -1,10 +1,10 @@
 import { create } from "zustand";
-import { IUser } from "../data/IUser";
+import { User } from "../data/User";
 
 type Store = {
-  authUser: IUser | null;
+  authUser: User | null;
   requestLoading: boolean;
-  setAuthUser: (user: IUser | null) => void;
+  setAuthUser: (user: User | null) => void;
   setRequestLoading: (isLoading: boolean) => void;
 };
 

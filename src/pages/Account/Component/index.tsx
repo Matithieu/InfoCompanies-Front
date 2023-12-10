@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 import { Container, Grid, TextField, Typography, Paper, Button, CircularProgress } from '@mui/material';
-import Account from '../../../data/account';
+import { User } from '../../../data/User';
+import useStore from '../../../store/authStore';
 
 export default function AccountPage() {
-  const account = new Account("username", "password", "email", "firstName", "lastName", "dateOfBirth", "address", "city", "postalCode", "country", "phoneNumber", "dateOfCreation");
+  const { authUser, requestLoading, setRequestLoading } = useStore();
+  const [accountData, setAccountData] = useState({ ...authUser });
   const [editMode, setEditMode] = useState(false);
-  const [accountData, setAccountData] = useState({ ...account });
-  const [isSaving, setIsSaving] = useState(false);
 
   const handleEdit = () => {
     setEditMode(true);
   };
 
   const handleSave = () => {
-    setIsSaving(true);
+    setRequestLoading(true);
     setEditMode(false);
     // Ajoutez ici la logique pour enregistrer les modifications
     // Exemple: simuler un enregistrement
-    setTimeout(() => setIsSaving(false), 2000);
+    setTimeout(() => setRequestLoading(false), 2000);
   };
 
   const handleChange = (e, key) => {
@@ -47,7 +47,7 @@ export default function AccountPage() {
           ))}
         </Grid>
         <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'flex-end' }}>
-          {isSaving ? (
+          {requestLoading ? (
             <CircularProgress />
           ) : !editMode ? (
             <Button variant="contained" color="primary" onClick={handleEdit}>

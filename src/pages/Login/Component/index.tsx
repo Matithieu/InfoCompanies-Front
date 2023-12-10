@@ -11,7 +11,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import GoogleLogo from '../../../assets/google.svg';
 import { getGoogleUrl } from '../../../utils/getGoogleUrl';
 import useStore from '../../../store/authStore';
-import { IUser } from '../../../data/IUser';
+import { User } from '../../../data/User';
 
 const loginSchema = object({
   email: string()
@@ -25,23 +25,13 @@ const loginSchema = object({
 export type LoginInput = TypeOf<typeof loginSchema>;
 
 const LoginPage = () => {
-  const [loading, setLoading] = useState(false);
+  const { authUser, setAuthUser, setRequestLoading } = useStore();
   const location = useLocation();
   const navigate = useNavigate();
-  const store = useStore();
   const from = ((location.state as any)?.from.pathname as string) || '/dashboard'; // Redirect to dashboard by default
-  const { setAuthUser, setRequestLoading } = useStore();
 
-  // Create a new IUser object for testing. Remove this when you have implemented the login logic with the API
-  const newIUser: IUser = {
-    id: "",
-    name: "",
-    email: "",
-    role: "",
-    photo: "",
-    provider: "",
-    verified: "",
-  };
+  // Create a new User object for testing. Remove this when you have implemented the login logic with the API
+  const newUser = new User("1", "Mat", "Email", "admin", "photo", "provider", "verified");
 
   const methods = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
@@ -51,16 +41,14 @@ const LoginPage = () => {
 
   const loginUser: SubmitHandler<LoginInput> = async (data) => {
     try {
-      setLoading(true);
-      store.setRequestLoading(true);
+      setRequestLoading(true);
 
-
-      // Test the protected route
-      setAuthUser(newIUser);
+      // TODO: Should return a User object from the API
+      setAuthUser(newUser);
       setRequestLoading(false);
-      console.log("authUser", store.authUser);
+      console.log("authUser ", authUser);
 
-      // TODO: Should return a IUser object from the API
+      // TODO: Should return a User object from the API
       /*
       const response = await axiosInstance.post('/login', data);
       const { token, refreshToken } = response.data;
@@ -75,14 +63,14 @@ const LoginPage = () => {
         position: 'top-right',
       });
     } finally {
-      setLoading(false);
-      store.setRequestLoading(false);
+      setRequestLoading(false);
+      setRequestLoading(false);
     }
   };
 
   useEffect(() => {
-    if (store.authUser) navigate(from); // If authUser is not null, navigate to the 'from' route
-  }, [store.authUser, navigate, from]);
+    if (authUser) navigate(from); // If authUser is not null, navigate to the 'from' route
+  }, [authUser, navigate, from]);
 
   const onSubmitHandler: SubmitHandler<LoginInput> = (values) => {
     loginUser(values);
