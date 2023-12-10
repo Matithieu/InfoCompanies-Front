@@ -172,7 +172,6 @@ export default function Dashboard() {
    */
   const handleDetailsClick = (companyDetails) => {
     setSelectedCompany(companyDetails);
-    console.log(companyDetails);
   };
 
   return (
