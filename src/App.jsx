@@ -11,6 +11,7 @@ import { Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import LoginPage from './pages/Login/login';
 import ProtectedRoute from './utils/protectedRoute.tsx'
+import RegisterPage from './pages/Register/register.tsx';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
 
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="*" element={<Error404 />} />
 
         <Route element={<ProtectedRoute />}>
