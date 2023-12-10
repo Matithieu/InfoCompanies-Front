@@ -33,17 +33,17 @@ export default function Page404() {
                 <Typography variant="h5" align="center" color="textSecondary" paragraph>
                     Oups! La page que vous cherchez n'existe pas.
                 </Typography>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        href="/"
-                        sx={{ mt: 3, mb: 2 }}
-                        onClick={( () => {
-                            navigate("/dashboard");
-                        })}
-                    >
-                        Retour à l'accueil
-                    </Button>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    href="/"
+                    sx={{ mt: 3, mb: 2 }}
+                    onClick={(() => {
+                        navigate("/dashboard");
+                    })}
+                >
+                    Retour à l'accueil
+                </Button>
             </Box>
         </Container>
     );
