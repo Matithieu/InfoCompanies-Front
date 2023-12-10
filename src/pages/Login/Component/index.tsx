@@ -11,7 +11,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import GoogleLogo from '../../../assets/google.svg';
 import { getGoogleUrl } from '../../../utils/getGoogleUrl';
 import useStore from '../../../store/authStore';
-import { User } from '../../../data/User';
+import { User } from '../../../data/user';
 
 const loginSchema = object({
   email: string()
