@@ -15,11 +15,11 @@ import ApartmentOutlinedIcon from '@mui/icons-material/ApartmentOutlined';
 import { useNavigate } from 'react-router-dom'; // Import from 'react-router-dom'
 import { useLocation } from 'react-router-dom';
 import { company1, company2 } from '../../../components/TableCompany/index.tsx';
-import { useCompanyContext } from '../../../context/CompanyContext.tsx';
 import Company from '../../../data/company.ts';
+import { useCompanyStore } from '../../../store/companyStore.tsx';
 
 // TODO: Replace this with the data from the API
-const initialCompanyData : Array<Company> = [
+const initialCompanyData: Array<Company> = [
   company1,
   company2,
 ];
@@ -30,7 +30,7 @@ const initialCompanyData : Array<Company> = [
  */
 function TableOfDetails() {
 
-  const { selectedCompany, setSelectedCompany } = useCompanyContext();
+  const { setSelectedCompany } = useCompanyStore();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -54,7 +54,7 @@ function TableOfDetails() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {initialCompanyData.map((row : Company) => (
+          {initialCompanyData.map((row: Company) => (
             <TableRow
               key={row.getSiren()} // Change 'name' to 'nom'
               onClick={() => {

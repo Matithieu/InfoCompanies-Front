@@ -1,6 +1,5 @@
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -17,11 +16,10 @@ import CustomSelect from '../../../components/CustomSelect/index.tsx';
 import { activityArea } from '../../../data/ListOfOptions/Activity.tsx';
 import { legalStatus } from '../../../data/ListOfOptions/Legal.tsx';
 import { regions } from '../../../data/ListOfOptions/Regions.tsx';
-import { Button, Container, Stack } from '@mui/material';
-import { useCompanyContext } from '../../../context/CompanyContext.tsx';
+import { Button } from '@mui/material';
 import { listOfCompanies } from '../../../components/TableCompany/index.tsx';
-import { loadCompanyFromLocalStorage } from '../../../utils/loadCompany.tsx';
 import { loadCompaniesFilterFromLocalStorage } from '../../../utils/loadFilter.tsx';
+import { useCompanyStore } from '../../../store/companyStore.tsx';
 
 /**
  * 
@@ -154,7 +152,7 @@ const AdvancedSearch = () => {
  * @returns The dashboard page
  */
 export default function Dashboard() {
-  const { setSelectedCompany } = useCompanyContext();
+  const { setSelectedCompany } = useCompanyStore();
 
   useEffect(() => {
     const savedCompanyDetails = JSON.parse(localStorage.getItem("companyDetailsDashboard") || "null");
@@ -205,7 +203,7 @@ export default function Dashboard() {
               // Modifier aussi la valeur dans TableCompany/index.tsx
             }}
           >
-            <TableCompany onDetailsClick={handleDetailsClick} listOfCompanies={initialCompanyData}/>
+            <TableCompany onDetailsClick={handleDetailsClick} listOfCompanies={initialCompanyData} />
           </Paper>
         </Grid>
 

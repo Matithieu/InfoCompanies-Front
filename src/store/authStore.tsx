@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { IUser } from "./types";
+import { IUser } from "../data/IUser";
 
 type Store = {
   authUser: IUser | null;
@@ -9,9 +9,12 @@ type Store = {
 };
 
 const useStore = create<Store>((set) => ({
-  authUser: null,
+  authUser: JSON.parse(localStorage.getItem('authUser') || 'null'),
   requestLoading: false,
-  setAuthUser: (user) => set((state) => ({ ...state, authUser: user })),
+  setAuthUser: (user) => {
+    localStorage.setItem('authUser', JSON.stringify(user));
+    set((state) => ({ ...state, authUser: user }));
+  },
   setRequestLoading: (isLoading) =>
     set((state) => ({ ...state, requestLoading: isLoading })),
 }));

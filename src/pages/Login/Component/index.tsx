@@ -10,8 +10,8 @@ import { Avatar, Box, Button, Container, CssBaseline, Divider, Grid, Link, TextF
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import GoogleLogo from '../../../assets/google.svg';
 import { getGoogleUrl } from '../../../utils/getGoogleUrl';
-import useStore from '../../../store';
-import { IUser } from '../../../store/types';
+import useStore from '../../../store/authStore';
+import { IUser } from '../../../data/IUser';
 
 const loginSchema = object({
   email: string()
@@ -33,7 +33,7 @@ const LoginPage = () => {
   const { setAuthUser, setRequestLoading } = useStore();
 
   // Create a new IUser object for testing. Remove this when you have implemented the login logic with the API
-  const newIUser : IUser = {
+  const newIUser: IUser = {
     id: "",
     name: "",
     email: "",
@@ -54,7 +54,7 @@ const LoginPage = () => {
       setLoading(true);
       store.setRequestLoading(true);
 
-      
+
       // Test the protected route
       setAuthUser(newIUser);
       setRequestLoading(false);

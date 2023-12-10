@@ -12,12 +12,12 @@ import ChatGPT from '../../../components/ChatGPT/index.tsx';
 import { useEffect } from 'react';
 import Company from '../../../data/company.ts';
 import { loadCompaniesFilterFromLocalStorage } from '../../../utils/loadFilter.tsx';
-import { useCompanyContext } from '../../../context/CompanyContext.tsx';
+import { useCompanyStore } from '../../../store/companyStore.tsx';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 export default function Favorites() {
-    const { selectedCompanyChecked, setSelectedCompanyChecked } = useCompanyContext();
+    const { selectedCompanyChecked, setSelectedCompanyChecked } = useCompanyStore();
     const [listOfCompanies, setListOfCompanies] = useState<Company[]>([]);
 
     useEffect(() => {

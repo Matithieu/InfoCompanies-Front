@@ -1,7 +1,7 @@
 // utils/ProtectedRoute.tsx
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import useStore from '../store'; // Import your Zustand store
+import useStore from '../store/authStore'; // Import your Zustand store
 
 const ProtectedRoute: React.FC = () => {
   const { authUser } = useStore(); // Use authUser to determine if user is authenticated

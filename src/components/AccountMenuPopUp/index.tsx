@@ -9,12 +9,12 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { linkStyles } from '../../pages/Layout/ListItems/listItems';
+import useStore from '../../store/authStore';
 
 async function deleteSessionAPI() {
   const VITE_SERVER_ENDPOINT = import.meta.env.VITE_SERVER_ENDPOINT;
-
   const response = await fetch(`${VITE_SERVER_ENDPOINT}/logout`, {
     method: 'DELETE',
     credentials: 'include',
@@ -31,9 +31,10 @@ async function deleteSessionAPI() {
     });
 }
 
-
 export default function AccountMenu() {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { setAuthUser, setRequestLoading } = useStore();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -41,6 +42,13 @@ export default function AccountMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const logout = () => {
+    localStorage.removeItem('authUser'); // Remove token from local storage
+    setAuthUser(null); // Clear the authenticated user
+    setRequestLoading(false); // Set loading to false after logout
+  };
+  
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', justifyContent: 'flex-end' }}>
@@ -113,7 +121,8 @@ export default function AccountMenu() {
           <MenuItem onClick={
             () => {
               handleClose();
-              deleteSessionAPI();
+              logout();
+              navigate('/login');
             }
           } /* Need to add function to clear session cache */ >
             <ListItemIcon>

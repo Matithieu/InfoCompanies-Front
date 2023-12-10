@@ -14,9 +14,9 @@ import { Box } from '@mui/material';
 import Company, { CheckedStatus } from '../../data/company.ts';
 import ChiffreAffaire from '../../data/chiffreDaffaire.tsx';
 import Leader from '../../data/leader.tsx';
-import { useCompanyContext } from '../../context/CompanyContext.tsx';
 import { loadCompanyFromLocalStorage } from '../../utils/loadCompany.tsx';
 import { StatutIcon, manageIsChecked } from '../StatutIcon/index.tsx';
+import { useCompanyStore } from '../../store/companyStore.tsx';
 
 
 interface Column {
@@ -148,12 +148,12 @@ export const initialCompanyData: Company[] = [
  * @param param0 Takes a callback function as a parameter and displays a table of companies
  * @returns A table of companies with their details
  */
-export default function TableCompany({ onDetailsClick, listOfCompanies }: { onDetailsClick: (company: Company) => void, listOfCompanies: Company[]  }) {
+export default function TableCompany({ onDetailsClick, listOfCompanies }: { onDetailsClick: (company: Company) => void, listOfCompanies: Company[] }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [companyData, setCompanyData] = React.useState(listOfCompanies);
 
-  const { selectedCompany, setSelectedCompany } = useCompanyContext();
+  const { selectedCompany, setSelectedCompany } = useCompanyStore();
 
 
   React.useEffect(() => {

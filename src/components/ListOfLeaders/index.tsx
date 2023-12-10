@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import Leader from '../../data/leader';
 import Company from '../../data/company';
 import { useState } from 'react';
-import { useCompanyContext } from '../../context/CompanyContext';
+import { useCompanyStore } from '../../store/companyStore';
 
 /**
  * 
@@ -19,11 +19,10 @@ import { useCompanyContext } from '../../context/CompanyContext';
 export default function ListOfLeaders() {
     const navigate = useNavigate();
 
-    const { selectedCompany } = useCompanyContext();
+    const { selectedCompany } = useCompanyStore();
 
     const [leaders, setLeaders] = useState<Leader[]>(null as unknown as Leader[]);
     const [isLoading, setIsLoading] = useState(true);
-
 
     React.useEffect(() => {
         if (selectedCompany !== null && selectedCompany instanceof Company && typeof selectedCompany.getLeaders === 'function') {
@@ -37,10 +36,10 @@ export default function ListOfLeaders() {
     if (leaders === null) {
         return <a style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Veuillez sélectionner une entreprise</a>;
     }
-    if(leaders.length === 0) {
+    if (leaders.length === 0) {
         return <a style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Pas de données pour cette entreprise</a>;
     }
-     else {
+    else {
         return (
             <TableContainer style={{ borderRadius: 9 }} >
                 <div style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center', marginTop: 5, top: '0' }}>Liste des dirigeants</div>

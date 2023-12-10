@@ -3,14 +3,14 @@ import { CssBaseline, Typography, Grid, Paper, Box, Button } from '@mui/material
 import Chart from '../../../components/Chart/index.tsx';
 import ListOfLeaders from '../../../components/ListOfLeaders/index.tsx';
 import Details from '../../../components/Details/index.tsx';
-import { useCompanyContext } from '../../../context/CompanyContext.tsx';
 import Company, { CheckedStatus } from '../../../data/company.ts';
 import { StatutIcon, manageIsChecked } from '../../../components/StatutIcon/index.tsx';
+import { useCompanyStore } from '../../../store/companyStore.tsx';
 
 export default function CompanyPage() {
   //TODO: remove, this demo shouldn't need to have a useEffect. A call to the API should be made.
 
-  const { selectedCompany, setSelectedCompany } = useCompanyContext();
+  const { selectedCompany, setSelectedCompany } = useCompanyStore();
   const [statut, setStatut] = useState(selectedCompany?.getChecked());
 
 

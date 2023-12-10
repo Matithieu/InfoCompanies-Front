@@ -3,13 +3,13 @@ import { useTheme } from '@mui/material/styles';
 import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
 import Company from '../../data/company';
 import ChiffreAffaire from '../../data/chiffreDaffaire';
-import { useCompanyContext } from '../../context/CompanyContext';
 import { Tooltip } from 'recharts';
+import { useCompanyStore } from '../../store/companyStore';
 
 export default function Chart() {
   const theme = useTheme();
   // Only use selectedCompany. Don't use setSelectedCompany
-  const { selectedCompany } = useCompanyContext();
+  const { selectedCompany } = useCompanyStore();
   const [companyDetails, setCompanyDetails] = React.useState<ChiffreAffaire | null>(null);
 
   React.useEffect(() => {

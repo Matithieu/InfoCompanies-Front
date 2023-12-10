@@ -11,16 +11,16 @@ import BusinessIcon from '@mui/icons-material/Business';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import { Tooltip } from '@mui/material';
 import Company from '../../data/company';
-import { useCompanyContext } from '../../context/CompanyContext';
 import { useState } from 'react';
+import { useCompanyStore } from '../../store/companyStore';
 
 export default function Details() {
-    const { selectedCompany } = useCompanyContext();
+    const { selectedCompany } = useCompanyStore();
     const [company, setCompany] = useState<Company>(null as unknown as Company);
 
     React.useEffect(() => {
         // Use getChiffreAffaire() to test if the company is valid
-        if (selectedCompany !== null && selectedCompany instanceof Company && typeof selectedCompany.getChiffreAffaire=== 'function') {
+        if (selectedCompany !== null && selectedCompany instanceof Company && typeof selectedCompany.getChiffreAffaire === 'function') {
             setCompany(selectedCompany);
         } else {
             setCompany(null as unknown as Company);
@@ -30,9 +30,9 @@ export default function Details() {
     if (company === null) {
         return <a style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Veuillez sélectionner une entreprise</a>;
     }
-    if(company.getSiren().length === 0) {
+    if (company.getSiren().length === 0) {
         return <a style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Pas de données pour cette entreprise</a>;
-    } 
+    }
     else {
         return (
             <TableContainer style={{ borderRadius: 9 }}>
