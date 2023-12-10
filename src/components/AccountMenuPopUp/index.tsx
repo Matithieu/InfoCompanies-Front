@@ -122,7 +122,6 @@ export default function AccountMenu() {
             () => {
               handleClose();
               logout();
-              navigate('/login');
             }
           } /* Need to add function to clear session cache */ >
             <ListItemIcon>
