@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../../utils/axios";
 import { Container, Box, Typography, Button } from "@mui/material";
 
@@ -33,16 +33,17 @@ export default function Page404() {
                 <Typography variant="h5" align="center" color="textSecondary" paragraph>
                     Oups! La page que vous cherchez n'existe pas.
                 </Typography>
-                <Link to="/dashboard">
                     <Button
                         variant="contained"
                         color="primary"
                         href="/"
                         sx={{ mt: 3, mb: 2 }}
+                        onClick={( () => {
+                            navigate("/dashboard");
+                        })}
                     >
                         Retour à l'accueil
                     </Button>
-                </Link>
             </Box>
         </Container>
     );
