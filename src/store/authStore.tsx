@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { User } from "../data/User";
+import { User } from "../data/user";
 
 type Store = {
   authUser: User | null;

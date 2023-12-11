@@ -1,8 +1,12 @@
 import React from 'react';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import { Button } from '@mui/material';
 
 function Invoices() {
+
+  //TODO: Make this page with Stripe Invoices
+
   // Créez un tableau de données pour stocker les informations sur les factures
   const invoicesData = [
     { id: 1, name: 'Invoice 1', amount: 100 },
@@ -52,8 +56,9 @@ function Invoices() {
               <td>{invoice.name}</td>
               <td>${invoice.amount}</td>
               <td>
-                <button onClick={() => handleDownload(invoice.id)}>Télécharger</button>
-                <button onClick={() => handleView(invoice.id)}>Visualiser</button>
+                <Button variant="contained" style={{marginRight: "10px"}} onClick={() => handleDownload(invoice.id)}>Télécharger</Button>
+                
+                <Button variant="contained" onClick={() => handleView(invoice.id)}>Visualiser</Button>
               </td>
             </tr>
           ))}
