@@ -36,7 +36,6 @@ export default function Page404() {
                 <Button
                     variant="contained"
                     color="primary"
-                    href="/"
                     sx={{ mt: 3, mb: 2 }}
                     onClick={(() => {
                         navigate("/dashboard");

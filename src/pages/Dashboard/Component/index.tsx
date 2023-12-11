@@ -96,7 +96,7 @@ const AdvancedSearch = () => {
 
   return (
     <div style={{ marginLeft: 25, marginTop: 20, marginBottom: 20 }}>
-      <Button className="buttonlist" variant='outlined' onClick={toggleMenu} style={{ borderRadius: 5, marginBottom: 30 }}>Recherche avancée</Button>
+      <Button variant='outlined' onClick={toggleMenu} style={{ borderRadius: 5, marginBottom: 30 }}>Recherche avancée</Button>
       <div className={`search-menu ${showMenu ? 'show' : ''}`}>
         <Grid container spacing={1} alignItems="center" justifyContent="flex-start" width="100%" padding="10px">
           <Grid item xs={12} sm={6} md={4}>

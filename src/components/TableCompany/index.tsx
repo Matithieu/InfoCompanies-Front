@@ -26,7 +26,7 @@ interface Column {
 }
 
 const columns: readonly Column[] = [
-  { id: 'checked', label: 'O', minWidth: 100, align: 'center' },
+  { id: 'checked', label: '', minWidth: 100, align: 'center' },
   { id: 'denomination', label: 'Denomination', minWidth: 170 },
   { id: 'phone', label: 'Téléphone', minWidth: 170 },
   { id: 'email', label: 'Email', minWidth: 170 },
