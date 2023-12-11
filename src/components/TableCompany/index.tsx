@@ -18,7 +18,6 @@ import { loadCompanyFromLocalStorage } from '../../utils/loadCompany.tsx';
 import { StatutIcon, manageIsChecked } from '../StatutIcon/index.tsx';
 import { useCompanyStore } from '../../store/companyStore.tsx';
 
-
 interface Column {
   id: string;
   label: string;
@@ -155,7 +154,6 @@ export default function TableCompany({ onDetailsClick, listOfCompanies }: { onDe
 
   const { selectedCompany, setSelectedCompany } = useCompanyStore();
 
-
   React.useEffect(() => {
     // Charger les listes pour les statuts "Done" et "ToDo" depuis le localStorage
     const checkedDone = JSON.parse(localStorage.getItem('checkedDone') || '[]');
@@ -185,9 +183,9 @@ export default function TableCompany({ onDetailsClick, listOfCompanies }: { onDe
     setPage(0);
   };
 
-  const handleDetailsClick = (company) => {
-    // Appelez la fonction de rappel lorsque l'utilisateur clique sur une ligne
-    if (onDetailsClick) {
+  const handleDetailsClick = (company: Company) => {
+    // If the company is the same as the selected one, do nothing to avoid re-rendering
+    if (onDetailsClick && company !== selectedCompany) {
       onDetailsClick(company);
       setSelectedCompany(company);
       console.log('Company selected: ', selectedCompany);
@@ -195,8 +193,6 @@ export default function TableCompany({ onDetailsClick, listOfCompanies }: { onDe
   };
 
   // TODO : Another function is in the file src/pages/Company/Component/index.tsx
-
-
   const handleChangeStatut = (company: Company) => {
     let newStatus: CheckedStatus;
 
