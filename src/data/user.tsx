@@ -2,15 +2,21 @@ export class User {
   id: string;
   name: string;
   email: string;
+  phone: string;
+  city: string;
+  address: string;
   role: string;
   photo: string;
   provider: string;
   verified: string;
 
-  constructor(id: string, name: string, email: string, role: string, photo: string, provider: string, verified: string) {
+  constructor(id: string, name: string, email: string, phone: string, city: string, address: string, role: string, photo: string, provider: string, verified: string) {
     this.id = id;
     this.name = name;
     this.email = email;
+    this.phone = phone;
+    this.city = city;
+    this.address = address;
     this.role = role;
     this.photo = photo;
     this.provider = provider;
@@ -27,6 +33,18 @@ export class User {
 
   getEmail(): string {
     return this.email;
+  }
+
+  getPhone(): string {
+    return this.phone;
+  }
+
+  getCity(): string {
+    return this.city;
+  }
+
+  getAddress(): string {
+    return this.address;
   }
 
   getRole(): string {
@@ -59,6 +77,18 @@ export class User {
 
   setEmail(email: string): void {
     this.email = email;
+  }
+
+  setPhone(phone: string): void {
+    this.phone = phone;
+  }
+
+  setCity(city: string): void {
+    this.city = city;
+  }
+
+  setAddress(address: string): void {
+    this.address = address;
   }
 
   setName(name: string): void {

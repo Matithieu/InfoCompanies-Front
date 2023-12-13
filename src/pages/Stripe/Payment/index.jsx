@@ -4,35 +4,27 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "../../../components/Checkout/checkoutForm";
 
-function Payment() {
+const Payment = () => {
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
-  const publishableKey = import.meta.env.VITE_STRIPE_PUBLIC_KEY;
-  const JSON = { clientSecret: "" };
-  JSON.clientSecret = import.meta.env.VITE_STRIPE_CLIENT_SECRET;
 
   useEffect(() => {
-    /*fetch("/config").then(async (r) => {
+    fetch("http://localhost:8080/config").then(async (r) => {
       const { publishableKey } = await r.json();
+      console.log(publishableKey);
       setStripePromise(loadStripe(publishableKey));
     });
-    */
-    setStripePromise(loadStripe(publishableKey));
-    console.log(stripePromise);
   }, []);
 
   useEffect(() => {
-    /*fetch("/create-payment-intent", {
+    fetch("http://localhost:8080/create-payment-intent", {
       method: "POST",
       body: JSON.stringify({}),
     }).then(async (result) => {
       var { clientSecret } = await result.json();
+      console.log(clientSecret);
       setClientSecret(clientSecret);
     });
-    */
-
-    const clientSecret = JSON.clientSecret;
-    setClientSecret(clientSecret);
   }, []);
 
   return (

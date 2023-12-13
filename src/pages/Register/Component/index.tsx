@@ -35,7 +35,7 @@ const RegisterPageComponent = () => {
     const { setRequestLoading, setAuthUser, authUser } = useStore();
     const from = ((location.state as any)?.from.pathname as string) || '/dashboard'; // Redirect to dashboard by default
 
-    const newUser = new User("1", "Mat", "Email", "admin", "photo", "provider", "verified");
+    const newUser = new User("1", "Mat", "Email", "phone", "city", "address" ,"admin", "photo", "provider", "verified");
 
     const registerUser = async (data: RegisterInput) => {
         try {

@@ -2,7 +2,7 @@ import { PaymentElement } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 
-export default function CheckoutForm() {
+function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -13,12 +13,14 @@ export default function CheckoutForm() {
     e.preventDefault();
 
     if (!stripe || !elements) {
+      console.log("Stripe.js has not yet loaded.");
       // Stripe.js has not yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
 
     setIsProcessing(true);
+    console.log("Processing payment");
 
     const { error } = await stripe.confirmPayment({
       elements,
@@ -50,3 +52,5 @@ export default function CheckoutForm() {
     </form>
   );
 }
+
+export default CheckoutForm;
