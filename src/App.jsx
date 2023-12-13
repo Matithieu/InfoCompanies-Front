@@ -7,6 +7,8 @@ import LoginPage from './pages/Login/login';
 import RegisterPage from './pages/Register/register';
 import Error404 from './pages/404/Account/404';
 import LoadingPage from './pages/Loading/loading.tsx';
+import Payment from './pages/Stripe/Payment/index.jsx';
+import ProtectedRoute from './utils/protectedRoute.tsx';
 
 // Lazy loading components for security
 const Dashboard = React.lazy(() => import('./pages/Dashboard/dashboard'));
@@ -16,7 +18,6 @@ const Account = React.lazy(() => import('./pages/Account/account'));
 const Search = React.lazy(() => import('./pages/Search/search'));
 const Company = React.lazy(() => import('./pages/Company/company'));
 const Leader = React.lazy(() => import('./pages/Leaders/leader'));
-const ProtectedRoute = React.lazy(() => import('../src/utils/protectedRoute'));
 
 
 function App() {
@@ -28,6 +29,8 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/stripe" element={<Payment />} />
+          <Route path="/completion" element={"Thank you for purshasing"} />
           <Route path="*" element={<Error404 />} />
 
           <Route element={<ProtectedRoute />}>
