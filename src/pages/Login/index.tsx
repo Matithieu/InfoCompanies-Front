@@ -3,15 +3,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { object, string, TypeOf } from 'zod';
-import axiosInstance from '../../../utils/axios';
+import axiosInstance from '../../utils/axios';
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 import { Avatar, Box, Button, Container, CssBaseline, Divider, Grid, Link, TextField, Typography, CircularProgress } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import GoogleLogo from '../../../assets/google.svg';
-import { getGoogleUrl } from '../../../utils/getGoogleUrl';
-import useStore from '../../../store/authStore';
-import { User } from '../../../data/user';
+import GoogleLogo from '../../assets/google.svg';
+import { getGoogleUrl } from '../../utils/getGoogleUrl';
+import useStore from '../../store/authStore';
+import { User } from '../../data/user';
 
 const loginSchema = object({
   email: string()

@@ -3,16 +3,16 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
 import Paper from '@mui/material/Paper';
-import TableCompany, { initialCompanyData } from '../../../components/TableCompany/index.tsx';
-import Details from '../../../components/Details/index.tsx';
+import TableCompany, { initialCompanyData } from '../../components/TableCompany/index.tsx';
+import Details from '../../components/Details/index.tsx';
 import { useState } from 'react';
-import Chart from '../../../components/Chart/index.tsx';
-import ListOfLeaders from '../../../components/ListOfLeaders/index.tsx';
-import ChatGPT from '../../../components/ChatGPT/index.tsx';
+import Chart from '../../components/Chart/index.tsx';
+import ListOfLeaders from '../../components/ListOfLeaders/index.tsx';
+import ChatGPT from '../../components/ChatGPT/index.tsx';
 import { useEffect } from 'react';
-import Company from '../../../data/company.ts';
-import { loadCompaniesFilterFromLocalStorage } from '../../../utils/loadFilter.tsx';
-import { useCompanyStore } from '../../../store/companyStore.tsx';
+import Company from '../../data/company.ts';
+import { loadCompaniesFilterFromLocalStorage } from '../../utils/loadFilter.tsx';
+import { useCompanyStore } from '../../store/companyStore.tsx';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 

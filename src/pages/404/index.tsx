@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../../../../utils/axios";
+import axiosInstance from "../../utils/axios";
 import { Container, Box, Typography, Button } from "@mui/material";
 
 export default function Page404() {

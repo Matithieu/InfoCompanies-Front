@@ -5,7 +5,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Title from '../../../components/Title/Title.tsx';
+import Title from '../../components/Title/Title.tsx';
 import { TableHead } from '@mui/material';
 import Box from '@mui/material/Box';
 import { Grid } from '@mui/material';
@@ -14,9 +14,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import ApartmentOutlinedIcon from '@mui/icons-material/ApartmentOutlined';
 import { useNavigate } from 'react-router-dom'; // Import from 'react-router-dom'
 import { useLocation } from 'react-router-dom';
-import { company1, company2 } from '../../../components/TableCompany/index.tsx';
-import Company from '../../../data/company.ts';
-import { useCompanyStore } from '../../../store/companyStore.tsx';
+import { company1, company2 } from '../../components/TableCompany/index.tsx';
+import Company from '../../data/company.ts';
+import { useCompanyStore } from '../../store/companyStore.tsx';
 
 // TODO: Replace this with the data from the API
 const initialCompanyData: Array<Company> = [

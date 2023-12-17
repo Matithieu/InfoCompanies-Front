@@ -22,6 +22,7 @@ import SearchBar from '../../components/SearchBar/index.tsx';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { Paper } from '@mui/material';
+import { Outlet } from 'react-router-dom';
 
 function Copyright(props: any) {
   return (
@@ -47,6 +48,7 @@ function Copyright(props: any) {
     </Paper>
   );
 }
+
 const drawerWidth: number = 240;
 
 interface AppBarProps extends MuiAppBarProps {
@@ -153,7 +155,7 @@ function DarkModeToggle({ darkMode, toggleDarkMode }: { darkMode: boolean; toggl
   );
 }
 
-export default function Home({ renderComponent }: { renderComponent: () => JSX.Element }) {
+export default function Layout() {
   // Utilisez le localStorage pour stocker l'état du mode sombre
   const isDarkMode = localStorage.getItem('darkMode') === 'true';
   const [darkMode, setDarkMode] = React.useState(isDarkMode);
@@ -249,7 +251,7 @@ export default function Home({ renderComponent }: { renderComponent: () => JSX.E
         >
           <Toolbar />
 
-          {renderComponent()}
+          <Outlet/>
 
         </Box>
       </Box>

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import useStore from '../store/authStore'; // Import your Zustand store
-import Loading from '../pages/Loading/Component';
+import Loading from '../pages/Loading';
 
 const ProtectedRoute: React.FC = () => {
   const { authUser, requestLoading } = useStore();
@@ -20,6 +20,5 @@ const ProtectedRoute: React.FC = () => {
 
   return authUser ? <Outlet /> : <Navigate to="/login" />;
 };
-
 
 export default ProtectedRoute;

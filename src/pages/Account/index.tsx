@@ -4,10 +4,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Account from '../../../components/Account';
+import Account from '../../components/Account';
 import { Paper } from '@mui/material';
-import useStore from '../../../store/authStore';
-import Invoices from '../../../components/Invoices';
+import useStore from '../../store/authStore';
+import Invoices from '../../components/Invoices';
 
 export default function AccountPage() {
 

@@ -4,8 +4,8 @@ import Box from '@mui/material/Box';
 import { Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import CssBaseline from '@mui/material/CssBaseline';
-import DetailsLeaders from '../../../components/DetailsLeader/index.tsx';
-import Leader from '../../../data/leader.tsx';
+import DetailsLeaders from '../../components/DetailsLeader/index.tsx';
+import Leader from '../../data/leader.tsx';
 
 
 const idTest = window.location.pathname.split("/")[2];

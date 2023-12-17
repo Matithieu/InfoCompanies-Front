@@ -3,23 +3,23 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Chart from '../../../components/Chart/index.tsx';
-import TableCompany, { initialCompanyData } from '../../../components/TableCompany/index.tsx';
-import ListOfLeaders from '../../../components/ListOfLeaders/index.tsx';
-import Details from '../../../components/Details/index.tsx';
+import Chart from '../../components/Chart/index.tsx';
+import TableCompany, { initialCompanyData } from '../../components/TableCompany/index.tsx';
+import ListOfLeaders from '../../components/ListOfLeaders/index.tsx';
+import Details from '../../components/Details/index.tsx';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import SEO from '../../../components/SEO/index.tsx';
+import SEO from '../../components/SEO/index.tsx';
 import './style.css';
-import CustomSelect from '../../../components/CustomSelect/index.tsx';
-import { activityArea } from '../../../data/ListOfOptions/Activity.tsx';
-import { legalStatus } from '../../../data/ListOfOptions/Legal.tsx';
-import { regions } from '../../../data/ListOfOptions/Regions.tsx';
+import CustomSelect from '../../components/CustomSelect/index.tsx';
+import { activityArea } from '../../data/ListOfOptions/Activity.tsx';
+import { legalStatus } from '../../data/ListOfOptions/Legal.tsx';
+import { regions } from '../../data/ListOfOptions/Regions.tsx';
 import { Button } from '@mui/material';
-import { listOfCompanies } from '../../../components/TableCompany/index.tsx';
-import { loadCompaniesFilterFromLocalStorage } from '../../../utils/loadFilter.tsx';
-import { useCompanyStore } from '../../../store/companyStore.tsx';
+import { listOfCompanies } from '../../components/TableCompany/index.tsx';
+import { loadCompaniesFilterFromLocalStorage } from '../../utils/loadFilter.tsx';
+import { useCompanyStore } from '../../store/companyStore.tsx';
 
 /**
  * 

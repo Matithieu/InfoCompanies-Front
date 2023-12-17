@@ -1,16 +1,16 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import useStore from "../../../store/authStore";
+import useStore from "../../store/authStore";
 import { object, string, TypeOf } from "zod";
 import { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Container, CssBaseline, Box, Avatar, Typography, TextField, Button, Grid, Divider } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { getGoogleUrl } from "../../../utils/getGoogleUrl";
-import GoogleLogo from '../../../assets/google.svg';
-import { User } from "../../../data/user";
+import { getGoogleUrl } from "../../utils/getGoogleUrl";
+import GoogleLogo from '../../assets/google.svg';
+import { User } from "../../data/user";
 
 const registerSchema = object({
     name: string().min(1, "Full name is required").max(100),
