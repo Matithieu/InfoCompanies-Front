@@ -8,7 +8,7 @@ import RegisterPage from './pages/Register/index.tsx';
 import Error404 from './pages/404/index.tsx';
 import LoadingPage from './pages/Loading/index.tsx';
 import ProtectedRoute from './utils/protectedRoute.tsx';
-import Payment from './pages/Stripe/Payment/index.jsx';
+import Payment from "./pages/Stripe/index.tsx"
 import Layout from "./pages/Layout/index.tsx";
 
 // Lazy loading components for security

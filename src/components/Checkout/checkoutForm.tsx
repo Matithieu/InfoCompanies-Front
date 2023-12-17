@@ -6,10 +6,10 @@ function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e : any) => {
     e.preventDefault();
 
     if (!stripe || !elements) {
@@ -31,7 +31,7 @@ function CheckoutForm() {
     });
 
     if (error.type === "card_error" || error.type === "validation_error") {
-      setMessage(error.message);
+      setMessage(error.message || "");
     } else {
       setMessage("An unexpected error occured.");
     }

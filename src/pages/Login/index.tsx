@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { object, string, TypeOf } from 'zod';
-import axiosInstance from '../../utils/axios';
-import Cookies from 'js-cookie';
+//import axiosInstance from '../../utils/axios';
+//import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
-import { Avatar, Box, Button, Container, CssBaseline, Divider, Grid, Link, TextField, Typography, CircularProgress } from '@mui/material';
+import { Avatar, Box, Button, Container, CssBaseline, Divider, Grid, Link, TextField, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import GoogleLogo from '../../assets/google.svg';
+import GoogleLogo from '../../assets/google.png';
 import { getGoogleUrl } from '../../utils/getGoogleUrl';
 import useStore from '../../store/authStore';
 import { User } from '../../data/user';
@@ -31,7 +31,7 @@ const LoginPage = () => {
   const from = ((location.state as any)?.from.pathname as string) || '/dashboard'; // Redirect to dashboard by default
 
   // Create a new User object for testing. Remove this when you have implemented the login logic with the API
-  const newUser = new User("1", "Mat", "Email", "phone", "city", "address" ,"admin", "photo", "provider", "verified");
+  const newUser = new User("1", "Mat", "Email", "phone", "city", "address", "admin", "photo", "provider", "verified");
 
   const methods = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
@@ -39,7 +39,7 @@ const LoginPage = () => {
 
   const { handleSubmit, register, formState: { errors } } = methods;
 
-  const loginUser: SubmitHandler<LoginInput> = async (data) => {
+  const loginUser: SubmitHandler<LoginInput> = async (data: LoginInput) => {
     try {
       setRequestLoading(true);
 

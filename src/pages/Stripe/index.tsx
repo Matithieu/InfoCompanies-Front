@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-
 import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import CheckoutForm from "../../../components/Checkout/checkoutForm";
+import { loadStripe, Stripe } from "@stripe/stripe-js"; // Import the Stripe type
+
+import CheckoutForm from "../../components/Checkout/checkoutForm.tsx";
 
 const Payment = () => {
-  const [stripePromise, setStripePromise] = useState(null);
+  const [stripePromise, setStripePromise] = useState<Promise<Stripe | null>>(Promise.resolve(null));
   const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {

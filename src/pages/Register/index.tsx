@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useStore from "../../store/authStore";
@@ -9,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Container, CssBaseline, Box, Avatar, Typography, TextField, Button, Grid, Divider } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { getGoogleUrl } from "../../utils/getGoogleUrl";
-import GoogleLogo from '../../assets/google.svg';
+import GoogleLogo from '../../assets/google.png';
 import { User } from "../../data/user";
 
 const registerSchema = object({
@@ -35,7 +34,7 @@ const RegisterPageComponent = () => {
     const { setRequestLoading, setAuthUser, authUser } = useStore();
     const from = ((location.state as any)?.from.pathname as string) || '/dashboard'; // Redirect to dashboard by default
 
-    const newUser = new User("1", "Mat", "Email", "phone", "city", "address" ,"admin", "photo", "provider", "verified");
+    const newUser = new User("1", "Mat", "Email", "phone", "city", "address", "admin", "photo", "provider", "verified");
 
     const registerUser = async (data: RegisterInput) => {
         try {
