@@ -6,14 +6,14 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Account from '../../components/Account';
 import { Paper } from '@mui/material';
-import useStore from '../../store/authStore';
+import useAuthStore from '../../store/authStore';
 import Invoices from '../../components/Invoices';
 
 export default function AccountPage() {
 
   const [language, setLanguage] = React.useState('en');
   const [currentTab, setCurrentTab] = React.useState(0);
-  const { authUser } = useStore();
+  const { authUser } = useAuthStore();
 
   const handleLanguageChange = (event) => {
     setLanguage(event.target.value);

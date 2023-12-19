@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axios";
 import { Container, Box, Typography, Button } from "@mui/material";
@@ -10,7 +9,7 @@ export default function Page404() {
         try {
             const response = await axiosInstance.get("/Company/423055995");
             console.log(response.data);
-        } catch (error) {
+        } catch (error : any) {
             console.error("Error fetching companies", error);
             if (error.response && error.response.status === 401) {
                 navigate("/login");

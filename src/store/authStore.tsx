@@ -8,7 +8,7 @@ type Store = {
   setRequestLoading: (isLoading: boolean) => void;
 };
 
-const useStore = create<Store>((set) => ({
+const useAuthStore = create<Store>((set) => ({
   authUser: JSON.parse(localStorage.getItem('authUser') || 'null'),
   requestLoading: false,
   setAuthUser: (user) => {
@@ -19,4 +19,4 @@ const useStore = create<Store>((set) => ({
     set((state) => ({ ...state, requestLoading: isLoading })),
 }));
 
-export default useStore;
+export default useAuthStore;

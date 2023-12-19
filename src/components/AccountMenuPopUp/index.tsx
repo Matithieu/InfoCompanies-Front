@@ -11,7 +11,7 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { linkStyles } from '../../pages/Layout/ListItems/listItems';
-import useStore from '../../store/authStore';
+import useAuthStore from '../../store/authStore';
 
 async function deleteSessionAPI() {
   const VITE_SERVER_ENDPOINT = import.meta.env.VITE_SERVER_ENDPOINT;
@@ -34,7 +34,7 @@ async function deleteSessionAPI() {
 export default function AccountMenu() {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const { setAuthUser, setRequestLoading } = useStore();
+  const { setAuthUser, setRequestLoading } = useAuthStore();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

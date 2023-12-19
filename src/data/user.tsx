@@ -8,9 +8,9 @@ export class User {
   role: string;
   photo: string;
   provider: string;
-  verified: string;
+  verified: boolean;
 
-  constructor(id: string, name: string, email: string, phone: string, city: string, address: string, role: string, photo: string, provider: string, verified: string) {
+  constructor(id: string, name: string, email: string, phone: string, city: string, address: string, role: string, photo: string, provider: string, verified: boolean) {
     this.id = id;
     this.name = name;
     this.email = email;
@@ -59,11 +59,11 @@ export class User {
     return this.provider;
   }
 
-  getVerified(): string {
+  getVerified(): boolean {
     return this.verified;
   }
 
-  setVerified(verified: string): void {
+  setVerified(verified: boolean): void {
     this.verified = verified;
   }
 

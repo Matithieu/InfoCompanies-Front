@@ -10,7 +10,7 @@ import { Avatar, Box, Button, Container, CssBaseline, Divider, Grid, Link, TextF
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import GoogleLogo from '../../assets/google.png';
 import { getGoogleUrl } from '../../utils/getGoogleUrl';
-import useStore from '../../store/authStore';
+import useAuthStore from '../../store/authStore';
 import { User } from '../../data/user';
 
 const loginSchema = object({
@@ -25,13 +25,13 @@ const loginSchema = object({
 export type LoginInput = TypeOf<typeof loginSchema>;
 
 const LoginPage = () => {
-  const { authUser, setAuthUser, setRequestLoading } = useStore();
+  const { authUser, setAuthUser, setRequestLoading } = useAuthStore();
   const location = useLocation();
   const navigate = useNavigate();
   const from = ((location.state as any)?.from.pathname as string) || '/dashboard'; // Redirect to dashboard by default
 
   // Create a new User object for testing. Remove this when you have implemented the login logic with the API
-  const newUser = new User("1", "Mat", "Email", "phone", "city", "address", "admin", "photo", "provider", "verified");
+  const newUser = new User("1", "Mat", "Email", "phone", "city", "address", "admin", "photo", "provider", true);
 
   const methods = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),

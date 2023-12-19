@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import useStore from "../../store/authStore";
+import useAuthStore from "../../store/authStore";
 import { object, string, TypeOf } from "zod";
 import { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -28,20 +28,18 @@ const registerSchema = object({
 
 export type RegisterInput = TypeOf<typeof registerSchema>;
 
-const RegisterPageComponent = () => {
+const RegisterPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { setRequestLoading, setAuthUser, authUser } = useStore();
+    const { setRequestLoading, setAuthUser, authUser } = useAuthStore();
     const from = ((location.state as any)?.from.pathname as string) || '/dashboard'; // Redirect to dashboard by default
 
-    const newUser = new User("1", "Mat", "Email", "phone", "city", "address", "admin", "photo", "provider", "verified");
+    const newUser = new User("1", "Mat", "Email", "phone", "city", "address", "admin", "photo", "provider", false);
 
     const registerUser = async (data: RegisterInput) => {
         try {
-            setRequestLoading(true);
 
             setRequestLoading(true);
-
             // TODO: Should return a User object from the API
             setAuthUser(newUser);
             setRequestLoading(false);
@@ -215,4 +213,4 @@ const RegisterPageComponent = () => {
     );
 };
 
-export default RegisterPageComponent;
+export default RegisterPage;

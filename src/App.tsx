@@ -6,10 +6,11 @@ import Landing from './pages/Landing/index.tsx';
 import LoginPage from './pages/Login/index.tsx';
 import RegisterPage from './pages/Register/index.tsx';
 import Error404 from './pages/404/index.tsx';
-import LoadingPage from './pages/Loading/index.tsx';
+import Loading from './pages/Loading/index.tsx';
 import ProtectedRoute from './utils/protectedRoute.tsx';
 import Payment from "./pages/Stripe/index.tsx"
 import Layout from "./pages/Layout/index.tsx";
+import PurchaseSuccessPage from './pages/Purchasing/index.tsx';
 
 // Lazy loading components for security
 const Dashboard = React.lazy(() => import('./pages/Dashboard/index.tsx'));
@@ -23,14 +24,14 @@ const Leader = React.lazy(() => import('./pages/Leaders/index.tsx'));
 function App() {
   return (
     <HelmetProvider>
-      <Suspense fallback={<LoadingPage />}>
+      <Suspense fallback={<Loading />}>
 
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/stripe" element={<Payment />} />
-          <Route path="/completion" element={"Thank you for purchasing"} />
+          <Route path="/completion" element={<PurchaseSuccessPage/>} />
           <Route path="*/" element={<Error404 />} />
 
           <Route element={<ProtectedRoute />}>
