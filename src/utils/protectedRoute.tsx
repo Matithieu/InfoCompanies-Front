@@ -1,37 +1,37 @@
-// utils/ProtectedRoute.tsx
-import React, { useEffect, useState } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
-import useAuthStore from '../store/authStore'; // Import your Zustand store
+import React, { useEffect } from 'react';
+import { Navigate, Outlet, useNavigate } from 'react-router-dom';
+import useAuthStore from '../store/authStore';
 import Loading from '../pages/Loading';
 import { User } from '../data/user';
 
 const ProtectedRoute: React.FC = () => {
   const { authUser, requestLoading } = useAuthStore();
-  const [isVerified, setIsVerified] = useState(false);
+  const navigate = useNavigate();
 
-  // Check if the user is verified
   useEffect(() => {
-    if (!requestLoading) {
-      setIsVerified(true);
+    // Rediriger l'utilisateur en fonction de son état de vérification
+    if (authUser !== null && authUser instanceof User) {
+      if (typeof authUser.getVerified === 'function') {
+        if (authUser.getVerified() === false) {
+          // Si l'utilisateur n'est pas vérifié, rediriger vers Stripe
+          navigate('/stripe');
+        } else if (window.location.pathname === '/stripe') {
+          // Si l'utilisateur est vérifié et essaie d'accéder à Stripe, rediriger vers le tableau de bord
+          navigate('/dashboard');
+        }
+      }
+    } else if (authUser === null) {
+      // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
+      navigate('/login');
     }
-  }, [requestLoading]);
+  }, [authUser, navigate]);
 
-  if (!isVerified || requestLoading) {
-    return <Loading />; // Show the loading component until verification is complete
-  }
-
-
-  // If authUser is null, navigate to the '/login' route
-  if (authUser instanceof User && typeof authUser.getVerified === 'function' && !authUser.getEmail()) {
-    return <Navigate to="/login" />;
-  }
-
-  // If authUser is not null and not verified, navigate to the '/stripe' route
-  if (authUser instanceof User && typeof authUser.getVerified === 'function' && !authUser.getVerified()) {
-    return <Navigate to="/stripe" />;
+  if (requestLoading) {
+    return <Loading />;
   }
 
   return authUser ? <Outlet /> : <Navigate to="/login" />;
 };
+
 
 export default ProtectedRoute;

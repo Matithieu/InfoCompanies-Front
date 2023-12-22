@@ -37,6 +37,13 @@ const LoginPage = () => {
     resolver: zodResolver(loginSchema),
   });
 
+  // Handle in a useEffect hook if the user is already logged in
+  useEffect(() => {
+    if (authUser?.getVerified() == false) {
+      localStorage.removeItem('authUser');
+    }
+  }, [authUser]);
+
   const { handleSubmit, register, formState: { errors } } = methods;
 
   const loginUser: SubmitHandler<LoginInput> = async (data: LoginInput) => {

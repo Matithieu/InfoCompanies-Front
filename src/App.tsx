@@ -10,7 +10,7 @@ import Loading from './pages/Loading/index.tsx';
 import ProtectedRoute from './utils/protectedRoute.tsx';
 import Payment from "./pages/Stripe/index.tsx"
 import Layout from "./pages/Layout/index.tsx";
-import PurchaseSuccessPage from './pages/Purchasing/index.tsx';
+import OrderConfirmation from './pages/Purchasing/index.tsx';
 
 // Lazy loading components for security
 const Dashboard = React.lazy(() => import('./pages/Dashboard/index.tsx'));
@@ -30,11 +30,11 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/stripe" element={<Payment />} />
-          <Route path="/completion" element={<PurchaseSuccessPage/>} />
+          <Route path="/completion" element={<OrderConfirmation/>} />
           <Route path="*/" element={<Error404 />} />
 
           <Route element={<ProtectedRoute />}>
+          <Route path="/stripe" element={<Payment />} />
             <Route element={<Layout />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/favorites" element={<Favorites />} />

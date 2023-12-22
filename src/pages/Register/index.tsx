@@ -34,7 +34,7 @@ const RegisterPage = () => {
     const { setRequestLoading, setAuthUser, authUser } = useAuthStore();
     const from = ((location.state as any)?.from.pathname as string) || '/dashboard'; // Redirect to dashboard by default
 
-    const newUser = new User("1", "Mat", "Email", "phone", "city", "address", "admin", "photo", "provider", false);
+    const newUser = new User("1", "Mat", "amarmathi@gmail.com", "0454784817", "Le Tholonet", "Avenue de la mouine", "admin", "photo", "provider", false);
 
     const registerUser = async (data: RegisterInput) => {
         try {

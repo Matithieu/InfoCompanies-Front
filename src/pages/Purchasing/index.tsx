@@ -1,38 +1,48 @@
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { Container, Divider } from '@mui/material';
-import TrackChangesIcon from '@mui/icons-material/TrackChanges';
+import { Paper, Typography, List, ListItem, ListItemText, Button, Divider } from '@mui/material';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { useNavigate } from 'react-router-dom';
 
-const PurchaseSuccessPage = () => {
+const OrderConfirmation = () => {
   const navigate = useNavigate();
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <Card sx={{ maxWidth: 500, m: 2, boxShadow: 3 }}>
-        <CardContent>
-          <Typography gutterBottom variant="h4" component="div" color="primary.main">
-            Purchase Successful!
+    <div style={{ display: 'flex', justifyContent: 'center', padding: '20px', marginTop: "7rem" }}>
+      <Paper elevation={3} style={{ padding: '20px', maxWidth: '400px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+          <CheckCircleOutlineIcon color="success" style={{ fontSize: '60px' }} />
+          <Typography variant="h5" gutterBottom>
+            Thank you for your purchase!
           </Typography>
-          <Typography variant="body1" color="text.secondary">
-            Your order #12345 has been processed.
-            We've emailed you the order details.
+          <Typography variant="body2" gutterBottom>
+            Your order has been successfully processed. Please check your email for order confirmation.
           </Typography>
-          <Divider sx={{ my: 2 }} />
-          <Button variant="contained" color="primary" sx={{ mr: 1 }} onClick={() => {
-            navigate('/dashboard');
-          }}>
-            Let's Go!
-          </Button>
-          <Button variant="outlined" startIcon={<TrackChangesIcon />}>
-            Track Order
-          </Button>
-        </CardContent>
-      </Card>
-    </Container>
+        </div>
+        
+        <Divider style={{ marginBottom: '20px' }} />
+
+        <Typography variant="h6" gutterBottom>
+          Order Details
+        </Typography>
+
+        <List>
+          <ListItem>
+            <ListItemText primary="Order number:" secondary="#123456" />
+          </ListItem>
+          <ListItem>
+            <ListItemText primary="Order total:" secondary="$120.00" />
+          </ListItem>
+          <ListItem>
+            <ListItemText primary="Delivery address:" secondary="123, ABC Street, City, Country" />
+          </ListItem>
+        </List>
+        <Button variant="contained" color="primary" fullWidth style={{ marginTop: '20px' }} onClick={()=> {
+          navigate('/dashboard');
+        }}>
+          Let's go !
+        </Button>
+      </Paper>
+    </div>
   );
 };
 
-export default PurchaseSuccessPage;
+export default OrderConfirmation;

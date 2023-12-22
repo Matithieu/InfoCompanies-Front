@@ -120,6 +120,7 @@ export default function AccountMenu() {
         <Link to="/login" style={linkStyles}>
           <MenuItem onClick={
             () => {
+              localStorage.removeItem('authUser');
               handleClose();
               logout();
             }
