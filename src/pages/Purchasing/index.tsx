@@ -1,9 +1,12 @@
 import { Paper, Typography, List, ListItem, ListItemText, Button, Divider } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { useNavigate } from 'react-router-dom';
+import useAuthStore from '../../store/authStore';
+import { User } from '../../data/user';
 
 const OrderConfirmation = () => {
   const navigate = useNavigate();
+  const { authUser, setAuthUser } = useAuthStore();
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', padding: '20px', marginTop: "7rem" }}>
@@ -36,6 +39,7 @@ const OrderConfirmation = () => {
           </ListItem>
         </List>
         <Button variant="contained" color="primary" fullWidth style={{ marginTop: '20px' }} onClick={()=> {
+          setAuthUser({...authUser, verified: true} as User);
           navigate('/dashboard');
         }}>
           Let's go !
