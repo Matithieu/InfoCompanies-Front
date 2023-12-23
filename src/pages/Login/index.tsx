@@ -31,7 +31,7 @@ const LoginPage = () => {
   const from = ((location.state as any)?.from.pathname as string) || '/dashboard'; // Redirect to dashboard by default
 
   // Create a new User object for testing. Remove this when you have implemented the login logic with the API
-  const newUser = new User("1", "Mat", "Email", "phone", "city", "address", "admin", "photo", "provider", true);
+  const newUser = new User("1", "Mat", "Email", "phone", "city", "address", "admin", "provider", true);
 
   const methods = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),

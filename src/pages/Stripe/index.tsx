@@ -31,7 +31,7 @@ const Payment = () => {
   useEffect(() => {
     fetch("http://localhost:8080/config").then(async (r) => {
       const { publishableKey } = await r.json();
-      console.log(publishableKey);
+      console.log("fetch de publishableKey");
       setStripePromise(loadStripe(publishableKey));
     });
   }, []);
@@ -39,10 +39,16 @@ const Payment = () => {
   useEffect(() => {
     fetch("http://localhost:8080/create-payment-intent", {
       method: "POST",
-      body: JSON.stringify({authUser}),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: authUser?.getEmail(),      
+      }),
     }).then(async (result) => {
       // eslint-disable-next-line no-var
       var { clientSecret } = await result.json();
+      console.log("fetch de clientSecret");
       console.log(clientSecret);
       setClientSecret(clientSecret);
     });

@@ -6,11 +6,10 @@ export class User {
   city: string;
   address: string;
   role: string;
-  photo: string;
   provider: string;
   verified: boolean;
 
-  constructor(id: string, name: string, email: string, phone: string, city: string, address: string, role: string, photo: string, provider: string, verified: boolean) {
+  constructor(id: string, name: string, email: string, phone: string, city: string, address: string, role: string, provider: string, verified: boolean) {
     this.id = id;
     this.name = name;
     this.email = email;
@@ -18,7 +17,6 @@ export class User {
     this.city = city;
     this.address = address;
     this.role = role;
-    this.photo = photo;
     this.provider = provider;
     this.verified = verified;
   }
@@ -51,10 +49,6 @@ export class User {
     return this.role;
   }
 
-  getPhoto(): string {
-    return this.photo;
-  }
-
   getProvider(): string {
     return this.provider;
   }
@@ -65,10 +59,6 @@ export class User {
 
   setVerified(verified: boolean): void {
     this.verified = verified;
-  }
-
-  setPhoto(photo: string): void {
-    this.photo = photo;
   }
 
   setRole(role: string): void {

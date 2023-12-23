@@ -19,7 +19,6 @@ export function loadUserFromLocalStorage(key : any) {
         userObjs.city,
         userObjs.address,
         userObjs.role,
-        userObjs.photo,
         userObjs.provider,
         userObjs.verified
     );
