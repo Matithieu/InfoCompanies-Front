@@ -5,23 +5,48 @@ import Typography from '@mui/material/Typography';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Account from '../../components/Account';
-import { Paper } from '@mui/material';
 import useAuthStore from '../../store/authStore';
-import Invoices from '../../components/Invoices';
+import { useEffect } from 'react';
+import Cookies from 'js-cookie';
+import ViewInvoices from '../Purchasing/invoice';
 
 export default function AccountPage() {
 
   const [language, setLanguage] = React.useState('en');
   const [currentTab, setCurrentTab] = React.useState(0);
-  const { authUser } = useAuthStore();
+  const { authUser, setAuthUser } = useAuthStore();
 
-  const handleLanguageChange = (event) => {
+  const handleLanguageChange = (event : any) => {
     setLanguage(event.target.value);
   };
 
-  const handleTabChange = (event, newValue) => {
+  const handleTabChange = (event : any, newValue : any) => {
     setCurrentTab(newValue);
   };
+
+  const fetchAccountData = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8080/user", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: 'include'
+      });
+
+      const data = await response.json();
+      console.log("data ", data);
+      setAuthUser(data);
+    } catch (error) {
+      console.log("Error while fetching the account ", error);
+    }
+  }
+
+  useEffect(() => {
+    console.log("fetching data")
+    //fetchAccountData();
+    console.log("fetching data done")
+  }, []);
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -63,7 +88,7 @@ export default function AccountPage() {
         </Tabs>
 
         {currentTab === 0 && <Account />} {/* Afficher le composant Paiements */}
-        {currentTab === 1 && <Invoices />} {/* Afficher le composant Factures */}
+        {currentTab === 1 && <ViewInvoices />} {/* Afficher le composant Factures */}
 
         {/* Ajoutez le contenu pour d'autres onglets ici */}
       </Box>

@@ -16,7 +16,7 @@ axiosInstance.interceptors.request.use(
       config.headers["Authorization"] = `Bearer ${jwtToken}`;
     }
     //config.withCredentials = true;
-    console.log("config ", config);
+    //console.log("config ", config);
 
     return config;
   },

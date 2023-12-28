@@ -2,9 +2,10 @@ import { Paper, Typography, List, ListItem, ListItemText, Button, Divider } from
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../../store/authStore';
-import { User } from '../../data/user';
+import { loadUserFromLocalStorage } from '../../utils/loadUser';
 
 const OrderConfirmation = () => {
+  const queryParams = new URLSearchParams(window.location.search);
   const navigate = useNavigate();
   const { authUser, setAuthUser } = useAuthStore();
 
@@ -20,12 +21,14 @@ const OrderConfirmation = () => {
             Your order has been successfully processed. Please check your email for order confirmation.
           </Typography>
         </div>
-        
+
         <Divider style={{ marginBottom: '20px' }} />
 
         <Typography variant="h6" gutterBottom>
           Order Details
         </Typography>
+
+        <Typography color={'black'} variant='h6'>{queryParams.toString().split("&").join("\n")}</Typography>
 
         <List>
           <ListItem>
@@ -38,9 +41,15 @@ const OrderConfirmation = () => {
             <ListItemText primary="Delivery address:" secondary="123, ABC Street, City, Country" />
           </ListItem>
         </List>
-        <Button variant="contained" color="primary" fullWidth style={{ marginTop: '20px' }} onClick={()=> {
-          setAuthUser({...authUser, verified: true} as User);
-          navigate('/dashboard');
+        <Button variant="contained" color="primary" fullWidth style={{ marginTop: '20px' }} onClick={() => {
+          const user = loadUserFromLocalStorage('authUser');
+          user?.setVerified(true);
+          setAuthUser(user); // Clear the authenticated user
+          console.log("test " + authUser);
+          setTimeout(() => {
+            navigate('/dashboard');
+          }
+            , 500);
         }}>
           Let's go !
         </Button>

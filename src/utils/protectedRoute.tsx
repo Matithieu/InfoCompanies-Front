@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Navigate, Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import useAuthStore from '../store/authStore';
 import Loading from '../pages/Loading';
 import { User } from '../data/user';
@@ -9,29 +9,37 @@ const ProtectedRoute: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Rediriger l'utilisateur en fonction de son état de vérification
-    if (authUser !== null && authUser instanceof User) {
-      if (typeof authUser.getVerified === 'function') {
-        if (authUser.getVerified() === false) {
-          // Si l'utilisateur n'est pas vérifié, rediriger vers Stripe
-          navigate('/stripe');
-        } else if (window.location.pathname === '/stripe') {
-          // Si l'utilisateur est vérifié et essaie d'accéder à Stripe, rediriger vers le tableau de bord
-          navigate('/dashboard');
-        }
-      }
-    } else if (authUser === null) {
+    if (!authUser) {
       // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
       navigate('/login');
+      return;
     }
+
+    if (!(authUser instanceof User && typeof authUser.getVerified === 'function')) {
+      navigate('/login');
+      return;
+    }
+
+    const isVerified = authUser.getVerified();
+    const path = window.location.pathname;
+
+    const paymentPaths = ['/subscription', '/stripe', '/failure', '/invoices'];
+
+    if (paymentPaths.includes(path)) {
+      // Gérer les redirections pour les pages de paiement
+      navigate(isVerified ? '/dashboard' : '/subscription');
+    } else if (!isVerified) {
+      // Si l'utilisateur n'est pas vérifié et essaie d'accéder à une page protégée, rediriger vers la page de paiement
+      navigate('/subscription');
+    }
+
   }, [authUser, navigate]);
 
   if (requestLoading) {
     return <Loading />;
   }
 
-  return authUser ? <Outlet /> : <Navigate to="/login" />;
+  return <Outlet />;
 };
-
 
 export default ProtectedRoute;

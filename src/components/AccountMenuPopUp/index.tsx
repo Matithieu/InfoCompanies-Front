@@ -12,6 +12,8 @@ import Logout from '@mui/icons-material/Logout';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { linkStyles } from '../../pages/Layout/ListItems/listItems';
 import useAuthStore from '../../store/authStore';
+import { loadUserFromLocalStorage } from '../../utils/loadUser';
+import { User } from '../../data/user';
 
 async function deleteSessionAPI() {
   const VITE_SERVER_ENDPOINT = import.meta.env.VITE_SERVER_ENDPOINT;
@@ -36,7 +38,7 @@ export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { setAuthUser, setRequestLoading } = useAuthStore();
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
+  const handleClick = (event : any) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -44,7 +46,7 @@ export default function AccountMenu() {
   };
 
   const logout = () => {
-    localStorage.removeItem('authUser'); // Remove token from local storage
+    setRequestLoading(true); // Set loading to true while the request is being made
     setAuthUser(null); // Clear the authenticated user
     setRequestLoading(false); // Set loading to false after logout
   };
@@ -120,7 +122,6 @@ export default function AccountMenu() {
         <Link to="/login" style={linkStyles}>
           <MenuItem onClick={
             () => {
-              localStorage.removeItem('authUser');
               handleClose();
               logout();
             }

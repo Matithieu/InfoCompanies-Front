@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Grid, TextField, Typography, Paper, Button, CircularProgress } from '@mui/material';
 import useAuthStore from '../../store/authStore';
 
@@ -6,6 +6,7 @@ export default function Account() {
   const { authUser, requestLoading, setRequestLoading } = useAuthStore();
   const [accountData, setAccountData] = useState({ ...authUser });
   const [editMode, setEditMode] = useState(false);
+  console.log("authUser ", authUser);
 
   const handleEdit = () => {
     setEditMode(true);
@@ -22,6 +23,8 @@ export default function Account() {
   const handleChange = (e, key) => {
     setAccountData({ ...accountData, [key]: e.target.value });
   };
+
+
 
   return (
     <Container maxWidth="lg">

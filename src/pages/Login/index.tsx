@@ -3,15 +3,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { object, string, TypeOf } from 'zod';
-//import axiosInstance from '../../utils/axios';
-//import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 import { Avatar, Box, Button, Container, CssBaseline, Divider, Grid, Link, TextField, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import GoogleLogo from '../../assets/google.png';
 import { getGoogleUrl } from '../../utils/getGoogleUrl';
 import useAuthStore from '../../store/authStore';
-import { User } from '../../data/user';
+import Cookies from 'js-cookie';
 
 const loginSchema = object({
   email: string()
@@ -28,52 +26,50 @@ const LoginPage = () => {
   const { authUser, setAuthUser, setRequestLoading } = useAuthStore();
   const location = useLocation();
   const navigate = useNavigate();
+  // Redirect to the page the user was on before logging in
   const from = ((location.state as any)?.from.pathname as string) || '/dashboard'; // Redirect to dashboard by default
 
   // Create a new User object for testing. Remove this when you have implemented the login logic with the API
-  const newUser = new User("1", "Mat", "Email", "phone", "city", "address", "admin", "provider", true);
+  //const newUser = new User("1", "Mat", "amarmathi@gmail.com", "0454784817", "Le Tholonet", "Avenue de la mouine", "admin", "provider", false);
+  //setAuthUser(newUser);
+  //setRequestLoading(false);
 
   const methods = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
   });
-
-  // Handle in a useEffect hook if the user is already logged in
-  useEffect(() => {
-    if (authUser?.getVerified() == false) {
-      localStorage.removeItem('authUser');
-    }
-  }, [authUser]);
 
   const { handleSubmit, register, formState: { errors } } = methods;
 
   const loginUser: SubmitHandler<LoginInput> = async (data: LoginInput) => {
     try {
       setRequestLoading(true);
+      // Replace the URL with the URL in an .env
+      console.log(import.meta.env.VITE_SERVER_URL + '/login');
+      const response = await fetch(import.meta.env.VITE_SERVER_URL + '/login', {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-      // TODO: Should return a User object from the API
-      setAuthUser(newUser);
-      setRequestLoading(false);
-      console.log("authUser ", authUser);
+      const { user } = await response.json();
 
-      // TODO: Should return a User object from the API
-      /*
-      const response = await axiosInstance.post('/login', data);
-      const { token, refreshToken } = response.data;
+      if (response.status === 200) {
+        console.log("user ", user);
+        setAuthUser(user);
+        setRequestLoading(false);
+        navigate("/dashboard");
+      }
 
-      Cookies.set('user-jwt', token, { secure: true, sameSite: 'strict' });
-      Cookies.set('refresh-token', refreshToken, { secure: true, sameSite: 'strict' });
-      */
-
-      navigate(from);
     } catch (error: any) {
       toast.error(error.response?.data?.message || 'Login failed', {
         position: 'top-right',
       });
     } finally {
       setRequestLoading(false);
-      setRequestLoading(false);
     }
-  };
+  }
 
   useEffect(() => {
     if (authUser) navigate(from); // If authUser is not null, navigate to the 'from' route
