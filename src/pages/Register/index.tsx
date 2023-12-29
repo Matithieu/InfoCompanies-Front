@@ -41,37 +41,35 @@ const RegisterPage = () => {
 
             setRequestLoading(true);
             // TODO: Should return a User object from the API
-            setAuthUser(newUser);
-            setRequestLoading(false);
+            //setAuthUser(newUser);
+            //setRequestLoading(false);
             console.log("authUser ", authUser);
-
-            /*
-            const VITE_SERVER_ENDPOINT = import.meta.env.VITE_SERVER_ENDPOINT;
+            
             const response = await fetch(
-                `${VITE_SERVER_ENDPOINT}/api/auth/register`,
+                `${import.meta.env.VITE_SERVER_URL}/auth/register`,
                 {
                     method: "POST",
-                    credentials: "include",
                     body: JSON.stringify(data),
                     headers: {
                         "Content-Type": "application/json",
                     },
                 }
             );
-            
-            if (!response.ok) {
-                throw await response.json();
+
+            const user = await response.json();
+            console.log("user ", user);
+
+            if (response.status === 201) {
+              console.log("user ", user);
+              setAuthUser(user);
+              setRequestLoading(false);
+              navigate("/subscription");
             }
-            */
 
             toast.success("Account created successfully", {
                 position: "top-right",
             });
-            //const registeredUser = await response.json();
-            //const user = new User(data.name, data.email, registeredUser.role, registeredUser.provider, registeredUser.verified);
-            //setAuthUser(user);
-            setRequestLoading(false);
-            navigate("/subscription");
+
         } catch (error: any) {
             setRequestLoading(false);
             if (error.error) {

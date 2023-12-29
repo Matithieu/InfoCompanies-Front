@@ -11,7 +11,7 @@ export function loadUserFromLocalStorage(key: any) {
     console.log("User data found: " + userData);
 
     const userObjs: any = JSON.parse(userData);
-    if (userObjs) {
+    if (userObjs != undefined) {
         return new User(
             userObjs.id,
             userObjs.name,

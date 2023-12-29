@@ -44,18 +44,19 @@ const LoginPage = () => {
     try {
       setRequestLoading(true);
       // Replace the URL with the URL in an .env
-      console.log(import.meta.env.VITE_SERVER_URL + '/login');
-      const response = await fetch(import.meta.env.VITE_SERVER_URL + '/login', {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_SERVER_URL}/auth/login`,
+        {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
       const { user } = await response.json();
 
-      if (response.status === 200) {
+      if (response.ok) {
         console.log("user ", user);
         setAuthUser(user);
         setRequestLoading(false);
