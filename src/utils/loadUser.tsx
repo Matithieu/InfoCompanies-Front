@@ -10,21 +10,24 @@ export function loadUserFromLocalStorage(key: any) {
 
     console.log("User data found: " + userData);
 
-    const userObjs: any = JSON.parse(userData);
-    if (userObjs != undefined) {
-        return new User(
-            userObjs.id,
-            userObjs.name,
-            userObjs.email,
-            userObjs.phone,
-            userObjs.city,
-            userObjs.address,
-            userObjs.role,
-            userObjs.provider,
-            userObjs.verified
-        );
-    } else {
-        console.log("Invalid user data format");
-        return null;
+    if (userData != "undefined") {
+        const userObjs: any = JSON.parse(userData);
+        if (userObjs != undefined) {
+            console.log("User data format is valid");
+            return new User(
+                userObjs.id,
+                userObjs.name,
+                userObjs.email,
+                userObjs.phone,
+                userObjs.city,
+                userObjs.address,
+                userObjs.role,
+                userObjs.provider,
+                userObjs.verified
+            );
+        } else {
+            console.log("Invalid user data format");
+            return null;
+        }
     }
 }

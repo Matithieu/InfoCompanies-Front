@@ -9,7 +9,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import GoogleLogo from '../../assets/google.png';
 import { getGoogleUrl } from '../../utils/getGoogleUrl';
 import useAuthStore from '../../store/authStore';
-import Cookies from 'js-cookie';
+//import Cookies from 'js-cookie';
 
 const loginSchema = object({
   email: string()
@@ -48,13 +48,18 @@ const LoginPage = () => {
         `${import.meta.env.VITE_SERVER_URL}/auth/login`,
         {
           method: "POST",
+          credentials: 'include',
           body: JSON.stringify(data),
           headers: {
             "Content-Type": "application/json",
           },
         });
 
-      const { user } = await response.json();
+        const user = await response.json();
+        // Now store the cookie received
+      //Cookies.set('session_id', user);
+
+      console.log("response ", response);
 
       if (response.ok) {
         console.log("user ", user);

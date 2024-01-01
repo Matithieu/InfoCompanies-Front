@@ -12,14 +12,10 @@ const ProtectedRoute: React.FC = () => {
     if (!authUser) {
       // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
       navigate('/login');
-      return;
     }
 
-    if (!(authUser instanceof User && typeof authUser.getVerified === 'function')) {
-      navigate('/login');
-      return;
-    }
-
+    // Vérifier que l'utilisateur est bien une instance de User
+    if ((authUser instanceof User && typeof authUser.getVerified === 'function')) {
     const isVerified = authUser.getVerified();
     const path = window.location.pathname;
 
@@ -32,6 +28,11 @@ const ProtectedRoute: React.FC = () => {
       // Si l'utilisateur n'est pas vérifié et essaie d'accéder à une page protégée, rediriger vers la page de paiement
       navigate('/subscription');
     }
+    else {
+      // Si l'utilisateur est vérifié, rediriger vers le tableau de bord
+      navigate('/dashboard');
+    }
+  }
 
   }, [authUser, navigate]);
 

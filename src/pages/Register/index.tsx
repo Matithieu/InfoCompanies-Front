@@ -53,6 +53,7 @@ const RegisterPage = () => {
                     headers: {
                         "Content-Type": "application/json",
                     },
+                    credentials: "include",
                 }
             );
 

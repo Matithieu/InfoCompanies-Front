@@ -3,10 +3,9 @@ import { Container, Grid, TextField, Typography, Paper, Button, CircularProgress
 import useAuthStore from '../../store/authStore';
 
 export default function Account() {
-  const { authUser, requestLoading, setRequestLoading } = useAuthStore();
+  const { authUser, setAuthUser, requestLoading, setRequestLoading } = useAuthStore();
   const [accountData, setAccountData] = useState({ ...authUser });
   const [editMode, setEditMode] = useState(false);
-  console.log("authUser ", authUser);
 
   const handleEdit = () => {
     setEditMode(true);
@@ -24,7 +23,30 @@ export default function Account() {
     setAccountData({ ...accountData, [key]: e.target.value });
   };
 
+  const fetchAccountData = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/api/v1/user/" + authUser?.email , {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include",
+      });
 
+      const data = await response.json();
+
+      if(response.status === 200) {
+        console.log("data ", data);
+        setAuthUser(data);
+      }
+    } catch (error) {
+      console.log("Error while fetching the account ", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchAccountData();
+  }, []);
 
   return (
     <Container maxWidth="lg">
