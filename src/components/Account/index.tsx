@@ -26,7 +26,7 @@ export default function Account() {
   const fetchAccountData = async () => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch("http://localhost:8080/api/v1/users" , {
+      const response = await fetch("http://localhost:8080/api/v1/user/" + authUser?.email , {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
