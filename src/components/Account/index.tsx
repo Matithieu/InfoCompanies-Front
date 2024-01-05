@@ -24,13 +24,14 @@ export default function Account() {
   };
 
   const fetchAccountData = async () => {
+    const token = localStorage.getItem("token");
     try {
-      const response = await fetch("http://localhost:8080/api/v1/user/" + authUser?.email , {
+      const response = await fetch("http://localhost:8080/api/v1/users" , {
         method: "GET",
         headers: {
-          "Content-Type": "application/json"
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
-        credentials: "include",
       });
 
       const data = await response.json();

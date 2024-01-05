@@ -9,6 +9,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import GoogleLogo from '../../assets/google.png';
 import { getGoogleUrl } from '../../utils/getGoogleUrl';
 import useAuthStore from '../../store/authStore';
+import { dataReceived } from '../Register';
 //import Cookies from 'js-cookie';
 
 const loginSchema = object({
@@ -45,25 +46,22 @@ const LoginPage = () => {
       setRequestLoading(true);
       // Replace the URL with the URL in an .env
       const response = await fetch(
-        `${import.meta.env.VITE_SERVER_URL}/auth/login`,
+        `${import.meta.env.VITE_SERVER_URL}/auth/authenticate`,
         {
           method: "POST",
-          credentials: 'include',
           body: JSON.stringify(data),
           headers: {
             "Content-Type": "application/json",
           },
         });
 
-        const user = await response.json();
-        // Now store the cookie received
-      //Cookies.set('session_id', user);
-
-      console.log("response ", response);
+      const dataReceived: dataReceived = await response.json();
+      console.log("data ", dataReceived);
 
       if (response.ok) {
-        console.log("user ", user);
-        setAuthUser(user);
+        localStorage.setItem("token", dataReceived.bearerToken.accessToken);
+        console.log("user ", dataReceived.user);
+        setAuthUser(dataReceived.user);
         setRequestLoading(false);
         navigate("/dashboard");
       }

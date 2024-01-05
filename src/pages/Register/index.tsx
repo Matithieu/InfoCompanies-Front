@@ -11,6 +11,14 @@ import { getGoogleUrl } from "../../utils/getGoogleUrl";
 import GoogleLogo from '../../assets/google.png';
 import { User } from "../../data/user";
 
+export type dataReceived = {
+    bearerToken: {
+        accessToken: string;
+        tokenType: string;
+    };
+    user: User;
+}
+
 const registerSchema = object({
     name: string().min(1, "Full name is required").max(100),
     email: string()
@@ -44,7 +52,7 @@ const RegisterPage = () => {
             //setAuthUser(newUser);
             //setRequestLoading(false);
             console.log("authUser ", authUser);
-            
+
             const response = await fetch(
                 `${import.meta.env.VITE_SERVER_URL}/auth/register`,
                 {
@@ -53,18 +61,19 @@ const RegisterPage = () => {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    credentials: "include",
+                    //credentials: "include",
                 }
             );
 
-            const user = await response.json();
-            console.log("user ", user);
+            const dataReceived : dataReceived  = await response.json();
+            console.log("data ", dataReceived);
 
-            if (response.status === 201) {
-              console.log("user ", user);
-              setAuthUser(user);
-              setRequestLoading(false);
-              navigate("/subscription");
+            if (response.status === 200) {
+                localStorage.setItem("token", dataReceived.bearerToken.accessToken);
+                console.log("user ", dataReceived.user);
+                setAuthUser(dataReceived.user);
+                setRequestLoading(false);
+                navigate("/subscription");
             }
 
             toast.success("Account created successfully", {
