@@ -10,7 +10,7 @@ type Store = {
 };
 
 const useAuthStore = create<Store>((set) => ({
-  authUser: loadUserFromLocalStorage("authUser" || null),
+  authUser: loadUserFromLocalStorage("authUser") ?? null,
   requestLoading: false,
   setAuthUser: (user) => {
     localStorage.setItem('authUser', JSON.stringify(user));

@@ -2,19 +2,19 @@ import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
 import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
 import Company from '../../data/company';
-import ChiffreAffaire from '../../data/chiffreDaffaire';
 import { Tooltip } from 'recharts';
 import { useCompanyStore } from '../../store/companyStore';
+import ChiffreAffaire from '../../data/chiffreAffaire';
 
 export default function Chart() {
   const theme = useTheme();
   // Only use selectedCompany. Don't use setSelectedCompany
   const { selectedCompany } = useCompanyStore();
-  const [companyDetails, setCompanyDetails] = React.useState<ChiffreAffaire | null>(null);
+  const [companyDetails, setCompanyDetails] = React.useState<ChiffreAffaire>(null as unknown as ChiffreAffaire);
 
   React.useEffect(() => {
-    if (selectedCompany !== null && selectedCompany instanceof Company && typeof selectedCompany.getChiffreAffaire === 'function') {
-      setCompanyDetails(selectedCompany.getChiffreAffaire());
+    if (selectedCompany !== null && selectedCompany instanceof Company && typeof selectedCompany.getCA1 === 'function') {
+      setCompanyDetails(selectedCompany.getAdresseTotal());
     } else {
       setCompanyDetails(null as unknown as ChiffreAffaire);
     }
@@ -25,12 +25,12 @@ export default function Chart() {
     const data: { date: string; amount: number }[] = [];
     const chiffreAffaireData = companyDetails;
 
-    if (chiffreAffaireData && chiffreAffaireData.getDate() && chiffreAffaireData.getChiffreAffaire()) {
+    if (chiffreAffaireData && chiffreAffaireData.getDate() && chiffreAffaireData.getAdresse()) {
       const dates = chiffreAffaireData.getDate();
-      const chiffreAffaireValues = chiffreAffaireData.getChiffreAffaire();
+      const chiffreAffaireValues = chiffreAffaireData.getAdresse();
 
       for (let i = 0; i < dates.length; i++) {
-        const chiffreAffaire = parseFloat(chiffreAffaireValues[i]);
+        const chiffreAffaire = chiffreAffaireValues[i];
         if (!isNaN(chiffreAffaire)) {
           data.push({ date: dates[i], amount: chiffreAffaire });
         }
@@ -42,7 +42,7 @@ export default function Chart() {
   if (companyDetails === null) {
     return <a style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Veuillez sélectionner une entreprise</a>;
   }
-  if (companyDetails.getChiffreAffaire().length === 0) {
+  if (companyDetails.getAdresse().length === 0) {
     return <a style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Pas de données pour cette entreprise</a>;
   }
   else {

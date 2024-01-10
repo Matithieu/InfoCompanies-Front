@@ -21,12 +21,14 @@ export default function ListOfLeaders() {
 
     const { selectedCompany } = useCompanyStore();
 
+    const temp : Leader[] = [];
+
     const [leaders, setLeaders] = useState<Leader[]>(null as unknown as Leader[]);
     const [isLoading, setIsLoading] = useState(true);
 
     React.useEffect(() => {
-        if (selectedCompany !== null && selectedCompany instanceof Company && typeof selectedCompany.getLeaders === 'function') {
-            setLeaders(selectedCompany.getLeaders());
+        if (selectedCompany !== null && selectedCompany instanceof Company && typeof selectedCompany.getAdresse === 'function') {
+            setLeaders(temp);
         } else {
             setLeaders(null as unknown as Leader[]);
         }

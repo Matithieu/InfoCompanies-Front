@@ -1,11 +1,14 @@
-import React from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import PendingIcon from '@mui/icons-material/Pending';
 import { CheckedStatus } from '../../data/company';
 
-export const StatutIcon = ({ statut }: { statut?: CheckedStatus }) => {
+interface StatutIconProps {
+    statut: CheckedStatus;
+}
+
+export const StatutIcon = ({statut} : StatutIconProps) => {
     switch (statut) {
         case CheckedStatus.NotDone || "":
             return (
@@ -28,26 +31,26 @@ export const StatutIcon = ({ statut }: { statut?: CheckedStatus }) => {
     }
 };
 
-export const manageIsChecked = (companySiren: string | undefined, currentStatus: CheckedStatus) => {
+export const manageIsChecked = (companyId: number | undefined, currentStatus: CheckedStatus) => {
     const checkedDone = JSON.parse(localStorage.getItem('checkedDone') || '[]');
     const checkedToDo = JSON.parse(localStorage.getItem('checkedToDo') || '[]');
 
     // Suppression du SIREN des deux listes
-    const removeFromList = (list: string[], siren: string) => {
-        const index = list.indexOf(siren);
+    const removeFromList = (list: number[], id: number) => {
+        const index = list.indexOf(id);
         if (index !== -1) {
             list.splice(index, 1);
         }
     };
 
-    removeFromList(checkedDone, companySiren as string);
-    removeFromList(checkedToDo, companySiren as string);
+    removeFromList(checkedDone, companyId as number);
+    removeFromList(checkedToDo, companyId as number);
 
     // Ajout du SIREN à la liste appropriée
     if (currentStatus === CheckedStatus.Done) {
-        checkedDone.push(companySiren);
+        checkedDone.push(companyId);
     } else if (currentStatus === CheckedStatus.ToDo) {
-        checkedToDo.push(companySiren);
+        checkedToDo.push(companyId);
     }
 
     localStorage.setItem('checkedDone', JSON.stringify(checkedDone));

@@ -7,7 +7,6 @@ import Tab from '@mui/material/Tab';
 import Account from '../../components/Account';
 import useAuthStore from '../../store/authStore';
 import { useEffect } from 'react';
-import Cookies from 'js-cookie';
 import ViewInvoices from '../Purchasing/invoice';
 
 export default function AccountPage() {
@@ -24,27 +23,8 @@ export default function AccountPage() {
     setCurrentTab(newValue);
   };
 
-  const fetchAccountData = async () => {
-    try {
-      const response = await fetch("http://127.0.0.1:8080/user", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        credentials: 'include'
-      });
-
-      const data = await response.json();
-      console.log("data ", data);
-      setAuthUser(data);
-    } catch (error) {
-      console.log("Error while fetching the account ", error);
-    }
-  }
-
   useEffect(() => {
     console.log("fetching data")
-    //fetchAccountData();
     console.log("fetching data done")
   }, []);
 

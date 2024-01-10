@@ -1,8 +1,8 @@
 export default class ChiffreAffaire {
     date: string[];
-    chiffreAffaire: string[];
+    chiffreAffaire: number[];
 
-    constructor(date: string[], chiffreAffaire: string[]) {
+    constructor(date: string[], chiffreAffaire: number[]) {
         this.date = date;
         this.chiffreAffaire = chiffreAffaire;
     }
@@ -11,7 +11,7 @@ export default class ChiffreAffaire {
         return this.date;
     }
 
-    public getChiffreAffaire(): string[] {
+    public getAdresse(): number[] {
         return this.chiffreAffaire;
     }
 
@@ -19,7 +19,7 @@ export default class ChiffreAffaire {
         this.date = date;
     }
 
-    public setChiffreAffaire(chiffreAffaire: string[]): void {
+    public setChiffreAffaire(chiffreAffaire: number[]): void {
         this.chiffreAffaire = chiffreAffaire;
     }
 }

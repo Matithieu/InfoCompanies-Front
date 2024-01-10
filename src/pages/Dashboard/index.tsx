@@ -1,10 +1,9 @@
-import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Chart from '../../components/Chart/index.tsx';
-import TableCompany, { initialCompanyData } from '../../components/TableCompany/index.tsx';
+import TableCompany from '../../components/TableCompany/index.tsx';
 import ListOfLeaders from '../../components/ListOfLeaders/index.tsx';
 import Details from '../../components/Details/index.tsx';
 import SearchIcon from '@mui/icons-material/Search';
@@ -15,11 +14,9 @@ import './style.css';
 import CustomSelect from '../../components/CustomSelect/index.tsx';
 import { activityArea } from '../../data/ListOfOptions/Activity.tsx';
 import { legalStatus } from '../../data/ListOfOptions/Legal.tsx';
-import { regions } from '../../data/ListOfOptions/Regions.tsx';
+import { region } from '../../data/ListOfOptions/Region.tsx';
 import { Button } from '@mui/material';
-import { listOfCompanies } from '../../components/TableCompany/index.tsx';
-import { loadCompaniesFilterFromLocalStorage } from '../../utils/loadFilter.tsx';
-import { useCompanyStore } from '../../store/companyStore.tsx';
+import { useCompanyFilterStore } from '../../store/filtersStore.tsx';
 
 /**
  * 
@@ -27,71 +24,56 @@ import { useCompanyStore } from '../../store/companyStore.tsx';
  */
 const AdvancedSearch = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const [searchParams, setSearchParams] = useState({
-    // Définissez ici les paramètres de recherche par défaut ou utilisez un objet vide
-    // Par exemple : keyword: '', minPrice: 0, maxPrice: 100
-    legalStatus: '',
-    activityArea: '',
-    region: '',
+  const [searchTerm, setSearchTerm] = useState({
+    legalStatusValue: '',
+    activityAreaValue: '',
+    regionValue: '',
   });
 
-  const [legalStatusValue, setLegalStatusValue] = useState(searchParams.legalStatus);
-  const [activityAreaValue, setActivityAreaValue] = useState(searchParams.activityArea);
-  const [regionValue, setRegionValue] = useState(searchParams.region);
+  const {
+    searchParams,
+    setSearchParams,
+  } = useCompanyFilterStore();
 
   useEffect(() => {
-    const storedFilters = loadCompaniesFilterFromLocalStorage('companiesFilter');
-    if (storedFilters) {
-      setSearchParams(storedFilters);
-      setLegalStatusValue(storedFilters.legalStatus);
-      setActivityAreaValue(storedFilters.activityArea);
-      setRegionValue(storedFilters.region);
-    }
-  }, []);
-
-  const resetSearchParams = () => {
-    setSearchParams({
-      legalStatus: '',
-      activityArea: '',
-      region: '',
+    setSearchTerm({
+      legalStatusValue: searchParams.legalStatus,
+      activityAreaValue: searchParams.activityArea,
+      regionValue: searchParams.region,
     });
-    setLegalStatusValue('');
-    setActivityAreaValue('');
-    setRegionValue('');
-
-    // Resetting localStorage
-    localStorage.setItem('companiesFilter', JSON.stringify({}));
-  };
+  }, [searchParams]);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
 
-  const handleLegalStatusChange = (selectedValue) => {
+  const handleLegalStatusChange = (selectedValue: any) => {
     console.log('Legal status changed to:', selectedValue);
-    setSearchParams({ ...searchParams, legalStatus: selectedValue });
-    setLegalStatusValue(selectedValue);
+    setSearchTerm((prevSearchTerm) => ({ ...prevSearchTerm, legalStatusValue: selectedValue }));
   };
 
-  const handleActivityAreaChange = (selectedValue) => {
+  const handleActivityAreaChange = (selectedValue: any) => {
     console.log('Activity area changed to:', selectedValue);
-    setSearchParams({ ...searchParams, activityArea: selectedValue });
-    setActivityAreaValue(selectedValue);
+    setSearchTerm((prevSearchTerm) => ({ ...prevSearchTerm, activityAreaValue: selectedValue }));
   };
 
-  const handleRegionChange = (selectedValue) => {
+  const handleRegionChange = (selectedValue: any) => {
     console.log('Region changed to:', selectedValue);
-    setSearchParams({ ...searchParams, region: selectedValue });
-    setRegionValue(selectedValue);
+    setSearchTerm((prevSearchTerm) => ({ ...prevSearchTerm, regionValue: selectedValue }));
   };
 
   const handleSearch = () => {
-    // Ici, vous pouvez envoyer les paramètres de recherche au backend
-    console.log('Paramètres de recherche:', searchParams);
-    const companiesFilter = loadCompaniesFilterFromLocalStorage('companiesFilter');
-    if (companiesFilter) {
-      localStorage.setItem('companiesFilter', JSON.stringify(searchParams));
-    }
+    setSearchParams({
+      legalStatus: searchTerm.legalStatusValue,
+      activityArea: searchTerm.activityAreaValue,
+      region: searchTerm.regionValue,
+    });
+
+    // Use the callback function to log the updated state
+    setSearchTerm((prevSearchTerm) => {
+      console.log('Search term:', prevSearchTerm);
+      return prevSearchTerm;
+    });
   };
 
   return (
@@ -105,8 +87,8 @@ const AdvancedSearch = () => {
               onSelectionChange={handleLegalStatusChange}
               label="Status légaux"
               placeholder="Status légaux"
-              selectedValues={legalStatusValue}
-              value={legalStatusValue}
+              selectedValues={searchTerm.legalStatusValue}
+              value={searchTerm.legalStatusValue}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -115,22 +97,33 @@ const AdvancedSearch = () => {
               onSelectionChange={handleActivityAreaChange}
               label="Secteur d'activité"
               placeholder="Secteur d'activité"
-              selectedValues={activityAreaValue}
-              value={activityAreaValue}
+              selectedValues={searchTerm.activityAreaValue}
+              value={searchTerm.activityAreaValue}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <CustomSelect
-              options={regions}
+              options={region}
               onSelectionChange={handleRegionChange}
               label="Région"
               placeholder="Région"
-              selectedValues={regionValue}
-              value={regionValue}
+              selectedValues={searchTerm.regionValue}
+              value={searchTerm.regionValue}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <Button onClick={resetSearchParams} variant='outlined' style={{ marginTop: '20px' }}>
+            <Button onClick={() => {
+              setSearchTerm({
+                legalStatusValue: '',
+                activityAreaValue: '',
+                regionValue: '',
+              });
+              setSearchParams({
+                legalStatus: '',
+                activityArea: '',
+                region: '',
+              });
+            }} variant='outlined' style={{ marginTop: '20px' }}>
               Réinitialiser
             </Button>
 
@@ -152,27 +145,16 @@ const AdvancedSearch = () => {
  * @returns The dashboard page
  */
 export default function Dashboard() {
-  const { setSelectedCompany } = useCompanyStore();
+  const { searchParams } = useCompanyFilterStore();
+  const [url, setUrl] = useState<string>(`api/v1/companies?secteurActivite=${searchParams.activityArea}&region=${searchParams.region}`);
 
   useEffect(() => {
-    const savedCompanyDetails = JSON.parse(localStorage.getItem("companyDetailsDashboard") || "null");
-    if (savedCompanyDetails) {
-      setSelectedCompany(savedCompanyDetails);
+    if(searchParams.activityArea === '' && searchParams.region === '') {
+      setUrl('api/v1/random-companies?');
+      return;
     }
-  }, []);
-
-  // Enregistrer les données dans localStorage chaque fois qu'elles changent
-  useEffect(() => {
-    localStorage.setItem('companyDetailsDashboard', JSON.stringify(listOfCompanies));
-  }, [listOfCompanies]);
-
-  /**
-   * 
-   * @param companyDetails When the user clicks on a company, this function is called
-   */
-  const handleDetailsClick = (companyDetails) => {
-    setSelectedCompany(companyDetails);
-  };
+    setUrl(`api/v1/companies?secteurActivite=${searchParams.activityArea}&region=${searchParams.region}&`);
+  }, [searchParams]);
 
   return (
     <Grid>
@@ -198,11 +180,12 @@ export default function Dashboard() {
               display: 'flex',
               flexDirection: 'column',
               width: 'auto',
+              minHeight: 500,
+              maxHeight: 550,
               borderRadius: 3,
-              // Modifier aussi la valeur dans TableCompany/index.tsx
             }}
           >
-            <TableCompany onDetailsClick={handleDetailsClick} listOfCompanies={initialCompanyData} />
+            <TableCompany url={url} />
           </Paper>
         </Grid>
 

@@ -10,22 +10,24 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import YouTubeIcon from '@mui/icons-material/YouTube';
-import { Box } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import Company, { CheckedStatus } from '../../data/company.ts';
-import ChiffreAffaire from '../../data/chiffreDaffaire.tsx';
-import Leader from '../../data/leader.tsx';
-import { loadCompanyFromLocalStorage } from '../../utils/loadCompany.tsx';
 import { StatutIcon, manageIsChecked } from '../StatutIcon/index.tsx';
 import { useCompanyStore } from '../../store/companyStore.tsx';
+import { toast } from 'react-toastify';
+import { useCompanyFilterStore } from '../../store/filtersStore.tsx';
+import { Page } from '../../data/companyDetails.tsx';
+import { companyJsonToCompany } from '../../utils/companyJsonToCompany.tsx';
+import { TableSkeleton } from '../Skeleton/index.tsx';
 
-interface Column {
+export interface Column {
   id: string;
   label: string;
   minWidth?: number;
   align?: 'right' | 'center' | 'left';
 }
 
-const columns: readonly Column[] = [
+const columns: Column[] = [
   { id: 'checked', label: '', minWidth: 100, align: 'center' },
   { id: 'denomination', label: 'Denomination', minWidth: 170 },
   { id: 'phone', label: 'Téléphone', minWidth: 170 },
@@ -34,165 +36,117 @@ const columns: readonly Column[] = [
 
   { id: 'social', label: 'Réseaux Sociaux', minWidth: 170 },
 
-  { id: 'secteur_d_activite', label: 'Secteur d\'Activité', minWidth: 170 },
-  { id: 'forme_juridique', label: 'Forme Juridique', minWidth: 170 },
+  { id: 'secteurActivite', label: 'Secteur d\'Activité', minWidth: 170 },
+  { id: 'formeJuridique', label: 'Forme Juridique', minWidth: 170 },
   { id: 'adresse', label: 'Adresse', minWidth: 170 },
-  { id: 'code_postal', label: 'Code Postal', minWidth: 170 },
+  { id: 'codePostal', label: 'Code Postal', minWidth: 170 },
   { id: 'ville', label: 'Ville', minWidth: 170 },
-  { id: 'num_dept', label: 'Numéro Département', minWidth: 170 },
-  { id: 'departement', label: 'Département', minWidth: 170 },
   { id: 'region', label: 'Région', minWidth: 170 },
-  { id: 'date_immatriculation', label: 'Date Immatriculation', minWidth: 170 },
-  { id: 'address', label: 'Adresse', minWidth: 170 },
-  { id: 'creationDate', label: 'Date de création', minWidth: 170 },
-
+  { id: 'dateImmatriculation', label: 'Date Immatriculation', minWidth: 170 },
 ];
 
-// TODO: Replace this with the data from the API
+// TODO: Replace this with the data from the API 
+/*
 const leader1 = new Leader(1, "JEAN", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 1, denomination: "Entreprise 1" }])
 const leader2 = new Leader(2, "JOSEPHE", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 2, denomination: "Entreprise 1" }])
 const leader3 = new Leader(3, "HENRI", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 4, denomination: "Entreprise 4" }])
 const leader4 = new Leader(4, "EUDES", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 5, denomination: "Entreprise 5" }])
 const leader5 = new Leader(5, "HERCUL", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 6, denomination: "Entreprise 6" }])
+*/
 
-export const company1 = new Company(
-  false,
-  CheckedStatus.Done,
-  "LA MIE'STERIEUSE",
-  "948404819",
-  "00013",
-  "Société par actions simplifiée",
-  "0000Z",
-  "EN INSTANCE DE CHIFFREMENT",
-  "213 ROUTE DE MACORNAY",
-  "39000",
-  "LONS LE SAUNIER",
-  "39",
-  "Jura",
-  "Bourgogne-Franche-Comté",
-  "3902",
-  "LONS-LE-SAUNIER",
-  "2023-02-13",
-  "2024",
-  "B",
-  {
-    "lon": 5.545786,
-    "lat": 46.667538
-  },
-  '06 00 00 00 00',
-  "email@email.com",
-  "www.website.com",
-  "",
-  "facebook.com",
-  "",
-  "linkdin",
-  '',
-  "01/01/2021",
-  new ChiffreAffaire(["01/01/2021", "01/01/2022", "01/01/2023"], ["100", "200", "300"]),
-  [
-    leader1,
-    leader2
-  ]
-);
-
-export const company2 = new Company(
-  false,
-  CheckedStatus.ToDo,
-  "Nom de l'entreprise 2",
-  "123456789",
-  "00001",
-  "Société anonyme",
-  "1234A",
-  "Service informatique",
-  "123 Rue de l'Entreprise",
-  "12345",
-  "Ville Entreprise",
-  "12",
-  "Département Entreprise",
-  "Région Entreprise",
-  "6789",
-  "Greffe Entreprise",
-  "2022-01-01",
-  "2023-03-03",
-  "A",
-  {
-    "lon": 12.345678,
-    "lat": 34.567890
-  },
-  '06 00 00 00 00',
-  "email@gmail.com",
-  "www.website.com",
-  "1 rue de la rue",
-  "www.youtube.com",
-  "www.facebook.com",
-  "www.twitter.com",
-  "www.linkedin.com",
-  "01/01/2021",
-  new ChiffreAffaire(["01/01/2021", "01/01/2022", "01/01/2023"], ["10000", "1000", "30000"]),
-  []
-);
-
-export const listOfCompanies: Company[] = [
-  company1,
-  company2
-];
-
-// TODO: Replace this with a message saying that no data was found
-export const initialCompanyData: Company[] = [
-  ...(loadCompanyFromLocalStorage("companyDetailsDashboard") || listOfCompanies),
-];
+interface Props {
+  url: string;
+}
 
 /**
  * 
  * @param param0 Takes a callback function as a parameter and displays a table of companies
  * @returns A table of companies with their details
  */
-export default function TableCompany({ onDetailsClick, listOfCompanies }: { onDetailsClick: (company: Company) => void, listOfCompanies: Company[] }) {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [companyData, setCompanyData] = React.useState(listOfCompanies);
+export default function TableCompany({ url }: Props) {
+  const [dataPagniation, setDataPagination] = React.useState({
+    page: 0,
+    rowsPerPage: 10,
+    totalPages: 0,
+  });
 
+  const [companyData, setCompanyData] = React.useState<Company[]>([]);
   const { selectedCompany, setSelectedCompany } = useCompanyStore();
+  const { searchParams } = useCompanyFilterStore();
 
   React.useEffect(() => {
-    // Charger les listes pour les statuts "Done" et "ToDo" depuis le localStorage
-    const checkedDone = JSON.parse(localStorage.getItem('checkedDone') || '[]');
-    const checkedToDo = JSON.parse(localStorage.getItem('checkedToDo') || '[]');
+    const fetchData = async () => {
+      try {
+        setCompanyData(null as unknown as Company[]);
 
-    // Mettre à jour l'état des entreprises en fonction des listes "Done" et "ToDo"
-    const updatedCompanyData = initialCompanyData.map((company) => {
-      if (checkedDone.includes(company.getSiren())) {
-        company.setChecked(CheckedStatus.Done);
-      } else if (checkedToDo.includes(company.getSiren())) {
-        company.setChecked(CheckedStatus.ToDo);
-      } else {
-        company.setChecked(CheckedStatus.NotDone);
+        const response = await fetch(
+          `${import.meta.env.VITE_SERVER_URL}/${url}page=${dataPagniation.page}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        const data: Page<Company> = await response.json();
+
+        if (response.ok && data.content) {
+          const companies: Company[] = data.content.map((companyObj) =>
+            companyJsonToCompany(companyObj)
+          ).filter(Boolean) as Company[];
+
+          const checkedDone = JSON.parse(localStorage.getItem('checkedDone') || '[]');
+          const checkedToDo = JSON.parse(localStorage.getItem('checkedToDo') || '[]');
+
+          const updatedCompanyData = companies.map((company) => {
+            if (checkedDone.includes(company.getId())) {
+              company.setChecked(CheckedStatus.Done);
+            } else if (checkedToDo.includes(company.getId())) {
+              company.setChecked(CheckedStatus.ToDo);
+            } else {
+              company.setChecked(CheckedStatus.NotDone);
+            }
+            return company;
+          });
+
+          setCompanyData(updatedCompanyData);
+          setDataPagination((prevDataPagination) => ({ ...prevDataPagination, totalPages: data.totalPages }));
+        } else {
+          console.log("error: ", data);
+          toast.error("Erreur lors de la récupération des entreprises", {
+            position: "top-right",
+          });
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("Erreur lors de la récupération des entreprises", {
+          position: "top-right",
+        });
       }
-      return company; // Retourner l'objet entreprise mis à jour
-    });
+    };
 
-    setCompanyData(updatedCompanyData);
-  }, []);
+    fetchData();
+  }, [dataPagniation.page, searchParams, url]);
 
   const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
+    setDataPagination((prevDataPagination) => ({ ...prevDataPagination, page: newPage }));
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
+    setDataPagination((prevDataPagination) => ({ ...prevDataPagination, rowsPerPage: +event.target.value, page: 0 }));
   };
 
   const handleDetailsClick = (company: Company) => {
     // If the company is the same as the selected one, do nothing to avoid re-rendering
-    if (onDetailsClick && company !== selectedCompany) {
-      onDetailsClick(company);
+    if (company !== selectedCompany) {
       setSelectedCompany(company);
       console.log('Company selected: ', selectedCompany);
     }
   };
 
-  // TODO : Another function is in the file src/pages/Company/Component/index.tsx
+  // TODO : Another function is in the file src/pages/Company/index.tsx
   const handleChangeStatut = (company: Company) => {
     let newStatus: CheckedStatus;
 
@@ -205,87 +159,172 @@ export default function TableCompany({ onDetailsClick, listOfCompanies }: { onDe
     }
 
     company.setChecked(newStatus);
-    manageIsChecked(company.getSiren(), newStatus);
+    manageIsChecked(company.getId(), newStatus);
 
     setCompanyData(companyData.map((item) =>
-      item.getSiren() === company.getSiren() ? company : item
+      item.getId() === company.getId() ? company : item
     ));
 
     return newStatus;
   };
 
-  return (
-    <Box sx={{ width: '100%', height: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ width: '100%', minHeight: 380, height: '100%', borderRadius: 3 }}>
-        <Table stickyHeader aria-label="sticky table" style={{}}>
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth, fontFamily: 'Poppins', fontSize: 16, }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {companyData
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  //Afficher les details de l'entreprise en cliquant dessus
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.getSiren()} onClick={() => handleDetailsClick(row)} style={{ cursor: 'pointer' }}>
-                    <TableCell key="statut" align="center">
-                      <button style={{ border: 'none', backgroundColor: 'transparent', cursor: 'pointer' }}
-                        onClick={(e) => {
-                          e.stopPropagation(); // Pour éviter de déclencher handleDetailsClick
-                          row.setChecked(handleChangeStatut(row));
-                        }}
-                      >
-                        <StatutIcon statut={row.getChecked()} />
-                      </button>
-                    </TableCell>
-                    {/* Slice to exclude favorites */}
-                    {columns.slice(1).map((column) => {
-                      if (column.id === 'social') {
-                        return (
-                          <TableCell key={column.id} align={column.align} style={{ fontFamily: 'Poppins' }}>
-                            {row.getFacebook() && <FacebookIcon style={{ color: "#3b5998" }} />}
-                            {row.getTwitter() && <TwitterIcon style={{ color: "#1DA1F2" }} />}
-                            {row.getLinkedin() && <LinkedInIcon style={{ color: "#0e76a8" }} />}
-                            {row.getYoutube() && <YouTubeIcon style={{ color: 'red' }} />}
-                          </TableCell>
-                        );
-                      } else {
-                        const value = row[column.id];
-                        return (
-                          <TableCell key={column.id} align={column.align} style={{ fontFamily: 'Poppins' }}>
-                            {column.id === 'geolocalisation'
-                              ? `Lon: ${row.getGeolocalisation[0]}, Lat: ${row.getGeolocalisation[1]}`
-                              : value}
-                          </TableCell>
-                        );
-                      }
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25]}
-        component="div"
-        count={companyData.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        sx={{ fontFamily: 'Poppins' }}
-      />
-    </Box>
-  );
+  if (companyData === null) {
+    return <TableSkeleton columns={columns} />;
+  }
+  else if (companyData.length == 0) {
+    return <div>Aucune entreprise trouvée</div>;
+  }
+  else if (companyData !== null && Array.isArray(companyData) && typeof companyData[0].getAdresse === 'function') {
+    return (
+      <Box sx={{ position: 'relative', width: '100%', borderRadius: 3, overflow: 'auto' }}>
+        <TableContainer sx={{ }}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {columns.map((column) => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    style={{ minWidth: column.minWidth, fontFamily: 'Poppins', fontSize: 16, }}
+                  >
+                    {column.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {companyData
+                .map((row) => {
+                  return (
+                    //Afficher les details de l'entreprise en cliquant dessus
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.getSiren()} onClick={() => handleDetailsClick(row)} style={{ cursor: 'pointer' }}>
+                      <TableCell key="statut" align="center">
+                        <IconButton style={{ border: 'none', backgroundColor: 'transparent', cursor: 'pointer' }}
+                          onClick={(e) => {
+                            e.stopPropagation(); // Pour éviter de déclencher handleDetailsClick
+                            row.setChecked(handleChangeStatut(row));
+                          }}
+                        >
+                          <StatutIcon statut={row.getChecked()} />
+                        </IconButton>
+                      </TableCell>
+                      {/* Slice to exclude the id */}
+                      {columns.slice(1).map((column) => {
+                        if (column.id === 'social') {
+                          return (
+                            <TableCell key={column.id} align={column.align} style={{ fontFamily: 'Poppins' }}>
+                              {row.getFacebook() && <FacebookIcon style={{ color: "#3b5998" }} />}
+                              {row.getTwitter() && <TwitterIcon style={{ color: "#1DA1F2" }} />}
+                              {row.getLinkedin() && <LinkedInIcon style={{ color: "#0e76a8" }} />}
+                              {row.getYoutube() && <YouTubeIcon style={{ color: 'red' }} />}
+                            </TableCell>
+                          );
+                        }
+                        else if (column.id === 'checked') {
+                          return (
+                            <TableCell key={column.id} align={column.align} style={{ fontFamily: 'Poppins' }}>
+                              <StatutIcon statut={row.getChecked()} />
+                            </TableCell>
+                          );
+                        }
+                        else if (column.id === 'dateImmatriculation') {
+                          return (
+                            <TableCell key={column.id} align={column.align} style={{ fontFamily: 'Poppins' }}>
+                              {row.getDateImmatriculation() ?? "N/A"}
+                            </TableCell>
+                          );
+                        }
+                        else if (column.id === 'secteurActivite') {
+                          return (
+                            <TableCell key={column.id} align={column.align} style={{ fontFamily: 'Poppins' }}>
+                              {row.getSecteurActivite() ?? "N/A"}
+                            </TableCell>
+                          );
+                        }
+                        else if (column.id === 'formeJuridique') {
+                          return (
+                            <TableCell key={column.id} align={column.align} style={{ fontFamily: 'Poppins' }}>
+                              {row.getFormeJuridique() ?? "N/A"}
+                            </TableCell>
+                          );
+                        }
+                        else if (column.id === 'adresse') {
+                          return (
+                            <TableCell key={column.id} align={column.align} style={{ fontFamily: 'Poppins' }}>
+                              {row.getAdresse() ?? "N/A"}
+                            </TableCell>
+                          );
+                        }
+                        else if (column.id === 'codePostal') {
+                          return (
+                            <TableCell key={column.id} align={column.align} style={{ fontFamily: 'Poppins' }}>
+                              {row.getCodePostal() ?? "N/A"}
+                            </TableCell>
+                          );
+                        }
+                        else if (column.id === 'ville') {
+                          return (
+                            <TableCell key={column.id} align={column.align} style={{ fontFamily: 'Poppins' }}>
+                              {row.getVille() ?? "N/A"}
+                            </TableCell>
+                          );
+                        }
+                        else if (column.id === 'region') {
+                          return (
+                            <TableCell key={column.id} align={column.align} style={{ fontFamily: 'Poppins' }}>
+                              {row.getRegion()}
+                            </TableCell>
+                          );
+                        }
+                        else if (column.id === 'denomination') {
+                          return (
+                            <TableCell key={column.id} align={column.align} style={{ fontFamily: 'Poppins' }}>
+                              {row.getDenomination() ?? "N/A"}
+                            </TableCell>
+                          );
+                        }
+                        else if (column.id === 'phone') {
+                          return (
+                            <TableCell key={column.id} align={column.align} style={{ fontFamily: 'Poppins' }}>
+                              {row.getPhone() ?? "N/A"}
+                            </TableCell>
+                          );
+                        }
+                        else if (column.id === 'email') {
+                          return (
+                            <TableCell key={column.id} align={column.align} style={{ fontFamily: 'Poppins' }}>
+                              {row.getEmail() ?? "N/A"}
+                            </TableCell>
+                          );
+                        }
+                        else if (column.id === 'website') {
+                          return (
+                            <TableCell key={column.id} align={column.align} style={{ fontFamily: 'Poppins', maxWidth: '50px', overflow: 'hidden' }} onClick={(e) => {
+                              e.stopPropagation();
+                              window.open(row.getWebsite(), '_blank');
+                            }}>
+                              {row.getWebsite() ?? "N/A"}
+                            </TableCell>
+                          );
+                        }
+                      })}
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10]}
+          component="div"
+          count={dataPagniation.totalPages * dataPagniation.rowsPerPage}
+          rowsPerPage={dataPagniation.rowsPerPage}
+          page={dataPagniation.page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          sx={{ position: 'absolute', right: 0 }}
+        />
+      </Box>
+    );
+  }
 }

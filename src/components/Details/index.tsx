@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,30 +9,16 @@ import WebAssetIcon from '@mui/icons-material/WebAsset';
 import BusinessIcon from '@mui/icons-material/Business';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import { Tooltip } from '@mui/material';
-import Company from '../../data/company';
-import { useState } from 'react';
 import { useCompanyStore } from '../../store/companyStore';
+import Company from '../../data/company';   
 
 export default function Details() {
     const { selectedCompany } = useCompanyStore();
-    const [company, setCompany] = useState<Company>(null as unknown as Company);
 
-    React.useEffect(() => {
-        // Use getChiffreAffaire() to test if the company is valid
-        if (selectedCompany !== null && selectedCompany instanceof Company && typeof selectedCompany.getChiffreAffaire === 'function') {
-            setCompany(selectedCompany);
-        } else {
-            setCompany(null as unknown as Company);
-        }
-    }, [selectedCompany]);
-
-    if (company === null) {
+    if (selectedCompany === null) {
         return <a style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Veuillez sélectionner une entreprise</a>;
     }
-    if (company.getSiren().length === 0) {
-        return <a style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Pas de données pour cette entreprise</a>;
-    }
-    else {
+    else if (selectedCompany !== null && selectedCompany instanceof Company && typeof selectedCompany.getAdresse === 'function') {
         return (
             <TableContainer style={{ borderRadius: 9 }}>
                 <a style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center' }}>Détails</a>
@@ -45,7 +30,7 @@ export default function Details() {
                                     <PhoneIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{company?.getPhone() ?? "No company found"}</a>
+                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{selectedCompany.getPhone() ?? "No phone found"}</a>
                             </TableCell>
                         </TableRow>
                         <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -54,7 +39,7 @@ export default function Details() {
                                     <EmailIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{company?.getEmail()}</a>
+                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{selectedCompany.getEmail() ?? "No email found"}</a>
                             </TableCell>
                         </TableRow>
                         <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -63,7 +48,7 @@ export default function Details() {
                                     <WebAssetIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{company?.getWebsite()}</a>
+                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{selectedCompany.getWebsite() ?? "No website found"}</a>
                             </TableCell>
                         </TableRow>
                         <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -72,7 +57,7 @@ export default function Details() {
                                     <BusinessIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{company?.getAddress()}</a>
+                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{selectedCompany.getAdresse() ?? "No address found"}</a>
                             </TableCell>
                         </TableRow>
                         <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -81,7 +66,7 @@ export default function Details() {
                                     <CalendarTodayOutlinedIcon />
                                 </Tooltip>
                                 <span style={{ marginLeft: '10px' }}></span>
-                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{company?.getCreationDate()}</a>
+                                <a style={{ fontSize: '18px', fontFamily: 'Poppins' }}>{selectedCompany.getDateImmatriculation() ?? "No date found"}</a>
                             </TableCell>
                         </TableRow>
                     </TableBody>

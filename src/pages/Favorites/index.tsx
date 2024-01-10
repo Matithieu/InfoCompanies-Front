@@ -3,7 +3,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
 import Paper from '@mui/material/Paper';
-import TableCompany, { initialCompanyData } from '../../components/TableCompany/index.tsx';
+import TableCompany from '../../components/TableCompany/index.tsx';
 import Details from '../../components/Details/index.tsx';
 import { useState } from 'react';
 import Chart from '../../components/Chart/index.tsx';

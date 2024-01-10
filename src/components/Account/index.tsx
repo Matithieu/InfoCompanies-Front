@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container, Grid, TextField, Typography, Paper, Button, CircularProgress } from '@mui/material';
 import useAuthStore from '../../store/authStore';
 
@@ -19,17 +19,16 @@ export default function Account() {
     setTimeout(() => setRequestLoading(false), 2000);
   };
 
-  const handleChange = (e, key) => {
+  const handleChange = (e : any, key : any) => {
     setAccountData({ ...accountData, [key]: e.target.value });
   };
 
   const fetchAccountData = async () => {
-    const token = localStorage.getItem("token");
     try {
       const response = await fetch("http://localhost:8080/api/v1/user/" + authUser?.email , {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
         },
       });

@@ -1,4 +1,4 @@
-export const regions =
+export const region =
     [
         "Auvergne-Rhône-Alpes",
         "Bourgogne-Franche-Comté",
