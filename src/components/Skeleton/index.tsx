@@ -30,7 +30,7 @@ export const TableSkeleton = ({ columns }: TableSkeletonProps) => {
                     <TableBody>
                         {Array.from({ length: 5 }).map((_, index) => (
                             <TableRow key={index} style={{ alignItems: 'center' }}>
-                                <TableCell key={index + "status"} align="center" >
+                                <TableCell key={index + "status"} align="center" style={{justifyItems: 'center', display: 'flex'}} >
                                     <Skeleton animation="wave" variant="circular" width={25} height={25} />
                                 </TableCell>
                                 {columns.map((column) => (

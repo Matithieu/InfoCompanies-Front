@@ -146,7 +146,7 @@ const AdvancedSearch = () => {
  */
 export default function Dashboard() {
   const { searchParams } = useCompanyFilterStore();
-  const [url, setUrl] = useState<string>(`api/v1/companies?secteurActivite=${searchParams.activityArea}&region=${searchParams.region}`);
+  const [url, setUrl] = useState<string>(`api/v1/random-companies?`);
 
   useEffect(() => {
     if(searchParams.activityArea === '' && searchParams.region === '') {

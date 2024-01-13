@@ -63,6 +63,8 @@ const LoginPage = () => {
         console.log("user ", dataReceived.user);
         setAuthUser(dataReceived.user);
         setRequestLoading(false);
+        //if(dataReceived.user.verified === true) navigate("/dashboard");
+        //else navigate("/payment");
         navigate("/dashboard");
       }
 
