@@ -149,7 +149,7 @@ export default function Dashboard() {
   const [url, setUrl] = useState<string>(`api/v1/random-companies?`);
 
   useEffect(() => {
-    if(searchParams.activityArea === '' && searchParams.region === '') {
+    if(searchParams.activityArea === '' && searchParams.region === '' && searchParams.legalStatus === '') {
       setUrl('api/v1/random-companies?');
       return;
     }

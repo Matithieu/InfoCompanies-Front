@@ -1,5 +1,8 @@
 import Company, { CheckedStatus } from "../data/company";
 
+// https://github.com/typestack/class-transformer
+// use this library to transform json to class ??
+
 export function companyJsonToCompany(companyObj: any) {
     try {
         return new Company(

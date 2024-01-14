@@ -20,6 +20,9 @@ import { Page } from '../../data/companyDetails.tsx';
 import { companyJsonToCompany } from '../../utils/companyJsonToCompany.tsx';
 import { TableSkeleton } from '../Skeleton/index.tsx';
 
+// https://www.material-react-table.com/
+// Using this ?
+
 export interface Column {
   id: string;
   label: string;
@@ -27,7 +30,7 @@ export interface Column {
   align?: 'right' | 'center' | 'left';
 }
 
-const columns: Column[] = [
+export const columns: Column[] = [
   { id: 'checked', label: '', minWidth: 100, align: 'center' },
   { id: 'denomination', label: 'Denomination', minWidth: 170 },
   { id: 'phone', label: 'Téléphone', minWidth: 170 },
@@ -176,7 +179,7 @@ export default function TableCompany({ url }: Props) {
   }
   else if (companyData !== null && Array.isArray(companyData) && typeof companyData[0].getAdresse === 'function') {
     return (
-      <Box sx={{ position: 'relative', width: '100%', borderRadius: 3, overflow: 'auto' }}>
+      <Box sx={{ position: 'relative', width: '100%', borderRadius: 3, overflow: 'auto', maxHeight: 550 }}>
         <TableContainer sx={{ }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
@@ -322,7 +325,6 @@ export default function TableCompany({ url }: Props) {
           page={dataPagniation.page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-          sx={{ position: 'absolute', right: 0 }}
         />
       </Box>
     );

@@ -1,45 +1,26 @@
-import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
 import Paper from '@mui/material/Paper';
-import TableCompany from '../../components/TableCompany/index.tsx';
+import TableCompany, { columns } from '../../components/TableCompany/index.tsx';
 import Details from '../../components/Details/index.tsx';
 import { useState } from 'react';
 import Chart from '../../components/Chart/index.tsx';
 import ListOfLeaders from '../../components/ListOfLeaders/index.tsx';
-import ChatGPT from '../../components/ChatGPT/index.tsx';
 import { useEffect } from 'react';
-import Company from '../../data/company.ts';
-import { loadCompaniesFilterFromLocalStorage } from '../../utils/loadFilter.tsx';
-import { useCompanyStore } from '../../store/companyStore.tsx';
-
-// TODO remove, this demo shouldn't need to reset the theme.
+import { TableSkeleton } from '../../components/Skeleton/index.tsx';
 
 export default function Favorites() {
-    const { selectedCompanyChecked, setSelectedCompanyChecked } = useCompanyStore();
-    const [listOfCompanies, setListOfCompanies] = useState<Company[]>([]);
+    const [url, setUrl] = useState<string>("");
 
     useEffect(() => {
-        const sirensOfCheckedCompanies = loadCompaniesFilterFromLocalStorage('checkedToDo') || [];
+        const idsOfCheckedCompanies: Array<String> = JSON.parse(localStorage.getItem('checkedToDo') || '[]');
         //TODO: fetch the list of companies from the api using the sirensOfCheckedCompanies and then put it in setListOfCompanies
+        console.log("idsOfCheckedCompanies ", idsOfCheckedCompanies);
 
-        const savedCompanyDetails = JSON.parse(localStorage.getItem("companyDetailsChecked") || "null");
-        if (savedCompanyDetails) {
-            setSelectedCompanyChecked(savedCompanyDetails);
-        }
+        setUrl(`api/v1/companies-by-ids?ids=${idsOfCheckedCompanies}&`);
+        console.log("url: ", `api/v1/companies-by-ids?ids=${idsOfCheckedCompanies}&`);
     }, []);
-
-    // Enregistrer les données dans localStorage chaque fois qu'elles changent
-    useEffect(() => {
-        localStorage.setItem("companyDetailsChecked", JSON.stringify(selectedCompanyChecked));
-    }, [selectedCompanyChecked]);
-
-    const handleDetailsClick = (companyDetails) => {
-        // Faites quelque chose avec les détails de l'entreprise, par exemple :
-        // Mettez à jour l'état local pour afficher les détails dans le composant "Details"
-        setSelectedCompanyChecked(companyDetails);
-    };
 
     return (
         <Grid >
@@ -64,7 +45,7 @@ export default function Favorites() {
                                     borderRadius: 3
                                 }}
                             >
-                                <TableCompany onDetailsClick={handleDetailsClick} listOfCompanies={initialCompanyData} />
+                                {url ? <TableCompany url={url} /> : <TableSkeleton columns={columns} />}
                             </Paper>
                         </Grid>
 
@@ -152,7 +133,6 @@ export default function Favorites() {
                                     borderRadius: 3
                                 }}
                             >
-                                <ChatGPT selectedValue={selectedCompanyChecked} />
                             </Paper>
                         </Grid>
                     </Grid>
