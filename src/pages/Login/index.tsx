@@ -10,7 +10,6 @@ import GoogleLogo from '../../assets/google.png';
 import { getGoogleUrl } from '../../utils/getGoogleUrl';
 import useAuthStore from '../../store/authStore';
 import { dataReceived } from '../Register';
-//import Cookies from 'js-cookie';
 
 const loginSchema = object({
   email: string()
@@ -27,13 +26,14 @@ const LoginPage = () => {
   const { authUser, setAuthUser, setRequestLoading } = useAuthStore();
   const location = useLocation();
   const navigate = useNavigate();
-  // Redirect to the page the user was on before logging in
-  const from = ((location.state as any)?.from.pathname as string) || '/dashboard'; // Redirect to dashboard by default
+  const from = ((location.state as any)?.from.pathname as string); // Redirect to dashboard by default
 
+  /*
   // Create a new User object for testing. Remove this when you have implemented the login logic with the API
-  //const newUser = new User("1", "Mat", "amarmathi@gmail.com", "0454784817", "Le Tholonet", "Avenue de la mouine", "admin", "provider", false);
-  //setAuthUser(newUser);
-  //setRequestLoading(false);
+  const newUser = new User("1", "Mat", "amarmathi@gmail.com", "0454784817", "Le Tholonet", "Avenue de la mouine", "admin", "provider", false);
+  setAuthUser(newUser);
+  setRequestLoading(false);
+  */
 
   const methods = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
@@ -44,7 +44,6 @@ const LoginPage = () => {
   const loginUser: SubmitHandler<LoginInput> = async (data: LoginInput) => {
     try {
       setRequestLoading(true);
-      // Replace the URL with the URL in an .env
       const response = await fetch(
         `${import.meta.env.VITE_SERVER_URL}/auth/authenticate`,
         {
@@ -84,7 +83,7 @@ const LoginPage = () => {
   useEffect(() => {
     if (authUser?.verified === true) {
       navigate('/dashboard');
-    } // If authUser is not null, navigate to the 'from' route
+    }
   }, [authUser, navigate]);
 
   const onSubmitHandler: SubmitHandler<LoginInput> = (values) => {

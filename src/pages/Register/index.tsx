@@ -42,15 +42,12 @@ const RegisterPage = () => {
     const { setRequestLoading, setAuthUser, authUser } = useAuthStore();
     const from = ((location.state as any)?.from.pathname as string) || '/dashboard'; // Redirect to dashboard by default
 
-    const newUser = new User("3", "Mathieu", "mathieu@gmail.com", "0624734817", "Le Tholonet", "Avenue Aurélien Houchard", "admin", "provider", false);
+    //const newUser = new User("3", "Mathieu", "mathieu@gmail.com", "0624734817", "Le Tholonet", "Avenue Aurélien Houchard", "admin", "provider", false);
 
     const registerUser = async (data: RegisterInput) => {
         try {
 
             setRequestLoading(true);
-            // TODO: Should return a User object from the API
-            //setAuthUser(newUser);
-            //setRequestLoading(false);
             console.log("authUser ", authUser);
 
             const response = await fetch(
@@ -61,7 +58,6 @@ const RegisterPage = () => {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    //credentials: "include",
                 }
             );
 
@@ -132,7 +128,7 @@ const RegisterPage = () => {
     useEffect(() => {
         if (authUser?.verified === true) {
             navigate('/dashboard');
-        } // If authUser is not null, navigate to the 'from' route
+        }
     }, [authUser, navigate]);
 
     return (
