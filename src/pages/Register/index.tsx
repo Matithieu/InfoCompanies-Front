@@ -65,15 +65,19 @@ const RegisterPage = () => {
                 }
             );
 
-            const dataReceived : dataReceived  = await response.json();
-            console.log("data ", dataReceived);
+            const dataReceived: dataReceived = await response.json();
 
             if (response.status === 200) {
                 localStorage.setItem("token", dataReceived.bearerToken.accessToken);
                 console.log("user ", dataReceived.user);
                 setAuthUser(dataReceived.user);
                 setRequestLoading(false);
-                navigate("/subscription");
+
+                if (dataReceived.user.verified === true) {
+                    navigate("/dashboard");
+                } else {
+                    navigate("/subscription");
+                }
             }
 
             toast.success("Account created successfully", {
@@ -124,6 +128,12 @@ const RegisterPage = () => {
     const onSubmitHandler: SubmitHandler<RegisterInput> = (values) => {
         registerUser(values);
     };
+
+    useEffect(() => {
+        if (authUser?.verified === true) {
+            navigate('/dashboard');
+        } // If authUser is not null, navigate to the 'from' route
+    }, [authUser, navigate]);
 
     return (
         <Container component="main" maxWidth="xs" style={{ paddingTop: "4rem" }}>

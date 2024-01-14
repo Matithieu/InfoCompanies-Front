@@ -63,9 +63,13 @@ const LoginPage = () => {
         console.log("user ", dataReceived.user);
         setAuthUser(dataReceived.user);
         setRequestLoading(false);
-        //if(dataReceived.user.verified === true) navigate("/dashboard");
-        //else navigate("/payment");
-        navigate("/dashboard");
+        if (dataReceived.user.verified === true) {
+          console.log("verified");
+          navigate("/dashboard");
+        } else {
+          console.log("not verified");
+          navigate("/subscription");
+        }
       }
 
     } catch (error: any) {
@@ -78,8 +82,10 @@ const LoginPage = () => {
   }
 
   useEffect(() => {
-    if (authUser) navigate(from); // If authUser is not null, navigate to the 'from' route
-  }, [authUser, navigate, from]);
+    if (authUser?.verified === true) {
+      navigate('/dashboard');
+    } // If authUser is not null, navigate to the 'from' route
+  }, [authUser, navigate]);
 
   const onSubmitHandler: SubmitHandler<LoginInput> = (values) => {
     loginUser(values);
