@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import loadable from '@loadable/component';
+import { lazy } from '@loadable/component';
 
 import Landing from './pages/Landing/index.tsx';
 import LoginPage from './pages/Login/index.tsx';
@@ -18,13 +18,13 @@ import ViewInvoices from './pages/Purchasing/invoice.tsx';
 import { ProtectedRoutes, ProtectedSimpleRoutes } from './utils/protectedRoute.tsx';
 
 // Lazy loading components for security
-const Dashboard = loadable(() => import('./pages/Dashboard/index.tsx'));
-const Favorites = loadable(() => import('./pages/Favorites/index.tsx'));
-const Settings = loadable(() => import('./pages/Settings/index.tsx'));
-const Account = loadable(() => import('./pages/Account/index.tsx'));
-const Search = loadable(() => import('./pages/Search/index.tsx'));
-const Company = loadable(() => import('./pages/Company/index.tsx'));
-const Leader = loadable(() => import('./pages/Leaders/index.tsx'));
+const Dashboard = lazy(() => import('./pages/Dashboard/index.tsx'));
+const Favorites = lazy(() => import('./pages/Favorites/index.tsx'));
+const Settings = lazy(() => import('./pages/Settings/index.tsx'));
+const Account = lazy(() => import('./pages/Account/index.tsx'));
+const Search = lazy(() => import('./pages/Search/index.tsx'));
+const Company = lazy(() => import('./pages/Company/index.tsx'));
+const Leader = lazy(() => import('./pages/Leaders/index.tsx'));
 
 function App() {
   return (
