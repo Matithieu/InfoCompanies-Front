@@ -17,6 +17,7 @@ import { legalStatus } from '../../data/ListOfOptions/Legal.tsx';
 import { region } from '../../data/ListOfOptions/Region.tsx';
 import { Button } from '@mui/material';
 import { useCompanyFilterStore } from '../../store/filtersStore.tsx';
+import { toast } from 'react-toastify';
 
 /**
  * 
@@ -149,13 +150,24 @@ export default function Dashboard() {
   const [url, setUrl] = useState<string>(`api/v1/random-companies?`);
 
   useEffect(() => {
-    if(searchParams.activityArea === '' && searchParams.region === '' && searchParams.legalStatus === '') {
-      setUrl('api/v1/random-companies?');
-      return;
-    }
-    setUrl(`api/v1/companies?secteurActivite=${searchParams.activityArea}&region=${searchParams.region}&`);
-  }, [searchParams]);
+    const fetchData = async () => {
+      try {
+        if (searchParams.activityArea === '' && searchParams.region === '' && searchParams.legalStatus === '') {
+          setUrl('api/v1/random-companies?');
+          return;
+        }
 
+        setUrl(`api/v1/companies?secteurActivite=${searchParams.activityArea}&region=${searchParams.region}&`);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        toast.error('An error occurred while fetching data', {
+          position: 'top-right',
+        });
+      }
+    };
+
+    fetchData();
+  }, [searchParams]);
   return (
     <Grid>
       <SEO
