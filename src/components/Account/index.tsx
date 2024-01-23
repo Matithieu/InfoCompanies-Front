@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Container, Grid, TextField, Typography, Paper, Button, CircularProgress } from '@mui/material';
+import { Grid, TextField, Typography, Paper, Button, CircularProgress, Box } from '@mui/material';
 import useAuthStore from '../../store/authStore';
 
 export default function Account() {
@@ -49,7 +49,7 @@ export default function Account() {
   }, []);
 
   return (
-    <Container maxWidth="lg">
+    <Box>
       <Paper style={{ padding: '20px', marginTop: '20px', boxShadow: '0 3px 10px rgba(0,0,0,0.2)' }}>
         <Typography variant="h4" gutterBottom>
           Détails du compte
@@ -60,7 +60,7 @@ export default function Account() {
               <TextField
                 fullWidth
                 label={key.charAt(0).toUpperCase() + key.slice(1)}
-                value={accountData[key]}
+                value={accountData[key] ?? ''}
                 variant="outlined"
                 InputProps={{
                   readOnly: !editMode,
@@ -84,6 +84,6 @@ export default function Account() {
           )}
         </div>
       </Paper>
-    </Container>
+    </Box>
   );
 }

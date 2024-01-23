@@ -1,5 +1,4 @@
 import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Tabs from '@mui/material/Tabs';
@@ -8,18 +7,14 @@ import Account from '../../components/Account';
 import useAuthStore from '../../store/authStore';
 import { useEffect } from 'react';
 import ViewInvoices from '../Purchasing/invoice';
+import { Grid } from '@mui/material';
 
 export default function AccountPage() {
 
-  const [language, setLanguage] = React.useState('en');
   const [currentTab, setCurrentTab] = React.useState(0);
-  const { authUser, setAuthUser } = useAuthStore();
+  const { authUser } = useAuthStore();
 
-  const handleLanguageChange = (event : any) => {
-    setLanguage(event.target.value);
-  };
-
-  const handleTabChange = (event : any, newValue : any) => {
+  const handleTabChange = (event: any, newValue: any) => {
     setCurrentTab(newValue);
   };
 
@@ -29,20 +24,8 @@ export default function AccountPage() {
   }, []);
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <Box
-        component="main"
-        sx={{
-          backgroundColor: (theme) =>
-            theme.palette.mode === 'light'
-              ? theme.palette.grey[100]
-              : theme.palette.grey[900],
-          flexGrow: 1,
-          height: '100vh',
-          overflow: 'auto',
-        }}
-      >
+    <Grid sx={{ display: 'flex' }}>
+      <Box>
         <Typography
           fontFamily="Poppins"
           variant="h4"
@@ -61,6 +44,11 @@ export default function AccountPage() {
           indicatorColor="primary"
           textColor="primary"
           centered
+          style={{
+            marginLeft: 10,
+            marginRight: 10,
+            marginBottom: 10,
+          }}
         >
           <Tab label="Profil" />
           <Tab label="Factures" />
@@ -72,6 +60,6 @@ export default function AccountPage() {
 
         {/* Ajoutez le contenu pour d'autres onglets ici */}
       </Box>
-    </Box>
+    </Grid>
   );
 }
