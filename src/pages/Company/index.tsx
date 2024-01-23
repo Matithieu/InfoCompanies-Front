@@ -67,20 +67,13 @@ export default function CompanyPage() {
     const checkedDone = JSON.parse(localStorage.getItem('checkedDone') || '[]');
     const checkedToDo = JSON.parse(localStorage.getItem('checkedToDo') || '[]');
 
-    console.log('checkedDone', checkedDone);
-    console.log('checkedToDo', checkedToDo);
-
     if (company !== null && company instanceof Company && typeof company.getAdresse === 'function') {
-      console.log('Entry Point');
       if (checkedDone.includes(company.getId())) {
         company.setChecked(CheckedStatus.Done);
-        console.log('checkedDone', checkedDone);
       } else if (checkedToDo.includes(company.getId())) {
         company.setChecked(CheckedStatus.ToDo);
-        console.log('checkedToDo', checkedToDo);
       } else {
         company.setChecked(CheckedStatus.NotDone);
-        console.log('checkedNotDone', checkedToDo);
       }
       setCompany(company);
     }
