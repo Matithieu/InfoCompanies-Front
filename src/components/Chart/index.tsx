@@ -92,13 +92,17 @@ export default function Chart() {
               }}
               formatter={(value, name, props) => {
                 if (value === 0) {
-                  return ['Pas de données']
-                }
-                else {
-                  return [`${value} €`, 'Chiffre d\'affaire']
+                  return ['Pas de données'];
+                } else {
+                  const formattedValue = new Intl.NumberFormat('fr-FR', {
+                    style: 'currency',
+                    currency: 'EUR',
+                  }).format(Number(value));
+                  return [formattedValue, 'Chiffre d\'affaire'];
                 }
               }}
             />
+
             <Line
               isAnimationActive={true}
               type="monotone"
