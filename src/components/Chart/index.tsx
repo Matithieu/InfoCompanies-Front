@@ -13,7 +13,7 @@ export default function Chart() {
   const [companyDetails, setCompanyDetails] = React.useState<ChiffreAffaire>(null as unknown as ChiffreAffaire);
 
   React.useEffect(() => {
-    if (selectedCompany !== null && selectedCompany instanceof Company && typeof selectedCompany.getCA1 === 'function') {
+    if (selectedCompany !== null && selectedCompany instanceof Company && typeof selectedCompany.getAdresse === 'function') {
       setCompanyDetails(selectedCompany.getAdresseTotal());
     } else {
       setCompanyDetails(null as unknown as ChiffreAffaire);
@@ -21,7 +21,6 @@ export default function Chart() {
   }, [selectedCompany]);
 
   function insertData() {
-    // Data cannot be a class instance, so we have to convert it to an array
     const data: { date: string; amount: number }[] = [];
     const chiffreAffaireData = companyDetails;
 
@@ -31,8 +30,10 @@ export default function Chart() {
 
       for (let i = 0; i < dates.length; i++) {
         const chiffreAffaire = chiffreAffaireValues[i];
-        if (!isNaN(chiffreAffaire)) {
-          data.push({ date: dates[i], amount: chiffreAffaire });
+        if (chiffreAffaire !== null && !isNaN(chiffreAffaire)) {
+          if (dates.length > 1 && chiffreAffaireValues.length > 1) {
+            data.push({ date: dates[i], amount: chiffreAffaire }); // The chart only accepts objects with date and amount
+          }
         }
       }
     }
@@ -40,15 +41,15 @@ export default function Chart() {
   }
 
   if (companyDetails === null) {
-    return <a style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Veuillez sélectionner une entreprise</a>;
+    return <a style={{ fontSize: '19px' }}>Veuillez sélectionner une entreprise</a>;
   }
   if (companyDetails.getAdresse().length === 0) {
-    return <a style={{ fontSize: '19px', fontFamily: 'Poppins' }}>Pas de données pour cette entreprise</a>;
+    return <a style={{ fontSize: '19px' }}>Pas de données pour cette entreprise</a>;
   }
   else {
     return (
       <React.Fragment>
-        <div style={{ display: "flex", fontFamily: 'Poppins', justifyContent: 'center', marginTop: 5 }}>Chiffre d'affaire</div>
+        <div style={{ display: "flex", justifyContent: 'center', marginTop: 5 }}>Chiffre d'affaire</div>
         <ResponsiveContainer>
           <LineChart
             data={insertData()}
@@ -58,7 +59,7 @@ export default function Chart() {
               bottom: 10,
               left: 16,
             }}
-            style={{ fontFamily: 'Poppins', borderRadius: 3 }}
+            style={{ borderRadius: 3 }}
           >
             <XAxis
               dataKey="date"
@@ -76,7 +77,6 @@ export default function Chart() {
                   textAnchor: 'middle',
                   fill: theme.palette.text.primary,
                   ...theme.typography.body1,
-                  fontFamily: 'Poppins',
                 }}
               >
                 En Euro (€)
@@ -84,8 +84,20 @@ export default function Chart() {
             </YAxis>
             <Tooltip
               cursor={{ strokeDasharray: '3 3' }}
-              contentStyle={{ backgroundColor: '#f5f5f5', border: 'none', borderRadius: 3 }}
-              formatter={(value, name, props) => [`${value} €`, 'Chiffre d\'affaire']}
+              contentStyle={{
+                backgroundColor: theme.palette.background.paper,
+                color: theme.palette.text.primary,
+                border: 'none',
+                borderRadius: 3,
+              }}
+              formatter={(value, name, props) => {
+                if (value === 0) {
+                  return ['Pas de données']
+                }
+                else {
+                  return [`${value} €`, 'Chiffre d\'affaire']
+                }
+              }}
             />
             <Line
               isAnimationActive={true}

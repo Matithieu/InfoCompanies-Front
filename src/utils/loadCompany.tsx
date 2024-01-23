@@ -7,6 +7,7 @@ export function loadCompanyFromLocalStorage(key: any) {
     }
 
     if (companyData != "undefined" && companyData != undefined && companyData != null) {
+        console.log("Company data format is valid");
         const companyObjs: any[] = JSON.parse(companyData);
         return companyObjs.map(companyObj => new Company(
             companyObj.id,
@@ -22,6 +23,15 @@ export function loadCompanyFromLocalStorage(key: any) {
             companyObj.dateImmatriculation,
             companyObj.dateRadiation,
             companyObj.checked,
+            companyObj.dateClotureExercice1_2018,
+            companyObj.CA1_2018,
+            companyObj.resultat1_2018,
+            companyObj.dateClotureExercice2_2018,
+            companyObj.CA2_2018,
+            companyObj.resultat2_2018,
+            companyObj.dateClotureExercice3_2018,
+            companyObj.CA3_2018,
+            companyObj.resultat3_2018,
             companyObj.dateClotureExercice1_2019,
             companyObj.CA1_2019,
             companyObj.resultat1_2019,
@@ -67,15 +77,6 @@ export function loadCompanyFromLocalStorage(key: any) {
             companyObj.dateClotureExercice3_2023,
             companyObj.CA3_2023,
             companyObj.resultat3_2023,
-            companyObj.dateClotureExercice1,
-            companyObj.CA1,
-            companyObj.resultat1,
-            companyObj.dateClotureExercice2,
-            companyObj.CA2,
-            companyObj.resultat2,
-            companyObj.dateClotureExercice3,
-            companyObj.CA3,
-            companyObj.resultat3,
             companyObj.secteurActivite,
             companyObj.phone,
             companyObj.website,
@@ -90,7 +91,7 @@ export function loadCompanyFromLocalStorage(key: any) {
             companyObj.dateOfScrapping
         ));
     } else {
-        console.log("Invalid user data format");
+        console.log("Invalid Company data format");
         return null;
     }
 }
