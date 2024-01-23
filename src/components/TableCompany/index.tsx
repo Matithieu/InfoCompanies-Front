@@ -14,7 +14,7 @@ import { Box, IconButton } from '@mui/material';
 import Company, { CheckedStatus } from '../../data/company.ts';
 import { StatutIcon, manageIsChecked } from '../StatutIcon/index.tsx';
 import { useCompanyStore } from '../../store/companyStore.tsx';
-import { toast } from 'react-toastify';
+import { Bounce, toast } from 'react-toastify';
 import { useCompanyFilterStore } from '../../store/filtersStore.tsx';
 import { Page } from '../../data/companyDetails.tsx';
 import { companyJsonToCompany } from '../../utils/companyJsonToCompany.tsx';
@@ -81,6 +81,7 @@ export default function TableCompany({ url }: Props) {
     const fetchData = async () => {
       try {
         setCompanyData(null as unknown as Company[]);
+        setSelectedCompany(null as unknown as Company);
 
         const response = await fetch(
           `${import.meta.env.VITE_SERVER_URL}/${url}page=${dataPagniation.page}`,
@@ -94,6 +95,8 @@ export default function TableCompany({ url }: Props) {
         );
 
         const data: Page<Company> = await response.json();
+
+        console.log(data);
 
         if (response.ok && data.content) {
           const companies: Company[] = data.content.map((companyObj) =>
@@ -116,16 +119,19 @@ export default function TableCompany({ url }: Props) {
 
           setCompanyData(updatedCompanyData);
           setDataPagination((prevDataPagination) => ({ ...prevDataPagination, totalPages: data.totalPages }));
-        } else {
-          console.log("error: ", data);
-          toast.error("Erreur lors de la récupération des entreprises", {
-            position: "top-right",
-          });
         }
       } catch (error) {
         console.log(error);
-        toast.error("Erreur lors de la récupération des entreprises", {
+        toast.error('🦄 Wow so easy!', {
           position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Bounce,
         });
       }
     };
@@ -175,12 +181,12 @@ export default function TableCompany({ url }: Props) {
     return <TableSkeleton columns={columns} />;
   }
   else if (companyData.length == 0) {
-    return <div>Aucune entreprise trouvée</div>;
+    return <a style={{ fontSize: '19px' }}>Aucune entreprise trouvée</a>;
   }
   else if (companyData !== null && Array.isArray(companyData) && typeof companyData[0].getAdresse === 'function') {
     return (
-      <Box sx={{ position: 'relative', width: '100%', borderRadius: 3, overflow: 'auto', maxHeight: 550 }}>
-        <TableContainer sx={{ }}>
+      <Box sx={{ position: 'relative', width: '100%', borderRadius: 3, overflow: 'auto', maxHeight: 550, height: '100%' }}>
+        <TableContainer sx={{}}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
