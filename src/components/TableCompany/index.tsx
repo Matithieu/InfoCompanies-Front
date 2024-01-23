@@ -137,7 +137,7 @@ export default function TableCompany({ url }: Props) {
     };
 
     fetchData();
-  }, [dataPagniation.page, searchParams, url]);
+  }, [dataPagniation.page, searchParams, url, setSelectedCompany]);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setDataPagination((prevDataPagination) => ({ ...prevDataPagination, page: newPage }));
@@ -181,11 +181,21 @@ export default function TableCompany({ url }: Props) {
     return <TableSkeleton columns={columns} />;
   }
   else if (companyData.length == 0) {
-    return <a style={{ fontSize: '19px' }}>Aucune entreprise trouvée</a>;
+    return <a style={{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      fontSize: '19px',
+      color: '#666',
+      height: '100%',
+    }}>
+      Aucune entreprise trouvée
+    </a>
   }
   else if (companyData !== null && Array.isArray(companyData) && typeof companyData[0].getAdresse === 'function') {
     return (
-      <Box sx={{ position: 'relative', width: '100%', borderRadius: 3, overflow: 'auto', maxHeight: 550, height: '100%' }}>
+      <Box sx={{ position: 'relative', width: '100%', borderRadius: 3, overflow: 'auto', height: '100%' }}>
         <TableContainer sx={{}}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>

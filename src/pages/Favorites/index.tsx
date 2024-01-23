@@ -12,14 +12,12 @@ import { TableSkeleton } from '../../components/Skeleton/index.tsx';
 
 export default function Favorites() {
     const [url, setUrl] = useState<string>("");
-    const [checkedCompanies, setCheckedCompanies] = useState<Array<String>>([]);
+    const [checkedCompanies, setCheckedCompanies] = useState<Array<string>>([]);
 
     useEffect(() => {
-        const idsOfCheckedCompanies: Array<String> = JSON.parse(localStorage.getItem('checkedToDo') || '[]');
+        const idsOfCheckedCompanies: Array<string> = JSON.parse(localStorage.getItem('checkedToDo') || '[]');
         setCheckedCompanies(idsOfCheckedCompanies);
         //TODO: fetch the list of companies from the api using the sirensOfCheckedCompanies and then put it in setListOfCompanies
-        console.log("idsOfCheckedCompanies ", idsOfCheckedCompanies);
-        console.log("checkedCompanies ", checkedCompanies);
 
         setUrl(`api/v1/companies-by-ids?ids=${idsOfCheckedCompanies}&`);
         console.log("url: ", `api/v1/companies-by-ids?ids=${idsOfCheckedCompanies}&`);
@@ -49,6 +47,7 @@ export default function Favorites() {
                                     flexDirection: 'column',
                                     alignItems: 'center',
                                     justifyContent: 'center',
+                                    height: '100%',
                                     borderRadius: 3,
                                     minHeight: 400,
                                     maxHeight: 400
