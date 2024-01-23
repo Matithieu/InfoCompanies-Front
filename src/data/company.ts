@@ -30,6 +30,17 @@ export default class Company {
     private checked: CheckedStatus;
 
     // 2019
+    private dateClotureExercice1_2018: string;
+    private CA1_2018: number;
+    private resultat1_2018: number;
+    private dateClotureExercice2_2018: string;
+    private CA2_2018: number;
+    private resultat2_2018: number;
+    private dateClotureExercice3_2018: string;
+    private CA3_2018: number;
+    private resultat3_2018: number;
+
+    // 2019
     private dateClotureExercice1_2019: string;
     private CA1_2019: number;
     private resultat1_2019: number;
@@ -85,16 +96,6 @@ export default class Company {
     private resultat3_2023: number;
 
     // Additional fields
-    private dateClotureExercice1: string;
-    private CA1: number;
-    private resultat1: number;
-    private dateClotureExercice2: string;
-    private CA2: number;
-    private resultat2: number;
-    private dateClotureExercice3: string;
-    private CA3: number;
-    private resultat3: number;
-
     private secteurActivite: string;
     private phone: string;
     private website: string;
@@ -122,6 +123,16 @@ export default class Company {
         dateImmatriculation: string,
         dateRadiation: string,
         checked: CheckedStatus,
+        // 2018
+        dateClotureExercice1_2018: string,
+        CA1_2018: number,
+        resultat1_2018: number,
+        dateClotureExercice2_2018: string,
+        CA2_2018: number,
+        resultat2_2018: number,
+        dateClotureExercice3_2018: string,
+        CA3_2018: number,
+        resultat3_2018: number,
         // 2019
         dateClotureExercice1_2019: string,
         CA1_2019: number,
@@ -173,15 +184,7 @@ export default class Company {
         CA3_2023: number,
         resultat3_2023: number,
         // Additional fields
-        dateClotureExercice1: string,
-        CA1: number,
-        resultat1: number,
-        dateClotureExercice2: string,
-        CA2: number,
-        resultat2: number,
-        dateClotureExercice3: string,
-        CA3: number,
-        resultat3: number,
+
         secteurActivite: string,
         phone: string,
         website: string,
@@ -209,6 +212,17 @@ export default class Company {
         this.dateImmatriculation = dateImmatriculation;
         this.dateRadiation = dateRadiation;
         this.checked = checked;
+
+        // 2018
+        this.dateClotureExercice1_2018 = dateClotureExercice1_2018;
+        this.CA1_2018 = CA1_2018;
+        this.resultat1_2018 = resultat1_2018;
+        this.dateClotureExercice2_2018 = dateClotureExercice2_2018;
+        this.CA2_2018 = CA2_2018;
+        this.resultat2_2018 = resultat2_2018;
+        this.dateClotureExercice3_2018 = dateClotureExercice3_2018;
+        this.CA3_2018 = CA3_2018;
+        this.resultat3_2018 = resultat3_2018;
     
         // 2019
         this.dateClotureExercice1_2019 = dateClotureExercice1_2019;
@@ -264,17 +278,6 @@ export default class Company {
         this.dateClotureExercice3_2023 = dateClotureExercice3_2023;
         this.CA3_2023 = CA3_2023;
         this.resultat3_2023 = resultat3_2023;
-    
-        // Additional fields
-        this.dateClotureExercice1 = dateClotureExercice1;
-        this.CA1 = CA1;
-        this.resultat1 = resultat1;
-        this.dateClotureExercice2 = dateClotureExercice2;
-        this.CA2 = CA2;
-        this.resultat2 = resultat2;
-        this.dateClotureExercice3 = dateClotureExercice3;
-        this.CA3 = CA3;
-        this.resultat3 = resultat3;
     
         this.secteurActivite = secteurActivite;
         this.phone = phone;
@@ -392,6 +395,78 @@ export default class Company {
 
     public setChecked(checked: CheckedStatus): void {
         this.checked = checked;
+    }
+
+    public getDateClotureExercice1_2018(): string {
+        return this.dateClotureExercice1_2018;
+    }
+
+    public setDateClotureExercice1_2018(dateClotureExercice1_2018: string): void {
+        this.dateClotureExercice1_2018 = dateClotureExercice1_2018;
+    }
+
+    public getCA1_2018(): number {
+        return this.CA1_2018;
+    }
+
+    public setCA1_2018(CA1_2018: number): void {
+        this.CA1_2018 = CA1_2018;
+    }
+
+    public getResultat1_2018(): number {
+        return this.resultat1_2018;
+    }
+
+    public setResultat1_2018(resultat1_2018: number): void {
+        this.resultat1_2018 = resultat1_2018;
+    }
+
+    public getDateClotureExercice2_2018(): string {
+        return this.dateClotureExercice2_2018;
+    }
+
+    public setDateClotureExercice2_2018(dateClotureExercice2_2018: string): void {
+        this.dateClotureExercice2_2018 = dateClotureExercice2_2018;
+    }
+
+    public getCA2_2018(): number {
+        return this.CA2_2018;
+    }
+
+    public setCA2_2018(CA2_2018: number): void {
+        this.CA2_2018 = CA2_2018;
+    }
+
+    public getResultat2_2018(): number {
+        return this.resultat2_2018;
+    }
+
+    public setResultat2_2018(resultat2_2018: number): void {
+        this.resultat2_2018 = resultat2_2018;
+    }
+
+    public getDateClotureExercice3_2018(): string {
+        return this.dateClotureExercice3_2018;
+    }
+
+    public setDateClotureExercice3_2018(dateClotureExercice3_2018: string): void {
+        this.dateClotureExercice3_2018 = dateClotureExercice3_2018;
+    }
+
+    public getCA3_2018(): number {
+        return this.CA3_2018;
+    }
+
+    public setCA3_2018(CA3_2018: number): void {
+        this.CA3_2018 = CA3_2018;
+    }
+
+    public getResultat3_2018(): number {
+        return this.resultat3_2018;
+    }
+
+    public setResultat3_2018(resultat3_2018: number): void {
+        this.resultat3_2018 = resultat3_2018;
     }
 
     public getDateClotureExercice1_2019(): string {
@@ -754,78 +829,6 @@ export default class Company {
         this.resultat3_2023 = resultat3_2023;
     }
 
-    public getDateClotureExercice1(): string {
-        return this.dateClotureExercice1;
-    }
-
-    public setDateClotureExercice1(dateClotureExercice1: string): void {
-        this.dateClotureExercice1 = dateClotureExercice1;
-    }
-
-    public getCA1(): number {
-        return this.CA1;
-    }
-
-    public setCA1(CA1: number): void {
-        this.CA1 = CA1;
-    }
-
-    public getResultat1(): number {
-        return this.resultat1;
-    }
-
-    public setResultat1(resultat1: number): void {
-        this.resultat1 = resultat1;
-    }
-
-    public getDateClotureExercice2(): string {
-        return this.dateClotureExercice2;
-    }
-
-    public setDateClotureExercice2(dateClotureExercice2: string): void {
-        this.dateClotureExercice2 = dateClotureExercice2;
-    }
-
-    public getCA2(): number {
-        return this.CA2;
-    }
-
-    public setCA2(CA2: number): void {
-        this.CA2 = CA2;
-    }
-
-    public getResultat2(): number {
-        return this.resultat2;
-    }
-
-    public setResultat2(resultat2: number): void {
-        this.resultat2 = resultat2;
-    }
-
-    public getDateClotureExercice3(): string {
-        return this.dateClotureExercice3;
-    }
-
-    public setDateClotureExercice3(dateClotureExercice3: string): void {
-        this.dateClotureExercice3 = dateClotureExercice3;
-    }
-
-    public getCA3(): number {
-        return this.CA3;
-    }
-
-    public setCA3(CA3: number): void {
-        this.CA3 = CA3;
-    }
-
-    public getResultat3(): number {
-        return this.resultat3;
-    }
-
-    public setResultat3(resultat3: number): void {
-        this.resultat3 = resultat3;
-    }
-
     public getSecteurActivite(): string {
         return this.secteurActivite;
     }
@@ -925,6 +928,8 @@ export default class Company {
 
     public getCAByYear(year: number): number {
         switch (year) {
+            case 2018:
+                return this.CA1_2018 + this.CA2_2018 + this.CA3_2018;
             case 2019:
                 return this.CA1_2019 + this.CA2_2019 + this.CA3_2019;
             case 2020:
@@ -936,12 +941,14 @@ export default class Company {
             case 2023:
                 return this.CA1_2023 + this.CA2_2023 + this.CA3_2023;
             default:
-                return this.CA1 + this.CA2 + this.CA3;
+                return 0;
         }
     }
 
     public getResultatByYear(year: number): number {
         switch (year) {
+            case 2018:
+                return this.resultat1_2018 + this.resultat2_2018 + this.resultat3_2018;
             case 2019:
                 return this.resultat1_2019 + this.resultat2_2019 + this.resultat3_2019;
             case 2020:
@@ -953,26 +960,26 @@ export default class Company {
             case 2023:
                 return this.resultat1_2023 + this.resultat2_2023 + this.resultat3_2023;
             default:
-                return this.resultat1 + this.resultat2 + this.resultat3;
+                return 0;
         }
     }
 
     getAdresseTotal() {
         return new ChiffreAffaire([
+            "2018",
             "2019",
             "2020",
             "2021",
             "2022",
             "2023",
-            "En cours"
         ],
         [
+            this.CA1_2018 + this.CA2_2018 + this.CA3_2018,
             this.CA1_2019 + this.CA2_2019 + this.CA3_2019,
             this.CA1_2020 + this.CA2_2020 + this.CA3_2020,
             this.CA1_2021 + this.CA2_2021 + this.CA3_2021,
             this.CA1_2022 + this.CA2_2022 + this.CA3_2022,
             this.CA1_2023 + this.CA2_2023 + this.CA3_2023,
-            this.CA1 + this.CA2 + this.CA3
         ],
         )
     }
