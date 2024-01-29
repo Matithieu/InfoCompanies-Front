@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     styled,
     alpha,
@@ -62,7 +61,7 @@ export default function SearchAppBar() {
             console.log(`/search/${searchTerm}`);
             // Redirigez vers la page des résultats avec le terme de recherche
             navigate(`/search/${searchTerm}`, { state: { searchTerm } });
-    };
+    }
 };
 
     return (
