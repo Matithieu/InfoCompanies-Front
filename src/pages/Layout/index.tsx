@@ -6,11 +6,9 @@ import Box from '@mui/material/Box';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
-import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -21,33 +19,7 @@ import SearchBar from '../../components/SearchBar/index.tsx';
 // Importez un nouvel icône pour le mode sombre et le mode clair
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import { Paper } from '@mui/material';
 import { Outlet } from 'react-router-dom';
-
-function Copyright(props: any) {
-  return (
-    <Paper
-      sx={{
-        marginTop: 'calc(10% + 60px)',
-        bottom: 0,
-        width: '100%',
-        position: 'fixed',
-      }}
-      component="footer"
-      square
-      variant="outlined"
-    >
-      <Typography variant="body2" color="text.secondary" align="center" {...props} component={"footer"}>
-        {'Copyright © '}
-        <Link color="inherit" href="https://mui.com/">
-          Your Website
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-    </Paper>
-  );
-}
 
 const drawerWidth: number = 240;
 
@@ -232,7 +204,7 @@ export default function Layout() {
           </Toolbar>
           <Divider />
           <List component="nav">
-            <MainListItems/>
+            <MainListItems />
             <Divider sx={{ my: 1 }} />
             <SecondaryListItems />
           </List>
@@ -251,7 +223,7 @@ export default function Layout() {
         >
           <Toolbar />
 
-          <Outlet/>
+          <Outlet />
 
         </Box>
       </Box>
