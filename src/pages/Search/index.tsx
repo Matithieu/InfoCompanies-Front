@@ -38,7 +38,7 @@ function TableOfDetails() {
   const searchTerm = location.state.searchTerm.toString();
   console.log("Search term: ", searchTerm);
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_event: unknown, newPage: number) => {
     setDataPagination((prevDataPagination) => ({ ...prevDataPagination, page: newPage }));
   };
 
@@ -93,6 +93,7 @@ function TableOfDetails() {
     setCompanies(null as unknown as CompanyDetails[]);
     fetchCompanies();
     console.log(`${import.meta.env.VITE_SERVER_URL}/api/v1/search?name=${searchTerm}&page=${dataPagniation.page}`);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataPagniation.page, searchTerm]);
 
   if (error !== "") {
