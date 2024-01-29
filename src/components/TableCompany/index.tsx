@@ -10,15 +10,17 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import YouTubeIcon from '@mui/icons-material/YouTube';
-import { Box, IconButton } from '@mui/material';
+import { Box, Button, IconButton } from '@mui/material';
 import Company, { CheckedStatus } from '../../data/company.ts';
 import { StatutIcon, manageIsChecked } from '../StatutIcon/index.tsx';
 import { useCompanyStore } from '../../store/companyStore.tsx';
-import { Bounce, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useCompanyFilterStore } from '../../store/filtersStore.tsx';
 import { Page } from '../../data/companyDetails.tsx';
 import { companyJsonToCompany } from '../../utils/companyJsonToCompany.tsx';
 import { TableSkeleton } from '../Skeleton/index.tsx';
+import { ErrorJwtAuth } from '../../data/errorAuthJwt.ts';
+import useAuthStore from '../../store/authStore.tsx';
 
 // https://www.material-react-table.com/
 // Using this ?
@@ -75,6 +77,9 @@ export default function TableCompany({ url }: Props) {
 
   const [companyData, setCompanyData] = React.useState<Company[]>([]);
   const { selectedCompany, setSelectedCompany } = useCompanyStore();
+  const { setAuthUser, setRequestLoading } = useAuthStore();
+
+  const [error, setError] = React.useState("");
   const { searchParams } = useCompanyFilterStore();
 
   React.useEffect(() => {
@@ -94,11 +99,9 @@ export default function TableCompany({ url }: Props) {
           }
         );
 
-        const data: Page<Company> = await response.json();
+        if (response.ok && response.status === 200) {
+          const data: Page<Company> = await response.json();
 
-        console.log(data);
-
-        if (response.ok && data.content) {
           const companies: Company[] = data.content.map((companyObj) =>
             companyJsonToCompany(companyObj)
           ).filter(Boolean) as Company[];
@@ -120,18 +123,25 @@ export default function TableCompany({ url }: Props) {
           setCompanyData(updatedCompanyData);
           setDataPagination((prevDataPagination) => ({ ...prevDataPagination, totalPages: data.totalPages }));
         }
-      } catch (error) {
+        else {
+          const errorData: ErrorJwtAuth = await response.json();
+          if (response.status == 401) {
+            setError(errorData.message);
+            toast.error(`Erreur: ${errorData.message}`, {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          }
+        }
+      } catch (error: unknown) {
         console.log(error);
-        toast.error('🦄 Wow so easy!', {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-          transition: Bounce,
+        toast.error(`Erreur lors de la récupération des entreprises: ${error}`, {
         });
       }
     };
@@ -177,6 +187,23 @@ export default function TableCompany({ url }: Props) {
     return newStatus;
   };
 
+  if (error !== "") {
+    return (
+      <div style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', display: 'flex' }}>
+        <h1>{error}</h1>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            setRequestLoading(true);
+            setAuthUser(null);
+            setRequestLoading(false);
+          }}>
+          Se reconnecter
+        </Button>
+      </div>
+    );
+  }
   if (companyData === null) {
     return <TableSkeleton columns={columns} />;
   }
@@ -318,9 +345,11 @@ export default function TableCompany({ url }: Props) {
                         }
                         else if (column.id === 'website') {
                           return (
-                            <TableCell key={column.id} align={column.align} style={{ fontFamily: 'Poppins', maxWidth: '50px', overflow: 'hidden' }} onClick={(e) => {
-                              e.stopPropagation();
-                              window.open(row.getWebsite(), '_blank');
+                            <TableCell key={column.id} align={column.align} style={{ fontFamily: 'Poppins', maxWidth: '50px',maxHeight: '50px',overflow: 'hidden' }} onClick={(e) => {
+                              if (e.target === e.currentTarget && row.getWebsite() != null && row.getWebsite() != "") {
+                                e.stopPropagation(); // Pour éviter de déclencher handleDetailsClick
+                                window.open(row.getWebsite(), '_blank');
+                              }
                             }}>
                               {row.getWebsite() ?? "N/A"}
                             </TableCell>

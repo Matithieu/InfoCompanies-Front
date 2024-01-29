@@ -9,11 +9,9 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { linkStyles } from '../../pages/Layout/ListItems/listItems';
 import useAuthStore from '../../store/authStore';
-import { loadUserFromLocalStorage } from '../../utils/loadUser';
-import { User } from '../../data/user';
 
 async function deleteSessionAPI() {
   const VITE_SERVER_ENDPOINT = import.meta.env.VITE_SERVER_ENDPOINT;
@@ -34,7 +32,6 @@ async function deleteSessionAPI() {
 }
 
 export default function AccountMenu() {
-  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { setAuthUser, setRequestLoading } = useAuthStore();
   const open = Boolean(anchorEl);
@@ -43,12 +40,6 @@ export default function AccountMenu() {
   };
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const logout = () => {
-    setRequestLoading(true); // Set loading to true while the request is being made
-    setAuthUser(null); // Clear the authenticated user
-    setRequestLoading(false); // Set loading to false after logout
   };
   
   return (
@@ -123,7 +114,9 @@ export default function AccountMenu() {
           <MenuItem onClick={
             () => {
               handleClose();
-              logout();
+              setRequestLoading(true);
+              setAuthUser(null);
+              setRequestLoading(false);
             }
           } /* Need to add function to clear session cache */ >
             <ListItemIcon>
