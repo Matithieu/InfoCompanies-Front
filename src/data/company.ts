@@ -964,7 +964,7 @@ export default class Company {
         }
     }
 
-    getAdresseTotal() {
+    public getAdresseTotal() {
         return new ChiffreAffaire([
             "2018",
             "2019",
