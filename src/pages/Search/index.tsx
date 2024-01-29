@@ -16,7 +16,7 @@ import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { CompanyDetails, Page } from '../../data/companyDetails.tsx';
 import { ErrorJwtAuth } from '../../data/errorAuthJwt.ts';
-import { LogoutUser } from '../../utils/userUtils.tsx';
+import useAuthStore from '../../store/authStore.tsx';
 
 /**
  * 
@@ -34,7 +34,7 @@ function TableOfDetails() {
     rowsPerPage: 10,
     totalPages: 0,
   });
-
+  const { setAuthUser, setRequestLoading } = useAuthStore();
   const searchTerm = location.state.searchTerm.toString();
   console.log("Search term: ", searchTerm);
 
@@ -103,8 +103,9 @@ function TableOfDetails() {
           variant="contained"
           color="primary"
           onClick={() => {
-            LogoutUser({ setAuthUser: () => { }, setRequestLoading: () => { } });
-            navigate("/login")
+            setRequestLoading(true);
+            setAuthUser(null);
+            setRequestLoading(false);
           }}>
           Se reconnecter
         </Button>
