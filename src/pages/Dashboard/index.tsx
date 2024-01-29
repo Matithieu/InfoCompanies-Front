@@ -162,6 +162,7 @@ export default function Dashboard() {
         console.error('Error fetching data:', error);
         toast.error('An error occurred while fetching data', {
           position: 'top-right',
+          autoClose: 5000,
         });
       }
     };

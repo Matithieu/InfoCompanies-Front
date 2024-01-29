@@ -74,6 +74,7 @@ const LoginPage = () => {
     } catch (error: any) {
       toast.error(error.response?.data?.message || 'Login failed', {
         position: 'top-right',
+        autoClose: 5000,
       });
     } finally {
       setRequestLoading(false);

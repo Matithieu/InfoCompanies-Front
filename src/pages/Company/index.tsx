@@ -45,12 +45,14 @@ export default function CompanyPage() {
         console.log("error: ", data);
         toast.error("Erreur lors de la récupération des entreprises", {
           position: "top-right",
+          autoClose: 5000,
         });
       }
     } catch (error) {
       console.log(error);
       toast.error("Erreur lors de la récupération des entreprises", {
         position: "top-right",
+        autoClose: 5000,
       });
     }
   }

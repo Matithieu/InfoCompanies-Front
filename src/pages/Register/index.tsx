@@ -78,6 +78,7 @@ const RegisterPage = () => {
 
             toast.success("Account created successfully", {
                 position: "top-right",
+                autoClose: 5000,
             });
 
         } catch (error: any) {
@@ -86,6 +87,7 @@ const RegisterPage = () => {
                 error.error.forEach((err: any) => {
                     toast.error(err.message, {
                         position: "top-right",
+                        autoClose: 5000,
                     });
                 });
                 return;
@@ -99,6 +101,7 @@ const RegisterPage = () => {
 
             toast.error(resMessage, {
                 position: "top-right",
+                autoClose: 5000,
             });
         }
     };
