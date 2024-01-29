@@ -149,7 +149,7 @@ export default function TableCompany({ url }: Props) {
     fetchData();
   }, [dataPagniation.page, searchParams, url, setSelectedCompany]);
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_event: unknown, newPage: number) => {
     setDataPagination((prevDataPagination) => ({ ...prevDataPagination, page: newPage }));
   };
 
