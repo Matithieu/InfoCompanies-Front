@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 import { linkStyles } from '../../pages/Layout/ListItems/listItems';
 import useAuthStore from '../../store/authStore';
 
+/*
 async function deleteSessionAPI() {
   const VITE_SERVER_ENDPOINT = import.meta.env.VITE_SERVER_ENDPOINT;
   const response = await fetch(`${VITE_SERVER_ENDPOINT}/logout`, {
@@ -30,18 +31,19 @@ async function deleteSessionAPI() {
       console.log(error);
     });
 }
+*/
 
 export default function AccountMenu() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState<EventTarget & HTMLButtonElement | null>(null);
   const { setAuthUser, setRequestLoading } = useAuthStore();
   const open = Boolean(anchorEl);
-  const handleClick = (event : any) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
+
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', justifyContent: 'flex-end' }}>
