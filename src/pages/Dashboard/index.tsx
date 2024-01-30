@@ -1,23 +1,22 @@
+import SearchIcon from '@mui/icons-material/Search';
+import { Button } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import Chart from '../../components/Chart/index.tsx';
-import TableCompany from '../../components/TableCompany/index.tsx';
-import ListOfLeaders from '../../components/ListOfLeaders/index.tsx';
-import Details from '../../components/Details/index.tsx';
-import SearchIcon from '@mui/icons-material/Search';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import SEO from '../../components/SEO/index.tsx';
-import './style.css';
 import CustomSelect from '../../components/CustomSelect/index.tsx';
+import Details from '../../components/Details/index.tsx';
+import ListOfLeaders from '../../components/ListOfLeaders/index.tsx';
+import SEO from '../../components/SEO/index.tsx';
+import TableCompany from '../../components/TableCompany/index.tsx';
 import { activityArea } from '../../data/ListOfOptions/Activity.tsx';
 import { legalStatus } from '../../data/ListOfOptions/Legal.tsx';
 import { region } from '../../data/ListOfOptions/Region.tsx';
-import { Button } from '@mui/material';
 import { useCompanyFilterStore } from '../../store/filtersStore.tsx';
-import { toast } from 'react-toastify';
+import './style.css';
 
 /**
  * 
@@ -147,7 +146,7 @@ const AdvancedSearch = () => {
  */
 export default function Dashboard() {
   const { searchParams } = useCompanyFilterStore();
-  const [url, setUrl] = useState<string>(`api/v1/random-companies?`);
+  const [url, setUrl] = useState(`api/v1/random-companies?`);
 
   useEffect(() => {
     const fetchData = async () => {
