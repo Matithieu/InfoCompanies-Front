@@ -54,7 +54,7 @@ function App() {
               <Route path="/favorites" element={<Favorites />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/account" element={<Account />} />
-              <Route path="/search/*" element={<Search />} />
+              <Route path="/search/:searchTerm" element={<Search />} />
               <Route path="/company/*" element={<Company />} />
               <Route path="/leaders/*" element={<Leader />} />
               <Route path="/*" element={<Error404 />} />
