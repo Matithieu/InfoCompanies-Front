@@ -1,13 +1,21 @@
-import React, { useState, useMemo, useEffect } from "react";
-import { FixedSizeList } from "react-window";
-import {
-  Box, FormControl, Select, InputLabel, ListSubheader,
-  TextField, InputAdornment, Checkbox, ListItemText,
-  MenuItem, OutlinedInput
-} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import {
+  Box,
+  Checkbox,
+  FormControl,
+  InputAdornment,
+  InputLabel,
+  ListItemText,
+  ListSubheader,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  TextField,
+} from "@mui/material";
+import React, { useEffect, useMemo, useState } from "react";
+import { FixedSizeList } from "react-window";
 
-const containsText = (text, searchText) =>
+const containsText = (text: string, searchText: string) =>
   text.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
 
 const MenuProps = {
@@ -20,7 +28,17 @@ const MenuProps = {
   },
 };
 
-const RenderRow = ({ index, style, data }) => {
+type RenderRowProps = {
+  index: number;
+  style: React.CSSProperties;
+  data: {
+    displayedOptions: string[];
+    selectedOptions: string[];
+    handleToggle: (value: string) => void;
+  };
+};
+
+const RenderRow = ({ index, style, data }: RenderRowProps) => {
   const { displayedOptions, selectedOptions, handleToggle } = data;
   const option = displayedOptions[index];
 
@@ -37,8 +55,26 @@ const RenderRow = ({ index, style, data }) => {
   );
 };
 
-const CustomSelect = ({ options, onSelectionChange, selectedValues, label, placeholder, value }) => {
-  const [selectedOptions, setSelectedOptions] = useState<string[]>(selectedValues || []);
+type CustomSelectProps = {
+  options: string[];
+  onSelectionChange: (values: string[]) => void;
+  selectedValues?: string[];
+  label: string;
+  placeholder: string;
+  value?: string[];
+};
+
+const CustomSelect = ({
+  options,
+  onSelectionChange,
+  selectedValues,
+  label,
+  placeholder,
+  value,
+}: CustomSelectProps) => {
+  const [selectedOptions, setSelectedOptions] = useState<string[]>(
+    selectedValues || []
+  );
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
@@ -50,7 +86,7 @@ const CustomSelect = ({ options, onSelectionChange, selectedValues, label, place
     [searchText, options]
   );
 
-  const handleToggle = (value) => {
+  const handleToggle = (value: string) => {
     const currentIndex = selectedOptions.indexOf(value);
     const newChecked = [...selectedOptions];
 
@@ -92,7 +128,7 @@ const CustomSelect = ({ options, onSelectionChange, selectedValues, label, place
                   <InputAdornment position="start">
                     <SearchIcon />
                   </InputAdornment>
-                )
+                ),
               }}
               onChange={(e) => setSearchText(e.target.value)}
               onKeyDown={(e) => {
@@ -110,7 +146,7 @@ const CustomSelect = ({ options, onSelectionChange, selectedValues, label, place
             itemData={{
               displayedOptions,
               selectedOptions,
-              handleToggle
+              handleToggle,
             }}
           >
             {RenderRow}
