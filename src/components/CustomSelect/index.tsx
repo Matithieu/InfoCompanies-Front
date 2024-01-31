@@ -57,7 +57,7 @@ const RenderRow = ({ index, style, data }: RenderRowProps) => {
 
 type CustomSelectProps = {
   options: string[];
-  onSelectionChange: (values: string[]) => void;
+  onSelectionChange: (selectedValues: string[]) => void;
   selectedValues?: string[];
   label: string;
   placeholder: string;
@@ -73,7 +73,7 @@ const CustomSelect = ({
   value,
 }: CustomSelectProps) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>(
-    selectedValues || []
+    selectedValues || [""]
   );
   const [searchText, setSearchText] = useState("");
 
@@ -110,7 +110,7 @@ const CustomSelect = ({
           MenuProps={MenuProps}
           labelId="universal-select-label"
           id="universal-select"
-          value={selectedOptions}
+          value={Array.isArray(selectedOptions) ? selectedOptions : []} // ensure value is always an array
           label="Options"
           input={<OutlinedInput label={label} />}
           renderValue={(selected) => selected.join(", ")}

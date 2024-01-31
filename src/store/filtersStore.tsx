@@ -2,20 +2,26 @@ import { create } from "zustand";
 
 interface CompanyFilterState {
   searchParams: {
-    legalStatus: string;
-    activityArea: string;
-    region: string;
+    legalStatus: [];
+    activityArea: [];
+    region: [];
   };
-  setSearchParams: (params: { legalStatus?: string; activityArea?: string; region?: string }) => void;
+  setSearchParams: (params: {
+    legalStatus?: [];
+    activityArea?: [];
+    region?: [];
+  }) => void;
 }
 
 const loadFiltersFromLocalStorage = () => {
-  const storedFilters = JSON.parse(localStorage.getItem('searchParams') || '{}');
+  const storedFilters = JSON.parse(
+    localStorage.getItem("searchParams") || "{}"
+  );
   return {
     searchParams: {
-      legalStatus: storedFilters.legalStatus || '',
-      activityArea: storedFilters.activityArea || '',
-      region: storedFilters.region || '',
+      legalStatus: storedFilters.legalStatus || [],
+      activityArea: storedFilters.activityArea || [],
+      region: storedFilters.region || [],
     },
   };
 };
@@ -25,7 +31,7 @@ export const useCompanyFilterStore = create<CompanyFilterState>((set) => ({
   setSearchParams: (params) => {
     set((state) => {
       const newParams = { ...state.searchParams, ...params };
-      localStorage.setItem('searchParams', JSON.stringify(newParams));
+      localStorage.setItem("searchParams", JSON.stringify(newParams));
       return { searchParams: newParams };
     });
   },
