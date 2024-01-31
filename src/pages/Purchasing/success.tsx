@@ -1,8 +1,8 @@
-import { Paper, Typography, List, ListItem, ListItemText, Button, Divider } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { Button, Divider, List, ListItem, ListItemText, Paper, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../../store/authStore';
-import { loadUserFromLocalStorage } from '../../utils/loadUser';
+import { LoadUserFromLocalStorage } from '../../utils/loadUser';
 
 const OrderConfirmation = () => {
   const queryParams = new URLSearchParams(window.location.search);
@@ -42,9 +42,11 @@ const OrderConfirmation = () => {
           </ListItem>
         </List>
         <Button variant="contained" color="primary" fullWidth style={{ marginTop: '20px' }} onClick={() => {
-          const user = loadUserFromLocalStorage('authUser');
-          user?.setVerified(true);
-          setAuthUser(user); // Clear the authenticated user
+          const user = LoadUserFromLocalStorage("authUser");
+          if (user) {
+            user.setVerified(true);
+            setAuthUser(user); // Clear the authenticated user
+          }
           console.log("test " + authUser);
           setTimeout(() => {
             navigate('/dashboard');

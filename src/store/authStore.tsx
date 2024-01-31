@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { User } from "../data/user";
-import { loadUserFromLocalStorage } from "../utils/loadUser";
+import { User } from "../data/Account/user";
+import { LoadUserFromLocalStorage } from "../utils/loadUser";
 
 type Store = {
   authUser: User | null;
@@ -10,7 +10,7 @@ type Store = {
 };
 
 const useAuthStore = create<Store>((set) => ({
-  authUser: loadUserFromLocalStorage("authUser") ?? null,
+  authUser: LoadUserFromLocalStorage("authUser") ?? null,
   requestLoading: false,
   setAuthUser: (user) => {
     localStorage.setItem('authUser', JSON.stringify(user));
