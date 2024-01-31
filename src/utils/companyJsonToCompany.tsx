@@ -3,6 +3,7 @@ import Company, { CheckedStatus } from "../data/company";
 // https://github.com/typestack/class-transformer
 // use this library to transform json to class ??
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function companyJsonToCompany(companyObj: any) {
     try {
         return new Company(

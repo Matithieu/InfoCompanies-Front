@@ -1,6 +1,6 @@
-import { Navigate, Outlet } from 'react-router-dom';
-import useAuthStore from '../store/authStore';
-import Loading from '../pages/Loading';
+import { Navigate, Outlet } from "react-router-dom";
+import Loading from "../pages/Loading";
+import useAuthStore from "../store/authStore";
 
 export const ProtectedRoutes = () => {
   const { authUser, requestLoading } = useAuthStore();
@@ -31,7 +31,10 @@ export const ProtectedSimpleRoutes = () => {
     return <Loading />;
   }
 
-  if (authUser.verified === false && window.location.pathname !== "/subscription") {
+  if (
+    authUser.verified === false &&
+    window.location.pathname !== "/subscription"
+  ) {
     return <Navigate to="/subscription" />;
   }
 
@@ -40,5 +43,4 @@ export const ProtectedSimpleRoutes = () => {
   }
 
   return <Outlet />;
-}
-
+};
