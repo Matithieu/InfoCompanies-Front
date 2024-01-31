@@ -1,15 +1,15 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { Avatar, Box, Button, Container, CssBaseline, Divider, Grid, TextField, Typography } from "@mui/material";
+import { useEffect } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import useAuthStore from "../../store/authStore";
-import { object, string, TypeOf } from "zod";
-import { useEffect } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Container, CssBaseline, Box, Avatar, Typography, TextField, Button, Grid, Divider } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { getGoogleUrl } from "../../utils/getGoogleUrl";
+import { TypeOf, object, string } from "zod";
 import GoogleLogo from '../../assets/google.png';
-import { User } from "../../data/user";
+import { User } from "../../data/Account/user";
+import useAuthStore from "../../store/authStore";
+import { getGoogleUrl } from "../../utils/getGoogleUrl";
 
 export type dataReceived = {
     bearerToken: {

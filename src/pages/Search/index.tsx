@@ -19,7 +19,9 @@ import useAuthStore from "../../store/authStore.tsx";
 
 async function fetchCompanies(searchTerm: string, page: number) {
   const response = await fetch(
-    `${import.meta.env.VITE_SERVER_URL}/api/v1/search?name=${searchTerm}&page=${page}`,
+    `${
+      import.meta.env.VITE_SERVER_URL
+    }/api/v1/search?name=${searchTerm}&page=${page}`,
     {
       method: "GET",
       headers: {
@@ -62,6 +64,7 @@ function TableOfDetails() {
   const { isPending, isError, data, error } = useQuery({
     queryKey: ["companies", searchTerm, dataPagniation.page],
     queryFn: () => fetchCompanies(searchTerm ?? "", dataPagniation.page),
+    retry: 1,
   });
 
   // Reset the page number to 0 when searchTerm changes
