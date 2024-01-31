@@ -1,4 +1,4 @@
-import { User } from "../data/Account/user";
+import { User } from "../../data/Account/user";
 
 // Key is "authUser"
 export function LoadUserFromLocalStorage(key: string) {

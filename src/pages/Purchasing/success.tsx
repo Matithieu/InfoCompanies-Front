@@ -2,7 +2,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { Button, Divider, List, ListItem, ListItemText, Paper, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../../store/authStore';
-import { LoadUserFromLocalStorage } from '../../utils/loadUser';
+import { LoadUserFromLocalStorage } from '../../utils/Load/loadUser';
 
 const OrderConfirmation = () => {
   const queryParams = new URLSearchParams(window.location.search);

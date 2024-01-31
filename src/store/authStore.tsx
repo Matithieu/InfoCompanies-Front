@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { User } from "../data/Account/user";
-import { LoadUserFromLocalStorage } from "../utils/loadUser";
+import { LoadUserFromLocalStorage } from "../utils/Load/loadUser";
 
 type Store = {
   authUser: User | null;

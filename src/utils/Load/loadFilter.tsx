@@ -1,4 +1,4 @@
-export function loadCompaniesFilterFromLocalStorage(key) {
+export function loadCompaniesFilterFromLocalStorage(key: string) {
     const companiesFilter = localStorage.getItem(key);
     if (!companiesFilter) {
       return {};
