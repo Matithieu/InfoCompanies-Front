@@ -99,7 +99,7 @@ export default function TableCompany({ url }: Props) {
     rowsPerPage: 10,
     totalPages: 0,
   });
-
+  const [companies, setCompanies] = React.useState<Company[]>([]);
   const { selectedCompany, setSelectedCompany } = useCompanyStore();
   const { setAuthUser, setRequestLoading } = useAuthStore();
 
@@ -108,16 +108,18 @@ export default function TableCompany({ url }: Props) {
   const { isPending, isError, data, error } = useQuery({
     queryKey: ["companies", url, dataPagniation.page, searchParams],
     queryFn: () => fetchCompanies(url, dataPagniation.page),
+    retry: 1,
   });
 
   useEffect(() => {
-    if (data != null) {
+    if (data != null && !isError) {
       setDataPagination((prevDataPagination) => ({
         ...prevDataPagination,
         totalPages: data.totalPages,
       }));
+      setCompanies(data.content);
     }
-  }, [data]);
+  }, [data, isError]);
 
   const handleChangePage = (_event: unknown, newPage: number) => {
     setDataPagination((prevDataPagination) => ({
@@ -159,10 +161,11 @@ export default function TableCompany({ url }: Props) {
     company.setChecked(newStatus);
     manageIsChecked(company.getId(), newStatus);
 
-    data?.content.map((item) =>
+    // Change the status of the company in data
+    companies?.map((item) =>
       item.getId() === company.getId() ? company : item
     );
-
+    setCompanies([...companies]);
     return newStatus;
   };
 
@@ -244,7 +247,7 @@ export default function TableCompany({ url }: Props) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.content.map((row) => {
+              {companies.map((row) => {
                 return (
                   //Afficher les details de l'entreprise en cliquant dessus
                   <TableRow
