@@ -1,23 +1,25 @@
-import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import { Container } from '@mui/material';
+import { Container } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Grid from "@mui/material/Grid";
+import MenuItem from "@mui/material/MenuItem";
+import Paper from "@mui/material/Paper";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Switch from "@mui/material/Switch";
+import Typography from "@mui/material/Typography";
+import * as React from "react";
 
 export default function Settings() {
-  const [language, setLanguage] = React.useState('en');
+  const [language, setLanguage] = React.useState("en");
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(true); // State for notifications switch
 
-  const handleLanguageChange = (event) => {
+  const handleLanguageChange = (event: SelectChangeEvent<string>) => {
     setLanguage(event.target.value);
   };
 
-  const handleNotificationsChange = (event) => {
+  const handleNotificationsChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setNotificationsEnabled(event.target.checked);
   };
 
@@ -40,17 +42,17 @@ export default function Settings() {
       <Grid
         container
         spacing={3}
-        paddingBottom={'10vh'}
-        paddingLeft={'10vh'}
-        paddingRight={'10vh'}
+        paddingBottom={"10vh"}
+        paddingLeft={"10vh"}
+        paddingRight={"10vh"}
         justifyContent="center"
       >
         <Grid item xs={12} md={6}>
           <Paper
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
               padding: 2,
             }}
           >
