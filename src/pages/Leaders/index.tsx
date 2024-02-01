@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
 import { Grid } from '@mui/material';
-import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 import DetailsLeaders from '../../components/DetailsLeader/index.tsx';
 import Leader from '../../data/leader.tsx';
 

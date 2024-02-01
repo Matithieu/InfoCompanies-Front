@@ -1,10 +1,9 @@
-import React from "react";
+type Props = {
+  selectedValue: string;
+};
 
-function ChatGPT({ selectedValue }) {
-    return (
-        <div>test</div>
-
-    );
+function ChatGPT({ selectedValue }: Props) {
+  return <div>{selectedValue}</div>;
 }
 
 export default ChatGPT;
