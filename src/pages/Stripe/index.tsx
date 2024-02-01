@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { loadStripe, Stripe } from "@stripe/stripe-js"; // Import the Stripe type
 
-import Loading from "../Loading/index.tsx";
-import useAuthStore from "../../store/authStore.tsx";
-import { ItemData } from "../../data/Stripe/itemData.tsx";
 import { useLocation } from "react-router-dom";
+import { ItemData } from "../../data/Stripe/itemData.tsx";
+import useAuthStore from "../../store/authStore.tsx";
+import Loading from "../Loading/index.tsx";
 
 // Make this a functional component that takes in the item data as a prop
 function Payment() {
@@ -14,7 +13,8 @@ function Payment() {
 
   const { authUser } = useAuthStore();
 
-  const [stripePromise, setStripePromise] = useState<Promise<Stripe | null>>(Promise.resolve(null));
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  //const [stripePromise, setStripePromise] = useState<Promise<Stripe | null>>(Promise.resolve(null));
   const [loading, setLoading] = useState(true); // New loading state
 
   /**
@@ -31,11 +31,13 @@ function Payment() {
     }
   }, [authUser]);
 
+  /*
   useEffect(() => {
     // Make sure to call `loadStripe` outside of a component’s render to avoid
     // recreating the `Stripe` object on every render.
     setStripePromise(loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY || ""));
   }, []);
+  */
 
   useEffect(() => {
     console.log("itemData ", itemData);
