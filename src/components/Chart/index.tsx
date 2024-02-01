@@ -1,10 +1,9 @@
-import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
-import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
-import Company from '../../data/company';
-import { Tooltip } from 'recharts';
-import { useCompanyStore } from '../../store/companyStore';
+import * as React from 'react';
+import { Label, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import ChiffreAffaire from '../../data/chiffreAffaire';
+import Company from '../../data/company';
+import { useCompanyStore } from '../../store/companyStore';
 
 export default function Chart() {
   const theme = useTheme();
@@ -90,7 +89,7 @@ export default function Chart() {
                 border: 'none',
                 borderRadius: 3,
               }}
-              formatter={(value, name, props) => {
+              formatter={(value) => {
                 if (value === 0) {
                   return ['Pas de données'];
                 } else {
