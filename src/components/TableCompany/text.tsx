@@ -124,86 +124,6 @@ const rows = [
       email: "olivia@email.com",
     },
   },
-  {
-    id: "INV-1224",
-    date: "Feb 3, 2023",
-    status: "Cancelled",
-    customer: {
-      initial: "S",
-      name: "Steve Hampton",
-      email: "steve.hamp@email.com",
-    },
-  },
-  {
-    id: "INV-1223",
-    date: "Feb 3, 2023",
-    status: "Paid",
-    customer: {
-      initial: "C",
-      name: "Ciaran Murray",
-      email: "ciaran.murray@email.com",
-    },
-  },
-  {
-    id: "INV-1221",
-    date: "Feb 3, 2023",
-    status: "Refunded",
-    customer: {
-      initial: "M",
-      name: "Maria Macdonald",
-      email: "maria.mc@email.com",
-    },
-  },
-  {
-    id: "INV-1220",
-    date: "Feb 3, 2023",
-    status: "Paid",
-    customer: {
-      initial: "C",
-      name: "Charles Fulton",
-      email: "fulton@email.com",
-    },
-  },
-  {
-    id: "INV-1219",
-    date: "Feb 3, 2023",
-    status: "Cancelled",
-    customer: {
-      initial: "J",
-      name: "Jay Hooper",
-      email: "hooper@email.com",
-    },
-  },
-  {
-    id: "INV-1218",
-    date: "Feb 3, 2023",
-    status: "Cancelled",
-    customer: {
-      initial: "K",
-      name: "Krystal Stevens",
-      email: "k.stevens@email.com",
-    },
-  },
-  {
-    id: "INV-1217",
-    date: "Feb 3, 2023",
-    status: "Paid",
-    customer: {
-      initial: "S",
-      name: "Sachin Flynn",
-      email: "s.flyn@email.com",
-    },
-  },
-  {
-    id: "INV-1216",
-    date: "Feb 3, 2023",
-    status: "Cancelled",
-    customer: {
-      initial: "B",
-      name: "Bradley Rosales",
-      email: "brad123@email.com",
-    },
-  },
 ];
 
 function RowMenu() {
@@ -281,10 +201,10 @@ export default function OrderTable() {
                   sx={{ verticalAlign: "text-bottom" }}
                 />
               </th>
-              <th style={{ width: 120, padding: "12px 6px" }}>Invoice</th>
-              <th style={{ width: 140, padding: "12px 6px" }}>Date</th>
-              <th style={{ width: 140, padding: "12px 6px" }}>Status</th>
-              <th style={{ width: 240, padding: "12px 6px" }}>Customer</th>
+              <th style={{ width: 120, padding: "12px 6px" }}>Dénomination</th>
+              <th style={{ width: 140, padding: "12px 6px" }}>Téléphone</th>
+              <th style={{ width: 140, padding: "12px 6px" }}>Email</th>
+              <th style={{ width: 240, padding: "12px 6px" }}>Site Web</th>
               <th style={{ width: 140, padding: "12px 6px" }}> </th>
             </tr>
           </thead>

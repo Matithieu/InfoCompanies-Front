@@ -1,12 +1,12 @@
 import {
   Box,
-  Card,
+  Stack,
   Tab,
   TabList,
   TabPanel,
   Tabs,
   Typography,
-  tabClasses,
+  tabClasses
 } from "@mui/joy";
 import Account from "../../components/Account";
 import useAuthStore from "../../store/authStore";
@@ -29,7 +29,7 @@ export default function AccountPage() {
           }}
         >
           <Box sx={{ px: { xs: 2, md: 6 } }}>
-            <Typography level="h1" component="h1" style={{ marginTop: 52 }}>
+            <Typography level="h1" component="h1" style={{ marginTop: 20 }}>
               Bienvenue, {authUser?.name}
             </Typography>
           </Box>
@@ -66,18 +66,26 @@ export default function AccountPage() {
                 Factures
               </Tab>
             </TabList>
-
-            <TabPanel value={0}>
-              <Card>
+            <Stack
+              spacing={4}
+              sx={{
+                display: "flex",
+                maxWidth: "800px",
+                mx: "auto",
+                px: { xs: 2, md: 6 },
+                py: { xs: 2, md: 3 },
+              }}
+            >
+              <TabPanel value={0}>
                 <Account />
-              </Card>
-            </TabPanel>
-            <TabPanel value={1}>
-              <div>Test</div>
-            </TabPanel>
-            <TabPanel value={2}>
-              <ViewInvoices />
-            </TabPanel>
+              </TabPanel>
+              <TabPanel value={1}>
+                <div>Test</div>
+              </TabPanel>
+              <TabPanel value={2}>
+                <ViewInvoices />
+              </TabPanel>
+            </Stack>
           </Tabs>
         </Box>
       </Box>

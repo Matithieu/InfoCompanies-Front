@@ -1,10 +1,9 @@
 import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined";
-import { Box, Button, Container, Grid, Sheet, Table } from "@mui/joy";
+import { Box, Button, Grid, Sheet, Table, Typography } from "@mui/joy";
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import Title from "../../components/Title/Title.tsx";
 import { CompanyDetails, Page } from "../../data/companyDetails.tsx";
 import { ErrorJwtAuth } from "../../data/errorAuthJwt.ts";
 import useAuthStore from "../../store/authStore.tsx";
@@ -151,49 +150,61 @@ function TableOfDetails() {
     );
   } else if (data.empty === false) {
     return (
-      <Box
+      <Sheet
+        className="OrderTableContainer"
+        variant="outlined"
         sx={{
-          minWidth: 220,
-          minHeight: 220,
+          display: { xs: "none", sm: "initial" },
           width: "100%",
-          borderRadius: 3,
-          overflow: "auto",
-          height: "100%",
+          borderRadius: "sm",
+          flexShrink: 1,
+          minHeight: 0,
         }}
       >
-        <Container>
-          <Table stickyHeader sx={{ borderRadius: 10 }}>
-            <thead>
-              <tr>
-                <td align="left"></td>
-                <td align="left">Dénomination</td>
-                <td align="center">Secteur d'activité</td>
-                <td align="center">Ville</td>
-                <td align="center">Region</td>
+        <Table
+          aria-labelledby="tableTitle"
+          stickyHeader
+          hoverRow
+          sx={{
+            "--TableCell-headBackground":
+              "var(--joy-palette-background-level1)",
+            "--Table-headerUnderlineThickness": "1px",
+            "--TableRow-hoverBackground":
+              "var(--joy-palette-background-level1)",
+            "--TableCell-paddingY": "4px",
+            "--TableCell-paddingX": "8px",
+          }}
+        >
+          <thead>
+            <tr>
+              <th align="left"></th>
+              <th align="left">Dénomination</th>
+              <th align="center">Secteur d'activité</th>
+              <th align="center">Ville</th>
+              <th align="center">Region</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.content.map((row: CompanyDetails) => (
+              <tr
+                key={row.id}
+                onClick={() => {
+                  navigate(`/company/${row.id}`, {});
+                }}
+                style={{ cursor: "pointer" }}
+              >
+                <td align="left">
+                  <ApartmentOutlinedIcon />
+                </td>
+                <td scope="row">{row.denomination}</td>
+                <td align="center">{row.secteurActivite}</td>
+                <td align="center">{row.ville}</td>
+                <td align="center">{row.region}</td>
               </tr>
-            </thead>
-            <tbody>
-              {data.content.map((row: CompanyDetails) => (
-                <tr
-                  key={row.id}
-                  onClick={() => {
-                    navigate(`/company/${row.id}`, {});
-                  }}
-                  style={{ cursor: "pointer" }}
-                >
-                  <td align="left">
-                    <ApartmentOutlinedIcon />
-                  </td>
-                  <td scope="row">{row.denomination}</td>
-                  <td align="center">{row.secteurActivite}</td>
-                  <td align="center">{row.ville}</td>
-                  <td align="center">{row.region}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </Container>
-      </Box>
+            ))}
+          </tbody>
+        </Table>
+      </Sheet>
     );
   }
 }
@@ -206,60 +217,41 @@ export default function Search() {
   const { searchTerm } = useParams();
 
   return (
-    <Container sx={{ display: "flex" }}>
+    <Box sx={{ flex: 1, width: "100%" }}>
       <Box
-        component="main"
         sx={{
-          flexGrow: 1,
-          overflow: "auto",
+          px: { xs: 2, md: 6 },
         }}
       >
-        <Grid
-          container
-          spacing={"3vh"}
-          paddingBottom={"10vh"}
-          paddingLeft={"10vh"}
-          paddingRight={"10vh"}
-          justifyContent="center"
-        >
-          <Grid
-            container
-            spacing={3}
-            justifyContent="space-between"
-            marginTop={5}
-          >
-            <Grid xs={12} md={12}>
-              <Title>
-                <a
-                  style={{
-                    display: "flex",
-                    fontFamily: "Poppins",
-                    justifyContent: "center",
-                  }}
-                >
-                  Liste entreprises pour {searchTerm}
-                </a>
-              </Title>
-              <Sheet
-                variant="soft"
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  minHeight: 320,
-                  height: "100%",
-                  width: "100%",
-                  margin: "auto", // Center horizontally
-                  marginTop: "10vh", // Add top margin
-                }}
-              >
-                <TableOfDetails />
-              </Sheet>
-            </Grid>
-          </Grid>
-        </Grid>
+        <Typography component="h1" level="h1" style={{ marginTop: 20 }}>
+          Entreprises pour {searchTerm}
+        </Typography>
       </Box>
-    </Container>
+      <Grid
+        container
+        spacing={"3vh"}
+        paddingBottom={"10vh"}
+        paddingLeft={"10vh"}
+        paddingRight={"10vh"}
+        justifyContent="center"
+      >
+        <Grid xs={12} md={12}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              minHeight: 320,
+              height: "100%",
+              width: "100%",
+              margin: "auto", // Center horizontally
+            }}
+          >
+            <TableOfDetails />
+          </Box>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }

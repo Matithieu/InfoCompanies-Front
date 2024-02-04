@@ -1,18 +1,33 @@
-import { useTheme } from '@mui/joy/styles';
-import * as React from 'react';
-import { Label, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import ChiffreAffaire from '../../data/chiffreAffaire';
-import Company from '../../data/company';
-import { useCompanyStore } from '../../store/companyStore';
+import { Typography } from "@mui/joy";
+import { useTheme } from "@mui/joy/styles";
+import * as React from "react";
+import {
+  Label,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+import ChiffreAffaire from "../../data/chiffreAffaire";
+import Company from "../../data/company";
+import { useCompanyStore } from "../../store/companyStore";
 
 export default function Chart() {
   const theme = useTheme();
   // Only use selectedCompany. Don't use setSelectedCompany
   const { selectedCompany } = useCompanyStore();
-  const [companyDetails, setCompanyDetails] = React.useState<ChiffreAffaire>(null as unknown as ChiffreAffaire);
+  const [companyDetails, setCompanyDetails] = React.useState<ChiffreAffaire>(
+    null as unknown as ChiffreAffaire
+  );
 
   React.useEffect(() => {
-    if (selectedCompany !== null && selectedCompany instanceof Company && typeof selectedCompany.getAdresse === 'function') {
+    if (
+      selectedCompany !== null &&
+      selectedCompany instanceof Company &&
+      typeof selectedCompany.getAdresse === "function"
+    ) {
       setCompanyDetails(selectedCompany.getAdresseTotal());
     } else {
       setCompanyDetails(null as unknown as ChiffreAffaire);
@@ -23,7 +38,11 @@ export default function Chart() {
     const data: { date: string; amount: number }[] = [];
     const chiffreAffaireData = companyDetails;
 
-    if (chiffreAffaireData && chiffreAffaireData.getDate() && chiffreAffaireData.getAdresse()) {
+    if (
+      chiffreAffaireData &&
+      chiffreAffaireData.getDate() &&
+      chiffreAffaireData.getAdresse()
+    ) {
       const dates = chiffreAffaireData.getDate();
       const chiffreAffaireValues = chiffreAffaireData.getAdresse();
 
@@ -40,15 +59,18 @@ export default function Chart() {
   }
 
   if (companyDetails === null) {
-    return <a style={{ fontSize: '19px' }}>Veuillez sélectionner une entreprise</a>;
+    return (
+      <a style={{ fontSize: "19px" }}>Veuillez sélectionner une entreprise</a>
+    );
   }
   if (companyDetails.getAdresse().length === 0) {
-    return <a style={{ fontSize: '19px' }}>Pas de données pour cette entreprise</a>;
-  }
-  else {
+    return (
+      <a style={{ fontSize: "19px" }}>Pas de données pour cette entreprise</a>
+    );
+  } else {
     return (
       <React.Fragment>
-        <div style={{ display: "flex", justifyContent: 'center', marginTop: 5 }}>Chiffre d'affaire</div>
+        <Typography level="h4">Chiffre d'affaire</Typography>
         <ResponsiveContainer>
           <LineChart
             data={insertData()}
@@ -60,18 +82,13 @@ export default function Chart() {
             }}
             style={{ borderRadius: 3 }}
           >
-            <XAxis
-              dataKey="date"
-              stroke={theme.palette.text.secondary}
-            />
-            <YAxis
-              stroke={theme.palette.text.secondary}
-            >
+            <XAxis dataKey="date" stroke={theme.palette.text.secondary} />
+            <YAxis stroke={theme.palette.text.secondary}>
               <Label
                 angle={270}
                 position="left"
                 style={{
-                  textAnchor: 'middle',
+                  textAnchor: "middle",
                   fill: theme.palette.text.primary,
                 }}
               >
@@ -79,31 +96,29 @@ export default function Chart() {
               </Label>
             </YAxis>
             <Tooltip
-              cursor={{ strokeDasharray: '3 3' }}
+              cursor={{ strokeDasharray: "3 3" }}
               contentStyle={{
                 backgroundColor: theme.palette.background.body,
                 color: theme.palette.text.primary,
-                border: 'none',
+                border: "none",
                 borderRadius: 3,
               }}
               formatter={(value) => {
                 if (value === 0) {
-                  return ['Pas de données'];
+                  return ["Pas de données"];
                 } else {
-                  const formattedValue = new Intl.NumberFormat('fr-FR', {
-                    style: 'currency',
-                    currency: 'EUR',
+                  const formattedValue = new Intl.NumberFormat("fr-FR", {
+                    style: "currency",
+                    currency: "EUR",
                   }).format(Number(value));
-                  return [formattedValue, 'Chiffre d\'affaire'];
+                  return [formattedValue, "Chiffre d'affaire"];
                 }
               }}
             />
-
             <Line
               isAnimationActive={true}
               type="monotone"
               dataKey="amount"
-              stroke={theme.palette.primary.darkChannel}
               strokeWidth={3}
               dot={true}
               width={10}

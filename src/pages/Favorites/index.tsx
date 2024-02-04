@@ -1,4 +1,4 @@
-import { Grid, Sheet, Typography } from "@mui/joy";
+import { Box, Card, Grid, Typography } from "@mui/joy";
 import { useEffect, useState } from "react";
 import Chart from "../../components/Chart/index.tsx";
 import Details from "../../components/Details/index.tsx";
@@ -25,18 +25,16 @@ export default function Favorites() {
   }, []);
 
   return (
-    <Grid>
-      <Typography
-        level="h1"
+    <Grid sx={{ flex: 1, width: "100%" }}>
+      <Box
         sx={{
-          marginTop: 5,
-          marginLeft: 10,
-          marginBottom: 5,
-          alignSelf: "flex-start",
+          px: { xs: 2, md: 6 },
         }}
       >
-        Favoris
-      </Typography>
+        <Typography component="h1" level="h1" style={{ marginTop: 20 }}>
+          Favoris
+        </Typography>
+      </Box>
 
       <Grid
         container
@@ -78,7 +76,7 @@ export default function Favorites() {
             {/* Details of the company */}
             {checkedCompanies.length !== 0 && (
               <Grid xs={12} md={4}>
-                <Sheet
+                <Card
                   sx={{
                     display: "flex",
                     flexDirection: "column",
@@ -86,10 +84,11 @@ export default function Favorites() {
                     justifyContent: "center",
                     minHeight: 200,
                     borderRadius: 3,
+                    maxWidth: 400,
                   }}
                 >
                   <Details />
-                </Sheet>
+                </Card>
               </Grid>
             )}
           </Grid>
@@ -107,7 +106,7 @@ export default function Favorites() {
               >
                 {/* Leaders of the company */}
                 <Grid xs={12} md={6}>
-                  <Sheet
+                  <Card
                     sx={{
                       display: "flex",
                       flexDirection: "column",
@@ -115,14 +114,15 @@ export default function Favorites() {
                       justifyContent: "center",
                       height: 220,
                       borderRadius: 3,
+                      minWidth: 400,
                     }}
                   >
                     <Chart />
-                  </Sheet>
+                  </Card>
                 </Grid>
 
                 <Grid xs={12} md={6}>
-                  <Sheet
+                  <Card
                     sx={{
                       display: "flex",
                       flexDirection: "column",
@@ -133,7 +133,7 @@ export default function Favorites() {
                     }}
                   >
                     <ListOfLeaders />
-                  </Sheet>
+                  </Card>
                 </Grid>
               </Grid>
             </Grid>

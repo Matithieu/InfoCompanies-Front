@@ -1,5 +1,5 @@
 import SearchIcon from "@mui/icons-material/Search";
-import { Button, Grid, Sheet, Typography } from "@mui/joy";
+import { Box, Button, Card, Grid, Stack, Typography } from "@mui/joy";
 import { useEffect, useState } from "react";
 import Chart from "../../components/Chart/index.tsx";
 import CustomSelect from "../../components/CustomSelect/index.tsx";
@@ -78,11 +78,11 @@ const AdvancedSearch = () => {
   };
 
   return (
-    <div style={{ marginLeft: 25, marginTop: 20, marginBottom: 20 }}>
+    <div>
       <Button
         variant="outlined"
         onClick={toggleMenu}
-        style={{ borderRadius: 5, marginBottom: 30 }}
+        style={{ marginBottom: 30, marginTop: 20 }}
       >
         Recherche avancée
       </Button>
@@ -188,37 +188,31 @@ export default function Dashboard() {
     changeURL();
   }, [searchParams]);
   return (
-    <Grid>
+    <Grid sx={{ flex: 1, width: "100%" }}>
       <SEO
         title="Dashboard"
         description="Dashboard"
         name="Dashboard"
         type="Dashboard"
       />
-      <Typography
-        level="h1"
+      <Box
         sx={{
-          marginTop: 5,
-          marginLeft: 10,
-          marginBottom: 5,
-          alignSelf: "flex-start",
+          px: { xs: 2, md: 6 },
         }}
       >
-        Dashboard
-      </Typography>
+        <Typography component="h1" level="h1" style={{ marginTop: 20 }}>
+          Dashboard
+        </Typography>
+      </Box>
+      <Grid container spacing={3} paddingLeft={8} paddingRight={10}>
+        {/* Advanced Search */}
+        <Grid xs={12} md={4} lg={3}>
+          <AdvancedSearch />
+        </Grid>
 
-      <Grid
-        container
-        spacing={3}
-        paddingBottom={10}
-        paddingLeft={10}
-        paddingRight={10}
-      >
-        <AdvancedSearch />
         {/* List Of Companies */}
-        <Grid xs={12} md={12} lg={12}>
-          <Sheet
-            variant="soft"
+        <Grid xs={12} md={8} lg={9}>
+          <Stack
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -233,31 +227,42 @@ export default function Dashboard() {
             }}
           >
             <TableCompany url={url} />
-          </Sheet>
+          </Stack>
         </Grid>
 
         {/* Container des éléments sur la deuxième ligne */}
-        <Grid xs={12} md={12} lg={12}>
-          <Grid container spacing={3} justifyContent="center" marginTop={5}>
+        <Grid xs={12}>
+          <Grid
+            container
+            spacing={3}
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-evenly",
+              minWidth: "100%",
+            }}
+          >
             {/* Chart of the company */}
             <Grid xs={12} md={4}>
-              <Sheet
+              <Card
                 sx={{
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
                   height: 220,
+                  minWidth: 400,
                   borderRadius: 3,
                 }}
               >
                 <Chart />
-              </Sheet>
+              </Card>
             </Grid>
 
             {/* Leaders of the company */}
             <Grid xs={12} md={4}>
-              <Sheet
+              <Card
                 sx={{
                   display: "flex",
                   flexDirection: "column",
@@ -268,12 +273,12 @@ export default function Dashboard() {
                 }}
               >
                 <ListOfLeaders />
-              </Sheet>
+              </Card>
             </Grid>
 
             {/* Details of the company */}
-            <Grid xs={12} md={4}>
-              <Sheet
+            <Grid xs={12} md={12}>
+              <Card
                 sx={{
                   display: "flex",
                   flexDirection: "column",
@@ -281,10 +286,11 @@ export default function Dashboard() {
                   justifyContent: "center",
                   minHeight: 220,
                   borderRadius: 3,
+                  maxWidth: 400,
                 }}
               >
                 <Details />
-              </Sheet>
+              </Card>
             </Grid>
           </Grid>
         </Grid>

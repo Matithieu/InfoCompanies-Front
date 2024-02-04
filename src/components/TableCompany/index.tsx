@@ -7,11 +7,11 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import {
   Box,
   Button,
-  FormControl,
-  FormLabel,
   IconButton,
+  Sheet,
   Table,
   Typography,
+  iconButtonClasses,
 } from "@mui/joy";
 import { useQuery } from "@tanstack/react-query";
 import * as React from "react";
@@ -204,7 +204,7 @@ export default function TableCompany({ url }: Props) {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          overflow: "auto",
+          overflow: "visible",
         }}
       >
         <h1>{error.message}</h1>
@@ -246,287 +246,297 @@ export default function TableCompany({ url }: Props) {
     typeof data.content[0].getAdresse === "function"
   ) {
     return (
-      <Box
-        sx={{
-          position: "relative",
-          width: "100%",
-          borderRadius: 3,
-          overflow: "auto",
-          height: "100%",
-        }}
-      >
-        <Table stickyHeader aria-label="sticky table">
-          <thead>
-            <tr>
-              {columnsTableCompany.map((column) => (
-                <td
-                  key={column.id}
-                  align={column.align}
-                  style={{
-                    minWidth: column.minWidth,
-                    fontFamily: "Poppins",
-                    fontSize: 16,
-                  }}
-                >
-                  {column.label}
-                </td>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {companies.map((row) => {
-              return (
-                //Afficher les details de l'entreprise en cliquant dessus
-                <tr
-                  role="checkbox"
-                  tabIndex={-1}
-                  key={row.getSiren()}
-                  onClick={() => handleDetailsClick(row)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <td key="statut" align="center">
-                    <IconButton
-                      style={{
-                        border: "none",
-                        backgroundColor: "transparent",
-                        cursor: "pointer",
-                      }}
-                      onClick={(e) => {
-                        e.stopPropagation(); // Pour éviter de déclencher handleDetailsClick
-                        row.setChecked(handleChangeStatut(row));
-                      }}
-                    >
-                      <StatutIcon statut={row.getChecked()} />
-                    </IconButton>
-                  </td>
-                  {/* Slice to exclude the id */}
-                  {columnsTableCompany.slice(1).map((column) => {
-                    if (column.id === "social") {
-                      return (
-                        <td
-                          key={column.id}
-                          align={column.align}
-                          style={{ fontFamily: "Poppins" }}
-                        >
-                          {row.getFacebook() && (
-                            <FacebookIcon style={{ color: "#3b5998" }} />
-                          )}
-                          {row.getTwitter() && (
-                            <TwitterIcon style={{ color: "#1DA1F2" }} />
-                          )}
-                          {row.getLinkedin() && (
-                            <LinkedInIcon style={{ color: "#0e76a8" }} />
-                          )}
-                          {row.getYoutube() && (
-                            <YouTubeIcon style={{ color: "red" }} />
-                          )}
-                        </td>
-                      );
-                    } else if (column.id === "checked") {
-                      return (
-                        <td
-                          key={column.id}
-                          align={column.align}
-                          style={{ fontFamily: "Poppins" }}
-                        >
-                          <StatutIcon statut={row.getChecked()} />
-                        </td>
-                      );
-                    } else if (column.id === "dateImmatriculation") {
-                      return (
-                        <td
-                          key={column.id}
-                          align={column.align}
-                          style={{ fontFamily: "Poppins" }}
-                        >
-                          {row.getDateImmatriculation() ?? "N/A"}
-                        </td>
-                      );
-                    } else if (column.id === "secteurActivite") {
-                      return (
-                        <td
-                          key={column.id}
-                          align={column.align}
-                          style={{ fontFamily: "Poppins" }}
-                        >
-                          {row.getSecteurActivite() ?? "N/A"}
-                        </td>
-                      );
-                    } else if (column.id === "formeJuridique") {
-                      return (
-                        <td
-                          key={column.id}
-                          align={column.align}
-                          style={{ fontFamily: "Poppins" }}
-                        >
-                          {row.getFormeJuridique() ?? "N/A"}
-                        </td>
-                      );
-                    } else if (column.id === "adresse") {
-                      return (
-                        <td
-                          key={column.id}
-                          align={column.align}
-                          style={{ fontFamily: "Poppins" }}
-                        >
-                          {row.getAdresse() ?? "N/A"}
-                        </td>
-                      );
-                    } else if (column.id === "codePostal") {
-                      return (
-                        <td
-                          key={column.id}
-                          align={column.align}
-                          style={{ fontFamily: "Poppins" }}
-                        >
-                          {row.getCodePostal() ?? "N/A"}
-                        </td>
-                      );
-                    } else if (column.id === "ville") {
-                      return (
-                        <td
-                          key={column.id}
-                          align={column.align}
-                          style={{ fontFamily: "Poppins" }}
-                        >
-                          {row.getVille() ?? "N/A"}
-                        </td>
-                      );
-                    } else if (column.id === "region") {
-                      return (
-                        <td
-                          key={column.id}
-                          align={column.align}
-                          style={{ fontFamily: "Poppins" }}
-                        >
-                          {row.getRegion()}
-                        </td>
-                      );
-                    } else if (column.id === "denomination") {
-                      return (
-                        <td
-                          key={column.id}
-                          align={column.align}
-                          style={{ fontFamily: "Poppins" }}
-                        >
-                          {row.getDenomination() ?? "N/A"}
-                        </td>
-                      );
-                    } else if (column.id === "phone") {
-                      return (
-                        <td
-                          key={column.id}
-                          align={column.align}
-                          style={{ fontFamily: "Poppins" }}
-                        >
-                          {row.getPhone() ?? "N/A"}
-                        </td>
-                      );
-                    } else if (column.id === "email") {
-                      return (
-                        <td
-                          key={column.id}
-                          align={column.align}
-                          style={{ fontFamily: "Poppins" }}
-                        >
-                          {row.getEmail() ?? "N/A"}
-                        </td>
-                      );
-                    } else if (column.id === "website") {
-                      return (
-                        <td
-                          key={column.id}
-                          align={column.align}
-                          style={{
-                            fontFamily: "Poppins",
-                            maxWidth: "50px",
-                            maxHeight: "50px",
-                            overflow: "hidden",
-                          }}
-                          onClick={(e) => {
-                            if (
-                              e.target === e.currentTarget &&
-                              row.getWebsite() != null &&
-                              row.getWebsite() != ""
-                            ) {
-                              e.stopPropagation(); // To avoid triggering handleDetailsClick
-                              window.open(row.getWebsite(), "_blank");
-                            }
-                          }}
-                        >
-                          {row.getWebsite() ?? "N/A"}
-                        </td>
-                      );
-                    }
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colSpan={6}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 2,
-                    justifyContent: "flex-end",
-                  }}
-                >
-                  <FormControl orientation="horizontal" size="sm">
-                    <FormLabel>Rows per page:</FormLabel>=
-                  </FormControl>
-                  <Typography textAlign="center" sx={{ minWidth: 80 }}>
-                    {labelDisplayedRows({
-                      from:
-                        data.numberOfElements === 0
-                          ? 0
-                          : dataPagniation.page * dataPagniation.rowsPerPage +
-                            1,
-                      to: getLabelDisplayedRowsTo() ?? 0,
-                      count:
-                        data.numberOfElements === -1
-                          ? -1
-                          : data.numberOfElements,
-                    })}
-                  </Typography>
-                  <Box sx={{ display: "flex", gap: 1 }}>
-                    <IconButton
-                      size="sm"
-                      color="neutral"
-                      variant="outlined"
-                      disabled={dataPagniation.page === 0}
-                      onClick={() => handleChangePage(dataPagniation.page - 1)}
-                      sx={{ bgcolor: "background.surface" }}
-                    >
-                      <KeyboardArrowLeftIcon />
-                    </IconButton>
-                    <IconButton
-                      size="sm"
-                      color="neutral"
-                      variant="outlined"
-                      disabled={
-                        data.numberOfElements !== -1
-                          ? dataPagniation.page >=
-                            Math.ceil(
-                              data.numberOfElements / dataPagniation.rowsPerPage
-                            ) -
-                              1
-                          : false
+      <React.Fragment>
+        <Sheet
+          className="OrderTableContainer"
+          variant="outlined"
+          sx={{
+            display: { xs: "none", sm: "initial" },
+            width: "100%",
+            borderRadius: "sm",
+            flexShrink: 1,
+            overflow: "visible",
+            minHeight: 0,
+          }}
+        >
+          <Table
+            aria-labelledby="tableTitle"
+            stickyHeader
+            hoverRow
+            sx={{
+              "--TableCell-headBackground":
+                "var(--joy-palette-background-level1)",
+              "--Table-headerUnderlineThickness": "1px",
+              "--TableRow-hoverBackground":
+                "var(--joy-palette-background-level1)",
+              "--TableCell-paddingY": "4px",
+              "--TableCell-paddingX": "8px",
+            }}
+          >
+            <thead>
+              <tr>
+                {columnsTableCompany.map((column) => (
+                  <th
+                    key={column.id}
+                    align={column.align}
+                    style={{
+                      minWidth: column.minWidth,
+                      fontSize: 16,
+                    }}
+                  >
+                    {column.label}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {companies.map((row) => {
+                return (
+                  //Afficher les details de l'entreprise en cliquant dessus
+                  <tr
+                    role="checkbox"
+                    tabIndex={-1}
+                    key={row.getId() + "rowdetails"}
+                    onClick={() => handleDetailsClick(row)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <td key={row.getId() + "checbox"} align="center">
+                      <IconButton
+                        style={{
+                          border: "none",
+                          backgroundColor: "transparent",
+                          cursor: "pointer",
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation(); // Pour éviter de déclencher handleDetailsClick
+                          row.setChecked(handleChangeStatut(row));
+                        }}
+                      >
+                        <StatutIcon statut={row.getChecked()} />
+                      </IconButton>
+                    </td>
+                    {/* Slice to exclude the id */}
+                    {columnsTableCompany.slice(1).map((column) => {
+                      if (column.id === "social") {
+                        return (
+                          <td
+                            key={column.id}
+                            align={column.align}
+                            style={{ fontFamily: "Poppins" }}
+                          >
+                            {row.getFacebook() && (
+                              <FacebookIcon style={{ color: "#3b5998" }} />
+                            )}
+                            {row.getTwitter() && (
+                              <TwitterIcon style={{ color: "#1DA1F2" }} />
+                            )}
+                            {row.getLinkedin() && (
+                              <LinkedInIcon style={{ color: "#0e76a8" }} />
+                            )}
+                            {row.getYoutube() && (
+                              <YouTubeIcon style={{ color: "red" }} />
+                            )}
+                          </td>
+                        );
+                      } else if (column.id === "checked") {
+                        return (
+                          <td
+                            key={column.id}
+                            align={column.align}
+                            style={{ fontFamily: "Poppins" }}
+                          >
+                            <StatutIcon statut={row.getChecked()} />
+                          </td>
+                        );
+                      } else if (column.id === "dateImmatriculation") {
+                        return (
+                          <td
+                            key={column.id}
+                            align={column.align}
+                            style={{ fontFamily: "Poppins" }}
+                          >
+                            {row.getDateImmatriculation() ?? "N/A"}
+                          </td>
+                        );
+                      } else if (column.id === "secteurActivite") {
+                        return (
+                          <td
+                            key={column.id}
+                            align={column.align}
+                            style={{ fontFamily: "Poppins" }}
+                          >
+                            {row.getSecteurActivite() ?? "N/A"}
+                          </td>
+                        );
+                      } else if (column.id === "formeJuridique") {
+                        return (
+                          <td
+                            key={column.id}
+                            align={column.align}
+                            style={{ fontFamily: "Poppins" }}
+                          >
+                            {row.getFormeJuridique() ?? "N/A"}
+                          </td>
+                        );
+                      } else if (column.id === "adresse") {
+                        return (
+                          <td
+                            key={column.id}
+                            align={column.align}
+                            style={{ fontFamily: "Poppins" }}
+                          >
+                            {row.getAdresse() ?? "N/A"}
+                          </td>
+                        );
+                      } else if (column.id === "codePostal") {
+                        return (
+                          <td
+                            key={column.id}
+                            align={column.align}
+                            style={{ fontFamily: "Poppins" }}
+                          >
+                            {row.getCodePostal() ?? "N/A"}
+                          </td>
+                        );
+                      } else if (column.id === "ville") {
+                        return (
+                          <td
+                            key={column.id}
+                            align={column.align}
+                            style={{ fontFamily: "Poppins" }}
+                          >
+                            {row.getVille() ?? "N/A"}
+                          </td>
+                        );
+                      } else if (column.id === "region") {
+                        return (
+                          <td
+                            key={column.id}
+                            align={column.align}
+                            style={{ fontFamily: "Poppins" }}
+                          >
+                            {row.getRegion()}
+                          </td>
+                        );
+                      } else if (column.id === "denomination") {
+                        return (
+                          <td
+                            key={column.id}
+                            align={column.align}
+                            style={{ fontFamily: "Poppins" }}
+                          >
+                            {row.getDenomination() ?? "N/A"}
+                          </td>
+                        );
+                      } else if (column.id === "phone") {
+                        return (
+                          <td
+                            key={column.id}
+                            align={column.align}
+                            style={{ fontFamily: "Poppins" }}
+                          >
+                            {row.getPhone() ?? "N/A"}
+                          </td>
+                        );
+                      } else if (column.id === "email") {
+                        return (
+                          <td
+                            key={column.id}
+                            align={column.align}
+                            style={{ fontFamily: "Poppins" }}
+                          >
+                            {row.getEmail() ?? "N/A"}
+                          </td>
+                        );
+                      } else if (column.id === "website") {
+                        return (
+                          <td
+                            key={column.id}
+                            align={column.align}
+                            style={{
+                              fontFamily: "Poppins",
+                              maxWidth: "50px",
+                              maxHeight: "50px",
+                              overflow: "visible",
+                            }}
+                            onClick={(e) => {
+                              if (
+                                e.target === e.currentTarget &&
+                                row.getWebsite() != null &&
+                                row.getWebsite() != ""
+                              ) {
+                                e.stopPropagation(); // To avoid triggering handleDetailsClick
+                                window.open(row.getWebsite(), "_blank");
+                              }
+                            }}
+                          >
+                            {row.getWebsite() ?? "N/A"}
+                          </td>
+                        );
                       }
-                      onClick={() => handleChangePage(dataPagniation.page + 1)}
-                      sx={{ bgcolor: "background.surface" }}
-                    >
-                      <KeyboardArrowRightIcon />
-                    </IconButton>
-                  </Box>
-                </Box>
-              </td>
-            </tr>
-          </tfoot>
-        </Table>
-      </Box>
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </Sheet>
+        <Box>
+          <Box
+            sx={{
+              pt: 2,
+              gap: 1,
+              [`& .${iconButtonClasses.root}`]: { borderRadius: "50%" },
+              display: {
+                xs: "none",
+                md: "flex",
+              },
+            }}
+          >
+            <Box sx={{ display: "flex", gap: 1 }}>
+              <IconButton
+                size="sm"
+                color="neutral"
+                variant="outlined"
+                disabled={dataPagniation.page === 0}
+                onClick={() => handleChangePage(dataPagniation.page - 1)}
+                sx={{ bgcolor: "background.surface" }}
+              >
+                <KeyboardArrowLeftIcon />
+              </IconButton>
+              <Typography textAlign="center" sx={{ minWidth: 80 }}>
+                {labelDisplayedRows({
+                  from:
+                    data.numberOfElements === 0
+                      ? 0
+                      : dataPagniation.page * dataPagniation.rowsPerPage + 1,
+                  to: getLabelDisplayedRowsTo() ?? 0,
+                  count:
+                    data.numberOfElements === -1 ? -1 : data.numberOfElements,
+                })}
+              </Typography>
+              <IconButton
+                size="sm"
+                color="neutral"
+                variant="outlined"
+                disabled={
+                  data.numberOfElements !== -1
+                    ? dataPagniation.page >=
+                      Math.ceil(
+                        data.numberOfElements / dataPagniation.rowsPerPage
+                      ) -
+                        1
+                    : false
+                }
+                onClick={() => handleChangePage(dataPagniation.page + 1)}
+                sx={{ bgcolor: "background.surface" }}
+              >
+                <KeyboardArrowRightIcon />
+              </IconButton>
+            </Box>
+          </Box>
+        </Box>
+      </React.Fragment>
     );
   }
 }

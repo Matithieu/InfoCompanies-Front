@@ -1,4 +1,4 @@
-import { Container, Table, Tooltip } from "@mui/joy";
+import { Box, Table, Tooltip, Typography } from "@mui/joy";
 
 import BusinessIcon from "@mui/icons-material/Business";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
@@ -13,9 +13,7 @@ export default function Details() {
 
   if (selectedCompany === null) {
     return (
-      <a style={{ fontSize: "19px", fontFamily: "Poppins" }}>
-        Veuillez sélectionner une entreprise
-      </a>
+      <Typography level="h4">Veuillez sélectionner une entreprise</Typography>
     );
   } else if (
     selectedCompany !== null &&
@@ -23,11 +21,10 @@ export default function Details() {
     typeof selectedCompany.getAdresse === "function"
   ) {
     return (
-      <Container style={{ borderRadius: 9 }}>
+      <Box>
         <a
           style={{
             display: "flex",
-            fontFamily: "Poppins",
             justifyContent: "center",
           }}
         >
@@ -92,7 +89,7 @@ export default function Details() {
             </tr>
           </tbody>
         </Table>
-      </Container>
+      </Box>
     );
   }
 }

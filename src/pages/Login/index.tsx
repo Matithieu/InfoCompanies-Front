@@ -12,15 +12,18 @@ import {
   Link,
   Typography,
 } from "@mui/joy";
+import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { TypeOf, object, string } from "zod";
 import GoogleLogo from "../../assets/google.png";
+import { ErrorJwtAuth } from "../../data/errorAuthJwt";
 import useAuthStore from "../../store/authStore";
 import { getGoogleUrl } from "../../utils/getGoogleUrl";
-import { dataReceived } from "../Register";
+import { userJsonToUser } from "../../utils/userJsonToUser";
+import { DataReceived } from "../Register";
 
 const loginSchema = object({
   email: string()
@@ -33,18 +36,39 @@ const loginSchema = object({
 
 export type LoginInput = TypeOf<typeof loginSchema>;
 
+async function loginUser(data: LoginInput) {
+  const response = await fetch(
+    `${import.meta.env.VITE_SERVER_URL}/auth/authenticate`,
+    {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  if (response.ok) {
+    const data: DataReceived = await response.json();
+    return data;
+  } else {
+    const error: ErrorJwtAuth = await response.json();
+    if (response.status === 401) {
+      toast.error(error.message);
+      throw new Error(error.message);
+    } else {
+      throw new Error(error.message);
+    }
+  }
+}
+
 const LoginPage = () => {
   const { authUser, setAuthUser, setRequestLoading } = useAuthStore();
   const location = useLocation();
   const navigate = useNavigate();
-  const from = (location.state as any)?.from.pathname as string; // Redirect to dashboard by default
-
-  /*
-  // Create a new User object for testing. Remove this when you have implemented the login logic with the API
-  const newUser = new User("1", "Mat", "amarmathi@gmail.com", "0454784817", "Le Tholonet", "Avenue de la mouine", "admin", "provider", false);
-  setAuthUser(newUser);
-  setRequestLoading(false);
-  */
+  const from =
+    (location.state as { from: { pathname: string } })?.from.pathname ||
+    "/dashboard"; // Redirect to dashboard by default
 
   const methods = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
@@ -56,54 +80,27 @@ const LoginPage = () => {
     formState: { errors },
   } = methods;
 
-  const loginUser: SubmitHandler<LoginInput> = async (data: LoginInput) => {
-    try {
-      setRequestLoading(true);
-      const response = await fetch(
-        `${import.meta.env.VITE_SERVER_URL}/auth/authenticate`,
-        {
-          method: "POST",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      const dataReceived: dataReceived = await response.json();
-      console.log("data ", dataReceived);
-
-      if (response.ok) {
-        localStorage.setItem("token", dataReceived.bearerToken.accessToken);
-        console.log("user ", dataReceived.user);
-        setAuthUser(dataReceived.user);
-        setRequestLoading(false);
-        if (dataReceived.user.verified === true) {
-          console.log("verified");
-          navigate("/dashboard");
-        } else {
-          console.log("not verified");
-          navigate("/subscription");
-        }
-      }
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || "Login failed", {
-        position: "top-right",
-        autoClose: 5000,
-      });
-    } finally {
-      setRequestLoading(false);
-    }
-  };
+  const mutation = useMutation({
+    mutationFn: (values: LoginInput) => loginUser(values),
+    retry: 1,
+  });
 
   useEffect(() => {
     if (authUser?.verified === true) {
       navigate("/dashboard");
+    } else if (authUser?.verified === false) {
+      toast.error("Redirected to subscription page.");
+      navigate("/subscription");
     }
   }, [authUser, navigate]);
 
   const onSubmitHandler: SubmitHandler<LoginInput> = (values) => {
-    loginUser(values);
+    setRequestLoading(true);
+    mutation.mutate(values);
+    if (mutation.data != null) {
+      setAuthUser(userJsonToUser(mutation.data.user));
+      localStorage.setItem("token", mutation.data.bearerToken.accessToken);
+    }
   };
 
   return (

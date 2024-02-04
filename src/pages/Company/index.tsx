@@ -1,10 +1,10 @@
 import {
   Box,
   Button,
+  Card,
   CssBaseline,
   Grid,
   IconButton,
-  Sheet,
   Typography,
 } from "@mui/joy";
 import { useQuery } from "@tanstack/react-query";
@@ -162,7 +162,7 @@ export default function CompanyPage() {
               }}
             >
               <Typography
-                level="h4"
+                level="h1"
                 sx={{
                   marginTop: 5,
                   marginLeft: 0,
@@ -189,20 +189,21 @@ export default function CompanyPage() {
             <Grid>
               <Grid container spacing={3} justifyContent="center" marginTop={5}>
                 <Grid xs={12} md={4}>
-                  <Sheet
+                  <Card
                     sx={{
                       display: "flex",
                       flexDirection: "column",
                       alignItems: "center",
                       justifyContent: "center",
                       minHeight: 220,
+                      maxWidth: 400,
                     }}
                   >
                     <Details />
-                  </Sheet>
+                  </Card>
                 </Grid>
                 <Grid xs={12} md={4}>
-                  <Sheet
+                  <Card
                     sx={{
                       display: "flex",
                       flexDirection: "column",
@@ -212,33 +213,23 @@ export default function CompanyPage() {
                     }}
                   >
                     <ListOfLeaders />
-                  </Sheet>
+                  </Card>
                 </Grid>
               </Grid>
               <Grid container spacing={3} justifyContent="center" marginTop={5}>
                 <Grid xs={8} md={4}>
-                  <Sheet
+                  <Card
                     sx={{
                       display: "flex",
                       flexDirection: "column",
                       alignItems: "center",
                       justifyContent: "center",
                       height: 220,
+                      minWidth: 400,
                     }}
                   >
                     <Chart />
-                  </Sheet>
-                </Grid>
-                <Grid xs={8} md={4}>
-                  <Sheet
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      minHeight: 220,
-                    }}
-                  ></Sheet>
+                  </Card>
                 </Grid>
               </Grid>
             </Grid>

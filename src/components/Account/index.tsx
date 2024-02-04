@@ -1,12 +1,12 @@
 import {
-  Box,
   Button,
+  Card,
   CircularProgress,
+  Divider,
   FormControl,
   FormLabel,
   Grid,
   Input,
-  Stack,
   Typography,
 } from "@mui/joy";
 import { useQuery } from "@tanstack/react-query";
@@ -87,78 +87,69 @@ export default function Account() {
     return <div>{error?.message}</div>;
   } else if (authUser != null) {
     return (
-      <Box>
-        <Stack
-          spacing={4}
-          sx={{
-            display: "flex",
-            maxWidth: "800px",
-            mx: "auto",
-            px: { xs: 2, md: 6 },
-            py: { xs: 2, md: 3 },
-          }}
-        >
-          <Typography level="h3" gutterBottom>
-            Détails du compte
-          </Typography>
-          <form>
-            <Grid container spacing={3}>
-              <Grid xs={12} md={6}>
-                <FormControl>
-                  <FormLabel htmlFor="name">Name</FormLabel>
-                  <Input
-                    id="name"
-                    value={editedUser?.name ?? ""}
-                    onChange={(e) => handleChange(e, "name")}
-                    disabled={!editMode}
-                  />
-                </FormControl>
-              </Grid>
-              <Grid xs={12} md={6}>
-                <FormControl>
-                  <FormLabel htmlFor="email">Email</FormLabel>
-                  <Input
-                    id="email"
-                    value={editedUser?.email ?? ""}
-                    onChange={(e) => handleChange(e, "email")}
-                    disabled
-                  />
-                </FormControl>
-              </Grid>
-              <Grid xs={12} md={6}>
-                <FormControl>
-                  <FormLabel htmlFor="phone">Phone</FormLabel>
-                  <Input
-                    id="phone"
-                    value={editedUser?.phone?.toString() ?? ""}
-                    onChange={(e) => handleChange(e, "phone")}
-                    disabled={!editMode}
-                  />
-                </FormControl>
-              </Grid>
+      <Card>
+        <Typography level="h3" gutterBottom>
+          Détails du compte
+        </Typography>
+        <Divider />
+
+        <form>
+          <Grid container spacing={3}>
+            <Grid xs={12} md={6}>
+              <FormControl>
+                <FormLabel htmlFor="name">Name</FormLabel>
+                <Input
+                  id="name"
+                  value={editedUser?.name ?? ""}
+                  onChange={(e) => handleChange(e, "name")}
+                  disabled={!editMode}
+                />
+              </FormControl>
             </Grid>
-            <div
-              style={{
-                marginTop: "20px",
-                display: "flex",
-                justifyContent: "flex-end",
-              }}
-            >
-              {requestLoading ? (
-                <CircularProgress />
-              ) : !editMode ? (
-                <Button variant="outlined" color="primary" onClick={handleEdit}>
-                  Editer
-                </Button>
-              ) : (
-                <Button variant="outlined" color="neutral" onClick={handleSave}>
-                  Sauvegarder
-                </Button>
-              )}
-            </div>
-          </form>
-        </Stack>
-      </Box>
+            <Grid xs={12} md={6}>
+              <FormControl>
+                <FormLabel htmlFor="email">Email</FormLabel>
+                <Input
+                  id="email"
+                  value={editedUser?.email ?? ""}
+                  onChange={(e) => handleChange(e, "email")}
+                  disabled
+                />
+              </FormControl>
+            </Grid>
+            <Grid xs={12} md={6}>
+              <FormControl>
+                <FormLabel htmlFor="phone">Phone</FormLabel>
+                <Input
+                  id="phone"
+                  value={editedUser?.phone?.toString() ?? ""}
+                  onChange={(e) => handleChange(e, "phone")}
+                  disabled={!editMode}
+                />
+              </FormControl>
+            </Grid>
+          </Grid>
+          <div
+            style={{
+              marginTop: "20px",
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
+            {requestLoading ? (
+              <CircularProgress />
+            ) : !editMode ? (
+              <Button variant="outlined" color="primary" onClick={handleEdit}>
+                Editer
+              </Button>
+            ) : (
+              <Button variant="outlined" color="neutral" onClick={handleSave}>
+                Sauvegarder
+              </Button>
+            )}
+          </div>
+        </form>
+      </Card>
     );
   }
 }

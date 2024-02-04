@@ -1,15 +1,15 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {
-    Avatar,
-    Box,
-    Button,
-    Container,
-    CssBaseline,
-    Divider,
-    Grid,
-    Input,
-    Typography,
+  Avatar,
+  Box,
+  Button,
+  Container,
+  CssBaseline,
+  Divider,
+  Grid,
+  Input,
+  Typography,
 } from "@mui/joy";
 import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -21,7 +21,7 @@ import { User } from "../../data/Account/user";
 import useAuthStore from "../../store/authStore";
 import { getGoogleUrl } from "../../utils/getGoogleUrl";
 
-export type dataReceived = {
+export type DataReceived = {
   bearerToken: {
     accessToken: string;
     tokenType: string;
@@ -51,9 +51,8 @@ const RegisterPage = () => {
   const location = useLocation();
   const { setRequestLoading, setAuthUser, authUser } = useAuthStore();
   const from =
-    ((location.state as any)?.from.pathname as string) || "/dashboard"; // Redirect to dashboard by default
-
-  //const newUser = new User("3", "Mathieu", "mathieu@gmail.com", "0624734817", "Le Tholonet", "Avenue Aurélien Houchard", "admin", "provider", false);
+    (location.state as { from: { pathname: string } })?.from.pathname ||
+    "/dashboard"; // Redirect to dashboard by default
 
   const registerUser = async (data: RegisterInput) => {
     try {
@@ -71,7 +70,7 @@ const RegisterPage = () => {
         }
       );
 
-      const dataReceived: dataReceived = await response.json();
+      const dataReceived: DataReceived = await response.json();
 
       if (response.status === 200) {
         localStorage.setItem("token", dataReceived.bearerToken.accessToken);
