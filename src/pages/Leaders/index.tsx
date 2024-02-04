@@ -1,11 +1,6 @@
-import { Grid } from '@mui/material';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import DetailsLeaders from '../../components/DetailsLeader/index.tsx';
-import Leader from '../../data/leader.tsx';
-
+import { Box, CssBaseline, Grid, Sheet, Typography } from "@mui/joy";
+import DetailsLeaders from "../../components/DetailsLeader/index.tsx";
+import Leader from "../../data/leader.tsx";
 
 const idTest = window.location.pathname.split("/")[2];
 console.log("Leader id : " + idTest);
@@ -20,9 +15,7 @@ const leader1 = new Leader(
   new Date("1990-01-01"),
   " 06 00 00 00 00",
   "email@email.com",
-  [
-    { id: 1, denomination: "Entreprise 1" },
-  ]
+  [{ id: 1, denomination: "Entreprise 1" }]
 );
 
 const initialLeaderData: Leader = leader1;
@@ -30,49 +23,57 @@ const initialLeaderData: Leader = leader1;
 export default function LeaderDetails() {
   if (initialLeaderData == null) {
     return <a>Aucunes données trouvées</a>;
-  }
-  else {
+  } else {
     return (
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <Box
-          component="main"
-          sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-            flexGrow: 1,
-            height: '100vh',
-            overflow: 'auto',
-          }}
-        >
-          <Typography fontFamily={"Poppins"} variant="h4" component="div" align="left" marginTop={10} marginLeft={7} marginBottom={5}>
+        <Box component="main">
+          <Typography
+            fontFamily={"Poppins"}
+            level="h4"
+            component="div"
+            sx={{
+              marginTop: 5,
+              marginLeft: 10,
+              marginBottom: 5,
+              alignSelf: "flex-start",
+            }}
+          >
             {initialLeaderData.getNom()} {initialLeaderData.getPrenom()}
           </Typography>
 
-          <Grid container spacing={'3vh'} paddingBottom={'10vh'} paddingLeft={'10vh'} paddingRight={'10vh'} justifyContent="center">
-
-            <Grid container spacing={3} justifyContent="space-between" marginTop={5}>
-              <Grid item xs={12} md={6} >
-                <Paper
+          <Grid
+            container
+            spacing={"3vh"}
+            paddingBottom={"10vh"}
+            paddingLeft={"10vh"}
+            paddingRight={"10vh"}
+            justifyContent="center"
+          >
+            <Grid
+              container
+              spacing={3}
+              justifyContent="space-between"
+              marginTop={5}
+            >
+              <Grid xs={12} md={6}>
+                <Sheet
                   sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
                     minHeight: 200,
-                    height: '100%',
+                    height: "100%",
                   }}
                 >
                   <DetailsLeaders leaderDetails={initialLeaderData} />
-                </Paper>
+                </Sheet>
               </Grid>
             </Grid>
           </Grid>
         </Box>
       </Box>
-
     );
   }
 }

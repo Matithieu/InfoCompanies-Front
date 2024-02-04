@@ -2,13 +2,7 @@ import BusinessIcon from "@mui/icons-material/Business";
 import CakeIcon from "@mui/icons-material/Cake";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
-import { Tooltip } from "@mui/material";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
+import { Container, Sheet, Table, Tooltip } from "@mui/joy";
 import { useNavigate } from "react-router-dom";
 import Leader from "../../data/leader";
 
@@ -45,7 +39,7 @@ export default function DetailsLeader({
     );
   } else {
     return (
-      <TableContainer component={Paper} style={{}}>
+      <Container component={Sheet} style={{}}>
         <h2
           style={{
             display: "flex",
@@ -56,35 +50,27 @@ export default function DetailsLeader({
           Détails
         </h2>
         <Table sx={{ minWidth: 150 }} aria-label="List Of Leaders">
-          <TableBody>
-            <TableRow
-              key={leaderDetails.getPhone()}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
+          <tbody>
+            <tr key={leaderDetails.getPhone()} style={{ border: 0 }}>
+              <td scope="row">
                 <Tooltip arrow title="Numéro de téléphone" placement="top">
                   <PhoneIcon />
                 </Tooltip>
                 <span style={{ marginLeft: "10px" }}></span>
                 <a style={{ fontSize: "18px" }}>{leaderDetails.getPhone()}</a>
-              </TableCell>
-            </TableRow>
-            <TableRow
-              key={leaderDetails.getEmail()}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
+              </td>
+            </tr>
+            <tr key={leaderDetails.getEmail()} style={{ border: 0 }}>
+              <td scope="row">
                 <Tooltip arrow title="Adresse email" placement="top">
                   <EmailIcon />
                 </Tooltip>
                 <span style={{ marginLeft: "10px" }}></span>
                 <a style={{ fontSize: "18px" }}>{leaderDetails.getEmail()}</a>
-              </TableCell>
-            </TableRow>
-            <TableRow
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
+              </td>
+            </tr>
+            <tr style={{ border: 0 }}>
+              <td scope="row">
                 <Tooltip arrow title="Age" placement="top">
                   <CakeIcon />
                 </Tooltip>
@@ -92,12 +78,10 @@ export default function DetailsLeader({
                 <a style={{ fontSize: "18px" }}>
                   {toAgeFromDate(leaderDetails.getDateNaissance()) + " ans"}
                 </a>
-              </TableCell>
-            </TableRow>
-            <TableRow
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
+              </td>
+            </tr>
+            <tr style={{ border: 0 }}>
+              <td scope="row">
                 <Tooltip arrow title="Entreprises" placement="top">
                   <BusinessIcon />
                 </Tooltip>
@@ -121,11 +105,11 @@ export default function DetailsLeader({
                     </a>
                   </span>
                 ))}
-              </TableCell>
-            </TableRow>
-          </TableBody>
+              </td>
+            </tr>
+          </tbody>
         </Table>
-      </TableContainer>
+      </Container>
     );
   }
 }

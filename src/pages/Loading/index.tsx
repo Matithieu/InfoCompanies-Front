@@ -1,6 +1,5 @@
-import Box from "@mui/material/Box";
-import CircularProgress from "@mui/material/CircularProgress";
-import Typography from "@mui/material/Typography";
+import { Box, Typography } from "@mui/joy";
+import CircularProgress from "@mui/joy/CircularProgress";
 
 function Loading() {
   return (
@@ -16,7 +15,7 @@ function Loading() {
       }}
     >
       <CircularProgress />
-      <Typography variant="h6" sx={{ mt: 2 }}>
+      <Typography level="h4" sx={{ mt: 2 }}>
         Loading...
       </Typography>
     </Box>

@@ -1,13 +1,5 @@
 import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined";
-import { Button, Grid, TableHead, TablePagination } from "@mui/material";
-import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
+import { Box, Button, Container, Grid, Sheet, Table } from "@mui/joy";
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -65,6 +57,7 @@ function TableOfDetails() {
     queryKey: ["companies", searchTerm, dataPagniation.page],
     queryFn: () => fetchCompanies(searchTerm ?? "", dataPagniation.page),
     retry: 1,
+    refetchOnWindowFocus: false,
   });
 
   // Reset the page number to 0 when searchTerm changes
@@ -85,22 +78,22 @@ function TableOfDetails() {
     }
   }, [data]);
 
-  const handleChangePage = (_event: unknown, newPage: number) => {
-    setDataPagination((prevDataPagination) => ({
-      ...prevDataPagination,
-      page: newPage,
-    }));
-  };
+  // const handleChangePage = (_event: unknown, newPage: number) => {
+  //   setDataPagination((prevDataPagination) => ({
+  //     ...prevDataPagination,
+  //     page: newPage,
+  //   }));
+  // };
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setDataPagination((prevDataPagination) => ({
-      ...prevDataPagination,
-      rowsPerPage: +event.target.value,
-      page: 0,
-    }));
-  };
+  // const handleChangeRowsPerPage = (
+  //   event: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   setDataPagination((prevDataPagination) => ({
+  //     ...prevDataPagination,
+  //     rowsPerPage: +event.target.value,
+  //     page: 0,
+  //   }));
+  // };
 
   if (error != null && isError) {
     return (
@@ -110,11 +103,12 @@ function TableOfDetails() {
           alignItems: "center",
           justifyContent: "center",
           display: "flex",
+          height: "200px", // Set a fixed height for the container
         }}
       >
         <h1>{error.message}</h1>
         <Button
-          variant="contained"
+          variant="soft"
           color="primary"
           onClick={() => {
             setRequestLoading(true);
@@ -128,9 +122,33 @@ function TableOfDetails() {
     );
   }
   if (isPending || data === undefined) {
-    return <div>Chargement des données...</div>;
+    return (
+      <div
+        style={{
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          display: "flex",
+          height: "200px", // Set a fixed height for the container
+        }}
+      >
+        <h1>Chargement des données...</h1>
+      </div>
+    );
   } else if (data.empty) {
-    return <div>Aucune entreprise trouvée</div>;
+    return (
+      <div
+        style={{
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          display: "flex",
+          height: "200px", // Set a fixed height for the container
+        }}
+      >
+        <h1>Aucune entreprise trouvée</h1>
+      </div>
+    );
   } else if (data.empty === false) {
     return (
       <Box
@@ -143,55 +161,38 @@ function TableOfDetails() {
           height: "100%",
         }}
       >
-        <TableContainer>
+        <Container>
           <Table stickyHeader sx={{ borderRadius: 10 }}>
-            <TableHead>
-              <TableRow>
-                <TableCell align="left"></TableCell>
-                <TableCell align="left">Dénomination</TableCell>
-                <TableCell align="center">Secteur d'activité</TableCell>
-                <TableCell align="center">Ville</TableCell>
-                <TableCell align="center">Region</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
+            <thead>
+              <tr>
+                <td align="left"></td>
+                <td align="left">Dénomination</td>
+                <td align="center">Secteur d'activité</td>
+                <td align="center">Ville</td>
+                <td align="center">Region</td>
+              </tr>
+            </thead>
+            <tbody>
               {data.content.map((row: CompanyDetails) => (
-                <TableRow
+                <tr
                   key={row.id}
                   onClick={() => {
                     navigate(`/company/${row.id}`, {});
                   }}
-                  sx={{
-                    "&:last-child td, &:last-child th": { border: 0 },
-                    "&:hover": {
-                      backgroundColor: (theme) => theme.palette.action.hover,
-                    },
-                    cursor: "pointer",
-                  }}
+                  style={{ cursor: "pointer" }}
                 >
-                  <TableCell align="left">
+                  <td align="left">
                     <ApartmentOutlinedIcon />
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    {row.denomination}
-                  </TableCell>
-                  <TableCell align="center">{row.secteurActivite}</TableCell>
-                  <TableCell align="center">{row.ville}</TableCell>
-                  <TableCell align="center">{row.region}</TableCell>
-                </TableRow>
+                  </td>
+                  <td scope="row">{row.denomination}</td>
+                  <td align="center">{row.secteurActivite}</td>
+                  <td align="center">{row.ville}</td>
+                  <td align="center">{row.region}</td>
+                </tr>
               ))}
-            </TableBody>
+            </tbody>
           </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[10]}
-          component="div"
-          count={dataPagniation.totalPages * dataPagniation.rowsPerPage}
-          rowsPerPage={dataPagniation.rowsPerPage}
-          page={dataPagniation.page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+        </Container>
       </Box>
     );
   }
@@ -205,8 +206,7 @@ export default function Search() {
   const { searchTerm } = useParams();
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
+    <Container sx={{ display: "flex" }}>
       <Box
         component="main"
         sx={{
@@ -228,7 +228,7 @@ export default function Search() {
             justifyContent="space-between"
             marginTop={5}
           >
-            <Grid item xs={12} md={12}>
+            <Grid xs={12} md={12}>
               <Title>
                 <a
                   style={{
@@ -240,7 +240,8 @@ export default function Search() {
                   Liste entreprises pour {searchTerm}
                 </a>
               </Title>
-              <Paper
+              <Sheet
+                variant="soft"
                 sx={{
                   display: "flex",
                   flexDirection: "column",
@@ -249,14 +250,16 @@ export default function Search() {
                   minHeight: 320,
                   height: "100%",
                   width: "100%",
+                  margin: "auto", // Center horizontally
+                  marginTop: "10vh", // Add top margin
                 }}
               >
                 <TableOfDetails />
-              </Paper>
+              </Sheet>
             </Grid>
           </Grid>
         </Grid>
       </Box>
-    </Box>
+    </Container>
   );
 }

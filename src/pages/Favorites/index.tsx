@@ -1,7 +1,4 @@
-import { Grid } from "@mui/material";
-import CssBaseline from "@mui/material/CssBaseline";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
+import { Grid, Sheet, Typography } from "@mui/joy";
 import { useEffect, useState } from "react";
 import Chart from "../../components/Chart/index.tsx";
 import Details from "../../components/Details/index.tsx";
@@ -29,16 +26,14 @@ export default function Favorites() {
 
   return (
     <Grid>
-      <CssBaseline />
-
       <Typography
-        fontFamily={"Poppins"}
-        variant="h4"
-        component="div"
-        align="left"
-        marginTop={5}
-        marginLeft={10}
-        marginBottom={5}
+        level="h1"
+        sx={{
+          marginTop: 5,
+          marginLeft: 10,
+          marginBottom: 5,
+          alignSelf: "flex-start",
+        }}
       >
         Favoris
       </Typography>
@@ -50,7 +45,7 @@ export default function Favorites() {
         paddingLeft={10}
         paddingRight={10}
       >
-        <Grid item xs={12} md={12} lg={12}>
+        <Grid xs={12} md={12} lg={12}>
           {/* Container des éléments sur la première ligne */}
           <Grid
             container
@@ -59,35 +54,31 @@ export default function Favorites() {
             wrap="wrap"
           >
             {/* List Of Companies */}
-            <Grid item xs={12} md={8}>
-              <Paper
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  height: "100%",
-                  borderRadius: 3,
-                  minHeight: 400,
-                  maxHeight: 400,
-                }}
-              >
-                {checkedCompanies.length !== 0 ? (
-                  url ? (
-                    <TableCompany url={url} />
-                  ) : (
-                    <TableSkeleton columns={columnsTableCompany} />
-                  )
+            <Grid xs={12} md={8}>
+              {checkedCompanies.length !== 0 ? (
+                url ? (
+                  <TableCompany url={url} />
                 ) : (
-                  <a style={{ fontSize: "19px" }}>Aucun ToDO sélectionné</a>
-                )}
-              </Paper>
+                  <TableSkeleton columns={columnsTableCompany} />
+                )
+              ) : (
+                <h1
+                  style={{
+                    fontSize: "19px",
+                    color: "#888",
+                    textAlign: "center",
+                    marginTop: "20px",
+                  }}
+                >
+                  Aucun ToDO sélectionné
+                </h1>
+              )}
             </Grid>
 
             {/* Details of the company */}
             {checkedCompanies.length !== 0 && (
-              <Grid item xs={12} md={4}>
-                <Paper
+              <Grid xs={12} md={4}>
+                <Sheet
                   sx={{
                     display: "flex",
                     flexDirection: "column",
@@ -98,7 +89,7 @@ export default function Favorites() {
                   }}
                 >
                   <Details />
-                </Paper>
+                </Sheet>
               </Grid>
             )}
           </Grid>
@@ -107,7 +98,7 @@ export default function Favorites() {
         {/* Container des éléments sur la deuxième ligne */}
         {checkedCompanies.length !== 0 && (
           <>
-            <Grid item xs={12} md={12} lg={12}>
+            <Grid xs={12} md={12} lg={12}>
               <Grid
                 container
                 spacing={3}
@@ -115,8 +106,8 @@ export default function Favorites() {
                 marginTop={5}
               >
                 {/* Leaders of the company */}
-                <Grid item xs={12} md={6}>
-                  <Paper
+                <Grid xs={12} md={6}>
+                  <Sheet
                     sx={{
                       display: "flex",
                       flexDirection: "column",
@@ -127,11 +118,11 @@ export default function Favorites() {
                     }}
                   >
                     <Chart />
-                  </Paper>
+                  </Sheet>
                 </Grid>
 
-                <Grid item xs={12} md={6}>
-                  <Paper
+                <Grid xs={12} md={6}>
+                  <Sheet
                     sx={{
                       display: "flex",
                       flexDirection: "column",
@@ -142,12 +133,12 @@ export default function Favorites() {
                     }}
                   >
                     <ListOfLeaders />
-                  </Paper>
+                  </Sheet>
                 </Grid>
               </Grid>
             </Grid>
 
-            <Grid item xs={12} md={12} lg={12}>
+            <Grid xs={12} md={12} lg={12}>
               <Grid
                 container
                 spacing={3}

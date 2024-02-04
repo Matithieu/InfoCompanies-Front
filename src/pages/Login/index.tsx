@@ -1,15 +1,26 @@
-import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { object, string, TypeOf } from 'zod';
-import { toast } from 'react-toastify';
-import { Avatar, Box, Button, Container, CssBaseline, Divider, Grid, Link, TextField, Typography } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import GoogleLogo from '../../assets/google.png';
-import { getGoogleUrl } from '../../utils/getGoogleUrl';
-import useAuthStore from '../../store/authStore';
-import { dataReceived } from '../Register';
+import { zodResolver } from "@hookform/resolvers/zod";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import {
+  Avatar,
+  Box,
+  Button,
+  Container,
+  CssBaseline,
+  Divider,
+  Grid,
+  Input,
+  Link,
+  Typography,
+} from "@mui/joy";
+import { useEffect } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { TypeOf, object, string } from "zod";
+import GoogleLogo from "../../assets/google.png";
+import useAuthStore from "../../store/authStore";
+import { getGoogleUrl } from "../../utils/getGoogleUrl";
+import { dataReceived } from "../Register";
 
 const loginSchema = object({
   email: string()
@@ -26,7 +37,7 @@ const LoginPage = () => {
   const { authUser, setAuthUser, setRequestLoading } = useAuthStore();
   const location = useLocation();
   const navigate = useNavigate();
-  const from = ((location.state as any)?.from.pathname as string); // Redirect to dashboard by default
+  const from = (location.state as any)?.from.pathname as string; // Redirect to dashboard by default
 
   /*
   // Create a new User object for testing. Remove this when you have implemented the login logic with the API
@@ -39,7 +50,11 @@ const LoginPage = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const { handleSubmit, register, formState: { errors } } = methods;
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = methods;
 
   const loginUser: SubmitHandler<LoginInput> = async (data: LoginInput) => {
     try {
@@ -52,7 +67,8 @@ const LoginPage = () => {
           headers: {
             "Content-Type": "application/json",
           },
-        });
+        }
+      );
 
       const dataReceived: dataReceived = await response.json();
       console.log("data ", dataReceived);
@@ -70,20 +86,19 @@ const LoginPage = () => {
           navigate("/subscription");
         }
       }
-
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Login failed', {
-        position: 'top-right',
+      toast.error(error.response?.data?.message || "Login failed", {
+        position: "top-right",
         autoClose: 5000,
       });
     } finally {
       setRequestLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     if (authUser?.verified === true) {
-      navigate('/dashboard');
+      navigate("/dashboard");
     }
   }, [authUser, navigate]);
 
@@ -94,81 +109,91 @@ const LoginPage = () => {
   return (
     <Container component="main" maxWidth="xs" style={{ paddingTop: "4rem" }}>
       <CssBaseline />
-      <Box sx={{
-        marginTop: 8,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}>
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" level="h4">
           Sign in
         </Typography>
-        <Box component="form" onSubmit={handleSubmit(onSubmitHandler)} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
+        <Box
+          component="form"
+          onSubmit={handleSubmit(onSubmitHandler)}
+          noValidate
+          sx={{ mt: 1 }}
+        >
+          <Input
             required
             fullWidth
             id="email"
-            label="Email Address"
+            placeholder="Email Address"
             autoComplete="email"
             autoFocus
             {...register("email")}
+            sx={{ mb: 2 }}
           />
-          {errors.email && <a style={{ color: "red" }}>{errors.email.message}</a>}
+          {errors.email && (
+            <a style={{ color: "red" }}>{errors.email.message}</a>
+          )}
 
-          <TextField
-            margin="normal"
+          <Input
             required
             fullWidth
-            label="Password"
+            placeholder="Password"
             type="password"
             id="password"
             autoComplete="current-password"
             {...register("password")}
           />
-          {errors.password && <a style={{ color: "red" }}>{errors.password.message}</a>}
+          {errors.password && (
+            <a style={{ color: "red" }}>{errors.password.message}</a>
+          )}
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
+          <Button type="submit" fullWidth variant="soft" sx={{ mt: 3, mb: 2 }}>
             Sign In
           </Button>
           <Grid container>
-            <Grid item xs>
-              <Link href="" variant="body2">
+            <Grid xs>
+              <Link href="" level="body-md">
                 Forgot password?
               </Link>
             </Grid>
-            <Grid item>
-              <Link href="/register" variant="body2">
+            <Grid>
+              <Link href="/register" level="body-md">
                 {"Sign Up"}
               </Link>
             </Grid>
           </Grid>
 
           <Divider sx={{ my: 2 }}>
-            <Typography variant="body2">Or</Typography>
+            <Typography level="body-md">Or</Typography>
           </Divider>
 
           <Button
             href={getGoogleUrl(from)}
             fullWidth
-            variant="contained"
+            variant="soft"
             sx={{ mb: 2, backgroundColor: "#3b5998" }}
-            startIcon={<img src={GoogleLogo} alt="Google sign-in" style={{ height: "20px" }} />}
+            startDecorator={
+              <img
+                src={GoogleLogo}
+                alt="Google sign-in"
+                style={{ height: "20px" }}
+              />
+            }
           >
             Continue with Google
           </Button>
         </Box>
       </Box>
     </Container>
-
   );
 };
 

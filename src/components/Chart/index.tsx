@@ -1,4 +1,4 @@
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/joy/styles';
 import * as React from 'react';
 import { Label, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import ChiffreAffaire from '../../data/chiffreAffaire';
@@ -63,11 +63,9 @@ export default function Chart() {
             <XAxis
               dataKey="date"
               stroke={theme.palette.text.secondary}
-              style={theme.typography.body2}
             />
             <YAxis
               stroke={theme.palette.text.secondary}
-              style={theme.typography.body2}
             >
               <Label
                 angle={270}
@@ -75,7 +73,6 @@ export default function Chart() {
                 style={{
                   textAnchor: 'middle',
                   fill: theme.palette.text.primary,
-                  ...theme.typography.body1,
                 }}
               >
                 En Euro (€)
@@ -84,7 +81,7 @@ export default function Chart() {
             <Tooltip
               cursor={{ strokeDasharray: '3 3' }}
               contentStyle={{
-                backgroundColor: theme.palette.background.paper,
+                backgroundColor: theme.palette.background.body,
                 color: theme.palette.text.primary,
                 border: 'none',
                 borderRadius: 3,
@@ -106,7 +103,7 @@ export default function Chart() {
               isAnimationActive={true}
               type="monotone"
               dataKey="amount"
-              stroke={theme.palette.primary.main}
+              stroke={theme.palette.primary.darkChannel}
               strokeWidth={3}
               dot={true}
               width={10}

@@ -1,7 +1,7 @@
-import Tooltip from '@mui/material/Tooltip';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import PendingIcon from '@mui/icons-material/Pending';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import Tooltip from '@mui/joy/Tooltip';
 import { CheckedStatus } from '../../data/company';
 
 interface StatutIconProps {

@@ -1,11 +1,4 @@
-import { Box } from "@mui/material";
-import Skeleton from "@mui/material/Skeleton";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+import { Box, Container, Skeleton, Table } from "@mui/joy";
 import { Column } from "../../data/columns";
 
 interface TableSkeletonProps {
@@ -22,14 +15,14 @@ export const TableSkeleton = ({ columns }: TableSkeletonProps) => {
         overflow: "hidden",
       }}
     >
-      <TableContainer
+      <Container
         sx={{ width: "100%", minHeight: 380, height: "100%", borderRadius: 3 }}
       >
         <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
+          <thead>
+            <tr>
               {columns.map((column) => (
-                <TableCell
+                <td
                   key={column.id}
                   style={{
                     minWidth: column.minWidth,
@@ -38,14 +31,14 @@ export const TableSkeleton = ({ columns }: TableSkeletonProps) => {
                   }}
                 >
                   <Skeleton animation="wave" variant="text" />
-                </TableCell>
+                </td>
               ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
+            </tr>
+          </thead>
+          <tbody>
             {Array.from({ length: 5 }).map((_, index) => (
-              <TableRow key={index} style={{ alignItems: "center" }}>
-                <TableCell
+              <tr key={index} style={{ alignItems: "center" }}>
+                <td
                   key={index + "status"}
                   align="center"
                   style={{ justifyItems: "center", display: "flex" }}
@@ -56,17 +49,17 @@ export const TableSkeleton = ({ columns }: TableSkeletonProps) => {
                     width={25}
                     height={25}
                   />
-                </TableCell>
+                </td>
                 {columns.map((column) => (
-                  <TableCell key={column.id}>
+                  <td key={column.id}>
                     <Skeleton animation="wave" variant="text" />
-                  </TableCell>
+                  </td>
                 ))}
-              </TableRow>
+              </tr>
             ))}
-          </TableBody>
+          </tbody>
         </Table>
-      </TableContainer>
+      </Container>
     </Box>
   );
 };

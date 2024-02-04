@@ -4,9 +4,9 @@ import {
   CssBaseline,
   Grid,
   IconButton,
-  Paper,
+  Sheet,
   Typography,
-} from "@mui/material";
+} from "@mui/joy";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -125,7 +125,7 @@ export default function CompanyPage() {
       >
         <h1>{error.message}</h1>
         <Button
-          variant="contained"
+          variant="soft"
           color="primary"
           onClick={() => {
             setRequestLoading(true);
@@ -162,12 +162,13 @@ export default function CompanyPage() {
               }}
             >
               <Typography
-                fontFamily="Poppins"
-                variant="h4"
-                align="left"
-                marginTop={10}
-                marginLeft={0}
-                marginBottom={5}
+                level="h4"
+                sx={{
+                  marginTop: 5,
+                  marginLeft: 0,
+                  marginBottom: 5,
+                  alignSelf: "flex-start",
+                }}
               >
                 <IconButton
                   style={{
@@ -187,8 +188,8 @@ export default function CompanyPage() {
 
             <Grid>
               <Grid container spacing={3} justifyContent="center" marginTop={5}>
-                <Grid item xs={12} md={4}>
-                  <Paper
+                <Grid xs={12} md={4}>
+                  <Sheet
                     sx={{
                       display: "flex",
                       flexDirection: "column",
@@ -198,10 +199,10 @@ export default function CompanyPage() {
                     }}
                   >
                     <Details />
-                  </Paper>
+                  </Sheet>
                 </Grid>
-                <Grid item xs={12} md={4}>
-                  <Paper
+                <Grid xs={12} md={4}>
+                  <Sheet
                     sx={{
                       display: "flex",
                       flexDirection: "column",
@@ -211,12 +212,12 @@ export default function CompanyPage() {
                     }}
                   >
                     <ListOfLeaders />
-                  </Paper>
+                  </Sheet>
                 </Grid>
               </Grid>
               <Grid container spacing={3} justifyContent="center" marginTop={5}>
-                <Grid item xs={8} md={4}>
-                  <Paper
+                <Grid xs={8} md={4}>
+                  <Sheet
                     sx={{
                       display: "flex",
                       flexDirection: "column",
@@ -226,10 +227,10 @@ export default function CompanyPage() {
                     }}
                   >
                     <Chart />
-                  </Paper>
+                  </Sheet>
                 </Grid>
-                <Grid item xs={8} md={4}>
-                  <Paper
+                <Grid xs={8} md={4}>
+                  <Sheet
                     sx={{
                       display: "flex",
                       flexDirection: "column",
@@ -237,7 +238,7 @@ export default function CompanyPage() {
                       justifyContent: "center",
                       minHeight: 220,
                     }}
-                  ></Paper>
+                  ></Sheet>
                 </Grid>
               </Grid>
             </Grid>

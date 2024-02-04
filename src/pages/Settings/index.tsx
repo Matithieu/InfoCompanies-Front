@@ -1,20 +1,24 @@
-import { Container } from "@mui/material";
-import CssBaseline from "@mui/material/CssBaseline";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Grid from "@mui/material/Grid";
-import MenuItem from "@mui/material/MenuItem";
-import Paper from "@mui/material/Paper";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Switch from "@mui/material/Switch";
-import Typography from "@mui/material/Typography";
+import {
+  Container,
+  CssBaseline,
+  Grid,
+  Option,
+  Select,
+  Sheet,
+  Switch,
+  Typography,
+} from "@mui/joy";
 import * as React from "react";
 
 export default function Settings() {
-  const [language, setLanguage] = React.useState("en");
-  const [notificationsEnabled, setNotificationsEnabled] = React.useState(true); // State for notifications switch
+  const [language, setLanguage] = React.useState("English");
+  const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
 
-  const handleLanguageChange = (event: SelectChangeEvent<string>) => {
-    setLanguage(event.target.value);
+  const handleChange = (
+    _event: React.SyntheticEvent | null,
+    newValue: string | null
+  ) => {
+    setLanguage(newValue as string);
   };
 
   const handleNotificationsChange = (
@@ -28,13 +32,14 @@ export default function Settings() {
       <CssBaseline />
 
       <Typography
-        fontFamily="Poppins"
-        variant="h4"
+        level="h4"
         component="div"
-        align="left"
-        marginTop={10}
-        marginLeft={10}
-        marginBottom={5}
+        sx={{
+          marginTop: 5,
+          marginLeft: 10,
+          marginBottom: 5,
+          alignSelf: "flex-start",
+        }}
       >
         Settings
       </Typography>
@@ -42,13 +47,15 @@ export default function Settings() {
       <Grid
         container
         spacing={3}
-        paddingBottom={"10vh"}
-        paddingLeft={"10vh"}
-        paddingRight={"10vh"}
-        justifyContent="center"
+        sx={{
+          paddingBottom: "10vh",
+          paddingLeft: "10vh",
+          paddingRight: "10vh",
+          justifyContent: "center",
+        }}
       >
-        <Grid item xs={12} md={6}>
-          <Paper
+        <Grid xs={12} md={6}>
+          <Sheet
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -56,29 +63,27 @@ export default function Settings() {
               padding: 2,
             }}
           >
-            <Typography variant="h6" gutterBottom>
+            <Typography level="h4" gutterBottom>
               Language
             </Typography>
             <Select
-              label="Language"
-              value={language}
-              onChange={handleLanguageChange}
+              placeholder="Language"
+              onChange={handleChange}
+              value={language ?? ""}
             >
-              <MenuItem value="en">English</MenuItem>
-              <MenuItem value="fr">Français</MenuItem>
-              <MenuItem value="es">Español</MenuItem>
+              <Option value="english">English</Option>
+              <Option value="french">Français</Option>
+              <Option value="espagnol">Español</Option>
             </Select>
-          </Paper>
+          </Sheet>
 
-          {/* Switch for notifications moved outside the paper */}
-          <FormControlLabel
-            control={
-              <Switch
-                checked={notificationsEnabled}
-                onChange={handleNotificationsChange}
-              />
-            }
-            label="Enable Notifications"
+          {/* Switch for notifications moved outside the Sheet */}
+          <Typography level="h4" gutterBottom>
+            Notifications
+          </Typography>
+          <Switch
+            checked={notificationsEnabled}
+            onChange={handleNotificationsChange}
           />
         </Grid>
       </Grid>

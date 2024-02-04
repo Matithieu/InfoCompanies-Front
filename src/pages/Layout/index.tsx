@@ -1,232 +1,245 @@
-import * as React from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiDrawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import { MainListItems, SecondaryListItems } from './ListItems/listItems.tsx';
-import AccountMenu from '../../components/AccountMenuPopUp/index.tsx';
-import SearchBar from '../../components/SearchBar/index.tsx';
+import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
+import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
+import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
+import SupportRoundedIcon from "@mui/icons-material/SupportRounded";
+import Avatar from "@mui/joy/Avatar";
+import Box from "@mui/joy/Box";
+import Divider from "@mui/joy/Divider";
+import GlobalStyles from "@mui/joy/GlobalStyles";
+import IconButton from "@mui/joy/IconButton";
+import Input from "@mui/joy/Input";
+import List from "@mui/joy/List";
+import ListItem from "@mui/joy/ListItem";
+import ListItemButton, { listItemButtonClasses } from "@mui/joy/ListItemButton";
+import ListItemContent from "@mui/joy/ListItemContent";
+import Sheet from "@mui/joy/Sheet";
+import Typography from "@mui/joy/Typography";
 
-// Importez un nouvel icône pour le mode sombre et le mode clair
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
-import { Outlet } from 'react-router-dom';
+import { CssBaseline } from "@mui/joy";
+import { useState } from "react";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import useAuthStore from "../../store/authStore";
+import { linkStyles } from "./ListItems/listItems";
+import ColorSchemeToggle from "./colorScheme";
+import Header from "./header";
+import { closeSidebar } from "./utils";
 
-const drawerWidth: number = 240;
+export function Sidebar() {
+  const navigate = useNavigate();
 
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
-}
+  const { authUser, setAuthUser, setRequestLoading } = useAuthStore();
 
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})<AppBarProps>(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
+  const [searchTerm, setSearchTerm] = useState("");
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    '& .MuiDrawer-paper': {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width: drawerWidth,
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      boxSizing: 'border-box',
-      ...(!open && {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
-        },
-      }),
-    },
-  }),
-);
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-// Créez un thème sombre et un thème clair
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark', // Activez le mode sombre 
-    primary: {
-      main: '#1976D2', // Couleur principale (bleu)
-    },
-    secondary: {
-      main: '#388E3C', // Couleur secondaire (vert)
-    },
-    background: {
-      default: '#121212', // Couleur de fond par défaut (gris foncé)
-      paper: '#333333', // Couleur de fond des panneaux (gris)
-    },
-    text: {
-      primary: '#FFFFFF', // Couleur du texte principal (blanc)
-      secondary: '#CCCCCC', // Couleur du texte secondaire (gris clair)
-    },
-  },
-  typography: {
-    fontFamily: 'Poppins',
-  },
-});
+    if (searchTerm.trim() !== "") {
+      console.log(`/search/${searchTerm}`);
+      // Redirigez vers la page des résultats avec le terme de recherche
+      navigate(`/search/${searchTerm}`, { state: { searchTerm } });
+    }
+  };
 
-const lightTheme = createTheme({
-  palette: {
-    mode: 'light',
-    primary: {
-      main: '#1976D2', // Couleur : bleu
-    },
-    secondary: {
-      main: '#388E3C', // Couleur : vert
-    },
-    background: {
-      default: '#FFFFFF', // Couleur : blanc
-      paper: '#F5F5F5', // Couleur de fond des panneaux (gris clair)
-    },
-    text: {
-      primary: '#000000', // Couleur : noir
-      secondary: '#555555', // Couleur du texte secondaire (gris)
-    },
-  },
-  typography: {
-    fontFamily: 'Poppins',
-  },
-});
-
-// Composant DarkModeToggle
-function DarkModeToggle({ darkMode, toggleDarkMode }: { darkMode: boolean; toggleDarkMode: () => void }) {
   return (
-    <IconButton color="inherit" onClick={toggleDarkMode}>
-      {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
-    </IconButton>
+    <Sheet
+      className="Sidebar"
+      sx={{
+        position: { xs: "fixed", md: "sticky" },
+        transform: {
+          xs: "translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1)))",
+          md: "none",
+        },
+        transition: "transform 0.4s, width 0.4s",
+        zIndex: 10000,
+        height: "100dvh",
+        width: "var(--Sidebar-width)",
+        top: 0,
+        p: 2,
+        flexShrink: 0,
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+        borderRight: "1px solid",
+        borderColor: "divider",
+      }}
+    >
+      <GlobalStyles
+        styles={(theme) => ({
+          ":root": {
+            "--Sidebar-width": "220px",
+            [theme.breakpoints.up("lg")]: {
+              "--Sidebar-width": "240px",
+            },
+          },
+        })}
+      />
+      <Box
+        className="Sidebar-overlay"
+        sx={{
+          position: "fixed",
+          zIndex: 9998,
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          opacity: "var(--SideNavigation-slideIn)",
+          backgroundColor: "var(--joy-palette-background-backdrop)",
+          transition: "opacity 0.4s",
+          transform: {
+            xs: "translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1) + var(--SideNavigation-slideIn, 0) * var(--Sidebar-width, 0px)))",
+            lg: "translateX(-100%)",
+          },
+        }}
+        onClick={() => closeSidebar()}
+      />
+      <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+        <Typography level="title-lg">Info'Companies</Typography>
+        <ColorSchemeToggle sx={{ ml: "auto" }} />
+      </Box>
+
+      <form onSubmit={handleSearch}>
+        <Input
+          size="sm"
+          startDecorator={<SearchRoundedIcon />}
+          placeholder="Search"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </form>
+
+      <Box
+        sx={{
+          minHeight: 0,
+          overflow: "hidden auto",
+          flexGrow: 1,
+          display: "flex",
+          flexDirection: "column",
+          [`& .${listItemButtonClasses.root}`]: {
+            gap: 1.5,
+          },
+        }}
+      >
+        <List
+          size="sm"
+          sx={{
+            gap: 1,
+            "--List-nestedInsetStart": "30px",
+            "--ListItem-radius": (theme) => theme.vars.radius.sm,
+          }}
+        >
+          <Link to="/dashboard" style={linkStyles}>
+            <ListItem>
+              <ListItemButton>
+                <DashboardRoundedIcon />
+                <ListItemContent>
+                  <Typography level="title-sm">Dashboard</Typography>
+                </ListItemContent>
+              </ListItemButton>
+            </ListItem>
+          </Link>
+
+          <Link to="/favorites" style={linkStyles}>
+            <ListItem>
+              <ListItemButton>
+                <ShoppingCartRoundedIcon />
+                <ListItemContent>
+                  <Typography level="title-sm">Favorites</Typography>
+                </ListItemContent>
+              </ListItemButton>
+            </ListItem>
+          </Link>
+        </List>
+
+        <List
+          size="sm"
+          sx={{
+            mt: "auto",
+            flexGrow: 0,
+            "--ListItem-radius": (theme) => theme.vars.radius.sm,
+            "--List-gap": "8px",
+            mb: 2,
+          }}
+        >
+          <ListItem>
+            <ListItemButton>
+              <SupportRoundedIcon />
+              Support
+            </ListItemButton>
+          </ListItem>
+
+          <Link to="/settings" style={linkStyles}>
+            <ListItem>
+              <ListItemButton>
+                <SettingsRoundedIcon />
+                <ListItemContent>
+                  <Typography level="title-sm">Settings</Typography>
+                </ListItemContent>
+              </ListItemButton>
+            </ListItem>
+          </Link>
+        </List>
+      </Box>
+      <Divider />
+      <Link to="/account" style={linkStyles}>
+        <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+          <Avatar
+            variant="outlined"
+            size="sm"
+            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
+          />
+          <Box sx={{ minWidth: 0, flex: 1 }}>
+            <Typography level="title-sm">
+              {authUser?.name ?? "Error"}
+            </Typography>
+            <Typography level="body-xs">
+              {authUser?.email ?? "Error"}
+            </Typography>
+          </Box>
+          <IconButton
+            size="sm"
+            variant="plain"
+            color="neutral"
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              e.preventDefault();
+              setRequestLoading(true);
+              setAuthUser(null);
+              setRequestLoading(false);
+            }}
+          >
+            <LogoutRoundedIcon />
+          </IconButton>
+        </Box>
+      </Link>
+    </Sheet>
   );
 }
 
 export default function Layout() {
-  // Utilisez le localStorage pour stocker l'état du mode sombre
-  const isDarkMode = localStorage.getItem('darkMode') === 'true';
-  const [darkMode, setDarkMode] = React.useState(isDarkMode);
-
-  const isDrawerOpen = localStorage.getItem('stateDrawer');
-
-  const [open, setOpen] = React.useState(isDrawerOpen === 'true');
-  const toggleDrawer = () => {
-    setOpen(!open);
-    localStorage.setItem('stateDrawer', JSON.stringify(!open));
-  };
-
-  // Fonction pour activer/désactiver le mode sombre
-  const toggleDarkMode = () => {
-    const newDarkMode = !darkMode;
-    setDarkMode(newDarkMode);
-    localStorage.setItem('darkMode', JSON.stringify(newDarkMode));
-  };
-
   return (
-
-    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <AppBar position="absolute" open={open} style={{}}>
-          <Toolbar
-            sx={{
-              pr: '24px', // keep right padding when drawer closed
-            }}
-          >
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
-              sx={{
-                marginRight: '36px',
-                ...(open && { display: 'none' }),
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
-
-            <SearchBar />
-
-            {/* Utilisez le composant DarkModeToggle */}
-            <DarkModeToggle darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-
-            <div style={{ marginLeft: 'auto' }}>
-              <Badge badgeContent={0} color="secondary">
-                <AccountMenu />
-              </Badge>
-            </div>
-
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-        <Drawer variant="permanent" open={open} >
-          <Toolbar
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              px: [1],
-            }}
-          >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Toolbar>
-          <Divider />
-          <List component="nav">
-            <MainListItems />
-            <Divider sx={{ my: 1 }} />
-            <SecondaryListItems />
-          </List>
-        </Drawer>
-        <Box
-          component="main"
-          sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-            flexGrow: 1,
-            height: '100vh',
-            overflow: 'auto',
-          }}
-        >
-          <Toolbar />
-
-          <Outlet />
-
-        </Box>
+    <Box sx={{ display: "flex", minHeight: "100dvh" }}>
+      <CssBaseline />
+      <Sidebar />
+      <Header />
+      <Box
+        component="main"
+        className="MainContent"
+        sx={{
+          pt: { xs: "calc(12px + var(--Header-height))", md: 3 },
+          pb: { xs: 2, sm: 2, md: 3 },
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          minWidth: 0,
+          height: "100dvh",
+          gap: 1,
+          overflow: "auto",
+        }}
+      >
+        <Outlet />
       </Box>
-    </ThemeProvider>
+    </Box>
   );
 }

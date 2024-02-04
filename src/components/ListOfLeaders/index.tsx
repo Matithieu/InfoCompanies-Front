@@ -1,9 +1,5 @@
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
+import { Container, Table } from "@mui/joy";
 import * as React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -52,7 +48,7 @@ export default function ListOfLeaders() {
     );
   } else {
     return (
-      <TableContainer style={{ borderRadius: 9 }}>
+      <Container style={{ borderRadius: 9 }}>
         <div
           style={{
             display: "flex",
@@ -65,39 +61,35 @@ export default function ListOfLeaders() {
           Liste des dirigeants
         </div>
         <Table sx={{ minWidth: 220 }} aria-label="List Of Leaders">
-          <TableBody>
+          <tbody>
             {leaders?.length > 0 &&
               leaders?.map((row) => (
-                <TableRow
+                <tr
                   key={row.getId()}
                   onClick={() => {
                     navigate(`/leaders/${row.getId()}`);
                   }}
-                  sx={{
-                    "&:last-child td, &:last-child th": { border: 0 },
-                    "&:hover": {
-                      backgroundColor: (theme) => theme.palette.action.hover,
-                    },
+                  style={{
+                    border: 0,
                     cursor: "pointer",
                   }}
                 >
-                  <TableCell align="left">
+                  <td align="left">
                     <AccountCircleIcon />
-                  </TableCell>
-                  <TableCell
-                    component="th"
+                  </td>
+                  <td
                     scope="row"
                     style={{
                       fontFamily: "Poppins",
                     }}
                   >
                     {row.getNom()} {row.getPrenom()}
-                  </TableCell>
-                </TableRow>
+                  </td>
+                </tr>
               ))}
-          </TableBody>
+          </tbody>
         </Table>
-      </TableContainer>
+      </Container>
     );
   }
 }
