@@ -172,9 +172,9 @@ export default function Dashboard() {
   useEffect(() => {
     const changeURL = () => {
       if (
-        searchParams.activityArea.length > 0 &&
-        searchParams.region.length > 0 &&
-        searchParams.legalStatus.length > 0
+        searchParams.activityArea.length == 0 &&
+        searchParams.region.length == 0 &&
+        searchParams.legalStatus.length == 0
       ) {
         setUrl("api/v1/random-companies?");
         return;

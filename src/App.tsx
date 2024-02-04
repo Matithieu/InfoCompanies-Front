@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import { Route, Routes } from "react-router-dom";
 
+import OrderTable from "./components/TableCompany/text.tsx";
 import Error404 from "./pages/404/index.tsx";
 import Landing from "./pages/Landing/index.tsx";
 import Layout from "./pages/Layout/index.tsx";
@@ -60,6 +61,7 @@ function App() {
               <Route path="/company/*" element={<Company />} />
               <Route path="/leaders/*" element={<Leader />} />
               <Route path="/*" element={<Error404 />} />
+              <Route path="/test" element={<OrderTable />} />
             </Route>
           </Route>
         </Routes>
