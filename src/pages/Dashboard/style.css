@@ -23,7 +23,6 @@
   justify-content: center;
   font-size: 17px;
   font-size: 17;
-  font-family: 'Poppins';
   border-radius: 5;
   border: 1px solid ;
   margin: 7px;
@@ -37,7 +36,6 @@
 .search-button {
   border-radius: 5px;
   font-size: 17px;
-  font-family: 'Poppins';
   text-align: center;
   border: 1px solid #5A6ACF;
   color: #5A6ACF;

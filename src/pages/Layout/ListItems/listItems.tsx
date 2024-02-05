@@ -39,7 +39,6 @@ export const MainListItems = () => {
       <ListSubheader component="div">
         <Typography
           style={{
-            fontFamily: "Poppins",
             marginTop: "10px",
             marginBottom: "10px",
           }}

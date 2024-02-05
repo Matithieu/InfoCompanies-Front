@@ -33,7 +33,7 @@ export default function DetailsLeader({
 
   if (leaderDetails === null) {
     return (
-      <a style={{ fontSize: "19px", fontFamily: "Poppins" }}>
+      <a style={{ fontSize: "19px"}}>
         Veuillez sélectionner une entreprise
       </a>
     );
@@ -43,7 +43,6 @@ export default function DetailsLeader({
         <h2
           style={{
             display: "flex",
-            fontFamily: "Poppins",
             justifyContent: "center",
           }}
         >

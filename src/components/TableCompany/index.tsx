@@ -235,6 +235,7 @@ export default function TableCompany({ url }: Props) {
             flexShrink: 1,
             overflow: "auto",
             minHeight: 0,
+            fontFamily: "Poppins",
           }}
         >
           <Table
@@ -297,11 +298,7 @@ export default function TableCompany({ url }: Props) {
                     {columnsTableCompany.slice(1).map((column) => {
                       if (column.id === "social") {
                         return (
-                          <td
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             {row.getFacebook() && (
                               <FacebookIcon style={{ color: "#3b5998" }} />
                             )}
@@ -318,111 +315,67 @@ export default function TableCompany({ url }: Props) {
                         );
                       } else if (column.id === "checked") {
                         return (
-                          <td
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             <StatutIcon statut={row.getChecked()} />
                           </td>
                         );
                       } else if (column.id === "dateImmatriculation") {
                         return (
-                          <td
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             {row.getDateImmatriculation() ?? "N/A"}
                           </td>
                         );
                       } else if (column.id === "secteurActivite") {
                         return (
-                          <td
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             {row.getSecteurActivite() ?? "N/A"}
                           </td>
                         );
                       } else if (column.id === "formeJuridique") {
                         return (
-                          <td
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             {row.getFormeJuridique() ?? "N/A"}
                           </td>
                         );
                       } else if (column.id === "adresse") {
                         return (
-                          <td
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             {row.getAdresse() ?? "N/A"}
                           </td>
                         );
                       } else if (column.id === "codePostal") {
                         return (
-                          <td
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             {row.getCodePostal() ?? "N/A"}
                           </td>
                         );
                       } else if (column.id === "ville") {
                         return (
-                          <td
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             {row.getVille() ?? "N/A"}
                           </td>
                         );
                       } else if (column.id === "region") {
                         return (
-                          <td
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             {row.getRegion()}
                           </td>
                         );
                       } else if (column.id === "denomination") {
                         return (
-                          <td
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             {row.getDenomination() ?? "N/A"}
                           </td>
                         );
                       } else if (column.id === "phone") {
                         return (
-                          <td
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             {row.getPhone() ?? "N/A"}
                           </td>
                         );
                       } else if (column.id === "email") {
                         return (
-                          <td
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             {row.getEmail() ?? "N/A"}
                           </td>
                         );
@@ -432,7 +385,6 @@ export default function TableCompany({ url }: Props) {
                             key={column.id}
                             align={column.align}
                             style={{
-                              fontFamily: "Poppins",
                               maxWidth: "50px",
                               maxHeight: "20px",
                               overflow: "hidden",
@@ -493,7 +445,7 @@ export default function TableCompany({ url }: Props) {
                 </IconButton>
               </Tooltip>
               <Typography level="body-md">
-                {dataPagniation.page} / {dataPagniation.totalPages}
+                {dataPagniation.page + 1} / {dataPagniation.totalPages}
               </Typography>
               <Tooltip title="Page suivante">
                 <IconButton

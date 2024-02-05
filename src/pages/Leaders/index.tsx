@@ -29,7 +29,6 @@ export default function LeaderDetails() {
         <CssBaseline />
         <Box component="main">
           <Typography
-            fontFamily={"Poppins"}
             level="h4"
             component="div"
             sx={{

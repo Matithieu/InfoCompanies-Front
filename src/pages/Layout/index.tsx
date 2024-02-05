@@ -1,3 +1,4 @@
+import '@fontsource/poppins';
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import PendingIcon from "@mui/icons-material/Pending";
@@ -217,7 +218,7 @@ export function Sidebar() {
 
 export default function Layout() {
   return (
-    <Box sx={{ display: "flex", minHeight: "100dvh" }}>
+    <Box sx={{ display: "flex", minHeight: "100dvh", fontFamily: 'Poppins' }}>
       <CssBaseline />
       <Sidebar />
       <Header />
@@ -235,6 +236,7 @@ export default function Layout() {
           gap: 1,
           overflowY: "auto",
           overflowX: "hidden",
+          fontFamily: 'Poppins'
         }}
       >
         <Outlet />

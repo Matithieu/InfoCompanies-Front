@@ -26,7 +26,6 @@ export const TableSkeleton = ({ columns }: TableSkeletonProps) => {
                   key={column.id}
                   style={{
                     minWidth: column.minWidth,
-                    fontFamily: "Poppins",
                     fontSize: 16,
                   }}
                 >
