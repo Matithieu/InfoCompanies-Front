@@ -96,11 +96,14 @@ const LoginPage = () => {
 
   const onSubmitHandler: SubmitHandler<LoginInput> = (values) => {
     setRequestLoading(true);
-    mutation.mutate(values);
-    if (mutation.data != null) {
-      setAuthUser(userJsonToUser(mutation.data.user));
-      localStorage.setItem("token", mutation.data.bearerToken.accessToken);
-    }
+    mutation.mutate(values, {
+      onSuccess: (data) => {
+        console.log(data);
+        setAuthUser(userJsonToUser(data.user));
+        localStorage.setItem("token", data.bearerToken.accessToken);
+        setRequestLoading(false);
+      },
+    });
   };
 
   return (
