@@ -10,6 +10,7 @@ import {
   IconButton,
   Sheet,
   Table,
+  Tooltip,
   Typography,
   iconButtonClasses,
 } from "@mui/joy";
@@ -165,35 +166,12 @@ export default function TableCompany({ url }: Props) {
     manageIsChecked(company.getId(), newStatus);
 
     // Change the status of the company in data
-    companies?.map((item) =>
-      item.getId() === company.getId() ? company : item
+    setCompanies((prevCompanies) =>
+      prevCompanies.map((item) =>
+        item.getId() === company.getId() ? company : item
+      )
     );
-    setCompanies([...companies]);
     return newStatus;
-  };
-
-  function labelDisplayedRows({
-    from,
-    to,
-    count,
-  }: {
-    from: number;
-    to: number;
-    count: number;
-  }) {
-    return `${from}–${to} of ${count !== -1 ? count : `more than ${to}`}`;
-  }
-
-  const getLabelDisplayedRowsTo = () => {
-    if (data?.numberOfElements === -1) {
-      return (dataPagniation.page + 1) * dataPagniation.rowsPerPage;
-    }
-    return dataPagniation.rowsPerPage === -1
-      ? data?.numberOfElements
-      : Math.min(
-          data?.numberOfElements ?? 0,
-          (dataPagniation.page + 1) * dataPagniation.rowsPerPage
-        );
   };
 
   if (error != null && isError) {
@@ -255,7 +233,7 @@ export default function TableCompany({ url }: Props) {
             width: "100%",
             borderRadius: "sm",
             flexShrink: 1,
-            overflow: "visible",
+            overflow: "auto",
             minHeight: 0,
           }}
         >
@@ -274,7 +252,7 @@ export default function TableCompany({ url }: Props) {
             }}
           >
             <thead>
-              <tr>
+              <tr style={{ overflowX: "auto" }}>
                 {columnsTableCompany.map((column) => (
                   <th
                     key={column.id}
@@ -457,7 +435,7 @@ export default function TableCompany({ url }: Props) {
                               fontFamily: "Poppins",
                               maxWidth: "50px",
                               maxHeight: "50px",
-                              overflow: "visible",
+                              overflow: "hidden",
                             }}
                             onClick={(e) => {
                               if (
@@ -493,46 +471,44 @@ export default function TableCompany({ url }: Props) {
               },
             }}
           >
-            <Box sx={{ display: "flex", gap: 1 }}>
-              <IconButton
-                size="sm"
-                color="neutral"
-                variant="outlined"
-                disabled={dataPagniation.page === 0}
-                onClick={() => handleChangePage(dataPagniation.page - 1)}
-                sx={{ bgcolor: "background.surface" }}
-              >
-                <KeyboardArrowLeftIcon />
-              </IconButton>
-              <Typography textAlign="center" sx={{ minWidth: 80 }}>
-                {labelDisplayedRows({
-                  from:
-                    data.numberOfElements === 0
-                      ? 0
-                      : dataPagniation.page * dataPagniation.rowsPerPage + 1,
-                  to: getLabelDisplayedRowsTo() ?? 0,
-                  count:
-                    data.numberOfElements === -1 ? -1 : data.numberOfElements,
-                })}
+            <Box
+              sx={{
+                flexDirection: "row",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: 1.5,
+              }}
+            >
+              <Tooltip title="Page précédente">
+                <IconButton
+                  size="sm"
+                  color="neutral"
+                  variant="outlined"
+                  disabled={dataPagniation.page === 0}
+                  onClick={() => handleChangePage(dataPagniation.page - 1)}
+                  sx={{ bgcolor: "background.surface" }}
+                >
+                  <KeyboardArrowLeftIcon />
+                </IconButton>
+              </Tooltip>
+              <Typography level="body-md">
+                {dataPagniation.page} / {dataPagniation.totalPages}
               </Typography>
-              <IconButton
-                size="sm"
-                color="neutral"
-                variant="outlined"
-                disabled={
-                  data.numberOfElements !== -1
-                    ? dataPagniation.page >=
-                      Math.ceil(
-                        data.numberOfElements / dataPagniation.rowsPerPage
-                      ) -
-                        1
-                    : false
-                }
-                onClick={() => handleChangePage(dataPagniation.page + 1)}
-                sx={{ bgcolor: "background.surface" }}
-              >
-                <KeyboardArrowRightIcon />
-              </IconButton>
+              <Tooltip title="Page suivante">
+                <IconButton
+                  size="sm"
+                  color="neutral"
+                  variant="outlined"
+                  disabled={
+                    dataPagniation.page === dataPagniation.totalPages - 1
+                  }
+                  onClick={() => handleChangePage(dataPagniation.page + 1)}
+                  sx={{ bgcolor: "background.surface" }}
+                >
+                  <KeyboardArrowRightIcon />
+                </IconButton>
+              </Tooltip>
             </Box>
           </Box>
         </Box>
