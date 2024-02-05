@@ -1,5 +1,17 @@
 import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined";
-import { Box, Button, Grid, Sheet, Table, Typography } from "@mui/joy";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  Sheet,
+  Table,
+  Tooltip,
+  Typography,
+  iconButtonClasses,
+} from "@mui/joy";
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -77,22 +89,12 @@ function TableOfDetails() {
     }
   }, [data]);
 
-  // const handleChangePage = (_event: unknown, newPage: number) => {
-  //   setDataPagination((prevDataPagination) => ({
-  //     ...prevDataPagination,
-  //     page: newPage,
-  //   }));
-  // };
-
-  // const handleChangeRowsPerPage = (
-  //   event: React.ChangeEvent<HTMLInputElement>
-  // ) => {
-  //   setDataPagination((prevDataPagination) => ({
-  //     ...prevDataPagination,
-  //     rowsPerPage: +event.target.value,
-  //     page: 0,
-  //   }));
-  // };
+  const handleChangePage = (newPage: number) => {
+    setDataPagination((prevDataPagination) => ({
+      ...prevDataPagination,
+      page: newPage,
+    }));
+  };
 
   if (error != null && isError) {
     return (
@@ -102,7 +104,7 @@ function TableOfDetails() {
           alignItems: "center",
           justifyContent: "center",
           display: "flex",
-          height: "200px", // Set a fixed height for the container
+          height: "200px",
         }}
       >
         <h1>{error.message}</h1>
@@ -128,7 +130,7 @@ function TableOfDetails() {
           alignItems: "center",
           justifyContent: "center",
           display: "flex",
-          height: "200px", // Set a fixed height for the container
+          height: "200px",
         }}
       >
         <h1>Chargement des données...</h1>
@@ -142,7 +144,7 @@ function TableOfDetails() {
           alignItems: "center",
           justifyContent: "center",
           display: "flex",
-          height: "200px", // Set a fixed height for the container
+          height: "200px",
         }}
       >
         <h1>Aucune entreprise trouvée</h1>
@@ -150,61 +152,116 @@ function TableOfDetails() {
     );
   } else if (data.empty === false) {
     return (
-      <Sheet
-        className="OrderTableContainer"
-        variant="outlined"
-        sx={{
-          display: { xs: "none", sm: "initial" },
-          width: "100%",
-          borderRadius: "sm",
-          flexShrink: 1,
-          minHeight: 0,
-        }}
-      >
-        <Table
-          aria-labelledby="tableTitle"
-          stickyHeader
-          hoverRow
+      <React.Fragment>
+        <Sheet
+          className="OrderTableContainer"
+          variant="outlined"
           sx={{
-            "--TableCell-headBackground":
-              "var(--joy-palette-background-level1)",
-            "--Table-headerUnderlineThickness": "1px",
-            "--TableRow-hoverBackground":
-              "var(--joy-palette-background-level1)",
-            "--TableCell-paddingY": "4px",
-            "--TableCell-paddingX": "8px",
+            display: { xs: "none", sm: "initial" },
+            width: "100%",
+            borderRadius: "sm",
+            flexShrink: 1,
+            minHeight: 0,
           }}
         >
-          <thead>
-            <tr>
-              <th align="left"></th>
-              <th align="left">Dénomination</th>
-              <th align="center">Secteur d'activité</th>
-              <th align="center">Ville</th>
-              <th align="center">Region</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.content.map((row: CompanyDetails) => (
-              <tr
-                key={row.id}
-                onClick={() => {
-                  navigate(`/company/${row.id}`, {});
-                }}
-                style={{ cursor: "pointer" }}
-              >
-                <td align="left">
-                  <ApartmentOutlinedIcon />
-                </td>
-                <td scope="row">{row.denomination}</td>
-                <td align="center">{row.secteurActivite}</td>
-                <td align="center">{row.ville}</td>
-                <td align="center">{row.region}</td>
+          <Table
+            aria-labelledby="tableTitle"
+            stickyHeader
+            hoverRow
+            sx={{
+              "--TableCell-headBackground":
+                "var(--joy-palette-background-level1)",
+              "--Table-headerUnderlineThickness": "1px",
+              "--TableRow-hoverBackground":
+                "var(--joy-palette-background-level1)",
+              "--TableCell-paddingY": "4px",
+              "--TableCell-paddingX": "8px",
+            }}
+          >
+            <thead>
+              <tr style={{ fontSize: 16, alignItems: "left" }}>
+                <th align="left"></th>
+                <th align="left">Dénomination</th>
+                <th align="center">Secteur d'activité</th>
+                <th align="center">Ville</th>
+                <th align="center">Region</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
-      </Sheet>
+            </thead>
+            <tbody>
+              {data.content.map((row: CompanyDetails) => (
+                <tr
+                  key={row.id}
+                  onClick={() => {
+                    navigate(`/company/${row.id}`, {});
+                  }}
+                  style={{ cursor: "pointer", alignItems: "left"}}
+                >
+                  <td align="left">
+                    <ApartmentOutlinedIcon />
+                  </td>
+                  <td scope="row">{row.denomination}</td>
+                  <td align="center">{row.secteurActivite}</td>
+                  <td align="center">{row.ville}</td>
+                  <td align="center">{row.region}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </Sheet>
+        <Box>
+          <Box
+            sx={{
+              pt: 2,
+              gap: 1,
+              [`& .${iconButtonClasses.root}`]: { borderRadius: "50%" },
+              display: {
+                xs: "none",
+                md: "flex",
+              },
+            }}
+          >
+            <Box
+              sx={{
+                flexDirection: "row",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: 1.5,
+              }}
+            >
+              <Tooltip title="Page précédente">
+                <IconButton
+                  size="sm"
+                  color="neutral"
+                  variant="outlined"
+                  disabled={dataPagniation.page === 0}
+                  onClick={() => handleChangePage(dataPagniation.page - 1)}
+                  sx={{ bgcolor: "background.surface" }}
+                >
+                  <KeyboardArrowLeftIcon />
+                </IconButton>
+              </Tooltip>
+              <Typography level="body-md">
+                {dataPagniation.page + 1} / {dataPagniation.totalPages}
+              </Typography>
+              <Tooltip title="Page suivante">
+                <IconButton
+                  size="sm"
+                  color="neutral"
+                  variant="outlined"
+                  disabled={
+                    dataPagniation.page === dataPagniation.totalPages - 1
+                  }
+                  onClick={() => handleChangePage(dataPagniation.page + 1)}
+                  sx={{ bgcolor: "background.surface" }}
+                >
+                  <KeyboardArrowRightIcon />
+                </IconButton>
+              </Tooltip>
+            </Box>
+          </Box>
+        </Box>
+      </React.Fragment>
     );
   }
 }
@@ -224,15 +281,16 @@ export default function Search() {
         }}
       >
         <Typography component="h1" level="h1" style={{ marginTop: 20 }}>
-          Entreprises pour {searchTerm}
+          Entreprises pour "{searchTerm}"
         </Typography>
       </Box>
       <Grid
         container
-        spacing={"3vh"}
+        spacing={3}
+        marginTop={"7.8vh"}
         paddingBottom={"10vh"}
-        paddingLeft={"10vh"}
-        paddingRight={"10vh"}
+        paddingLeft={8}
+        paddingRight={10}
         justifyContent="center"
       >
         <Grid xs={12} md={12}>
