@@ -9,15 +9,10 @@ export const TableSkeleton = ({ columns }: TableSkeletonProps) => {
   return (
     <Box
       sx={{
-        position: "relative",
-        width: "100%",
-        height: "100%",
         overflow: "hidden",
       }}
     >
-      <Container
-        sx={{ width: "100%", minHeight: 380, height: "100%", borderRadius: 3 }}
-      >
+      <Container>
         <Table stickyHeader aria-label="sticky table">
           <thead>
             <tr>
