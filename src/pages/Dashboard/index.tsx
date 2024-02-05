@@ -238,7 +238,7 @@ export default function Dashboard() {
         </Grid>
 
         {/* Container on the second row */}
-        <Grid container xs={12} spacing={3}>
+        <Grid container xs={12} sm={6} md={8} lg={6} spacing={3}>
           {/* Chart of the company */}
           <Grid xs={12} sm={6} md={4}>
             <Card
@@ -250,6 +250,7 @@ export default function Dashboard() {
                 minHeight: 220,
                 minWidth: 400,
                 maxWidth: 400,
+                overflow: "hidden",
               }}
             >
               <Details />
@@ -273,7 +274,7 @@ export default function Dashboard() {
           </Grid>
 
           {/* Details of the company */}
-          <Grid xs={12} sm={12} md={4}>
+          <Grid xs={12} sm={6} md={4}>
             <Card
               sx={{
                 display: "flex",
@@ -282,6 +283,7 @@ export default function Dashboard() {
                 justifyContent: "center",
                 minHeight: 220,
                 minWidth: 400,
+                height: 200,
               }}
             >
               <Chart />
