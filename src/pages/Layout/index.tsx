@@ -1,8 +1,8 @@
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
+import PendingIcon from "@mui/icons-material/Pending";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
-import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
 import SupportRoundedIcon from "@mui/icons-material/SupportRounded";
 import Avatar from "@mui/joy/Avatar";
 import Box from "@mui/joy/Box";
@@ -144,9 +144,9 @@ export function Sidebar() {
           <Link to="/favorites" style={linkStyles}>
             <ListItem>
               <ListItemButton>
-                <ShoppingCartRoundedIcon />
+                <PendingIcon />
                 <ListItemContent>
-                  <Typography level="title-sm">Favorites</Typography>
+                  <Typography level="title-sm">To Do</Typography>
                 </ListItemContent>
               </ListItemButton>
             </ListItem>
@@ -185,11 +185,9 @@ export function Sidebar() {
       <Divider />
       <Link to="/account" style={linkStyles}>
         <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-          <Avatar
-            variant="outlined"
-            size="sm"
-            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
-          />
+          <Avatar variant="outlined" size="sm">
+            {authUser?.name?.charAt(0).toLocaleUpperCase()}
+          </Avatar>
           <Box sx={{ minWidth: 0, flex: 1 }}>
             <Typography level="title-sm">
               {authUser?.name ?? "Error"}
@@ -235,7 +233,8 @@ export default function Layout() {
           minWidth: 0,
           height: "100dvh",
           gap: 1,
-          overflow: "auto",
+          overflowY: "auto",
+          overflowX: "hidden",
         }}
       >
         <Outlet />
