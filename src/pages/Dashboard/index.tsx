@@ -188,7 +188,7 @@ export default function Dashboard() {
     changeURL();
   }, [searchParams]);
   return (
-    <Grid sx={{ flex: 1, width: "100%" }}>
+    <Grid sx={{}}>
       <SEO
         title="Dashboard"
         description="Dashboard"
@@ -204,14 +204,21 @@ export default function Dashboard() {
           Dashboard
         </Typography>
       </Box>
-      <Grid container spacing={3} paddingLeft={8} paddingRight={10}>
-        {/* Advanced Search */}
-        <Grid xs={12} md={4} lg={3}>
-          <AdvancedSearch />
-        </Grid>
 
-        {/* List Of Companies */}
-        <Grid xs={12} md={8} lg={9}>
+      <Grid xs={12} sm={6} md={4} lg={3} paddingLeft={8}>
+        <AdvancedSearch />
+      </Grid>
+
+      <Grid
+        container
+        spacing={3}
+        paddingLeft={8}
+        paddingRight={10}
+        justifyContent="center"
+        alignItems="center"
+      >
+        {/* Container on the first row */}
+        <Grid xs={12} sm={6} md={8} lg={6}>
           <Stack
             sx={{
               display: "flex",
@@ -230,69 +237,57 @@ export default function Dashboard() {
           </Stack>
         </Grid>
 
-        {/* Container des éléments sur la deuxième ligne */}
-        <Grid xs={12}>
-          <Grid
-            container
-            spacing={3}
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-evenly",
-              minWidth: "100%",
-            }}
-          >
-            {/* Chart of the company */}
-            <Grid xs={12} md={4}>
-              <Card
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  height: 220,
-                  minWidth: 400,
-                  borderRadius: 3,
-                }}
-              >
-                <Chart />
-              </Card>
-            </Grid>
-
-            {/* Leaders of the company */}
-            <Grid xs={12} md={4}>
-              <Card
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  minHeight: 220,
-                  borderRadius: 3,
-                }}
-              >
-                <ListOfLeaders />
-              </Card>
-            </Grid>
-
-            {/* Details of the company */}
-            <Grid xs={12} md={12}>
-              <Card
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  minHeight: 220,
-                  borderRadius: 3,
-                  maxWidth: 400,
-                }}
-              >
-                <Details />
-              </Card>
-            </Grid>
+        {/* Container on the second row */}
+        <Grid container xs={12} spacing={3}>
+          {/* Chart of the company */}
+          <Grid xs={12} sm={6} md={4}>
+            <Card
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                minHeight: 220,
+                minWidth: 400,
+                maxWidth: 400,
+              }}
+            >
+              <Details />
+            </Card>
           </Grid>
+
+          {/* Leaders of the company */}
+          <Grid xs={12} sm={6} md={4}>
+            <Card
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                minHeight: 220,
+                minWidth: 400,
+              }}
+            >
+              <ListOfLeaders />
+            </Card>
+          </Grid>
+
+          {/* Details of the company */}
+          <Grid xs={12} sm={12} md={4}>
+            <Card
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                minHeight: 220,
+                minWidth: 400,
+              }}
+            >
+              <Chart />
+            </Card>
+          </Grid>
+          {/* . */}
         </Grid>
       </Grid>
     </Grid>
