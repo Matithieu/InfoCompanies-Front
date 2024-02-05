@@ -252,7 +252,7 @@ export default function TableCompany({ url }: Props) {
             }}
           >
             <thead>
-              <tr style={{ overflowX: "auto" }}>
+              <tr>
                 {columnsTableCompany.map((column) => (
                   <th
                     key={column.id}
@@ -434,7 +434,7 @@ export default function TableCompany({ url }: Props) {
                             style={{
                               fontFamily: "Poppins",
                               maxWidth: "50px",
-                              maxHeight: "50px",
+                              maxHeight: "20px",
                               overflow: "hidden",
                             }}
                             onClick={(e) => {
