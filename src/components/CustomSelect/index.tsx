@@ -9,7 +9,8 @@ import {
   Input,
   ListSubheader,
   MenuButton,
-  Select
+  Select,
+  useTheme
 } from "@mui/joy";
 import React, { useEffect, useMemo, useState } from "react";
 import { FixedSizeList } from "react-window";
@@ -31,6 +32,8 @@ const RenderRow = ({ index, style, data }: RenderRowProps) => {
   const { displayedOptions, selectedOptions, handleToggle } = data;
   const option = displayedOptions[index];
 
+  const theme = useTheme();
+
   return (
     <FormControl>
       <Dropdown>
@@ -45,11 +48,14 @@ const RenderRow = ({ index, style, data }: RenderRowProps) => {
             width: "100%",
             padding: "0.5rem",
             backgroundColor:
-              selectedOptions.indexOf(option) !== -1 ? "primary.100" : "white",
+              selectedOptions.indexOf(option) !== -1
+                ? theme.palette.primary.mainChannel // Utilisez la couleur principale du thème
+                : theme.palette.background.surface, // Utilisez la couleur de fond du thème
             "&:hover": {
-              backgroundColor: "primary.100",
+              backgroundColor: theme.palette.primary.mainChannel,
             },
             overflowY: "hidden",
+            borderRadius: 0,
           }}
         >
           <Checkbox
