@@ -35,24 +35,19 @@ export default function ListOfLeaders() {
 
   if (leaders === null) {
     return (
-      <a style={{ fontSize: "19px", fontFamily: "Poppins" }}>
-        Veuillez sélectionner une entreprise
-      </a>
+      <a style={{ fontSize: "19px" }}>Veuillez sélectionner une entreprise</a>
     );
   }
   if (leaders.length === 0) {
     return (
-      <a style={{ fontSize: "19px", fontFamily: "Poppins" }}>
-        Pas de données pour cette entreprise
-      </a>
+      <a style={{ fontSize: "19px" }}>Pas de données pour cette entreprise</a>
     );
   } else {
     return (
-      <Container style={{ borderRadius: 9 }}>
+      <Container>
         <div
           style={{
             display: "flex",
-            fontFamily: "Poppins",
             justifyContent: "center",
             marginTop: 5,
             top: "0",
@@ -60,7 +55,7 @@ export default function ListOfLeaders() {
         >
           Liste des dirigeants
         </div>
-        <Table sx={{ minWidth: 220 }} aria-label="List Of Leaders">
+        <Table aria-label="List Of Leaders">
           <tbody>
             {leaders?.length > 0 &&
               leaders?.map((row) => (
@@ -77,12 +72,7 @@ export default function ListOfLeaders() {
                   <td align="left">
                     <AccountCircleIcon />
                   </td>
-                  <td
-                    scope="row"
-                    style={{
-                      fontFamily: "Poppins",
-                    }}
-                  >
+                  <td scope="row">
                     {row.getNom()} {row.getPrenom()}
                   </td>
                 </tr>
