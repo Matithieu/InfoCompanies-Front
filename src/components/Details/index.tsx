@@ -1,4 +1,4 @@
-import { Box, Table, Tooltip } from "@mui/joy";
+import { Box, Table, Tooltip, Typography } from "@mui/joy";
 
 import BusinessIcon from "@mui/icons-material/Business";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
@@ -34,57 +34,77 @@ export default function Details() {
           <tbody>
             <tr style={{ border: 0 }}>
               <td scope="row">
-                <Tooltip arrow title="Numéro de téléphone" placement="top">
-                  <PhoneIcon />
-                </Tooltip>
                 <span style={{ marginLeft: "10px" }}></span>
-                <a style={{ fontSize: "18px" }}>
+                <Typography
+                  style={{ fontSize: "18px", overflow: "hidden " }}
+                  startDecorator={
+                    <Tooltip arrow title="Numéro de téléphone" placement="top">
+                      <PhoneIcon />
+                    </Tooltip>
+                  }
+                >
                   {selectedCompany.getPhone() ?? "No phone found"}
-                </a>
+                </Typography>
               </td>
             </tr>
             <tr style={{ border: 0 }}>
               <td scope="row">
-                <Tooltip arrow title="Adresse email" placement="top">
-                  <EmailIcon />
-                </Tooltip>
                 <span style={{ marginLeft: "10px" }}></span>
-                <a style={{ fontSize: "18px" }}>
+                <Typography
+                  style={{ fontSize: "18px", overflow: "hidden " }}
+                  startDecorator={
+                    <Tooltip arrow title="Adresse email" placement="top">
+                      <EmailIcon />
+                    </Tooltip>
+                  }
+                >
                   {selectedCompany.getEmail() ?? "No email found"}
-                </a>
+                </Typography>
               </td>
             </tr>
             <tr style={{ border: 0 }}>
               <td scope="row">
-                <Tooltip arrow title="Site web" placement="top">
-                  <WebAssetIcon />
-                </Tooltip>
                 <span style={{ marginLeft: "10px" }}></span>
-                <a style={{ fontSize: "18px" }}>
+                <Typography
+                  style={{ fontSize: "18px", overflow: "auto" }}
+                  startDecorator={
+                    <Tooltip arrow title="Site web" placement="top">
+                      <WebAssetIcon />
+                    </Tooltip>
+                  }
+                >
                   {selectedCompany.getWebsite() ?? "No website found"}
-                </a>
+                </Typography>
               </td>
             </tr>
             <tr style={{ border: 0 }}>
               <td scope="row">
-                <Tooltip arrow title="Adresse" placement="top">
-                  <BusinessIcon />
-                </Tooltip>
                 <span style={{ marginLeft: "10px" }}></span>
-                <a style={{ fontSize: "18px" }}>
+                <Typography
+                  style={{ fontSize: "18px", overflow: "hidden " }}
+                  startDecorator={
+                    <Tooltip arrow title="Adresse" placement="top">
+                      <BusinessIcon />
+                    </Tooltip>
+                  }
+                >
                   {selectedCompany.getAdresse() ?? "No address found"}
-                </a>
+                </Typography>
               </td>
             </tr>
             <tr style={{ border: 0 }}>
               <td scope="row">
-                <Tooltip arrow title="Date de création" placement="top">
-                  <CalendarTodayOutlinedIcon />
-                </Tooltip>
                 <span style={{ marginLeft: "10px" }}></span>
-                <a style={{ fontSize: "18px" }}>
+                <Typography
+                  style={{ fontSize: "18px", overflow: "hidden " }}
+                  startDecorator={
+                    <Tooltip arrow title="Date de création" placement="top">
+                      <CalendarTodayOutlinedIcon />
+                    </Tooltip>
+                  }
+                >
                   {selectedCompany.getDateImmatriculation() ?? "No date found"}
-                </a>
+                </Typography>
               </td>
             </tr>
           </tbody>

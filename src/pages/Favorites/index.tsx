@@ -1,4 +1,4 @@
-import { Box, Card, Grid, Typography } from "@mui/joy";
+import { Box, Card, Grid, Stack, Typography } from "@mui/joy";
 import { useEffect, useState } from "react";
 import Chart from "../../components/Chart/index.tsx";
 import Details from "../../components/Details/index.tsx";
@@ -25,13 +25,17 @@ export default function Favorites() {
   }, []);
 
   return (
-    <Grid sx={{ flex: 1, width: "100%" }}>
+    <Grid>
       <Box
         sx={{
           px: { xs: 2, md: 6 },
         }}
       >
-        <Typography component="h1" level="h1" style={{ marginTop: 20 }}>
+        <Typography
+          component="h1"
+          level="h1"
+          style={{ marginTop: 20, marginBottom: 20 }}
+        >
           Favoris
         </Typography>
       </Box>
@@ -39,23 +43,58 @@ export default function Favorites() {
       <Grid
         container
         spacing={3}
-        paddingBottom={10}
-        paddingLeft={10}
+        paddingLeft={8}
         paddingRight={10}
+        alignItems="center"
       >
-        <Grid xs={12} md={12} lg={12}>
+        <Grid xs={12} sm={6} md={8} lg={6}>
           {/* Container des éléments sur la première ligne */}
           <Grid
             container
             spacing={6}
-            justifyContent="space-between"
-            wrap="wrap"
           >
             {/* List Of Companies */}
             <Grid xs={12} md={8}>
               {checkedCompanies.length !== 0 ? (
                 url ? (
-                  <TableCompany url={url} />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      gap: 5,
+                    }}
+                  >
+                    <Stack
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        minHeight: 400,
+                        minWidth: "70%",
+                        maxHeight: 550,
+                        borderRadius: 3,
+                      }}
+                    >
+                      <TableCompany url={url} />
+                    </Stack>
+                    <Card
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        minHeight: 200,
+                        borderRadius: 3,
+                        minWidth: "30%",
+                        maxWidth: 400,
+                      }}
+                    >
+                      <Details />
+                    </Card>
+                  </Box>
                 ) : (
                   <TableSkeleton columns={columnsTableCompany} />
                 )
@@ -72,25 +111,6 @@ export default function Favorites() {
                 </h1>
               )}
             </Grid>
-
-            {/* Details of the company */}
-            {checkedCompanies.length !== 0 && (
-              <Grid xs={12} md={4}>
-                <Card
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    minHeight: 200,
-                    borderRadius: 3,
-                    maxWidth: 400,
-                  }}
-                >
-                  <Details />
-                </Card>
-              </Grid>
-            )}
           </Grid>
         </Grid>
 
@@ -98,12 +118,7 @@ export default function Favorites() {
         {checkedCompanies.length !== 0 && (
           <>
             <Grid xs={12} md={12} lg={12}>
-              <Grid
-                container
-                spacing={3}
-                justifyContent="space-between"
-                marginTop={5}
-              >
+              <Grid container spacing={3} flexDirection={"row"} marginTop={5}>
                 {/* Leaders of the company */}
                 <Grid xs={12} md={6}>
                   <Card
@@ -136,15 +151,6 @@ export default function Favorites() {
                   </Card>
                 </Grid>
               </Grid>
-            </Grid>
-
-            <Grid xs={12} md={12} lg={12}>
-              <Grid
-                container
-                spacing={3}
-                justifyContent="space-between"
-                marginTop={5}
-              ></Grid>
             </Grid>
           </>
         )}

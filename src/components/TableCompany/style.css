@@ -1,0 +1,37 @@
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: #f0f0f0; /* Light gray track color */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #929292; /* Blue handle color */
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #888888; /* Darker blue on hover */
+}
+
+/* Handle on active */
+::-webkit-scrollbar-thumb:active {
+  background-color: #535353; /* Even darker blue on active */
+}
+
+/* Corner */
+::-webkit-scrollbar-corner {
+  background-color: #ecf0f1; /* Light gray corner color */
+}
+
+/* Resizer */
+::-webkit-resizer {
+  background-color: transparent; /* Light gray resizer color */
+}
+
+/* TableCompany */

@@ -28,6 +28,7 @@ import { useCompanyFilterStore } from "../../store/filtersStore.tsx";
 import { companyJsonToCompany } from "../../utils/companyJsonToCompany.tsx";
 import { TableSkeleton } from "../Skeleton/index.tsx";
 import { StatutIcon, manageIsChecked } from "../StatutIcon/index.tsx";
+import "./style.css";
 
 // https://www.material-react-table.com/
 // Using this ?
@@ -268,7 +269,11 @@ export default function TableCompany({ url }: Props) {
                 ))}
               </tr>
             </thead>
-            <tbody>
+            <tbody
+              style={{
+                wordBreak: "break-word",
+              }}
+            >
               {companies.map((row) => {
                 return (
                   //Afficher les details de l'entreprise en cliquant dessus
@@ -385,9 +390,10 @@ export default function TableCompany({ url }: Props) {
                             key={column.id}
                             align={column.align}
                             style={{
-                              maxWidth: "50px",
-                              maxHeight: "20px",
+                              maxWidth: "10px",
+                              maxHeight: "10px",
                               overflow: "hidden",
+                              wordBreak: "normal",
                             }}
                             onClick={(e) => {
                               if (

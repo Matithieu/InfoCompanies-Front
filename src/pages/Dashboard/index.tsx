@@ -188,7 +188,7 @@ export default function Dashboard() {
     changeURL();
   }, [searchParams]);
   return (
-    <Grid sx={{}}>
+    <Grid>
       <SEO
         title="Dashboard"
         description="Dashboard"
@@ -239,7 +239,7 @@ export default function Dashboard() {
 
         {/* Container on the second row */}
         <Grid container xs={12} sm={6} md={8} lg={6} spacing={3}>
-          {/* Chart of the company */}
+          {/* Details of the company */}
           <Grid xs={12} sm={6} md={4}>
             <Card
               sx={{
@@ -258,7 +258,7 @@ export default function Dashboard() {
           </Grid>
 
           {/* Leaders of the company */}
-          <Grid xs={12} sm={6} md={4}>
+          <Grid xs={12} sm={6} md={4} justifyContent={"space-evenly"}>
             <Card
               sx={{
                 display: "flex",
@@ -273,7 +273,7 @@ export default function Dashboard() {
             </Card>
           </Grid>
 
-          {/* Details of the company */}
+          {/* Chart of the company */}
           <Grid xs={12} sm={6} md={4}>
             <Card
               sx={{
