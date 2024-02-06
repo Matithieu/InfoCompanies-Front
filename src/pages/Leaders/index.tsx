@@ -1,4 +1,4 @@
-import { Box, CssBaseline, Grid, Sheet, Typography } from "@mui/joy";
+import { Box, Grid, Sheet, Typography } from "@mui/joy";
 import DetailsLeaders from "../../components/DetailsLeader/index.tsx";
 import Leader from "../../data/leader.tsx";
 
@@ -26,7 +26,6 @@ export default function LeaderDetails() {
   } else {
     return (
       <Box sx={{ display: "flex" }}>
-        <CssBaseline />
         <Box component="main">
           <Typography
             level="h4"

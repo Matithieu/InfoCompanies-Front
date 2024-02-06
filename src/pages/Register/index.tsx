@@ -5,11 +5,10 @@ import {
   Box,
   Button,
   Container,
-  CssBaseline,
   Divider,
   Grid,
   Input,
-  Typography,
+  Typography
 } from "@mui/joy";
 import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -144,7 +143,6 @@ const RegisterPage = () => {
 
   return (
     <Container component="main" maxWidth="xs" style={{ paddingTop: "4rem" }}>
-      <CssBaseline />
       <Box
         sx={{
           marginTop: 8,

@@ -1,12 +1,11 @@
 import {
   Container,
-  CssBaseline,
   Grid,
   Option,
   Select,
   Sheet,
   Switch,
-  Typography,
+  Typography
 } from "@mui/joy";
 import * as React from "react";
 
@@ -29,8 +28,6 @@ export default function Settings() {
 
   return (
     <Container maxWidth="lg">
-      <CssBaseline />
-
       <Typography
         level="h4"
         component="div"

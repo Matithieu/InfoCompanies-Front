@@ -2,10 +2,9 @@ import {
   Box,
   Button,
   Card,
-  CssBaseline,
   Grid,
   IconButton,
-  Typography,
+  Typography
 } from "@mui/joy";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -143,7 +142,6 @@ export default function CompanyPage() {
   } else if (company != null && typeof company.getAdresse === "function") {
     return (
       <Box sx={{ display: "flex" }}>
-        <CssBaseline />
         <Box
           component="main"
           sx={{

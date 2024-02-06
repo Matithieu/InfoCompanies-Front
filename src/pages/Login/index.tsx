@@ -5,12 +5,11 @@ import {
   Box,
   Button,
   Container,
-  CssBaseline,
   Divider,
   Grid,
   Input,
   Link,
-  Typography,
+  Typography
 } from "@mui/joy";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
@@ -108,7 +107,6 @@ const LoginPage = () => {
 
   return (
     <Container component="main" maxWidth="xs" style={{ paddingTop: "4rem" }}>
-      <CssBaseline />
       <Box
         sx={{
           marginTop: 8,

@@ -18,7 +18,6 @@ import ListItemContent from "@mui/joy/ListItemContent";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
 
-import { CssBaseline } from "@mui/joy";
 import { useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import useAuthStore from "../../store/authStore";
@@ -219,7 +218,6 @@ export function Sidebar() {
 export default function Layout() {
   return (
     <Box sx={{ display: "flex", minHeight: "100dvh", fontFamily: 'Poppins' }}>
-      <CssBaseline />
       <Sidebar />
       <Header />
       <Box
