@@ -1,3 +1,5 @@
+import { extendTheme } from "@mui/joy";
+
 export function openSidebar() {
   if (typeof window !== "undefined") {
     document.body.style.overflow = "hidden";
@@ -24,3 +26,10 @@ export function toggleSidebar() {
     }
   }
 }
+
+export const fontFamily = extendTheme({
+  fontFamily: {
+    body: "Poppins, sans-serif",
+    display: "Poppins, sans-serif",
+  },
+});
