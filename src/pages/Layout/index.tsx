@@ -1,4 +1,3 @@
-import '@fontsource/poppins';
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import PendingIcon from "@mui/icons-material/Pending";
