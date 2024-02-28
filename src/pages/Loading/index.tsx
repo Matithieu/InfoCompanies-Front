@@ -5,6 +5,7 @@ function Loading() {
   return (
     <Box
       sx={{
+        id: "suspense-fallback",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",

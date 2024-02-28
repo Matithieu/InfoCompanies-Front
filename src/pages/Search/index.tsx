@@ -190,11 +190,12 @@ function TableOfDetails() {
             <tbody>
               {data.content.map((row: CompanyDetails) => (
                 <tr
+                  id={`company-${row.id}`}
                   key={row.id}
                   onClick={() => {
                     navigate(`/company/${row.id}`, {});
                   }}
-                  style={{ cursor: "pointer", alignItems: "left"}}
+                  style={{ cursor: "pointer", alignItems: "left" }}
                 >
                   <td align="left">
                     <ApartmentOutlinedIcon />

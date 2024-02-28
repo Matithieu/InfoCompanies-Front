@@ -101,6 +101,7 @@ export function Sidebar() {
 
       <form onSubmit={handleSearch}>
         <Input
+          id="search-company"
           size="sm"
           startDecorator={<SearchRoundedIcon />}
           placeholder="Search"

@@ -154,7 +154,7 @@ const LoginPage = () => {
             <a style={{ color: "red" }}>{errors.password.message}</a>
           )}
 
-          <Button type="submit" fullWidth variant="soft" sx={{ mt: 3, mb: 2 }}>
+          <Button aria-label="submit-login" type="submit" fullWidth variant="soft" sx={{ mt: 3, mb: 2 }}>
             Sign In
           </Button>
           <Grid container>
