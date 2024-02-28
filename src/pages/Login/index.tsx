@@ -9,7 +9,7 @@ import {
   Grid,
   Input,
   Link,
-  Typography
+  Typography,
 } from "@mui/joy";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
@@ -187,7 +187,7 @@ const LoginPage = () => {
               />
             }
           >
-            Continue with Google
+            <a style={{color: "white"}}>Continue with Google</a>
           </Button>
         </Box>
       </Box>
