@@ -60,3 +60,13 @@ test('put all elements in the "to do" state', async ({ page }) => {
 
   expect(localStorage.length).toBe(10);
 });
+
+test("change to dark mode", async ({ page }) => {
+  await page.click('button[id="toggle-mode"]');
+
+  const darkMod = await page.evaluate(() => {
+    return localStorage.getItem("joy-mode");
+  });
+
+  expect(darkMod).toBe("dark");
+});
