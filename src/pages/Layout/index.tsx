@@ -184,7 +184,7 @@ export function Sidebar() {
       </Box>
       <Divider />
       <Link to="/account" style={linkStyles}>
-        <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+        <Box sx={{ display: "flex", gap: 1, alignItems: "center" }} id="user-page">
           <Avatar variant="outlined" size="sm">
             {authUser?.name?.charAt(0).toLocaleUpperCase()}
           </Avatar>
