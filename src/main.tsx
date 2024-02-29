@@ -6,6 +6,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import App from "./App.jsx";
+import "./index.css";
 import { fontFamily } from "./pages/Layout/utils.js";
 const queryClient = new QueryClient();
 
