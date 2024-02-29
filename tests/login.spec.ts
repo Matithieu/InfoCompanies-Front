@@ -34,3 +34,13 @@ test("search a company and click on it", async ({ page }) => {
 
   await page.click(`tr[id="company-${idOfCompany}"]`);
 });
+
+test("go to the user page", async ({ page }) => {
+  await page.click('div[id="user-page"]');
+
+  await page.waitForLoadState("networkidle");
+
+  const url = page.url();
+
+  expect(url).toBe(`${BASE_URL}/account`);
+});
