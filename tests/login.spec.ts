@@ -44,3 +44,16 @@ test("go to the user page", async ({ page }) => {
 
   expect(url).toBe(`${BASE_URL}/account`);
 });
+
+test('put all elements in the "to do" state', async ({ page }) => {
+  for (let i = 0; i < 10; i++) {
+    await page.click(`button[id="checkbox-${i}"]`);
+  }
+
+  // Acces to the local storage to see the 10 elements in the "to do" state
+  const localStorage = await page.evaluate(() => {
+    return JSON.parse(localStorage.getItem("checkedToDo"));
+  });
+
+  expect(localStorage.length).toBe(10);
+});
