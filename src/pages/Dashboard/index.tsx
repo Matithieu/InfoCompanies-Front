@@ -1,11 +1,6 @@
 import SearchIcon from "@mui/icons-material/Search";
-import { Button } from "@mui/material";
-import CssBaseline from "@mui/material/CssBaseline";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
+import { Box, Button, Card, Grid, Stack, Typography } from "@mui/joy";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import Chart from "../../components/Chart/index.tsx";
 import CustomSelect from "../../components/CustomSelect/index.tsx";
 import Details from "../../components/Details/index.tsx";
@@ -83,11 +78,11 @@ const AdvancedSearch = () => {
   };
 
   return (
-    <div style={{ marginLeft: 25, marginTop: 20, marginBottom: 20 }}>
+    <div>
       <Button
         variant="outlined"
         onClick={toggleMenu}
-        style={{ borderRadius: 5, marginBottom: 30 }}
+        style={{ marginBottom: 30, marginTop: 20 }}
       >
         Recherche avancée
       </Button>
@@ -100,7 +95,7 @@ const AdvancedSearch = () => {
           width="100%"
           padding="10px"
         >
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid xs={12} sm={6} md={4}>
             <CustomSelect
               options={legalStatus}
               onSelectionChange={handleLegalStatusChange}
@@ -110,7 +105,7 @@ const AdvancedSearch = () => {
               value={searchTerm.legalStatusValue}
             />
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid xs={12} sm={6} md={4}>
             <CustomSelect
               options={activityArea}
               onSelectionChange={handleActivityAreaChange}
@@ -120,7 +115,7 @@ const AdvancedSearch = () => {
               value={searchTerm.activityAreaValue}
             />
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid xs={12} sm={6} md={4}>
             <CustomSelect
               options={region}
               onSelectionChange={handleRegionChange}
@@ -130,7 +125,7 @@ const AdvancedSearch = () => {
               value={searchTerm.regionValue}
             />
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid xs={12} sm={6} md={4}>
             <Button
               onClick={() => {
                 setSearchTerm({
@@ -154,7 +149,7 @@ const AdvancedSearch = () => {
 
             <Button
               onClick={handleSearch}
-              variant="contained"
+              variant="soft"
               style={{ marginTop: "20px" }}
             >
               Rechercher <SearchIcon style={{ marginLeft: "6px" }} />
@@ -175,30 +170,22 @@ export default function Dashboard() {
   const [url, setUrl] = useState(`api/v1/random-companies?`);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (
-          searchParams.activityArea.length > 0 &&
-          searchParams.region.length > 0 &&
-          searchParams.legalStatus.length > 0
-        ) {
-          setUrl("api/v1/random-companies?");
-          return;
-        }
-
-        setUrl(
-          `api/v1/companies?secteurActivite=${searchParams.activityArea}&region=${searchParams.region}&`
-        );
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        toast.error("An error occurred while fetching data", {
-          position: "top-right",
-          autoClose: 5000,
-        });
+    const changeURL = () => {
+      if (
+        searchParams.activityArea.length == 0 &&
+        searchParams.region.length == 0 &&
+        searchParams.legalStatus.length == 0
+      ) {
+        setUrl("api/v1/random-companies?");
+        return;
       }
+
+      setUrl(
+        `api/v1/companies?secteurActivite=${searchParams.activityArea}&region=${searchParams.region}&`
+      );
     };
 
-    fetchData();
+    changeURL();
   }, [searchParams]);
   return (
     <Grid>
@@ -208,99 +195,101 @@ export default function Dashboard() {
         name="Dashboard"
         type="Dashboard"
       />
-
-      <CssBaseline />
-
-      <Typography
-        fontFamily={"Poppins"}
-        variant="h4"
-        component="div"
-        align="left"
-        marginTop={5}
-        marginLeft={10}
-        marginBottom={5}
+      <Box
+        sx={{
+          px: { xs: 2, md: 6 },
+        }}
       >
-        Dashboard
-      </Typography>
+        <Typography component="h1" level="h1" style={{ marginTop: 20 }}>
+          Dashboard
+        </Typography>
+      </Box>
+
+      <Grid xs={12} sm={6} md={4} lg={3} paddingLeft={8}>
+        <AdvancedSearch />
+      </Grid>
 
       <Grid
         container
         spacing={3}
-        paddingBottom={10}
-        paddingLeft={10}
+        paddingLeft={8}
         paddingRight={10}
+        justifyContent="center"
+        alignItems="center"
       >
-        <AdvancedSearch />
-        {/* List Of Companies */}
-        <Grid item xs={12} md={12} lg={12}>
-          <Paper
+        {/* Container on the first row */}
+        <Grid xs={12} sm={6} md={8} lg={6}>
+          <Stack
             sx={{
               display: "flex",
               flexDirection: "column",
-              width: "auto",
+              minWidth: "100%",
+              width: "100%",
               height: "100%",
               alignItems: "center",
               justifyContent: "center",
-              minHeight: 500,
+              minHeight: 550,
               maxHeight: 550,
               borderRadius: 3,
             }}
           >
             <TableCompany url={url} />
-          </Paper>
+          </Stack>
         </Grid>
 
-        {/* Container des éléments sur la deuxième ligne */}
-        <Grid item xs={12} md={12} lg={12}>
-          <Grid container spacing={3} justifyContent="center" marginTop={5}>
-            {/* Chart of the company */}
-            <Grid item xs={12} md={4}>
-              <Paper
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  height: 220,
-                  borderRadius: 3,
-                }}
-              >
-                <Chart />
-              </Paper>
-            </Grid>
-
-            {/* Leaders of the company */}
-            <Grid item xs={12} md={4}>
-              <Paper
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  minHeight: 220,
-                  borderRadius: 3,
-                }}
-              >
-                <ListOfLeaders />
-              </Paper>
-            </Grid>
-
-            {/* Details of the company */}
-            <Grid item xs={12} md={4}>
-              <Paper
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  minHeight: 220,
-                  borderRadius: 3,
-                }}
-              >
-                <Details />
-              </Paper>
-            </Grid>
+        {/* Container on the second row */}
+        <Grid container xs={12} sm={6} md={8} lg={6} spacing={3}>
+          {/* Details of the company */}
+          <Grid xs={12} sm={6} md={4}>
+            <Card
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                minHeight: 220,
+                minWidth: 400,
+                maxWidth: 400,
+                overflow: "hidden",
+              }}
+            >
+              <Details />
+            </Card>
           </Grid>
+
+          {/* Leaders of the company */}
+          <Grid xs={12} sm={6} md={4} justifyContent={"space-evenly"}>
+            <Card
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                minHeight: 220,
+                minWidth: 400,
+              }}
+            >
+              <ListOfLeaders />
+            </Card>
+          </Grid>
+
+          {/* Chart of the company */}
+          <Grid xs={12} sm={6} md={4}>
+            <Card
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                minHeight: 220,
+                minWidth: 400,
+                height: 200,
+              }}
+            >
+              <Chart />
+            </Card>
+          </Grid>
+          {/* . */}
         </Grid>
       </Grid>
     </Grid>

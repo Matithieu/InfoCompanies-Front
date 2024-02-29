@@ -2,31 +2,21 @@ import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
   Checkbox,
+  Chip,
+  Dropdown,
   FormControl,
-  InputAdornment,
-  InputLabel,
-  ListItemText,
+  FormLabel,
+  Input,
   ListSubheader,
-  MenuItem,
-  OutlinedInput,
+  MenuButton,
   Select,
-  TextField,
-} from "@mui/material";
+  useTheme
+} from "@mui/joy";
 import React, { useEffect, useMemo, useState } from "react";
 import { FixedSizeList } from "react-window";
 
 const containsText = (text: string, searchText: string) =>
   text.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
-
-const MenuProps = {
-  PaperProps: {
-    style: {
-      marginTop: 5,
-      maxHeight: 250,
-      overflow: "hidden",
-    },
-  },
-};
 
 type RenderRowProps = {
   index: number;
@@ -42,16 +32,41 @@ const RenderRow = ({ index, style, data }: RenderRowProps) => {
   const { displayedOptions, selectedOptions, handleToggle } = data;
   const option = displayedOptions[index];
 
+  const theme = useTheme();
+
   return (
-    <MenuItem
-      key={index}
-      value={option}
-      style={style}
-      onClick={() => handleToggle(option)}
-    >
-      <Checkbox checked={selectedOptions.indexOf(option) > -1} />
-      <ListItemText primary={option} />
-    </MenuItem>
+    <FormControl>
+      <Dropdown>
+        <MenuButton
+          key={index}
+          value={option}
+          style={style}
+          onClick={() => handleToggle(option)}
+          sx={{
+            display: "flex",
+            justifyContent: "flex-start",
+            width: "100%",
+            padding: "0.5rem",
+            backgroundColor:
+              selectedOptions.indexOf(option) !== -1
+                ? theme.palette.primary.mainChannel // Utilisez la couleur principale du thème
+                : theme.palette.background.surface, // Utilisez la couleur de fond du thème
+            "&:hover": {
+              backgroundColor: theme.palette.primary.mainChannel,
+            },
+            overflowY: "hidden",
+            borderRadius: 0,
+          }}
+        >
+          <Checkbox
+            checked={selectedOptions.indexOf(option) !== -1}
+            value={option}
+            sx={{ marginRight: "0.5rem" }}
+          />
+          {option}
+        </MenuButton>
+      </Dropdown>
+    </FormControl>
   );
 };
 
@@ -101,39 +116,48 @@ const CustomSelect = ({
   };
 
   return (
-    <Box sx={{ m: 0 }}>
-      <FormControl fullWidth>
-        <InputLabel id="universal-select-label">{label}</InputLabel>
-        <Select
-          multiple
-          style={{ minWidth: 250, maxWidth: 250 }}
-          MenuProps={MenuProps}
-          labelId="universal-select-label"
-          id="universal-select"
-          value={Array.isArray(selectedOptions) ? selectedOptions : []} // ensure value is always an array
-          label="Options"
-          input={<OutlinedInput label={label} />}
-          renderValue={(selected) => selected.join(", ")}
-          onClose={() => setSearchText("")}
-        >
+    <FormControl>
+      <FormLabel id="universal-select-label">{label}</FormLabel>
+      <Select
+        multiple
+        style={{ minWidth: "15rem", maxWidth: "15rem" }}
+        id="universal-select"
+        renderValue={(selected) => (
+          <Box sx={{ display: "flex", gap: "0.25rem" }}>
+            {selected.map((selectedOption) => (
+              <Chip variant="soft" color="primary">
+                {selectedOption.label}
+              </Chip>
+            ))}
+          </Box>
+        )}
+        value={selectedOptions}
+        slotProps={{
+          listbox: {
+            sx: {
+              width: "100%",
+            },
+          },
+        }}
+      >
+        <FormControl>
           <ListSubheader>
-            <TextField
-              size="small"
+            <Input
+              size="sm"
               autoFocus
               placeholder={placeholder}
-              fullWidth
               style={{ marginBottom: 5 }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-              }}
+              startDecorator={<SearchIcon />}
               onChange={(e) => setSearchText(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key !== "Escape") {
-                  e.stopPropagation();
+                if (e.key === "Enter" || e.key === "Escape") {
+                  e.preventDefault();
+
+                  if (displayedOptions.length > 0) {
+                    handleToggle(displayedOptions[0]);
+                  }
+
+                  return;
                 }
               }}
             />
@@ -141,7 +165,7 @@ const CustomSelect = ({
           <FixedSizeList
             height={250}
             width="100%"
-            itemSize={46}
+            itemSize={50}
             itemCount={displayedOptions.length}
             itemData={{
               displayedOptions,
@@ -151,9 +175,9 @@ const CustomSelect = ({
           >
             {RenderRow}
           </FixedSizeList>
-        </Select>
-      </FormControl>
-    </Box>
+        </FormControl>
+      </Select>
+    </FormControl>
   );
 };
 

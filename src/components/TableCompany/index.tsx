@@ -1,15 +1,19 @@
 import FacebookIcon from "@mui/icons-material/Facebook";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import YouTubeIcon from "@mui/icons-material/YouTube";
-import { Box, Button, IconButton } from "@mui/material";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
+import {
+  Box,
+  Button,
+  IconButton,
+  Sheet,
+  Table,
+  Tooltip,
+  Typography,
+  iconButtonClasses,
+} from "@mui/joy";
 import { useQuery } from "@tanstack/react-query";
 import * as React from "react";
 import { useEffect } from "react";
@@ -24,6 +28,7 @@ import { useCompanyFilterStore } from "../../store/filtersStore.tsx";
 import { companyJsonToCompany } from "../../utils/companyJsonToCompany.tsx";
 import { TableSkeleton } from "../Skeleton/index.tsx";
 import { StatutIcon, manageIsChecked } from "../StatutIcon/index.tsx";
+import "./style.css";
 
 // https://www.material-react-table.com/
 // Using this ?
@@ -36,7 +41,6 @@ const leader3 = new Leader(3, "HENRI", "Dupont", new Date("1990-01-01"), "06 00 
 const leader4 = new Leader(4, "EUDES", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 5, denomination: "Entreprise 5" }])
 const leader5 = new Leader(5, "HERCUL", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 6, denomination: "Entreprise 6" }])
 */
-
 async function fetchCompanies(url: string, page: number) {
   const response = await fetch(
     `${import.meta.env.VITE_SERVER_URL}/${url}page=${page}`,
@@ -109,34 +113,35 @@ export default function TableCompany({ url }: Props) {
     queryKey: ["companies", url, dataPagniation.page, searchParams],
     queryFn: () => fetchCompanies(url, dataPagniation.page),
     retry: 1,
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
-    if (data != null && !isError) {
+    if (data != null) {
       setDataPagination((prevDataPagination) => ({
         ...prevDataPagination,
         totalPages: data.totalPages,
       }));
       setCompanies(data.content);
     }
-  }, [data, isError]);
+  }, [data]);
 
-  const handleChangePage = (_event: unknown, newPage: number) => {
+  const handleChangePage = (newPage: number) => {
     setDataPagination((prevDataPagination) => ({
       ...prevDataPagination,
       page: newPage,
     }));
   };
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setDataPagination((prevDataPagination) => ({
-      ...prevDataPagination,
-      rowsPerPage: +event.target.value,
-      page: 0,
-    }));
-  };
+  // const handleChangeRowsPerPage = (
+  //   event: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   setDataPagination((prevDataPagination) => ({
+  //     ...prevDataPagination,
+  //     rowsPerPage: +event.target.value,
+  //     page: 0,
+  //   }));
+  // };
 
   const handleDetailsClick = (company: Company) => {
     // If the company is the same as the selected one, do nothing to avoid re-rendering
@@ -162,10 +167,11 @@ export default function TableCompany({ url }: Props) {
     manageIsChecked(company.getId(), newStatus);
 
     // Change the status of the company in data
-    companies?.map((item) =>
-      item.getId() === company.getId() ? company : item
+    setCompanies((prevCompanies) =>
+      prevCompanies.map((item) =>
+        item.getId() === company.getId() ? company : item
+      )
     );
-    setCompanies([...companies]);
     return newStatus;
   };
 
@@ -173,15 +179,16 @@ export default function TableCompany({ url }: Props) {
     return (
       <div
         style={{
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
           display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          overflow: "visible",
         }}
       >
         <h1>{error.message}</h1>
         <Button
-          variant="contained"
+          variant="soft"
           color="primary"
           onClick={() => {
             setRequestLoading(true);
@@ -218,48 +225,68 @@ export default function TableCompany({ url }: Props) {
     typeof data.content[0].getAdresse === "function"
   ) {
     return (
-      <Box
-        sx={{
-          position: "relative",
-          width: "100%",
-          borderRadius: 3,
-          overflow: "auto",
-          height: "100%",
-        }}
-      >
-        <TableContainer sx={{}}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
+      <React.Fragment>
+        <Sheet
+          className="OrderTableContainer"
+          variant="outlined"
+          sx={{
+            display: { xs: "none", sm: "initial" },
+            width: "100%",
+            borderRadius: "sm",
+            flexShrink: 1,
+            overflow: "auto",
+            minHeight: 0,
+            fontFamily: "Poppins",
+          }}
+        >
+          <Table
+            aria-labelledby="tableTitle"
+            stickyHeader
+            hoverRow
+            sx={{
+              "--TableCell-headBackground":
+                "var(--joy-palette-background-level1)",
+              "--Table-headerUnderlineThickness": "1px",
+              "--TableRow-hoverBackground":
+                "var(--joy-palette-background-level1)",
+              "--TableCell-paddingY": "4px",
+              "--TableCell-paddingX": "8px",
+            }}
+          >
+            <thead>
+              <tr>
                 {columnsTableCompany.map((column) => (
-                  <TableCell
+                  <th
                     key={column.id}
                     align={column.align}
                     style={{
                       minWidth: column.minWidth,
-                      fontFamily: "Poppins",
                       fontSize: 16,
                     }}
                   >
                     {column.label}
-                  </TableCell>
+                  </th>
                 ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {companies.map((row) => {
+              </tr>
+            </thead>
+            <tbody
+              style={{
+                wordBreak: "break-word",
+              }}
+            >
+              {companies.map((row, number) => {
                 return (
                   //Afficher les details de l'entreprise en cliquant dessus
-                  <TableRow
-                    hover
+                  <tr
                     role="checkbox"
                     tabIndex={-1}
-                    key={row.getSiren()}
+                    key={row.getId() + "rowdetails"}
                     onClick={() => handleDetailsClick(row)}
                     style={{ cursor: "pointer" }}
                   >
-                    <TableCell key="statut" align="center">
+                    <td key={row.getId() + "checbox"} align="center">
                       <IconButton
+                        id={`checkbox-${number}`}
                         style={{
                           border: "none",
                           backgroundColor: "transparent",
@@ -272,16 +299,12 @@ export default function TableCompany({ url }: Props) {
                       >
                         <StatutIcon statut={row.getChecked()} />
                       </IconButton>
-                    </TableCell>
+                    </td>
                     {/* Slice to exclude the id */}
                     {columnsTableCompany.slice(1).map((column) => {
                       if (column.id === "social") {
                         return (
-                          <TableCell
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             {row.getFacebook() && (
                               <FacebookIcon style={{ color: "#3b5998" }} />
                             )}
@@ -294,128 +317,84 @@ export default function TableCompany({ url }: Props) {
                             {row.getYoutube() && (
                               <YouTubeIcon style={{ color: "red" }} />
                             )}
-                          </TableCell>
+                          </td>
                         );
                       } else if (column.id === "checked") {
                         return (
-                          <TableCell
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             <StatutIcon statut={row.getChecked()} />
-                          </TableCell>
+                          </td>
                         );
                       } else if (column.id === "dateImmatriculation") {
                         return (
-                          <TableCell
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             {row.getDateImmatriculation() ?? "N/A"}
-                          </TableCell>
+                          </td>
                         );
                       } else if (column.id === "secteurActivite") {
                         return (
-                          <TableCell
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             {row.getSecteurActivite() ?? "N/A"}
-                          </TableCell>
+                          </td>
                         );
                       } else if (column.id === "formeJuridique") {
                         return (
-                          <TableCell
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             {row.getFormeJuridique() ?? "N/A"}
-                          </TableCell>
+                          </td>
                         );
                       } else if (column.id === "adresse") {
                         return (
-                          <TableCell
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             {row.getAdresse() ?? "N/A"}
-                          </TableCell>
+                          </td>
                         );
                       } else if (column.id === "codePostal") {
                         return (
-                          <TableCell
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             {row.getCodePostal() ?? "N/A"}
-                          </TableCell>
+                          </td>
                         );
                       } else if (column.id === "ville") {
                         return (
-                          <TableCell
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             {row.getVille() ?? "N/A"}
-                          </TableCell>
+                          </td>
                         );
                       } else if (column.id === "region") {
                         return (
-                          <TableCell
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             {row.getRegion()}
-                          </TableCell>
+                          </td>
                         );
                       } else if (column.id === "denomination") {
                         return (
-                          <TableCell
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             {row.getDenomination() ?? "N/A"}
-                          </TableCell>
+                          </td>
                         );
                       } else if (column.id === "phone") {
                         return (
-                          <TableCell
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             {row.getPhone() ?? "N/A"}
-                          </TableCell>
+                          </td>
                         );
                       } else if (column.id === "email") {
                         return (
-                          <TableCell
-                            key={column.id}
-                            align={column.align}
-                            style={{ fontFamily: "Poppins" }}
-                          >
+                          <td key={column.id} align={column.align}>
                             {row.getEmail() ?? "N/A"}
-                          </TableCell>
+                          </td>
                         );
                       } else if (column.id === "website") {
                         return (
-                          <TableCell
+                          <td
                             key={column.id}
                             align={column.align}
                             style={{
-                              fontFamily: "Poppins",
-                              maxWidth: "50px",
-                              maxHeight: "50px",
+                              maxWidth: "10px",
+                              maxHeight: "10px",
                               overflow: "hidden",
+                              wordBreak: "normal",
                             }}
                             onClick={(e) => {
                               if (
@@ -429,26 +408,70 @@ export default function TableCompany({ url }: Props) {
                             }}
                           >
                             {row.getWebsite() ?? "N/A"}
-                          </TableCell>
+                          </td>
                         );
                       }
                     })}
-                  </TableRow>
+                  </tr>
                 );
               })}
-            </TableBody>
+            </tbody>
           </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[10]}
-          component="div"
-          count={dataPagniation.totalPages * dataPagniation.rowsPerPage}
-          rowsPerPage={dataPagniation.rowsPerPage}
-          page={dataPagniation.page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Box>
+        </Sheet>
+        <Box>
+          <Box
+            sx={{
+              pt: 2,
+              gap: 1,
+              [`& .${iconButtonClasses.root}`]: { borderRadius: "50%" },
+              display: {
+                xs: "none",
+                md: "flex",
+              },
+            }}
+          >
+            <Box
+              sx={{
+                flexDirection: "row",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: 1.5,
+              }}
+            >
+              <Tooltip title="Page précédente">
+                <IconButton
+                  size="sm"
+                  color="neutral"
+                  variant="outlined"
+                  disabled={dataPagniation.page === 0}
+                  onClick={() => handleChangePage(dataPagniation.page - 1)}
+                  sx={{ bgcolor: "background.surface" }}
+                >
+                  <KeyboardArrowLeftIcon />
+                </IconButton>
+              </Tooltip>
+              <Typography level="body-md">
+                {dataPagniation.page + 1} / {dataPagniation.totalPages}
+              </Typography>
+              <Tooltip title="Page suivante">
+                <IconButton
+                  size="sm"
+                  color="neutral"
+                  variant="outlined"
+                  disabled={
+                    dataPagniation.page === dataPagniation.totalPages - 1
+                  }
+                  onClick={() => handleChangePage(dataPagniation.page + 1)}
+                  sx={{ bgcolor: "background.surface" }}
+                >
+                  <KeyboardArrowRightIcon />
+                </IconButton>
+              </Tooltip>
+            </Box>
+          </Box>
+        </Box>
+      </React.Fragment>
     );
   }
 }

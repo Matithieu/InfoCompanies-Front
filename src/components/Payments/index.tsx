@@ -1,9 +1,8 @@
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
+import { Sheet, Typography } from "@mui/joy";
 
 function Payments() {
   return (
-    <Paper
+    <Sheet
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -11,14 +10,14 @@ function Payments() {
         padding: 2,
       }}
     >
-      <Typography variant="h6" gutterBottom>
+      <Typography level="h4" gutterBottom>
         Payments
       </Typography>
-      <Typography variant="body1" gutterBottom>
+      <Typography level="body-md" gutterBottom>
         Here you can manage your payments and payment methods.
       </Typography>
       {/* Ajoutez ici le contenu spécifique à la section des paiements */}
-    </Paper>
+    </Sheet>
   );
 }
 

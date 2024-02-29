@@ -1,36 +1,39 @@
-import { Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
-import { lazy } from '@loadable/component';
+import { lazy } from "@loadable/component";
+import { Suspense } from "react";
+import { HelmetProvider } from "react-helmet-async";
+import { Route, Routes } from "react-router-dom";
 
-import Landing from './pages/Landing/index.tsx';
-import LoginPage from './pages/Login/index.tsx';
-import RegisterPage from './pages/Register/index.tsx';
-import Error404 from './pages/404/index.tsx';
-import Loading from './pages/Loading/index.tsx';
-import Payment from "./pages/Stripe/index.tsx"
+import OrderTable from "./components/TableCompany/text.tsx";
+import Error404 from "./pages/404/index.tsx";
+import Landing from "./pages/Landing/index.tsx";
 import Layout from "./pages/Layout/index.tsx";
-import OrderConfirmation from './pages/Purchasing/success.tsx';
-import FakeLoading from './pages/Loading/fakeLoading.tsx';
-import Subscription from './pages/Subscription/index.tsx';
-import Failure from './pages/Purchasing/failure.tsx';
-import ViewInvoices from './pages/Purchasing/invoice.tsx';
-import { ProtectedRoutes, ProtectedSimpleRoutes } from './utils/protectedRoute.tsx';
+import FakeLoading from "./pages/Loading/fakeLoading.tsx";
+import Loading from "./pages/Loading/index.tsx";
+import LoginPage from "./pages/Login/index.tsx";
+import Failure from "./pages/Purchasing/failure.tsx";
+import ViewInvoices from "./pages/Purchasing/invoice.tsx";
+import OrderConfirmation from "./pages/Purchasing/success.tsx";
+import RegisterPage from "./pages/Register/index.tsx";
+import Payment from "./pages/Stripe/index.tsx";
+import Subscription from "./pages/Subscription/index.tsx";
+import {
+  ProtectedRoutes,
+  ProtectedSimpleRoutes,
+} from "./utils/protectedRoute.tsx";
 
 // Lazy loading components for security
-const Dashboard = lazy(() => import('./pages/Dashboard/index.tsx'));
-const Favorites = lazy(() => import('./pages/Favorites/index.tsx'));
-const Settings = lazy(() => import('./pages/Settings/index.tsx'));
-const Account = lazy(() => import('./pages/Account/index.tsx'));
-const Search = lazy(() => import('./pages/Search/index.tsx'));
-const Company = lazy(() => import('./pages/Company/index.tsx'));
-const Leader = lazy(() => import('./pages/Leaders/index.tsx'));
+const Dashboard = lazy(() => import("./pages/Dashboard/index.tsx"));
+const Favorites = lazy(() => import("./pages/Favorites/index.tsx"));
+const Settings = lazy(() => import("./pages/Settings/index.tsx"));
+const Account = lazy(() => import("./pages/Account/index.tsx"));
+const Search = lazy(() => import("./pages/Search/index.tsx"));
+const Company = lazy(() => import("./pages/Company/index.tsx"));
+const Leader = lazy(() => import("./pages/Leaders/index.tsx"));
 
 function App() {
   return (
     <HelmetProvider>
       <Suspense fallback={<Loading />}>
-
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<LoginPage />} />
@@ -58,10 +61,10 @@ function App() {
               <Route path="/company/*" element={<Company />} />
               <Route path="/leaders/*" element={<Leader />} />
               <Route path="/*" element={<Error404 />} />
+              <Route path="/test" element={<OrderTable />} />
             </Route>
           </Route>
         </Routes>
-
       </Suspense>
     </HelmetProvider>
   );

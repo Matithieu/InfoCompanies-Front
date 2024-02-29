@@ -1,18 +1,21 @@
 import {
-  Box,
   Button,
+  Card,
   CircularProgress,
+  Divider,
+  FormControl,
+  FormLabel,
   Grid,
-  Paper,
-  TextField,
+  Input,
   Typography,
-} from "@mui/material";
+} from "@mui/joy";
 import { useQuery } from "@tanstack/react-query";
 import { ChangeEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { User } from "../../data/Account/user";
 import { ErrorJwtAuth } from "../../data/errorAuthJwt";
 import useAuthStore from "../../store/authStore";
+import { userJsonToUser } from "../../utils/userJsonToUser";
 
 async function fetchAccountData(email: string) {
   const response = await fetch("http://localhost:8080/api/v1/user/" + email, {
@@ -38,21 +41,24 @@ async function fetchAccountData(email: string) {
 }
 
 export default function Account() {
-  const { authUser, requestLoading, setRequestLoading } = useAuthStore();
-  const [accountData, setAccountData] = useState({ ...authUser });
+  const { authUser, requestLoading, setAuthUser, setRequestLoading } =
+    useAuthStore();
   const [editMode, setEditMode] = useState(false);
+  const [editedUser, setEditedUser] = useState<User | null>(null);
 
   const { isPending, isError, data, error } = useQuery({
-    queryKey: ["companies", authUser?.getEmail()],
-    queryFn: () => fetchAccountData(authUser?.getEmail() ?? ""),
+    queryKey: ["companies", authUser?.email],
+    queryFn: () => fetchAccountData(authUser?.email ?? ""),
     retry: 1,
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
     if (data) {
-      setAccountData(data);
+      setAuthUser(userJsonToUser(data));
+      setEditedUser(userJsonToUser(data));
     }
-  }, [data]);
+  }, [data, setAuthUser]);
 
   const handleEdit = () => {
     setEditMode(true);
@@ -61,8 +67,10 @@ export default function Account() {
   const handleSave = () => {
     setRequestLoading(true);
     setEditMode(false);
-    // Ajoutez ici la logique pour enregistrer les modifications
-    // Exemple: simuler un enregistrement
+    setAuthUser(editedUser as User);
+    setRequestLoading(false);
+    // Add your logic here to save the modifications
+    // Example: simulate a save
     setTimeout(() => setRequestLoading(false), 2000);
   };
 
@@ -70,62 +78,78 @@ export default function Account() {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     key: string
   ) => {
-    setAccountData({ ...accountData, [key]: e.target.value });
+    setEditedUser({ ...editedUser, [key]: e.target.value } as User);
   };
 
   if (isPending) {
     return <CircularProgress />;
   } else if (isError) {
     return <div>{error?.message}</div>;
-  }
-  return (
-    <Box>
-      <Paper
-        style={{
-          padding: "20px",
-          marginTop: "20px",
-          boxShadow: "0 3px 10px rgba(0,0,0,0.2)",
-        }}
-      >
-        <Typography variant="h4" gutterBottom>
+  } else if (authUser != null) {
+    return (
+      <Card>
+        <Typography level="h3" gutterBottom>
           Détails du compte
         </Typography>
-        <Grid container spacing={3}>
-          {Object.keys(accountData).map((key) => (
-            <Grid item xs={12} sm={6} key={key}>
-              <TextField
-                fullWidth
-                label={key.charAt(0).toUpperCase() + key.slice(1)}
-                value={accountData[key as keyof typeof accountData] ?? ""}
-                variant="outlined"
-                InputProps={{
-                  readOnly: !editMode,
-                }}
-                onChange={(e) => handleChange(e, key)}
-              />
+        <Divider />
+
+        <form>
+          <Grid container spacing={3}>
+            <Grid xs={12} md={6}>
+              <FormControl>
+                <FormLabel htmlFor="name">Name</FormLabel>
+                <Input
+                  id="name"
+                  value={editedUser?.name ?? ""}
+                  onChange={(e) => handleChange(e, "name")}
+                  disabled={!editMode}
+                />
+              </FormControl>
             </Grid>
-          ))}
-        </Grid>
-        <div
-          style={{
-            marginTop: "20px",
-            display: "flex",
-            justifyContent: "flex-end",
-          }}
-        >
-          {requestLoading ? (
-            <CircularProgress />
-          ) : !editMode ? (
-            <Button variant="contained" color="primary" onClick={handleEdit}>
-              Editer
-            </Button>
-          ) : (
-            <Button variant="contained" color="secondary" onClick={handleSave}>
-              Sauvegarder
-            </Button>
-          )}
-        </div>
-      </Paper>
-    </Box>
-  );
+            <Grid xs={12} md={6}>
+              <FormControl>
+                <FormLabel htmlFor="email">Email</FormLabel>
+                <Input
+                  id="email"
+                  value={editedUser?.email ?? ""}
+                  onChange={(e) => handleChange(e, "email")}
+                  disabled
+                />
+              </FormControl>
+            </Grid>
+            <Grid xs={12} md={6}>
+              <FormControl>
+                <FormLabel htmlFor="phone">Phone</FormLabel>
+                <Input
+                  id="phone"
+                  value={editedUser?.phone?.toString() ?? ""}
+                  onChange={(e) => handleChange(e, "phone")}
+                  disabled={!editMode}
+                />
+              </FormControl>
+            </Grid>
+          </Grid>
+          <div
+            style={{
+              marginTop: "20px",
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
+            {requestLoading ? (
+              <CircularProgress />
+            ) : !editMode ? (
+              <Button variant="outlined" color="primary" onClick={handleEdit}>
+                Editer
+              </Button>
+            ) : (
+              <Button variant="outlined" color="neutral" onClick={handleSave}>
+                Sauvegarder
+              </Button>
+            )}
+          </div>
+        </form>
+      </Card>
+    );
+  }
 }

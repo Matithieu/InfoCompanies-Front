@@ -1,9 +1,5 @@
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
+import { Container, Table } from "@mui/joy";
 import * as React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -39,24 +35,19 @@ export default function ListOfLeaders() {
 
   if (leaders === null) {
     return (
-      <a style={{ fontSize: "19px", fontFamily: "Poppins" }}>
-        Veuillez sélectionner une entreprise
-      </a>
+      <a style={{ fontSize: "19px" }}>Veuillez sélectionner une entreprise</a>
     );
   }
   if (leaders.length === 0) {
     return (
-      <a style={{ fontSize: "19px", fontFamily: "Poppins" }}>
-        Pas de données pour cette entreprise
-      </a>
+      <a style={{ fontSize: "19px" }}>Pas de données pour cette entreprise</a>
     );
   } else {
     return (
-      <TableContainer style={{ borderRadius: 9 }}>
+      <Container>
         <div
           style={{
             display: "flex",
-            fontFamily: "Poppins",
             justifyContent: "center",
             marginTop: 5,
             top: "0",
@@ -64,40 +55,31 @@ export default function ListOfLeaders() {
         >
           Liste des dirigeants
         </div>
-        <Table sx={{ minWidth: 220 }} aria-label="List Of Leaders">
-          <TableBody>
+        <Table aria-label="List Of Leaders">
+          <tbody>
             {leaders?.length > 0 &&
               leaders?.map((row) => (
-                <TableRow
+                <tr
                   key={row.getId()}
                   onClick={() => {
                     navigate(`/leaders/${row.getId()}`);
                   }}
-                  sx={{
-                    "&:last-child td, &:last-child th": { border: 0 },
-                    "&:hover": {
-                      backgroundColor: (theme) => theme.palette.action.hover,
-                    },
+                  style={{
+                    border: 0,
                     cursor: "pointer",
                   }}
                 >
-                  <TableCell align="left">
+                  <td align="left">
                     <AccountCircleIcon />
-                  </TableCell>
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    style={{
-                      fontFamily: "Poppins",
-                    }}
-                  >
+                  </td>
+                  <td scope="row">
                     {row.getNom()} {row.getPrenom()}
-                  </TableCell>
-                </TableRow>
+                  </td>
+                </tr>
               ))}
-          </TableBody>
+          </tbody>
         </Table>
-      </TableContainer>
+      </Container>
     );
   }
 }

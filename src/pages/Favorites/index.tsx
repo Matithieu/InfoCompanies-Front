@@ -1,7 +1,4 @@
-import { Grid } from "@mui/material";
-import CssBaseline from "@mui/material/CssBaseline";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
+import { Box, Card, Grid, Stack, Typography } from "@mui/joy";
 import { useEffect, useState } from "react";
 import Chart from "../../components/Chart/index.tsx";
 import Details from "../../components/Details/index.tsx";
@@ -29,94 +26,102 @@ export default function Favorites() {
 
   return (
     <Grid>
-      <CssBaseline />
-
-      <Typography
-        fontFamily={"Poppins"}
-        variant="h4"
-        component="div"
-        align="left"
-        marginTop={5}
-        marginLeft={10}
-        marginBottom={5}
+      <Box
+        sx={{
+          px: { xs: 2, md: 6 },
+        }}
       >
-        Favoris
-      </Typography>
+        <Typography
+          component="h1"
+          level="h1"
+          style={{ marginTop: 20, marginBottom: 20 }}
+        >
+          Favoris
+        </Typography>
+      </Box>
 
       <Grid
         container
         spacing={3}
-        paddingBottom={10}
-        paddingLeft={10}
+        paddingLeft={8}
         paddingRight={10}
+        alignItems="center"
       >
-        <Grid item xs={12} md={12} lg={12}>
+        <Grid xs={12} sm={6} md={8} lg={6}>
           {/* Container des éléments sur la première ligne */}
           <Grid
             container
             spacing={6}
-            justifyContent="space-between"
-            wrap="wrap"
           >
             {/* List Of Companies */}
-            <Grid item xs={12} md={8}>
-              <Paper
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  height: "100%",
-                  borderRadius: 3,
-                  minHeight: 400,
-                  maxHeight: 400,
-                }}
-              >
-                {checkedCompanies.length !== 0 ? (
-                  url ? (
-                    <TableCompany url={url} />
-                  ) : (
-                    <TableSkeleton columns={columnsTableCompany} />
-                  )
+            <Grid xs={12} md={8}>
+              {checkedCompanies.length !== 0 ? (
+                url ? (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      gap: 5,
+                    }}
+                  >
+                    <Stack
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        minHeight: 400,
+                        minWidth: "70%",
+                        maxHeight: 550,
+                        borderRadius: 3,
+                      }}
+                    >
+                      <TableCompany url={url} />
+                    </Stack>
+                    <Card
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        minHeight: 200,
+                        borderRadius: 3,
+                        minWidth: "30%",
+                        maxWidth: 400,
+                      }}
+                    >
+                      <Details />
+                    </Card>
+                  </Box>
                 ) : (
-                  <a style={{ fontSize: "19px" }}>Aucun ToDO sélectionné</a>
-                )}
-              </Paper>
-            </Grid>
-
-            {/* Details of the company */}
-            {checkedCompanies.length !== 0 && (
-              <Grid item xs={12} md={4}>
-                <Paper
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    minHeight: 200,
-                    borderRadius: 3,
+                  <TableSkeleton columns={columnsTableCompany} />
+                )
+              ) : (
+                <h1
+                  style={{
+                    fontSize: "19px",
+                    color: "#888",
+                    textAlign: "center",
+                    marginTop: "20px",
                   }}
                 >
-                  <Details />
-                </Paper>
-              </Grid>
-            )}
+                  Aucun ToDO sélectionné
+                </h1>
+              )}
+            </Grid>
           </Grid>
         </Grid>
 
         {/* Container des éléments sur la deuxième ligne */}
         {checkedCompanies.length !== 0 && (
           <>
-            <Grid item xs={12} md={12} lg={12}>
-              <Grid
-                container
-                spacing={3}
-                justifyContent="space-between"
-                marginTop={5}
-              >
+            <Grid xs={12} md={12} lg={12}>
+              <Grid container spacing={3} flexDirection={"row"} marginTop={5}>
                 {/* Leaders of the company */}
-                <Grid item xs={12} md={6}>
-                  <Paper
+                <Grid xs={12} md={6}>
+                  <Card
                     sx={{
                       display: "flex",
                       flexDirection: "column",
@@ -124,14 +129,15 @@ export default function Favorites() {
                       justifyContent: "center",
                       height: 220,
                       borderRadius: 3,
+                      minWidth: 400,
                     }}
                   >
                     <Chart />
-                  </Paper>
+                  </Card>
                 </Grid>
 
-                <Grid item xs={12} md={6}>
-                  <Paper
+                <Grid xs={12} md={6}>
+                  <Card
                     sx={{
                       display: "flex",
                       flexDirection: "column",
@@ -142,18 +148,9 @@ export default function Favorites() {
                     }}
                   >
                     <ListOfLeaders />
-                  </Paper>
+                  </Card>
                 </Grid>
               </Grid>
-            </Grid>
-
-            <Grid item xs={12} md={12} lg={12}>
-              <Grid
-                container
-                spacing={3}
-                justifyContent="space-between"
-                marginTop={5}
-              ></Grid>
             </Grid>
           </>
         )}
