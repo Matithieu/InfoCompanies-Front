@@ -274,7 +274,7 @@ export default function TableCompany({ url }: Props) {
                 wordBreak: "break-word",
               }}
             >
-              {companies.map((row) => {
+              {companies.map((row, number) => {
                 return (
                   //Afficher les details de l'entreprise en cliquant dessus
                   <tr
@@ -286,6 +286,7 @@ export default function TableCompany({ url }: Props) {
                   >
                     <td key={row.getId() + "checbox"} align="center">
                       <IconButton
+                        id={`checkbox-${number}`}
                         style={{
                           border: "none",
                           backgroundColor: "transparent",
