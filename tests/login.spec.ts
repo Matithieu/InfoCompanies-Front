@@ -3,11 +3,14 @@ import { expect, test } from "@playwright/test";
 const BASE_URL = "http://localhost:5173";
 
 test.beforeEach(async ({ page }) => {
+  const email = "test@gmail.com";
+  const password = "azertyuiop";
+
   // Go to the login page
   await page.goto(`${BASE_URL}/login`);
 
-  await page.fill('input[id="email"]', "test@gmail.com");
-  await page.fill('input[id="password"]', "azertyuiop");
+  await page.fill('input[id="email"]', email);
+  await page.fill('input[id="password"]', password);
 
   await page.click('button[aria-label="submit-login"]');
 
