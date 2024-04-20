@@ -1,5 +1,3 @@
-import { parseJsonToFinancialYear } from "../../utils/parseJsonToObject"
-
 export type FinancialYear = {
   closingDate1: string
   turnover1: number

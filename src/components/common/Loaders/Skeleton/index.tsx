@@ -1,8 +1,8 @@
-import { Box, Container, Skeleton, Table } from "@mui/joy";
-import { Column } from "../../data/types/columns";
+import { Box, Container, Skeleton, Table } from "@mui/joy"
+import { Column } from "../../../../data/types/columns"
 
 interface TableSkeletonProps {
-  columns: Column[];
+  columns: Column[]
 }
 
 export const TableSkeleton = ({ columns }: TableSkeletonProps) => {
@@ -55,5 +55,5 @@ export const TableSkeleton = ({ columns }: TableSkeletonProps) => {
         </Table>
       </Container>
     </Box>
-  );
-};
+  )
+}

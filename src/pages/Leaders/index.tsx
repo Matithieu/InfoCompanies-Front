@@ -1,9 +1,9 @@
-import { Box, Grid, Sheet, Typography } from "@mui/joy";
-import DetailsLeaders from "../../components/DetailsLeader/index.tsx";
-import { Leader } from "../../data/types/leader.ts";
+import { Box, Grid, Sheet, Typography } from "@mui/joy"
+import { Leader } from "../../data/types/leader.ts"
+import DetailsLeader from "../../components/parts/DetailsLeader/index.tsx"
 
-const idTest = window.location.pathname.split("/")[2];
-console.log("Leader id : " + idTest);
+const idTest = window.location.pathname.split("/")[2]
+console.log("Leader id : " + idTest)
 
 // TODO: Replace this with the data from the API
 // Fetch at /api/leaders/{id}
@@ -16,13 +16,13 @@ const leader1: Leader = {
   phone: "06 00 00 00 00",
   email: "email@email.com",
   listOfCompanies: [{ id: 1, name: "Entreprise 1" }],
-};
+}
 
-const initialLeaderData: Leader = leader1;
+const initialLeaderData: Leader = leader1
 
 export default function LeaderDetails() {
   if (initialLeaderData == null) {
-    return <a>Aucunes données trouvées</a>;
+    return <a>Aucunes données trouvées</a>
   } else {
     return (
       <Box sx={{ display: "flex" }}>
@@ -65,13 +65,13 @@ export default function LeaderDetails() {
                     height: "100%",
                   }}
                 >
-                  <DetailsLeaders leaderDetails={initialLeaderData} />
+                  <DetailsLeader leaderDetails={initialLeaderData} />
                 </Sheet>
               </Grid>
             </Grid>
           </Grid>
         </Box>
       </Box>
-    );
+    )
   }
 }

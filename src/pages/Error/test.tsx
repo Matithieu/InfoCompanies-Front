@@ -1,5 +1,4 @@
 import { useAuth } from "react-oidc-context"
-import { fetchTest } from "../../utils/api"
 
 export default function Test() {
   const auth = useAuth()

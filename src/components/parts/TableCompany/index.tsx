@@ -6,7 +6,6 @@ import TwitterIcon from "@mui/icons-material/Twitter"
 import YouTubeIcon from "@mui/icons-material/YouTube"
 import {
   Box,
-  Button,
   IconButton,
   Sheet,
   Table,
@@ -19,7 +18,6 @@ import * as React from "react"
 import { useEffect } from "react"
 import { columnsTableCompany } from "../../../data/types/columns.ts"
 import { Company, CheckStatus } from "../../../data/types/company.ts"
-import useAuthStore from "../../../store/authStore.tsx"
 import { useCompanyStore } from "../../../store/companyStore.tsx"
 import { useCompanyFilterStore } from "../../../store/filtersStore.tsx"
 import { parseJsonToCompany } from "../../../utils/parseJsonToObject.ts"

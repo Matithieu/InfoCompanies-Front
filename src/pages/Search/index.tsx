@@ -3,7 +3,6 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft"
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"
 import {
   Box,
-  Button,
   Grid,
   IconButton,
   Sheet,
@@ -16,7 +15,6 @@ import { useQuery } from "@tanstack/react-query"
 import React, { useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { CompanyDetails, Page } from "../../data/types/companyDetails.ts"
-import useAuthStore from "../../store/authStore.tsx"
 import { fetchCompanyBySearchTerm } from "../../utils/api/index.ts"
 import LogoutButton from "../../components/common/buttons/logout.tsx"
 

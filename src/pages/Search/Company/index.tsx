@@ -1,4 +1,4 @@
-import { Box, Button, Card, Grid, IconButton, Typography } from "@mui/joy"
+import { Box, Card, Grid, IconButton, Typography } from "@mui/joy"
 import { useQuery } from "@tanstack/react-query"
 import { useEffect, useState } from "react"
 import "react-toastify/dist/ReactToastify.css"
@@ -10,7 +10,6 @@ import {
   manageIsChecked,
 } from "../../../components/common/StatutIcon/index.tsx"
 import { Company, CheckStatus } from "../../../data/types/company.ts"
-import useAuthStore from "../../../store/authStore.tsx"
 import { useCompanyStore } from "../../../store/companyStore.tsx"
 import { fetchCompnayById } from "../../../utils/api/index.ts"
 import LogoutButton from "../../../components/common/buttons/logout.tsx"

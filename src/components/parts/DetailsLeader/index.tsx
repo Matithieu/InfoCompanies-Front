@@ -4,7 +4,7 @@ import EmailIcon from "@mui/icons-material/Email"
 import PhoneIcon from "@mui/icons-material/Phone"
 import { Container, Sheet, Table, Tooltip } from "@mui/joy"
 import { useNavigate } from "react-router-dom"
-import { Leader } from "../../data/types/leader"
+import { Leader } from "../../../data/types/leader"
 
 export function toAgeFromDate(date: Date) {
   const today = new Date()
