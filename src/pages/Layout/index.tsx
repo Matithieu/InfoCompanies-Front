@@ -1,3 +1,5 @@
+import { useState } from "react"
+import { Link, Outlet, useNavigate } from "react-router-dom"
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded"
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded"
 import PendingIcon from "@mui/icons-material/Pending"
@@ -17,14 +19,13 @@ import ListItemContent from "@mui/joy/ListItemContent"
 import Sheet from "@mui/joy/Sheet"
 import Typography from "@mui/joy/Typography"
 
-import { useState } from "react"
-import { Link, Outlet, useNavigate } from "react-router-dom"
+import useAuthManager from "../../hooks/useAuthManager"
 import useAuthStore from "../../store/authStore"
+
 import { linkStyles } from "./ListItems/listItems"
 import ColorSchemeToggle from "./colorScheme"
 import Header from "./header"
 import { closeSidebar } from "./utils"
-import useAuthManager from "../../hooks/useAuthManager"
 
 export function Sidebar() {
   const navigate = useNavigate()
@@ -104,9 +105,9 @@ export function Sidebar() {
       <form onSubmit={handleSearch}>
         <Input
           id="search-company"
+          placeholder="Search"
           size="sm"
           startDecorator={<SearchRoundedIcon />}
-          placeholder="Search"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -132,7 +133,7 @@ export function Sidebar() {
             "--ListItem-radius": (theme) => theme.vars.radius.sm,
           }}
         >
-          <Link to="/dashboard" style={linkStyles}>
+          <Link style={linkStyles} to="/dashboard">
             <ListItem>
               <ListItemButton>
                 <DashboardRoundedIcon />
@@ -143,7 +144,7 @@ export function Sidebar() {
             </ListItem>
           </Link>
 
-          <Link to="/favorites" style={linkStyles}>
+          <Link style={linkStyles} to="/favorites">
             <ListItem>
               <ListItemButton>
                 <PendingIcon />
@@ -172,7 +173,7 @@ export function Sidebar() {
             </ListItemButton>
           </ListItem>
 
-          <Link to="/settings" style={linkStyles}>
+          <Link style={linkStyles} to="/settings">
             <ListItem>
               <ListItemButton>
                 <SettingsRoundedIcon />
@@ -185,12 +186,12 @@ export function Sidebar() {
         </List>
       </Box>
       <Divider />
-      <Link to="/account" style={linkStyles}>
+      <Link style={linkStyles} to="/account">
         <Box
-          sx={{ display: "flex", gap: 1, alignItems: "center" }}
           id="user-page"
+          sx={{ display: "flex", gap: 1, alignItems: "center" }}
         >
-          <Avatar variant="outlined" size="sm">
+          <Avatar size="sm" variant="outlined">
             {authUser?.firstName?.charAt(0).toLocaleUpperCase()}
           </Avatar>
           <Box sx={{ minWidth: 0, flex: 1 }}>
@@ -202,9 +203,9 @@ export function Sidebar() {
             </Typography>
           </Box>
           <IconButton
+            color="neutral"
             size="sm"
             variant="plain"
-            color="neutral"
             onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
               e.preventDefault()
               authManager.redirectedLogout()
@@ -224,8 +225,8 @@ export default function Layout() {
       <Sidebar />
       <Header />
       <Box
-        component="main"
         className="MainContent"
+        component="main"
         sx={{
           pt: { xs: "calc(12px + var(--Header-height))", md: 3 },
           pb: { xs: 2, sm: 2, md: 3 },

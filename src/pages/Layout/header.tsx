@@ -2,6 +2,7 @@ import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import GlobalStyles from "@mui/joy/GlobalStyles";
 import IconButton from "@mui/joy/IconButton";
 import Sheet from "@mui/joy/Sheet";
+
 import { toggleSidebar } from "./utils";
 
 export default function Header() {
@@ -34,10 +35,10 @@ export default function Header() {
         })}
       />
       <IconButton
-        onClick={() => toggleSidebar()}
-        variant="outlined"
         color="neutral"
         size="sm"
+        variant="outlined"
+        onClick={() => toggleSidebar()}
       >
         <MenuRoundedIcon />
       </IconButton>

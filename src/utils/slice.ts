@@ -7,6 +7,7 @@ export function getUser() {
   const oidcStorage = sessionStorage.getItem(
     `oidc.user:${authority}:${clientId}`
   )
+
   if (!oidcStorage) {
     localStorage.removeItem("authUser")
     return null

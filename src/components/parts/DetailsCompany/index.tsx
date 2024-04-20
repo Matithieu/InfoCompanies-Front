@@ -1,10 +1,10 @@
-import { Box, Table, Tooltip, Typography } from "@mui/joy"
-
 import BusinessIcon from "@mui/icons-material/Business"
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined"
 import EmailIcon from "@mui/icons-material/Email"
 import PhoneIcon from "@mui/icons-material/Phone"
 import WebAssetIcon from "@mui/icons-material/WebAsset"
+import { Box, Table, Tooltip, Typography } from "@mui/joy"
+
 import { useCompanyStore } from "../../../store/companyStore"
 
 export default function DetailsCompany() {
@@ -31,12 +31,12 @@ export default function DetailsCompany() {
               <td scope="row">
                 <span style={{ marginLeft: "10px" }}></span>
                 <Typography
-                  style={{ fontSize: "18px", overflow: "hidden " }}
                   startDecorator={
-                    <Tooltip arrow title="Numéro de téléphone" placement="top">
+                    <Tooltip arrow placement="top" title="Numéro de téléphone">
                       <PhoneIcon />
                     </Tooltip>
                   }
+                  style={{ fontSize: "18px", overflow: "hidden " }}
                 >
                   {selectedCompany.phoneNumber ?? "No phone found"}
                 </Typography>
@@ -46,12 +46,12 @@ export default function DetailsCompany() {
               <td scope="row">
                 <span style={{ marginLeft: "10px" }}></span>
                 <Typography
-                  style={{ fontSize: "18px", overflow: "hidden " }}
                   startDecorator={
-                    <Tooltip arrow title="Adresse email" placement="top">
+                    <Tooltip arrow placement="top" title="Adresse email">
                       <EmailIcon />
                     </Tooltip>
                   }
+                  style={{ fontSize: "18px", overflow: "hidden " }}
                 >
                   {selectedCompany.email ?? "No email found"}
                 </Typography>
@@ -61,12 +61,12 @@ export default function DetailsCompany() {
               <td scope="row">
                 <span style={{ marginLeft: "10px" }}></span>
                 <Typography
-                  style={{ fontSize: "18px", overflow: "auto" }}
                   startDecorator={
-                    <Tooltip arrow title="Site web" placement="top">
+                    <Tooltip arrow placement="top" title="Site web">
                       <WebAssetIcon />
                     </Tooltip>
                   }
+                  style={{ fontSize: "18px", overflow: "auto" }}
                 >
                   {selectedCompany.website ?? "No website found"}
                 </Typography>
@@ -76,12 +76,12 @@ export default function DetailsCompany() {
               <td scope="row">
                 <span style={{ marginLeft: "10px" }}></span>
                 <Typography
-                  style={{ fontSize: "18px", overflow: "hidden " }}
                   startDecorator={
-                    <Tooltip arrow title="Adresse" placement="top">
+                    <Tooltip arrow placement="top" title="Adresse">
                       <BusinessIcon />
                     </Tooltip>
                   }
+                  style={{ fontSize: "18px", overflow: "hidden " }}
                 >
                   {selectedCompany.address ?? "No address found"}
                 </Typography>
@@ -91,12 +91,12 @@ export default function DetailsCompany() {
               <td scope="row">
                 <span style={{ marginLeft: "10px" }}></span>
                 <Typography
-                  style={{ fontSize: "18px", overflow: "hidden " }}
                   startDecorator={
-                    <Tooltip arrow title="Date de création" placement="top">
+                    <Tooltip arrow placement="top" title="Date de création">
                       <CalendarTodayOutlinedIcon />
                     </Tooltip>
                   }
+                  style={{ fontSize: "18px", overflow: "hidden " }}
                 >
                   {selectedCompany.dateRegistration ?? "No date found"}
                 </Typography>

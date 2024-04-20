@@ -1,4 +1,5 @@
 import { Button } from "@mui/joy"
+
 import useAuthManager from "../../../hooks/useAuthManager"
 
 export default function LogoutButton() {
@@ -6,8 +7,8 @@ export default function LogoutButton() {
 
   return (
     <Button
-      variant="soft"
       color="primary"
+      variant="soft"
       onClick={() => {
         authUser.redirectedLogout()
       }}

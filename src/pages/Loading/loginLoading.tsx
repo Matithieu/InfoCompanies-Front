@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom"
+import { useQuery } from "@tanstack/react-query"
+
 import useAuthStore from "../../store/authStore"
 import { fetchUser } from "../../utils/api"
+
 import Loading from "."
-import { useQuery } from "@tanstack/react-query"
 
 export default function FakeLoading() {
   const { setAuthUser } = useAuthStore()

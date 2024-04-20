@@ -19,6 +19,7 @@ export function toggleSidebar() {
     const slideIn = window
       .getComputedStyle(document.documentElement)
       .getPropertyValue("--SideNavigation-slideIn");
+
     if (slideIn) {
       closeSidebar();
     } else {

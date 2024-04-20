@@ -1,5 +1,5 @@
-import Typography from '@mui/joy/Typography';
 import * as React from 'react';
+import Typography from '@mui/joy/Typography';
 
 interface TitleProps {
   children?: React.ReactNode;
@@ -7,7 +7,7 @@ interface TitleProps {
 
 export default function Title(props: TitleProps) {
   return (
-    <Typography component="h2" level="h4" color="primary" >
+    <Typography color="primary" component="h2" level="h4" >
       {props.children}
     </Typography>
   );

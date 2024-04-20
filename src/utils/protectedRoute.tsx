@@ -1,7 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom"
+import { toast } from "react-toastify"
+
 import Loading from "../pages/Loading"
 import useAuthStore from "../store/authStore"
-import { toast } from "react-toastify"
+
 import { getUser } from "./slice"
 
 export const ProtectedRoutes = () => {

@@ -1,3 +1,5 @@
+import React, { useEffect, useMemo, useState } from "react";
+import { FixedSizeList } from "react-window";
 import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
@@ -12,8 +14,6 @@ import {
   Select,
   useTheme
 } from "@mui/joy";
-import React, { useEffect, useMemo, useState } from "react";
-import { FixedSizeList } from "react-window";
 
 const containsText = (text: string, searchText: string) =>
   text.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
@@ -39,9 +39,7 @@ const RenderRow = ({ index, style, data }: RenderRowProps) => {
       <Dropdown>
         <MenuButton
           key={index}
-          value={option}
           style={style}
-          onClick={() => handleToggle(option)}
           sx={{
             display: "flex",
             justifyContent: "flex-start",
@@ -57,11 +55,13 @@ const RenderRow = ({ index, style, data }: RenderRowProps) => {
             overflowY: "hidden",
             borderRadius: 0,
           }}
+          value={option}
+          onClick={() => handleToggle(option)}
         >
           <Checkbox
             checked={selectedOptions.indexOf(option) !== -1}
-            value={option}
             sx={{ marginRight: "0.5rem" }}
+            value={option}
           />
           {option}
         </MenuButton>
@@ -120,18 +120,16 @@ const CustomSelect = ({
       <FormLabel id="universal-select-label">{label}</FormLabel>
       <Select
         multiple
-        style={{ minWidth: "15rem", maxWidth: "15rem" }}
         id="universal-select"
         renderValue={(selected) => (
           <Box sx={{ display: "flex", gap: "0.25rem" }}>
             {selected.map((selectedOption) => (
-              <Chip variant="soft" color="primary">
+              <Chip color="primary" variant="soft">
                 {selectedOption.label}
               </Chip>
             ))}
           </Box>
         )}
-        value={selectedOptions}
         slotProps={{
           listbox: {
             sx: {
@@ -139,15 +137,17 @@ const CustomSelect = ({
             },
           },
         }}
+        style={{ minWidth: "15rem", maxWidth: "15rem" }}
+        value={selectedOptions}
       >
         <FormControl>
           <ListSubheader>
             <Input
-              size="sm"
               autoFocus
               placeholder={placeholder}
-              style={{ marginBottom: 5 }}
+              size="sm"
               startDecorator={<SearchIcon />}
+              style={{ marginBottom: 5 }}
               onChange={(e) => setSearchText(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === "Escape") {
@@ -164,14 +164,14 @@ const CustomSelect = ({
           </ListSubheader>
           <FixedSizeList
             height={250}
-            width="100%"
-            itemSize={50}
             itemCount={displayedOptions.length}
             itemData={{
               displayedOptions,
               selectedOptions,
               handleToggle,
             }}
+            itemSize={50}
+            width="100%"
           >
             {RenderRow}
           </FixedSizeList>

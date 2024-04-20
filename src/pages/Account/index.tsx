@@ -2,15 +2,17 @@ import {
   Box,
   Stack,
   Tab,
+  tabClasses,
   TabList,
   TabPanel,
   Tabs,
   Typography,
-  tabClasses,
 } from "@mui/joy"
-import Account from "./component"
+
 import useAuthStore from "../../store/authStore"
 import ViewInvoices from "../Purchasing/invoice"
+
+import Account from "./component"
 
 export default function AccountPage() {
   const { authUser, requestLoading } = useAuthStore()
@@ -29,14 +31,13 @@ export default function AccountPage() {
           }}
         >
           <Box sx={{ px: { xs: 2, md: 6 } }}>
-            <Typography level="h1" component="h1" style={{ marginTop: 20 }}>
+            <Typography component="h1" level="h1" style={{ marginTop: 20 }}>
               Bienvenue, {authUser?.firstName}
             </Typography>
           </Box>
 
           <Tabs defaultValue={0} sx={{ backgroundColor: "transparent" }}>
             <TabList
-              tabFlex={1}
               size="sm"
               sx={{
                 pl: { xs: 0, md: 4 },
@@ -55,14 +56,15 @@ export default function AccountPage() {
                   },
                 },
               }}
+              tabFlex={1}
             >
-              <Tab sx={{ borderRadius: "6px 6px 0 0" }} indicatorInset>
+              <Tab indicatorInset sx={{ borderRadius: "6px 6px 0 0" }}>
                 Profile
               </Tab>
-              <Tab sx={{ borderRadius: "6px 6px 0 0" }} indicatorInset>
+              <Tab indicatorInset sx={{ borderRadius: "6px 6px 0 0" }}>
                 Test
               </Tab>
-              <Tab sx={{ borderRadius: "6px 6px 0 0" }} indicatorInset>
+              <Tab indicatorInset sx={{ borderRadius: "6px 6px 0 0" }}>
                 Factures
               </Tab>
             </TabList>

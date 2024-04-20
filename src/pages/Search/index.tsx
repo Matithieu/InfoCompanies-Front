@@ -1,3 +1,5 @@
+import React, { useEffect } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined"
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft"
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"
@@ -5,18 +7,17 @@ import {
   Box,
   Grid,
   IconButton,
+  iconButtonClasses,
   Sheet,
   Table,
   Tooltip,
   Typography,
-  iconButtonClasses,
 } from "@mui/joy"
 import { useQuery } from "@tanstack/react-query"
-import React, { useEffect } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+
+import LogoutButton from "../../components/common/buttons/logout.tsx"
 import { CompanyDetails, Page } from "../../data/types/companyDetails.ts"
 import { fetchCompanyBySearchTerm } from "../../utils/api/index.ts"
-import LogoutButton from "../../components/common/buttons/logout.tsx"
 
 async function fetchCompanies(searchTerm: string, page: number) {
   const response = await fetchCompanyBySearchTerm(searchTerm, page)
@@ -90,6 +91,7 @@ function TableOfDetails() {
       </div>
     )
   }
+
   if (isPending || data === undefined) {
     return (
       <div
@@ -123,7 +125,6 @@ function TableOfDetails() {
       <React.Fragment>
         <Sheet
           className="OrderTableContainer"
-          variant="outlined"
           sx={{
             display: { xs: "none", sm: "initial" },
             width: "100%",
@@ -131,11 +132,12 @@ function TableOfDetails() {
             flexShrink: 1,
             minHeight: 0,
           }}
+          variant="outlined"
         >
           <Table
-            aria-labelledby="tableTitle"
-            stickyHeader
             hoverRow
+            stickyHeader
+            aria-labelledby="tableTitle"
             sx={{
               "--TableCell-headBackground":
                 "var(--joy-palette-background-level1)",
@@ -158,12 +160,12 @@ function TableOfDetails() {
             <tbody>
               {data.content.map((row: CompanyDetails) => (
                 <tr
-                  id={`company-${row.id}`}
                   key={row.id}
+                  id={`company-${row.id}`}
+                  style={{ cursor: "pointer", alignItems: "left" }}
                   onClick={() => {
                     navigate(`/company/${row.id}`, {})
                   }}
-                  style={{ cursor: "pointer", alignItems: "left" }}
                 >
                   <td align="left">
                     <ApartmentOutlinedIcon />
@@ -200,12 +202,12 @@ function TableOfDetails() {
             >
               <Tooltip title="Page précédente">
                 <IconButton
-                  size="sm"
                   color="neutral"
-                  variant="outlined"
                   disabled={dataPagniation.page === 0}
-                  onClick={() => handleChangePage(dataPagniation.page - 1)}
+                  size="sm"
                   sx={{ bgcolor: "background.surface" }}
+                  variant="outlined"
+                  onClick={() => handleChangePage(dataPagniation.page - 1)}
                 >
                   <KeyboardArrowLeftIcon />
                 </IconButton>
@@ -215,14 +217,14 @@ function TableOfDetails() {
               </Typography>
               <Tooltip title="Page suivante">
                 <IconButton
-                  size="sm"
                   color="neutral"
-                  variant="outlined"
                   disabled={
                     dataPagniation.page === dataPagniation.totalPages - 1
                   }
-                  onClick={() => handleChangePage(dataPagniation.page + 1)}
+                  size="sm"
                   sx={{ bgcolor: "background.surface" }}
+                  variant="outlined"
+                  onClick={() => handleChangePage(dataPagniation.page + 1)}
                 >
                   <KeyboardArrowRightIcon />
                 </IconButton>
@@ -255,14 +257,14 @@ export default function Search() {
       </Box>
       <Grid
         container
-        spacing={3}
-        marginTop={"7.8vh"}
-        paddingBottom={"10vh"}
+        justifyContent="center"
+        marginTop="7.8vh"
+        paddingBottom="10vh"
         paddingLeft={8}
         paddingRight={10}
-        justifyContent="center"
+        spacing={3}
       >
-        <Grid xs={12} md={12}>
+        <Grid md={12} xs={12}>
           <Box
             sx={{
               display: "flex",

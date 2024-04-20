@@ -1,4 +1,5 @@
 import { create } from "zustand"
+
 import { User } from "../data/types/user"
 
 type Store = {

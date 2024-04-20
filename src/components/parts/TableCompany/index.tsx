@@ -1,3 +1,7 @@
+import "./style.css"
+
+import * as React from "react"
+import { useEffect } from "react"
 import FacebookIcon from "@mui/icons-material/Facebook"
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft"
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"
@@ -7,25 +11,23 @@ import YouTubeIcon from "@mui/icons-material/YouTube"
 import {
   Box,
   IconButton,
+  iconButtonClasses,
   Sheet,
   Table,
   Tooltip,
   Typography,
-  iconButtonClasses,
 } from "@mui/joy"
 import { useQuery } from "@tanstack/react-query"
-import * as React from "react"
-import { useEffect } from "react"
+
 import { columnsTableCompany } from "../../../data/types/columns.ts"
-import { Company, CheckStatus } from "../../../data/types/company.ts"
+import { CheckStatus,Company } from "../../../data/types/company.ts"
 import { useCompanyStore } from "../../../store/companyStore.tsx"
 import { useCompanyFilterStore } from "../../../store/filtersStore.tsx"
-import { parseJsonToCompany } from "../../../utils/parseJsonToObject.ts"
-import { TableSkeleton } from "../../common/Loaders/Skeleton/index.tsx"
-import { StatutIcon, manageIsChecked } from "../../common/StatutIcon/index.tsx"
-import "./style.css"
 import { fetchCompaniesWithUrlAndPage } from "../../../utils/api/index.ts"
+import { parseJsonToCompany } from "../../../utils/parseJsonToObject.ts"
 import LogoutButton from "../../common/buttons/logout.tsx"
+import { TableSkeleton } from "../../common/Loaders/Skeleton/index.tsx"
+import { manageIsChecked,StatutIcon } from "../../common/StatutIcon/index.tsx"
 
 // https://www.material-react-table.com/
 // agGrid
@@ -58,6 +60,7 @@ async function fetchCompanies(url: string, page: number) {
       } else {
         company.checked = CheckStatus.NOT_DONE
       }
+
       return company
     })
 
@@ -166,6 +169,7 @@ export default function TableCompany({ url }: Props) {
       </div>
     )
   }
+
   if (isPending) {
     return <TableSkeleton columns={columnsTableCompany} />
   } else if (data !== undefined && data.empty) {
@@ -189,7 +193,6 @@ export default function TableCompany({ url }: Props) {
       <React.Fragment>
         <Sheet
           className="OrderTableContainer"
-          variant="outlined"
           sx={{
             display: { xs: "none", sm: "initial" },
             width: "100%",
@@ -199,11 +202,12 @@ export default function TableCompany({ url }: Props) {
             minHeight: 0,
             fontFamily: "Poppins",
           }}
+          variant="outlined"
         >
           <Table
-            aria-labelledby="tableTitle"
-            stickyHeader
             hoverRow
+            stickyHeader
+            aria-labelledby="tableTitle"
             sx={{
               overflow: "auto",
               "--TableCell-headBackground":
@@ -240,11 +244,11 @@ export default function TableCompany({ url }: Props) {
                 return (
                   //Afficher les details de l'entreprise en cliquant dessus
                   <tr
-                    role="checkbox"
-                    tabIndex={-1}
                     key={row.id + "rowdetails"}
-                    onClick={() => handleDetailsClick(row)}
+                    role="checkbox"
                     style={{ cursor: "pointer" }}
+                    tabIndex={-1}
+                    onClick={() => handleDetailsClick(row)}
                   >
                     <td key={row.id + "checbox"} align="center">
                       <IconButton
@@ -403,12 +407,12 @@ export default function TableCompany({ url }: Props) {
             >
               <Tooltip title="Page précédente">
                 <IconButton
-                  size="sm"
                   color="neutral"
-                  variant="outlined"
                   disabled={dataPagniation.page === 0}
-                  onClick={() => handleChangePage(dataPagniation.page - 1)}
+                  size="sm"
                   sx={{ bgcolor: "background.surface" }}
+                  variant="outlined"
+                  onClick={() => handleChangePage(dataPagniation.page - 1)}
                 >
                   <KeyboardArrowLeftIcon />
                 </IconButton>
@@ -418,14 +422,14 @@ export default function TableCompany({ url }: Props) {
               </Typography>
               <Tooltip title="Page suivante">
                 <IconButton
-                  size="sm"
                   color="neutral"
-                  variant="outlined"
                   disabled={
                     dataPagniation.page === dataPagniation.totalPages - 1
                   }
-                  onClick={() => handleChangePage(dataPagniation.page + 1)}
+                  size="sm"
                   sx={{ bgcolor: "background.surface" }}
+                  variant="outlined"
+                  onClick={() => handleChangePage(dataPagniation.page + 1)}
                 >
                   <KeyboardArrowRightIcon />
                 </IconButton>

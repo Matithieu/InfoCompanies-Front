@@ -2,6 +2,7 @@ import { User } from "../data/types/user"
 
 export function loadCompaniesFilterFromLocalStorage(key: string) {
   const companiesFilter = localStorage.getItem(key)
+
   if (!companiesFilter) {
     return {}
   }
@@ -18,6 +19,7 @@ export function loadCompaniesFilterFromLocalStorage(key: string) {
 // Key is "authUser"
 export function loadUserFromLocalStorage(key: string) {
   const userData = localStorage.getItem(key)
+
   if (userData === null || !userData || userData === "") {
     console.log("No user data found")
     localStorage.removeItem(key)
@@ -28,6 +30,7 @@ export function loadUserFromLocalStorage(key: string) {
 
   if (userData != "undefined") {
     const userObjs = JSON.parse(userData)
+
     if (userObjs != undefined) {
       console.log("User data format is valid")
       return {

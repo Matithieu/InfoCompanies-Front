@@ -1,3 +1,10 @@
+import * as React from "react";
+import AutorenewRoundedIcon from "@mui/icons-material/AutorenewRounded";
+import BlockIcon from "@mui/icons-material/Block";
+import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 import Avatar from "@mui/joy/Avatar";
 import Box from "@mui/joy/Box";
 import Button from "@mui/joy/Button";
@@ -13,15 +20,8 @@ import MenuItem from "@mui/joy/MenuItem";
 import Sheet from "@mui/joy/Sheet";
 import Table from "@mui/joy/Table";
 import Typography from "@mui/joy/Typography";
-import { ColorPaletteProp } from "@mui/joy/styles";
-import * as React from "react";
 
-import AutorenewRoundedIcon from "@mui/icons-material/AutorenewRounded";
-import BlockIcon from "@mui/icons-material/Block";
-import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
+import { ColorPaletteProp } from "@mui/joy/styles";
 
 const rows = [
   {
@@ -130,8 +130,8 @@ function RowMenu() {
   return (
     <Dropdown>
       <MenuButton
-        slots={{ root: IconButton }}
         slotProps={{ root: { variant: "plain", color: "neutral", size: "sm" } }}
+        slots={{ root: IconButton }}
       >
         <MoreHorizRoundedIcon />
       </MenuButton>
@@ -153,7 +153,6 @@ export default function OrderTable() {
     <React.Fragment>
       <Sheet
         className="OrderTableContainer"
-        variant="outlined"
         sx={{
           display: { xs: "none", sm: "initial" },
           width: "100%",
@@ -162,11 +161,12 @@ export default function OrderTable() {
           overflow: "auto",
           minHeight: 0,
         }}
+        variant="outlined"
       >
         <Table
-          aria-labelledby="tableTitle"
-          stickyHeader
           hoverRow
+          stickyHeader
+          aria-labelledby="tableTitle"
           sx={{
             "--TableCell-headBackground":
               "var(--joy-palette-background-level1)",
@@ -183,22 +183,22 @@ export default function OrderTable() {
                 style={{ width: 48, textAlign: "center", padding: "12px 6px" }}
               >
                 <Checkbox
-                  size="sm"
-                  indeterminate={
-                    selected.length > 0 && selected.length !== rows.length
-                  }
                   checked={selected.length === rows.length}
-                  onChange={(event) => {
-                    setSelected(
-                      event.target.checked ? rows.map((row) => row.id) : []
-                    );
-                  }}
                   color={
                     selected.length > 0 || selected.length === rows.length
                       ? "primary"
                       : undefined
                   }
+                  indeterminate={
+                    selected.length > 0 && selected.length !== rows.length
+                  }
+                  size="sm"
                   sx={{ verticalAlign: "text-bottom" }}
+                  onChange={(event) => {
+                    setSelected(
+                      event.target.checked ? rows.map((row) => row.id) : []
+                    );
+                  }}
                 />
               </th>
               <th style={{ width: 120, padding: "12px 6px" }}>Dénomination</th>
@@ -213,9 +213,11 @@ export default function OrderTable() {
               <tr key={row.id}>
                 <td style={{ textAlign: "center", width: 120 }}>
                   <Checkbox
-                    size="sm"
                     checked={selected.includes(row.id)}
                     color={selected.includes(row.id) ? "primary" : undefined}
+                    size="sm"
+                    slotProps={{ checkbox: { sx: { textAlign: "left" } } }}
+                    sx={{ verticalAlign: "text-bottom" }}
                     onChange={(event) => {
                       setSelected((ids) =>
                         event.target.checked
@@ -223,8 +225,6 @@ export default function OrderTable() {
                           : ids.filter((itemId) => itemId !== row.id)
                       );
                     }}
-                    slotProps={{ checkbox: { sx: { textAlign: "left" } } }}
-                    sx={{ verticalAlign: "text-bottom" }}
                   />
                 </td>
                 <td>
@@ -235,7 +235,13 @@ export default function OrderTable() {
                 </td>
                 <td>
                   <Chip
-                    variant="soft"
+                    color={
+                      {
+                        Paid: "success",
+                        Refunded: "neutral",
+                        Cancelled: "danger",
+                      }[row.status] as ColorPaletteProp
+                    }
                     size="sm"
                     startDecorator={
                       {
@@ -244,13 +250,7 @@ export default function OrderTable() {
                         Cancelled: <BlockIcon />,
                       }[row.status]
                     }
-                    color={
-                      {
-                        Paid: "success",
-                        Refunded: "neutral",
-                        Cancelled: "danger",
-                      }[row.status] as ColorPaletteProp
-                    }
+                    variant="soft"
                   >
                     {row.status}
                   </Chip>
@@ -270,7 +270,7 @@ export default function OrderTable() {
                 </td>
                 <td>
                   <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-                    <Link level="body-xs" component="button">
+                    <Link component="button" level="body-xs">
                       Download
                     </Link>
                     <RowMenu />
@@ -294,10 +294,10 @@ export default function OrderTable() {
         }}
       >
         <Button
-          size="sm"
-          variant="outlined"
           color="neutral"
+          size="sm"
           startDecorator={<KeyboardArrowLeftIcon />}
+          variant="outlined"
         >
           Previous
         </Button>
@@ -306,9 +306,9 @@ export default function OrderTable() {
         {["1", "2", "3", "…", "8", "9", "10"].map((page) => (
           <IconButton
             key={page}
+            color="neutral"
             size="sm"
             variant={Number(page) ? "outlined" : "plain"}
-            color="neutral"
           >
             {page}
           </IconButton>
@@ -316,10 +316,10 @@ export default function OrderTable() {
         <Box sx={{ flex: 1 }} />
 
         <Button
-          size="sm"
-          variant="outlined"
           color="neutral"
           endDecorator={<KeyboardArrowRightIcon />}
+          size="sm"
+          variant="outlined"
         >
           Next
         </Button>

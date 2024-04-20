@@ -1,7 +1,7 @@
-import SearchIcon from "@mui/icons-material/Search";
-import { Input } from "@mui/joy";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SearchIcon from "@mui/icons-material/Search";
+import { Input } from "@mui/joy";
 
 export default function SearchAppBar() {
   const navigate = useNavigate();
@@ -21,10 +21,10 @@ export default function SearchAppBar() {
   return (
     <form onSubmit={handleSearch}>
       <Input
+        endDecorator={<SearchIcon />}
         placeholder="Rechercher une entreprise"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        endDecorator={<SearchIcon />}
       />
     </form>
   );

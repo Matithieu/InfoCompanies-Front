@@ -12,18 +12,18 @@ export default function SEO({ title, description, name, type }: SEOProps) {
     <Helmet>
       {/* Standard metadata tags */}
       <title>{title}</title>
-      <meta name="description" content={description} />
+      <meta content={description} name="description" />
       {/* End standard metadata tags */}
       {/* Facebook tags */}
-      <meta property="og:type" content={type} />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
+      <meta content={type} property="og:type" />
+      <meta content={title} property="og:title" />
+      <meta content={description} property="og:description" />
       {/* End Facebook tags */}
       {/* Twitter tags */}
-      <meta name="twitter:creator" content={name} />
-      <meta name="twitter:card" content={type} />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
+      <meta content={name} name="twitter:creator" />
+      <meta content={type} name="twitter:card" />
+      <meta content={title} name="twitter:title" />
+      <meta content={description} name="twitter:description" />
       {/* End Twitter tags */}
     </Helmet>
   );

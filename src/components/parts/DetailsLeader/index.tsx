@@ -1,9 +1,10 @@
+import { useNavigate } from "react-router-dom"
 import BusinessIcon from "@mui/icons-material/Business"
 import CakeIcon from "@mui/icons-material/Cake"
 import EmailIcon from "@mui/icons-material/Email"
 import PhoneIcon from "@mui/icons-material/Phone"
 import { Container, Sheet, Table, Tooltip } from "@mui/joy"
-import { useNavigate } from "react-router-dom"
+
 import { Leader } from "../../../data/types/leader"
 
 export function toAgeFromDate(date: Date) {
@@ -41,11 +42,11 @@ export default function DetailsLeader({
         >
           Détails
         </h2>
-        <Table sx={{ minWidth: 150 }} aria-label="List Of Leaders">
+        <Table aria-label="List Of Leaders" sx={{ minWidth: 150 }}>
           <tbody>
             <tr key={leaderDetails.phone} style={{ border: 0 }}>
               <td scope="row">
-                <Tooltip arrow title="Numéro de téléphone" placement="top">
+                <Tooltip arrow placement="top" title="Numéro de téléphone">
                   <PhoneIcon />
                 </Tooltip>
                 <span style={{ marginLeft: "10px" }}></span>
@@ -54,7 +55,7 @@ export default function DetailsLeader({
             </tr>
             <tr key={leaderDetails.email} style={{ border: 0 }}>
               <td scope="row">
-                <Tooltip arrow title="Adresse email" placement="top">
+                <Tooltip arrow placement="top" title="Adresse email">
                   <EmailIcon />
                 </Tooltip>
                 <span style={{ marginLeft: "10px" }}></span>
@@ -63,7 +64,7 @@ export default function DetailsLeader({
             </tr>
             <tr style={{ border: 0 }}>
               <td scope="row">
-                <Tooltip arrow title="Age" placement="top">
+                <Tooltip arrow placement="top" title="Age">
                   <CakeIcon />
                 </Tooltip>
                 <span style={{ marginLeft: "10px" }}></span>
@@ -74,7 +75,7 @@ export default function DetailsLeader({
             </tr>
             <tr style={{ border: 0 }}>
               <td scope="row">
-                <Tooltip arrow title="Entreprises" placement="top">
+                <Tooltip arrow placement="top" title="Entreprises">
                   <BusinessIcon />
                 </Tooltip>
                 <span style={{ marginLeft: "10px" }}></span>

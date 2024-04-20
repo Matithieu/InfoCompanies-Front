@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom"
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline"
 import {
   Button,
@@ -8,7 +9,7 @@ import {
   Sheet,
   Typography,
 } from "@mui/joy"
-import { useNavigate } from "react-router-dom"
+
 import useAuthStore from "../../store/authStore"
 import { loadUserFromLocalStorage } from "../../utils/loadFromLocalStorage"
 
@@ -26,16 +27,16 @@ const OrderConfirmation = () => {
         marginTop: "7rem",
       }}
     >
-      <Sheet variant="soft" style={{ padding: "20px", maxWidth: "400px" }}>
+      <Sheet style={{ padding: "20px", maxWidth: "400px" }} variant="soft">
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
           <CheckCircleOutlineIcon
             color="success"
             style={{ fontSize: "60px" }}
           />
-          <Typography level="h4" gutterBottom>
+          <Typography gutterBottom level="h4">
             Thank you for your purchase!
           </Typography>
-          <Typography level="body-md" gutterBottom>
+          <Typography gutterBottom level="body-md">
             Your order has been successfully processed. Please check your email
             for order confirmation.
           </Typography>
@@ -43,7 +44,7 @@ const OrderConfirmation = () => {
 
         <Divider style={{ marginBottom: "20px" }} />
 
-        <Typography level="h4" gutterBottom>
+        <Typography gutterBottom level="h4">
           Order Details
         </Typography>
 
@@ -54,37 +55,39 @@ const OrderConfirmation = () => {
         <List>
           <ListItem>
             <ListItemContent>
-              <Typography level="h4" gutterBottom>
+              <Typography gutterBottom level="h4">
                 Order ID: 123456
               </Typography>
             </ListItemContent>
           </ListItem>
           <ListItem>
             <ListItemContent>
-              <Typography level="h4" gutterBottom>
+              <Typography gutterBottom level="h4">
                 Total amount: $100
               </Typography>
             </ListItemContent>
           </ListItem>
           <ListItem>
             <ListItemContent>
-              <Typography level="h4" gutterBottom>
+              <Typography gutterBottom level="h4">
                 Payment method: Credit Card
               </Typography>
             </ListItemContent>
           </ListItem>
         </List>
         <Button
-          variant="soft"
-          color="primary"
           fullWidth
+          color="primary"
           style={{ marginTop: "20px" }}
+          variant="soft"
           onClick={() => {
             const user = loadUserFromLocalStorage("authUser")
+
             if (user) {
               user.isVerified = true
               setAuthUser(user) // Clear the authenticated user
             }
+
             console.log("test " + authUser)
             setTimeout(() => {
               navigate("/dashboard")

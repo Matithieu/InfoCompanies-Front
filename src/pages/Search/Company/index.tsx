@@ -1,18 +1,20 @@
+import "react-toastify/dist/ReactToastify.css"
+
+import { useEffect, useState } from "react"
 import { Box, Card, Grid, IconButton, Typography } from "@mui/joy"
 import { useQuery } from "@tanstack/react-query"
-import { useEffect, useState } from "react"
-import "react-toastify/dist/ReactToastify.css"
+
+import LogoutButton from "../../../components/common/buttons/logout.tsx"
+import {
+  manageIsChecked,
+  StatutIcon,
+} from "../../../components/common/StatutIcon/index.tsx"
 import Chart from "../../../components/parts/Chart/index.tsx"
 import DetailsCompany from "../../../components/parts/DetailsCompany/index.tsx"
 import ListOfLeaders from "../../../components/parts/ListOfLeaders/index.tsx"
-import {
-  StatutIcon,
-  manageIsChecked,
-} from "../../../components/common/StatutIcon/index.tsx"
-import { Company, CheckStatus } from "../../../data/types/company.ts"
+import { CheckStatus,Company } from "../../../data/types/company.ts"
 import { useCompanyStore } from "../../../store/companyStore.tsx"
 import { fetchCompnayById } from "../../../utils/api/index.ts"
-import LogoutButton from "../../../components/common/buttons/logout.tsx"
 
 async function fetchCompanies(id: string) {
   const response = await fetchCompnayById(id)
@@ -31,6 +33,7 @@ async function fetchCompanies(id: string) {
       } else {
         company.checked = CheckStatus.NOT_DONE
       }
+
       return company
     }
 
@@ -94,6 +97,7 @@ export default function CompanyPage() {
       </div>
     )
   }
+
   if (isPending) {
     return <div>Chargement des données...</div>
   } else if (company != null) {
@@ -142,8 +146,8 @@ export default function CompanyPage() {
             </div>
 
             <Grid>
-              <Grid container spacing={3} justifyContent="center" marginTop={5}>
-                <Grid xs={12} md={4}>
+              <Grid container justifyContent="center" marginTop={5} spacing={3}>
+                <Grid md={4} xs={12}>
                   <Card
                     sx={{
                       display: "flex",
@@ -157,7 +161,7 @@ export default function CompanyPage() {
                     <DetailsCompany />
                   </Card>
                 </Grid>
-                <Grid xs={12} md={4}>
+                <Grid md={4} xs={12}>
                   <Card
                     sx={{
                       display: "flex",
@@ -171,8 +175,8 @@ export default function CompanyPage() {
                   </Card>
                 </Grid>
               </Grid>
-              <Grid container spacing={3} justifyContent="center" marginTop={5}>
-                <Grid xs={8} md={4}>
+              <Grid container justifyContent="center" marginTop={5} spacing={3}>
+                <Grid md={4} xs={8}>
                   <Card
                     sx={{
                       display: "flex",

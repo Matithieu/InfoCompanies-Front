@@ -1,6 +1,7 @@
 import { Box, Grid, Sheet, Typography } from "@mui/joy"
-import { Leader } from "../../data/types/leader.ts"
+
 import DetailsLeader from "../../components/parts/DetailsLeader/index.tsx"
+import { Leader } from "../../data/types/leader.ts"
 
 const idTest = window.location.pathname.split("/")[2]
 console.log("Leader id : " + idTest)
@@ -28,8 +29,8 @@ export default function LeaderDetails() {
       <Box sx={{ display: "flex" }}>
         <Box component="main">
           <Typography
-            level="h4"
             component="div"
+            level="h4"
             sx={{
               marginTop: 5,
               marginLeft: 10,
@@ -42,19 +43,19 @@ export default function LeaderDetails() {
 
           <Grid
             container
-            spacing={"3vh"}
-            paddingBottom={"10vh"}
-            paddingLeft={"10vh"}
-            paddingRight={"10vh"}
             justifyContent="center"
+            paddingBottom="10vh"
+            paddingLeft="10vh"
+            paddingRight="10vh"
+            spacing="3vh"
           >
             <Grid
               container
-              spacing={3}
               justifyContent="space-between"
               marginTop={5}
+              spacing={3}
             >
-              <Grid xs={12} md={6}>
+              <Grid md={6} xs={12}>
                 <Sheet
                   sx={{
                     display: "flex",

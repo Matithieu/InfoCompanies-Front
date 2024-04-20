@@ -1,5 +1,5 @@
+import { CheckStatus, Company, FinancialYear } from "../data/types/company"
 import { User } from "../data/types/user"
-import { Company, CheckStatus, FinancialYear } from "../data/types/company"
 
 type JSONValue =
   | string

@@ -19,17 +19,14 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
-    "plugin:redux-saga/recommended",
     "prettier",
-    "plugin:storybook/recommended",
-    "plugin:mdx/recommended",
     "plugin:tailwindcss/recommended",
     "plugin:@tanstack/eslint-plugin-query/recommended",
   ],
   ignorePatterns: [".eslintrc.cjs"],
   parserOptions: {
     tsconfigRootDir: __dirname,
-    project: "../tsconfig.json",
+    project: "./tsconfig.json",
     ecmaFeatures: {
       jsx: true,
     },
@@ -45,36 +42,6 @@ module.exports = {
   rules: {
     eqeqeq: "error",
     "no-nested-ternary": "error",
-    "simple-import-sort/imports": [
-      "error",
-      {
-        groups: [
-          // side-effect imports
-          ["^\\u0000"],
-          // Packages `react` related packages come first.
-          ["^react", "^@?\\w"],
-          // Internal packages.
-          ["^(@)(/.*|$)"],
-          [
-            "^(constants)(/.*|$)",
-            "^(types)(/.*|$)",
-            "^(services)(/.*|$)",
-            "^(utils)(/.*|$)",
-            "^(hooks)(/.*|$)",
-            "^(containers)(/.*|$)",
-            "^(components)(/.*|$)",
-            "^(designSystem)(/.*|$)",
-            "^(pages)(/.*|$)",
-          ],
-          // Parent imports. Put `..` last.
-          ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
-          // Other relative imports. Put same-folder imports and `.` last.
-          ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
-          // Styles last
-          ["^(assets)(/.*|$)", "/messages$", "/styles$"],
-        ],
-      },
-    ],
 
     // disabled rules
     "@typescript-eslint/no-explicit-any": "off",
@@ -85,7 +52,7 @@ module.exports = {
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/restrict-template-expressions": "off",
     "@typescript-eslint/consistent-type-assertions": "off",
-    "@typescript-eslint/no-unused-vars": "on",
+    "@typescript-eslint/no-unused-vars": "off",
     "unused-imports/no-unused-imports": "error",
     "unused-imports/no-unused-vars": [
       "error",

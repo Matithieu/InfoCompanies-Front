@@ -1,3 +1,7 @@
+import * as React from "react"
+import { Link } from "react-router-dom"
+import Logout from "@mui/icons-material/Logout"
+import Settings from "@mui/icons-material/Settings"
 import {
   Avatar,
   Box,
@@ -8,14 +12,10 @@ import {
   MenuItem,
   Tooltip,
 } from "@mui/joy"
-import * as React from "react"
 
-import Logout from "@mui/icons-material/Logout"
-import Settings from "@mui/icons-material/Settings"
-import { Link } from "react-router-dom"
+import useAuthManager from "../../../hooks/useAuthManager"
 import { linkStyles } from "../../../pages/Layout/ListItems/listItems"
 import useAuthStore from "../../../store/authStore"
-import useAuthManager from "../../../hooks/useAuthManager"
 
 /*
 async function deleteSessionAPI() {
@@ -44,9 +44,11 @@ export default function AccountMenu() {
   const authManager = useAuthManager()
   const { setAuthUser, setRequestLoading } = useAuthStore()
   const open = Boolean(anchorEl)
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
   }
+
   const handleClose = () => {
     setAnchorEl(null)
   }
@@ -63,7 +65,7 @@ export default function AccountMenu() {
       >
         <Tooltip arrow title="Account settings">
           {/*ts-ignore*/}
-          <IconButton onClick={handleClick} size="sm" sx={{ ml: 2 }}>
+          <IconButton size="sm" sx={{ ml: 2 }} onClick={handleClick}>
             <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
           </IconButton>
         </Tooltip>
@@ -72,10 +74,10 @@ export default function AccountMenu() {
         anchorEl={anchorEl}
         id="account-menu"
         open={open}
-        onClose={handleClose}
         onClick={handleClose}
+        onClose={handleClose}
       >
-        <Link to="/account" style={linkStyles}>
+        <Link style={linkStyles} to="/account">
           <MenuItem onClick={handleClose}>
             <Avatar /> Profile
           </MenuItem>
@@ -83,7 +85,7 @@ export default function AccountMenu() {
 
         <Divider />
 
-        <Link to="/settings" style={linkStyles}>
+        <Link style={linkStyles} to="/settings">
           <MenuItem onClick={handleClose}>
             <ListItemContent>
               <Settings fontSize="small" />
@@ -91,7 +93,7 @@ export default function AccountMenu() {
             Settings
           </MenuItem>
         </Link>
-        <div onClick={() => authManager.redirectedLogin()} style={linkStyles}>
+        <div style={linkStyles} onClick={() => authManager.redirectedLogin()}>
           <MenuItem
             onClick={() => {
               handleClose()

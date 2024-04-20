@@ -1,4 +1,5 @@
 import { Box, Container, Skeleton, Table } from "@mui/joy"
+
 import { Column } from "../../../../data/types/columns"
 
 interface TableSkeletonProps {
@@ -39,9 +40,9 @@ export const TableSkeleton = ({ columns }: TableSkeletonProps) => {
                 >
                   <Skeleton
                     animation="wave"
+                    height={25}
                     variant="circular"
                     width={25}
-                    height={25}
                   />
                 </td>
                 {columns.map((column) => (

@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 function Failure() {
     const queryParams = new URLSearchParams(window.location.search)
     const navigate = useNavigate()
+
     const onButtonClick = () => {
         navigate("/")
     }

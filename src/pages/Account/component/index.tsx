@@ -1,3 +1,4 @@
+import { ChangeEvent, useEffect, useState } from "react"
 import {
   Button,
   Card,
@@ -10,11 +11,11 @@ import {
   Typography,
 } from "@mui/joy"
 import { useQuery } from "@tanstack/react-query"
-import { ChangeEvent, useEffect, useState } from "react"
+
 import { User } from "../../../data/types/user"
 import useAuthStore from "../../../store/authStore"
-import { parseJsonToUser } from "../../../utils/parseJsonToObject"
 import { fetchUser } from "../../../utils/api"
+import { parseJsonToUser } from "../../../utils/parseJsonToObject"
 
 export default function Account() {
   const { authUser, requestLoading, setAuthUser, setRequestLoading } =
@@ -64,50 +65,50 @@ export default function Account() {
   } else if (authUser != null) {
     return (
       <Card>
-        <Typography level="h3" gutterBottom>
+        <Typography gutterBottom level="h3">
           Détails du compte
         </Typography>
         <Divider />
 
         <form>
           <Grid container spacing={3}>
-            <Grid xs={12} md={6}>
+            <Grid md={6} xs={12}>
               <FormControl>
                 <FormLabel htmlFor="firstName">First Name</FormLabel>
                 <Input
+                  disabled={!editMode}
                   id="firstName"
                   value={editedUser?.firstName ?? ""}
                   onChange={(e) => handleChange(e, "firstName")}
-                  disabled={!editMode}
                 />
                 <FormLabel htmlFor="name">Name</FormLabel>
                 <Input
+                  disabled={!editMode}
                   id="name"
                   value={editedUser?.lastName ?? ""}
                   onChange={(e) => handleChange(e, "name")}
-                  disabled={!editMode}
                 />
               </FormControl>
             </Grid>
-            <Grid xs={12} md={6}>
+            <Grid md={6} xs={12}>
               <FormControl>
                 <FormLabel htmlFor="email">Email</FormLabel>
                 <Input
+                  disabled
                   id="email"
                   value={editedUser?.email ?? ""}
                   onChange={(e) => handleChange(e, "email")}
-                  disabled
                 />
               </FormControl>
             </Grid>
-            <Grid xs={12} md={6}>
+            <Grid md={6} xs={12}>
               <FormControl>
                 <FormLabel htmlFor="phone">Phone</FormLabel>
                 <Input
+                  disabled={!editMode}
                   id="phone"
                   value={editedUser?.phone ?? ""}
                   onChange={(e) => handleChange(e, "phone")}
-                  disabled={!editMode}
                 />
               </FormControl>
             </Grid>
@@ -122,11 +123,11 @@ export default function Account() {
             {requestLoading ? (
               <CircularProgress />
             ) : !editMode ? (
-              <Button variant="outlined" color="primary" onClick={handleEdit}>
+              <Button color="primary" variant="outlined" onClick={handleEdit}>
                 Editer
               </Button>
             ) : (
-              <Button variant="outlined" color="neutral" onClick={handleSave}>
+              <Button color="neutral" variant="outlined" onClick={handleSave}>
                 Sauvegarder
               </Button>
             )}

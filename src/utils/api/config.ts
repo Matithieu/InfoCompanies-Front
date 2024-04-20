@@ -1,4 +1,5 @@
 import { toast } from "react-toastify"
+
 import { ErrorJwtAuth } from "../../data/errors/errorAuthJwt"
 import { getUser } from "../slice"
 

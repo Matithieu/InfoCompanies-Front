@@ -1,6 +1,5 @@
-import { Typography } from "@mui/joy"
-import { useTheme } from "@mui/joy/styles"
 import * as React from "react"
+import { Typography } from "@mui/joy"
 import {
   Label,
   Line,
@@ -10,8 +9,11 @@ import {
   XAxis,
   YAxis,
 } from "recharts"
+
+import { getTotalOfTurnOver,TurnOver } from "../../../data/types/company"
 import { useCompanyStore } from "../../../store/companyStore"
-import { TurnOver, getTotalOfTurnOver } from "../../../data/types/company"
+
+import { useTheme } from "@mui/joy/styles"
 
 export default function Chart() {
   const theme = useTheme()
@@ -33,6 +35,7 @@ export default function Chart() {
     if (turnOver !== null) {
       for (let i = 0; i < turnOver.date.length; i++) {
         const turnOverIndex = turnOver.turnOver[i]
+
         if (turnOverIndex !== null && !isNaN(turnOverIndex)) {
           if (turnOver.date.length > 1 && turnOver.turnOver.length > 1) {
             data.push({ date: turnOver.date[i], amount: turnOverIndex }) // The chart only accepts objects with date and amount
@@ -40,6 +43,7 @@ export default function Chart() {
         }
       }
     }
+
     return data
   }
 
@@ -48,6 +52,7 @@ export default function Chart() {
       <a style={{ fontSize: "19px" }}>Veuillez sélectionner une entreprise</a>
     )
   }
+
   if (
     selectedCompany !== null &&
     getTotalOfTurnOver(selectedCompany).turnOver.length === 0
@@ -84,13 +89,13 @@ export default function Chart() {
               </Label>
             </YAxis>
             <Tooltip
-              cursor={{ strokeDasharray: "3 3" }}
               contentStyle={{
                 backgroundColor: theme.palette.background.body,
                 color: theme.palette.text.primary,
                 border: "none",
                 borderRadius: 3,
               }}
+              cursor={{ strokeDasharray: "3 3" }}
               formatter={(value) => {
                 if (value === 0) {
                   return ["Pas de données"]
@@ -104,11 +109,11 @@ export default function Chart() {
               }}
             />
             <Line
-              isAnimationActive={true}
-              type="monotone"
+              dot
+              isAnimationActive
               dataKey="amount"
               strokeWidth={3}
-              dot={true}
+              type="monotone"
               width={10}
             />
           </LineChart>
