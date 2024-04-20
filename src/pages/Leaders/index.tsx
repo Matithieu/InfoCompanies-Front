@@ -1,35 +1,36 @@
-import { Box, Grid, Sheet, Typography } from "@mui/joy";
-import DetailsLeaders from "../../components/DetailsLeader/index.tsx";
-import Leader from "../../data/leader.tsx";
+import { Box, Grid, Sheet, Typography } from "@mui/joy"
 
-const idTest = window.location.pathname.split("/")[2];
-console.log("Leader id : " + idTest);
+import DetailsLeader from "../../components/parts/DetailsLeader/index.tsx"
+import { Leader } from "../../data/types/leader.ts"
+
+const idTest = window.location.pathname.split("/")[2]
+console.log("Leader id : " + idTest)
 
 // TODO: Replace this with the data from the API
 // Fetch at /api/leaders/{id}
 
-const leader1 = new Leader(
-  1,
-  "DUPONT",
-  "Jean",
-  new Date("1990-01-01"),
-  " 06 00 00 00 00",
-  "email@email.com",
-  [{ id: 1, denomination: "Entreprise 1" }]
-);
+const leader1: Leader = {
+  id: 1,
+  lastName: "DUPONT",
+  firstName: "Jean",
+  dateOfBirth: new Date("1990-01-01"),
+  phone: "06 00 00 00 00",
+  email: "email@email.com",
+  listOfCompanies: [{ id: 1, name: "Entreprise 1" }],
+}
 
-const initialLeaderData: Leader = leader1;
+const initialLeaderData: Leader = leader1
 
 export default function LeaderDetails() {
   if (initialLeaderData == null) {
-    return <a>Aucunes données trouvées</a>;
+    return <a>Aucunes données trouvées</a>
   } else {
     return (
       <Box sx={{ display: "flex" }}>
         <Box component="main">
           <Typography
-            level="h4"
             component="div"
+            level="h4"
             sx={{
               marginTop: 5,
               marginLeft: 10,
@@ -37,24 +38,24 @@ export default function LeaderDetails() {
               alignSelf: "flex-start",
             }}
           >
-            {initialLeaderData.getNom()} {initialLeaderData.getPrenom()}
+            {initialLeaderData.lastName} {initialLeaderData.firstName}
           </Typography>
 
           <Grid
             container
-            spacing={"3vh"}
-            paddingBottom={"10vh"}
-            paddingLeft={"10vh"}
-            paddingRight={"10vh"}
             justifyContent="center"
+            paddingBottom="10vh"
+            paddingLeft="10vh"
+            paddingRight="10vh"
+            spacing="3vh"
           >
             <Grid
               container
-              spacing={3}
               justifyContent="space-between"
               marginTop={5}
+              spacing={3}
             >
-              <Grid xs={12} md={6}>
+              <Grid md={6} xs={12}>
                 <Sheet
                   sx={{
                     display: "flex",
@@ -65,13 +66,13 @@ export default function LeaderDetails() {
                     height: "100%",
                   }}
                 >
-                  <DetailsLeaders leaderDetails={initialLeaderData} />
+                  <DetailsLeader leaderDetails={initialLeaderData} />
                 </Sheet>
               </Grid>
             </Grid>
           </Grid>
         </Box>
       </Box>
-    );
+    )
   }
 }

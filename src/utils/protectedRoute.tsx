@@ -1,46 +1,61 @@
-import { Navigate, Outlet } from "react-router-dom";
-import Loading from "../pages/Loading";
-import useAuthStore from "../store/authStore";
+import { Navigate, Outlet } from "react-router-dom"
+import { toast } from "react-toastify"
+
+import Loading from "../pages/Loading"
+import useAuthStore from "../store/authStore"
+
+import { getUser } from "./slice"
 
 export const ProtectedRoutes = () => {
-  const { authUser, requestLoading } = useAuthStore();
+  const { authUser, requestLoading } = useAuthStore()
+  const userFromLocalStorageOIDC = getUser()
 
-  if (authUser === null) {
-    return <Navigate to="/login" />;
+  if (
+    userFromLocalStorageOIDC === null ||
+    userFromLocalStorageOIDC?.expired === true
+  ) {
+    toast.error("Please connect to continue.")
+    return <Navigate to="/" />
+  }
+
+  if (userFromLocalStorageOIDC?.expired === false) {
+    return <Outlet />
+    // make a page to reconnect
+  }
+
+  if (authUser?.isVerified === false) {
+    return <Navigate to="/subscription" />
   }
 
   if (requestLoading) {
-    return <Loading />;
+    return <Loading />
   }
 
-  if (authUser.verified === false) {
-    return <Navigate to="/login" />;
-  }
-
-  return <Outlet />;
-};
+  return <Outlet />
+}
 
 export const ProtectedSimpleRoutes = () => {
-  const { authUser, requestLoading } = useAuthStore();
+  const { authUser, requestLoading } = useAuthStore()
+  const userFromLocalStorageOIDC = getUser()
 
-  if (authUser == null) {
-    return <Navigate to="/login" />;
-  }
-
-  if (requestLoading) {
-    return <Loading />;
+  if (
+    userFromLocalStorageOIDC == null ||
+    userFromLocalStorageOIDC?.expired === true
+  ) {
+    toast.error("Please connect to continue.")
+    return <Navigate to="/" />
   }
 
   if (
-    authUser.verified === false &&
+    authUser?.isVerified === false &&
     window.location.pathname !== "/subscription"
   ) {
-    return <Navigate to="/subscription" />;
+    return <Navigate to="/subscription" />
   }
 
-  if (authUser.verified === true) {
-    return <Navigate to="/dashboard" />;
+  if (requestLoading) {
+    return <Loading />
   }
 
-  return <Outlet />;
-};
+  return <Outlet />
+}

@@ -1,3 +1,5 @@
+import * as React from "react";
+import { Link } from "react-router-dom";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import AnalyticsIcon from "@mui/icons-material/Analytics";
 import BarChartIcon from "@mui/icons-material/BarChart";
@@ -14,8 +16,6 @@ import {
   ListSubheader,
   Typography,
 } from "@mui/joy";
-import * as React from "react";
-import { Link } from "react-router-dom";
 /*
 import useAuthStore from '../../../store/authStore';
 import { User } from '../../../data/user';
@@ -47,7 +47,7 @@ export const MainListItems = () => {
         </Typography>
       </ListSubheader>
 
-      <Link to="/dashboard" style={linkStyles}>
+      <Link style={linkStyles} to="/dashboard">
         <ListItemButton>
           <ListItemDecorator>
             <DashboardIcon />
@@ -58,7 +58,7 @@ export const MainListItems = () => {
         </ListItemButton>
       </Link>
 
-      <Link to="/favorites" style={linkStyles}>
+      <Link style={linkStyles} to="/favorites">
         <ListItemButton>
           <ListItemDecorator>
             <FavoriteIcon />
@@ -69,7 +69,7 @@ export const MainListItems = () => {
         </ListItemButton>
       </Link>
 
-      <Link to="/analytics" style={linkStyles}>
+      <Link style={linkStyles} to="/analytics">
         <ListItemButton>
           <ListItemDecorator>
             <AnalyticsIcon />
@@ -80,7 +80,7 @@ export const MainListItems = () => {
         </ListItemButton>
       </Link>
 
-      <Link to="/reports" style={linkStyles}>
+      <Link style={linkStyles} to="/reports">
         <ListItemButton>
           <ListItemDecorator>
             <BarChartIcon />
@@ -91,7 +91,7 @@ export const MainListItems = () => {
         </ListItemButton>
       </Link>
 
-      <Link to="/integrations" style={linkStyles}>
+      <Link style={linkStyles} to="/integrations">
         <ListItemButton>
           <ListItemDecorator>
             <LayersIcon />
@@ -134,7 +134,7 @@ export const SecondaryListItems = () => {
     <React.Fragment>
       <ListSubheader component="div">OTHERS</ListSubheader>
 
-      <Link to="/settings" style={linkStyles}>
+      <Link style={linkStyles} to="/settings">
         <ListItemButton>
           <ListItemDecorator>
             <SettingsIcon />
@@ -145,7 +145,7 @@ export const SecondaryListItems = () => {
         </ListItemButton>
       </Link>
 
-      <Link to="/account" style={linkStyles}>
+      <Link style={linkStyles} to="/account">
         <ListItemButton>
           <ListItemDecorator>
             <AccountBoxIcon />
@@ -156,7 +156,7 @@ export const SecondaryListItems = () => {
         </ListItemButton>
       </Link>
 
-      <Link to="/help" style={linkStyles}>
+      <Link style={linkStyles} to="/help">
         <ListItemButton>
           <ListItemDecorator>
             <HelpIcon />

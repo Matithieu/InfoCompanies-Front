@@ -1,4 +1,5 @@
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import { useNavigate } from "react-router-dom"
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline"
 import {
   Button,
   Divider,
@@ -7,15 +8,15 @@ import {
   ListItemContent,
   Sheet,
   Typography,
-} from "@mui/joy";
-import { useNavigate } from "react-router-dom";
-import useAuthStore from "../../store/authStore";
-import { LoadUserFromLocalStorage } from "../../utils/Load/loadUser";
+} from "@mui/joy"
+
+import useAuthStore from "../../store/authStore"
+import { loadUserFromLocalStorage } from "../../utils/loadFromLocalStorage"
 
 const OrderConfirmation = () => {
-  const queryParams = new URLSearchParams(window.location.search);
-  const navigate = useNavigate();
-  const { authUser, setAuthUser } = useAuthStore();
+  const queryParams = new URLSearchParams(window.location.search)
+  const navigate = useNavigate()
+  const { authUser, setAuthUser } = useAuthStore()
 
   return (
     <div
@@ -26,16 +27,16 @@ const OrderConfirmation = () => {
         marginTop: "7rem",
       }}
     >
-      <Sheet variant="soft" style={{ padding: "20px", maxWidth: "400px" }}>
+      <Sheet style={{ padding: "20px", maxWidth: "400px" }} variant="soft">
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
           <CheckCircleOutlineIcon
             color="success"
             style={{ fontSize: "60px" }}
           />
-          <Typography level="h4" gutterBottom>
+          <Typography gutterBottom level="h4">
             Thank you for your purchase!
           </Typography>
-          <Typography level="body-md" gutterBottom>
+          <Typography gutterBottom level="body-md">
             Your order has been successfully processed. Please check your email
             for order confirmation.
           </Typography>
@@ -43,7 +44,7 @@ const OrderConfirmation = () => {
 
         <Divider style={{ marginBottom: "20px" }} />
 
-        <Typography level="h4" gutterBottom>
+        <Typography gutterBottom level="h4">
           Order Details
         </Typography>
 
@@ -54,48 +55,50 @@ const OrderConfirmation = () => {
         <List>
           <ListItem>
             <ListItemContent>
-              <Typography level="h4" gutterBottom>
+              <Typography gutterBottom level="h4">
                 Order ID: 123456
               </Typography>
             </ListItemContent>
           </ListItem>
           <ListItem>
             <ListItemContent>
-              <Typography level="h4" gutterBottom>
+              <Typography gutterBottom level="h4">
                 Total amount: $100
               </Typography>
             </ListItemContent>
           </ListItem>
           <ListItem>
             <ListItemContent>
-              <Typography level="h4" gutterBottom>
+              <Typography gutterBottom level="h4">
                 Payment method: Credit Card
               </Typography>
             </ListItemContent>
           </ListItem>
         </List>
         <Button
-          variant="soft"
-          color="primary"
           fullWidth
+          color="primary"
           style={{ marginTop: "20px" }}
+          variant="soft"
           onClick={() => {
-            const user = LoadUserFromLocalStorage("authUser");
+            const user = loadUserFromLocalStorage("authUser")
+
             if (user) {
-              user.setVerified(true);
-              setAuthUser(user); // Clear the authenticated user
+              user.isVerified = true
+              setAuthUser(user) // Clear the authenticated user
             }
-            console.log("test " + authUser);
+
+            console.log("test " + authUser)
             setTimeout(() => {
-              navigate("/dashboard");
-            }, 500);
+              navigate("/dashboard")
+            }, 500)
           }}
         >
           Let's go !
         </Button>
       </Sheet>
     </div>
-  );
-};
+  )
+}
 
-export default OrderConfirmation;
+export default OrderConfirmation

@@ -1,28 +1,25 @@
-import { Box, Card, Grid, Stack, Typography } from "@mui/joy";
-import { useEffect, useState } from "react";
-import Chart from "../../components/Chart/index.tsx";
-import Details from "../../components/Details/index.tsx";
-import ListOfLeaders from "../../components/ListOfLeaders/index.tsx";
-import { TableSkeleton } from "../../components/Skeleton/index.tsx";
-import TableCompany from "../../components/TableCompany/index.tsx";
-import { columnsTableCompany } from "../../data/columns.ts";
+import { useEffect, useState } from "react"
+import { Box, Card, Grid, Stack, Typography } from "@mui/joy"
+
+import { TableSkeleton } from "../../components/common/Loaders/Skeleton/index.tsx"
+import Chart from "../../components/parts/Chart/index.tsx"
+import DetailsCompany from "../../components/parts/DetailsCompany/index.tsx"
+import ListOfLeaders from "../../components/parts/ListOfLeaders/index.tsx"
+import TableCompany from "../../components/parts/TableCompany/index.tsx"
+import { columnsTableCompany } from "../../data/types/columns.ts"
 
 export default function Favorites() {
-  const [url, setUrl] = useState<string>("");
-  const [checkedCompanies, setCheckedCompanies] = useState<Array<string>>([]);
+  const [url, setUrl] = useState<string>("")
+  const [checkedCompanies, setCheckedCompanies] = useState<Array<string>>([])
 
   useEffect(() => {
     const idsOfCheckedCompanies: Array<string> = JSON.parse(
       localStorage.getItem("checkedToDo") || "[]"
-    );
-    setCheckedCompanies(idsOfCheckedCompanies);
+    )
+    setCheckedCompanies(idsOfCheckedCompanies)
 
-    setUrl(`api/v1/companies-by-ids?ids=${idsOfCheckedCompanies}&`);
-    console.log(
-      "url: ",
-      `api/v1/companies-by-ids?ids=${idsOfCheckedCompanies}&`
-    );
-  }, []);
+    setUrl(`get-by-ids?ids=${idsOfCheckedCompanies}&`)
+  }, [])
 
   return (
     <Grid>
@@ -42,19 +39,16 @@ export default function Favorites() {
 
       <Grid
         container
-        spacing={3}
+        alignItems="center"
         paddingLeft={8}
         paddingRight={10}
-        alignItems="center"
+        spacing={3}
       >
-        <Grid xs={12} sm={6} md={8} lg={6}>
+        <Grid lg={6} md={8} sm={6} xs={12}>
           {/* Container des éléments sur la première ligne */}
-          <Grid
-            container
-            spacing={6}
-          >
+          <Grid container spacing={6}>
             {/* List Of Companies */}
-            <Grid xs={12} md={8}>
+            <Grid md={8} xs={12}>
               {checkedCompanies.length !== 0 ? (
                 url ? (
                   <Box
@@ -92,7 +86,7 @@ export default function Favorites() {
                         maxWidth: 400,
                       }}
                     >
-                      <Details />
+                      <DetailsCompany />
                     </Card>
                   </Box>
                 ) : (
@@ -115,12 +109,12 @@ export default function Favorites() {
         </Grid>
 
         {/* Container des éléments sur la deuxième ligne */}
-        {checkedCompanies.length !== 0 && (
+        {checkedCompanies.length !== 0 ? (
           <>
-            <Grid xs={12} md={12} lg={12}>
-              <Grid container spacing={3} flexDirection={"row"} marginTop={5}>
+            <Grid lg={12} md={12} xs={12}>
+              <Grid container flexDirection="row" marginTop={5} spacing={3}>
                 {/* Leaders of the company */}
-                <Grid xs={12} md={6}>
+                <Grid md={6} xs={12}>
                   <Card
                     sx={{
                       display: "flex",
@@ -128,7 +122,6 @@ export default function Favorites() {
                       alignItems: "center",
                       justifyContent: "center",
                       height: 220,
-                      borderRadius: 3,
                       minWidth: 400,
                     }}
                   >
@@ -136,7 +129,7 @@ export default function Favorites() {
                   </Card>
                 </Grid>
 
-                <Grid xs={12} md={6}>
+                <Grid md={6} xs={12}>
                   <Card
                     sx={{
                       display: "flex",
@@ -153,8 +146,8 @@ export default function Favorites() {
               </Grid>
             </Grid>
           </>
-        )}
+        ) : null}
       </Grid>
     </Grid>
-  );
+  )
 }

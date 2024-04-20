@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
   Container,
   Grid,
@@ -7,7 +8,6 @@ import {
   Switch,
   Typography
 } from "@mui/joy";
-import * as React from "react";
 
 export default function Settings() {
   const [language, setLanguage] = React.useState("English");
@@ -29,8 +29,8 @@ export default function Settings() {
   return (
     <Container maxWidth="lg">
       <Typography
-        level="h4"
         component="div"
+        level="h4"
         sx={{
           marginTop: 5,
           marginLeft: 10,
@@ -51,7 +51,7 @@ export default function Settings() {
           justifyContent: "center",
         }}
       >
-        <Grid xs={12} md={6}>
+        <Grid md={6} xs={12}>
           <Sheet
             sx={{
               display: "flex",
@@ -60,13 +60,13 @@ export default function Settings() {
               padding: 2,
             }}
           >
-            <Typography level="h4" gutterBottom>
+            <Typography gutterBottom level="h4">
               Language
             </Typography>
             <Select
               placeholder="Language"
-              onChange={handleChange}
               value={language ?? ""}
+              onChange={handleChange}
             >
               <Option value="english">English</Option>
               <Option value="french">Français</Option>
@@ -75,7 +75,7 @@ export default function Settings() {
           </Sheet>
 
           {/* Switch for notifications moved outside the Sheet */}
-          <Typography level="h4" gutterBottom>
+          <Typography gutterBottom level="h4">
             Notifications
           </Typography>
           <Switch

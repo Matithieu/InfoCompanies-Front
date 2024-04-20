@@ -1,50 +1,30 @@
-import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import React, { useEffect } from "react"
+import { useNavigate, useParams } from "react-router-dom"
+import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined"
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft"
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"
 import {
   Box,
-  Button,
   Grid,
   IconButton,
+  iconButtonClasses,
   Sheet,
   Table,
   Tooltip,
   Typography,
-  iconButtonClasses,
-} from "@mui/joy";
-import { useQuery } from "@tanstack/react-query";
-import React, { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import { CompanyDetails, Page } from "../../data/companyDetails.tsx";
-import { ErrorJwtAuth } from "../../data/errorAuthJwt.ts";
-import useAuthStore from "../../store/authStore.tsx";
+} from "@mui/joy"
+import { useQuery } from "@tanstack/react-query"
+
+import LogoutButton from "../../components/common/buttons/logout.tsx"
+import { CompanyDetails, Page } from "../../data/types/companyDetails.ts"
+import { fetchCompanyBySearchTerm } from "../../utils/api/index.ts"
 
 async function fetchCompanies(searchTerm: string, page: number) {
-  const response = await fetch(
-    `${
-      import.meta.env.VITE_SERVER_URL
-    }/api/v1/search?name=${searchTerm}&page=${page}`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const response = await fetchCompanyBySearchTerm(searchTerm, page)
 
-  if (response.ok) {
-    const data: Page<CompanyDetails> = await response.json();
-    return data;
-  } else {
-    const error: ErrorJwtAuth = await response.json();
-    if (response.status === 401) {
-      toast.error(error.message);
-      throw new Error(error.message);
-    } else {
-      throw new Error(error.message);
-    }
+  if (response) {
+    const data: Page<CompanyDetails> = response
+    return data
   }
 }
 
@@ -53,31 +33,30 @@ async function fetchCompanies(searchTerm: string, page: number) {
  * @returns A table of companies with their details for the search page
  */
 function TableOfDetails() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const { setAuthUser, setRequestLoading } = useAuthStore();
-  const { searchTerm } = useParams();
+  const { searchTerm } = useParams()
 
   const [dataPagniation, setDataPagination] = React.useState({
     page: 0,
     rowsPerPage: 10,
     totalPages: 0,
-  });
+  })
 
   const { isPending, isError, data, error } = useQuery({
     queryKey: ["companies", searchTerm, dataPagniation.page],
     queryFn: () => fetchCompanies(searchTerm ?? "", dataPagniation.page),
     retry: 1,
     refetchOnWindowFocus: false,
-  });
+  })
 
   // Reset the page number to 0 when searchTerm changes
   useEffect(() => {
     setDataPagination((prevDataPagination) => ({
       ...prevDataPagination,
       page: 0,
-    }));
-  }, [searchTerm]);
+    }))
+  }, [searchTerm])
 
   // Update the total pages when data changes
   useEffect(() => {
@@ -85,16 +64,16 @@ function TableOfDetails() {
       setDataPagination((prevDataPagination) => ({
         ...prevDataPagination,
         totalPages: data.totalPages,
-      }));
+      }))
     }
-  }, [data]);
+  }, [data])
 
   const handleChangePage = (newPage: number) => {
     setDataPagination((prevDataPagination) => ({
       ...prevDataPagination,
       page: newPage,
-    }));
-  };
+    }))
+  }
 
   if (error != null && isError) {
     return (
@@ -108,20 +87,11 @@ function TableOfDetails() {
         }}
       >
         <h1>{error.message}</h1>
-        <Button
-          variant="soft"
-          color="primary"
-          onClick={() => {
-            setRequestLoading(true);
-            setAuthUser(null);
-            setRequestLoading(false);
-          }}
-        >
-          Se reconnecter
-        </Button>
+        <LogoutButton />
       </div>
-    );
+    )
   }
+
   if (isPending || data === undefined) {
     return (
       <div
@@ -135,7 +105,7 @@ function TableOfDetails() {
       >
         <h1>Chargement des données...</h1>
       </div>
-    );
+    )
   } else if (data.empty) {
     return (
       <div
@@ -149,13 +119,12 @@ function TableOfDetails() {
       >
         <h1>Aucune entreprise trouvée</h1>
       </div>
-    );
+    )
   } else if (data.empty === false) {
     return (
       <React.Fragment>
         <Sheet
           className="OrderTableContainer"
-          variant="outlined"
           sx={{
             display: { xs: "none", sm: "initial" },
             width: "100%",
@@ -163,11 +132,12 @@ function TableOfDetails() {
             flexShrink: 1,
             minHeight: 0,
           }}
+          variant="outlined"
         >
           <Table
-            aria-labelledby="tableTitle"
-            stickyHeader
             hoverRow
+            stickyHeader
+            aria-labelledby="tableTitle"
             sx={{
               "--TableCell-headBackground":
                 "var(--joy-palette-background-level1)",
@@ -190,19 +160,19 @@ function TableOfDetails() {
             <tbody>
               {data.content.map((row: CompanyDetails) => (
                 <tr
-                  id={`company-${row.id}`}
                   key={row.id}
-                  onClick={() => {
-                    navigate(`/company/${row.id}`, {});
-                  }}
+                  id={`company-${row.id}`}
                   style={{ cursor: "pointer", alignItems: "left" }}
+                  onClick={() => {
+                    navigate(`/company/${row.id}`, {})
+                  }}
                 >
                   <td align="left">
                     <ApartmentOutlinedIcon />
                   </td>
-                  <td scope="row">{row.denomination}</td>
-                  <td align="center">{row.secteurActivite}</td>
-                  <td align="center">{row.ville}</td>
+                  <td scope="row">{row.companyName}</td>
+                  <td align="center">{row.industrySector}</td>
+                  <td align="center">{row.city}</td>
                   <td align="center">{row.region}</td>
                 </tr>
               ))}
@@ -232,12 +202,12 @@ function TableOfDetails() {
             >
               <Tooltip title="Page précédente">
                 <IconButton
-                  size="sm"
                   color="neutral"
-                  variant="outlined"
                   disabled={dataPagniation.page === 0}
-                  onClick={() => handleChangePage(dataPagniation.page - 1)}
+                  size="sm"
                   sx={{ bgcolor: "background.surface" }}
+                  variant="outlined"
+                  onClick={() => handleChangePage(dataPagniation.page - 1)}
                 >
                   <KeyboardArrowLeftIcon />
                 </IconButton>
@@ -247,14 +217,14 @@ function TableOfDetails() {
               </Typography>
               <Tooltip title="Page suivante">
                 <IconButton
-                  size="sm"
                   color="neutral"
-                  variant="outlined"
                   disabled={
                     dataPagniation.page === dataPagniation.totalPages - 1
                   }
-                  onClick={() => handleChangePage(dataPagniation.page + 1)}
+                  size="sm"
                   sx={{ bgcolor: "background.surface" }}
+                  variant="outlined"
+                  onClick={() => handleChangePage(dataPagniation.page + 1)}
                 >
                   <KeyboardArrowRightIcon />
                 </IconButton>
@@ -263,7 +233,7 @@ function TableOfDetails() {
           </Box>
         </Box>
       </React.Fragment>
-    );
+    )
   }
 }
 
@@ -272,7 +242,7 @@ function TableOfDetails() {
  * @returns The search page
  */
 export default function Search() {
-  const { searchTerm } = useParams();
+  const { searchTerm } = useParams()
 
   return (
     <Box sx={{ flex: 1, width: "100%" }}>
@@ -287,14 +257,14 @@ export default function Search() {
       </Box>
       <Grid
         container
-        spacing={3}
-        marginTop={"7.8vh"}
-        paddingBottom={"10vh"}
+        justifyContent="center"
+        marginTop="7.8vh"
+        paddingBottom="10vh"
         paddingLeft={8}
         paddingRight={10}
-        justifyContent="center"
+        spacing={3}
       >
-        <Grid xs={12} md={12}>
+        <Grid md={12} xs={12}>
           <Box
             sx={{
               display: "flex",
@@ -312,5 +282,5 @@ export default function Search() {
         </Grid>
       </Grid>
     </Box>
-  );
+  )
 }

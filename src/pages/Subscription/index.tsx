@@ -1,8 +1,9 @@
-import { Button, Card, CardActions, CardContent, Typography } from "@mui/joy";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Button, Card, CardActions, CardContent, Typography } from "@mui/joy";
+
 import { ItemData } from "../../data/Stripe/itemData";
-import { Products } from "../../data/subscription";
+import { Products } from "../../data/Stripe/subscription";
 
 function SubscriptionOption(item: ItemData) {
   const navigate = useNavigate();
@@ -20,8 +21,8 @@ function SubscriptionOption(item: ItemData) {
       </CardContent>
       <CardActions>
         <Button
-          variant="soft"
           color="primary"
+          variant="soft"
           onClick={() => {
             navigate("/stripe", {
               state: { item, endpoint: "/subscriptions/trial" },

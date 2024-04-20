@@ -1,73 +1,71 @@
-import { lazy } from "@loadable/component";
-import { Suspense } from "react";
-import { HelmetProvider } from "react-helmet-async";
-import { Route, Routes } from "react-router-dom";
+import { Suspense } from "react"
+import { HelmetProvider } from "react-helmet-async"
+import { Route, Routes } from "react-router-dom"
+import { lazy } from "@loadable/component"
 
-import OrderTable from "./components/TableCompany/text.tsx";
-import Error404 from "./pages/404/index.tsx";
-import Landing from "./pages/Landing/index.tsx";
-import Layout from "./pages/Layout/index.tsx";
-import FakeLoading from "./pages/Loading/fakeLoading.tsx";
-import Loading from "./pages/Loading/index.tsx";
-import LoginPage from "./pages/Login/index.tsx";
-import Failure from "./pages/Purchasing/failure.tsx";
-import ViewInvoices from "./pages/Purchasing/invoice.tsx";
-import OrderConfirmation from "./pages/Purchasing/success.tsx";
-import RegisterPage from "./pages/Register/index.tsx";
-import Payment from "./pages/Stripe/index.tsx";
-import Subscription from "./pages/Subscription/index.tsx";
+import Error401 from "./pages/Error/401.tsx"
+import Error404 from "./pages/Error/404.tsx"
+import Test from "./pages/Error/test.tsx"
+import Landing from "./pages/Landing/index.tsx"
+import Layout from "./pages/Layout/index.tsx"
+import Loading from "./pages/Loading/index.tsx"
+import Failure from "./pages/Purchasing/failure.tsx"
+import ViewInvoices from "./pages/Purchasing/invoice.tsx"
+import OrderConfirmation from "./pages/Purchasing/success.tsx"
+import Payment from "./pages/Stripe/index.tsx"
+import Subscription from "./pages/Subscription/index.tsx"
 import {
   ProtectedRoutes,
   ProtectedSimpleRoutes,
-} from "./utils/protectedRoute.tsx";
+} from "./utils/protectedRoute.tsx"
 
 // Lazy loading components for security
-const Dashboard = lazy(() => import("./pages/Dashboard/index.tsx"));
-const Favorites = lazy(() => import("./pages/Favorites/index.tsx"));
-const Settings = lazy(() => import("./pages/Settings/index.tsx"));
-const Account = lazy(() => import("./pages/Account/index.tsx"));
-const Search = lazy(() => import("./pages/Search/index.tsx"));
-const Company = lazy(() => import("./pages/Company/index.tsx"));
-const Leader = lazy(() => import("./pages/Leaders/index.tsx"));
+const Dashboard = lazy(() => import("./pages/Dashboard/index.tsx"))
+const Favorites = lazy(() => import("./pages/Favorites/index.tsx"))
+const Settings = lazy(() => import("./pages/Settings/index.tsx"))
+const Account = lazy(() => import("./pages/Account/index.tsx"))
+const Search = lazy(() => import("./pages/Search/index.tsx"))
+const Company = lazy(() => import("./pages/Search/Company/index.tsx"))
+const Leader = lazy(() => import("./pages/Leaders/index.tsx"))
+const FakeLoading = lazy(() => import("./pages/Loading/loginLoading.tsx"))
 
 function App() {
   return (
     <HelmetProvider>
       <Suspense fallback={<Loading />}>
         <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/loading" element={<FakeLoading />} />
-
-          <Route element={<ProtectedSimpleRoutes />}>
-            <Route path="/subscription" element={<Subscription />} />
-            <Route path="/stripe" element={<Payment />} />
-            <Route path="/failure" element={<Failure />} />
-            <Route path="/completion" element={<OrderConfirmation />} />
-
-            <Route path="*/" element={<Error404 />} />
+          <Route element={<Landing />} path="/" />
+          <Route element={<Test />} path="/test" />
+          <Route element={<FakeLoading />} path="/loading" />
+          <Route element="/error">
+            <Route element={<Error404 />} path="*/" />
+            <Route element={<Error401 />} path="/not-found" />
           </Route>
-
+          z
+          <Route element={<ProtectedSimpleRoutes />}>
+            <Route element={<Subscription />} path="/subscription" />
+            <Route element={<Payment />} path="/stripe" />
+            <Route element={<Failure />} path="/failure" />
+            <Route element={<OrderConfirmation />} path="/completion" />
+          </Route>
           <Route element={<ProtectedRoutes />}>
-            <Route path="/invoices" element={<ViewInvoices />} />
+            <Route element={<ViewInvoices />} path="/invoices" />
 
             <Route element={<Layout />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/favorites" element={<Favorites />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="/account" element={<Account />} />
-              <Route path="/search/:searchTerm" element={<Search />} />
-              <Route path="/company/*" element={<Company />} />
-              <Route path="/leaders/*" element={<Leader />} />
-              <Route path="/*" element={<Error404 />} />
-              <Route path="/test" element={<OrderTable />} />
+              <Route element={<Dashboard />} path="/dashboard" />
+              <Route element={<Favorites />} path="/favorites" />
+              <Route element={<Settings />} path="/settings" />
+              <Route element={<Account />} path="/account" />
+              <Route element={<Search />} path="/search/:searchTerm" />
+              <Route element={<Company />} path="/company/*" />
+              <Route element={<Leader />} path="/leaders/*" />
+              <Route element={<Error404 />} path="/*" />
             </Route>
           </Route>
         </Routes>
       </Suspense>
     </HelmetProvider>
-  );
+  )
 }
 
-export default App;
+export default App

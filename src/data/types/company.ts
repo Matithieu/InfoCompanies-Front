@@ -1,0 +1,87 @@
+export type FinancialYear = {
+  closingDate1: string
+  turnover1: number
+  result1: number
+  closingDate2: string
+  turnover2: number
+  result2: number
+  closingDate3: string
+  turnover3: number
+  result3: number
+}
+
+type SocialMedia = {
+  instagram: string
+  facebook: string
+  twitter: string
+  linkedin: string
+  youtube: string
+}
+
+export enum CheckStatus {
+  DONE = "DONE",
+  NOT_DONE = "NOT_DONE",
+  TO_DO = "TO_DO",
+}
+
+export type Company = {
+  id: number
+  companyName: string
+  sirenNumber: string
+  nicNumber: string
+  legalForm: string
+  apeCode: string
+  address: string
+  postalCode: string
+  city: string
+  region: string
+  dateRegistration: string
+  deregistrationDate: string
+  checked: CheckStatus
+  financialYears: Record<string, FinancialYear>
+  industrySector: string
+  phoneNumber: string
+  website: string
+  reviews: string
+  schedule: string
+  email: string
+  scrapingDate: string
+  socialMedia: SocialMedia
+}
+
+export function getTurnOverByYear(company: Company, year: number): number {
+  return (
+    company.financialYears[year.toString()].turnover1 +
+    company.financialYears[year.toString()].turnover2 +
+    company.financialYears[year.toString()].turnover3
+  )
+}
+
+export function getResultsByYear(company: Company, year: number): number {
+  return (
+    company.financialYears[year.toString()].result1 +
+    company.financialYears[year.toString()].result2 +
+    company.financialYears[year.toString()].result3
+  )
+}
+
+export type TurnOver = {
+  date: string[]
+  turnOver: number[]
+}
+
+export function getTotalOfTurnOver(company: Company): TurnOver {
+  const turnOver = {
+    date: ["2018", "2019", "2020", "2021", "2022", "2023"],
+    turnOver: [
+      getTurnOverByYear(company, 2018),
+      getTurnOverByYear(company, 2019),
+      getTurnOverByYear(company, 2020),
+      getTurnOverByYear(company, 2021),
+      getTurnOverByYear(company, 2022),
+      getTurnOverByYear(company, 2023),
+    ],
+  }
+
+  return turnOver
+}
