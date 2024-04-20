@@ -1,81 +1,81 @@
-import SearchIcon from "@mui/icons-material/Search";
-import { Box, Button, Card, Grid, Stack, Typography } from "@mui/joy";
-import { useEffect, useState } from "react";
-import Chart from "../../components/Chart/index.tsx";
-import CustomSelect from "../../components/CustomSelect/index.tsx";
-import Details from "../../components/Details/index.tsx";
-import ListOfLeaders from "../../components/ListOfLeaders/index.tsx";
-import SEO from "../../components/SEO/index.tsx";
-import TableCompany from "../../components/TableCompany/index.tsx";
-import { activityArea } from "../../data/ListOfOptions/Activity.tsx";
-import { legalStatus } from "../../data/ListOfOptions/Legal.tsx";
-import { region } from "../../data/ListOfOptions/Region.tsx";
-import { useCompanyFilterStore } from "../../store/filtersStore.tsx";
-import "./style.css";
+import SearchIcon from "@mui/icons-material/Search"
+import { Box, Button, Card, Grid, Stack, Typography } from "@mui/joy"
+import { useEffect, useState } from "react"
+import Chart from "../../components/parts/Chart/index.tsx"
+import CustomSelect from "../../components/common/CustomSelect/index.tsx"
+import DetailsCompany from "../../components/parts/DetailsCompany/index.tsx"
+import ListOfLeaders from "../../components/parts/ListOfLeaders/index.tsx"
+import SEO from "../../components/common/SEO/index.tsx"
+import TableCompany from "../../components/parts/TableCompany/index.tsx"
+import { activityArea } from "../../data/ListOfOptions/Activity.tsx"
+import { legalStatus } from "../../data/ListOfOptions/Legal.tsx"
+import { region } from "../../data/ListOfOptions/Region.tsx"
+import { useCompanyFilterStore } from "../../store/filtersStore.tsx"
+import "./style.css"
 
 /**
  *
  * @returns Multiple components to filter the list of companies
  */
 const AdvancedSearch = () => {
-  const [showMenu, setShowMenu] = useState(false);
+  const [showMenu, setShowMenu] = useState(false)
   const [searchTerm, setSearchTerm] = useState({
     legalStatusValue: [],
     activityAreaValue: [],
     regionValue: [],
-  });
+  })
 
-  const { searchParams, setSearchParams } = useCompanyFilterStore();
+  const { searchParams, setSearchParams } = useCompanyFilterStore()
 
   useEffect(() => {
     setSearchTerm({
       legalStatusValue: searchParams.legalStatus,
       activityAreaValue: searchParams.activityArea,
       regionValue: searchParams.region,
-    });
-  }, [searchParams]);
+    })
+  }, [searchParams])
 
   const toggleMenu = () => {
-    setShowMenu(!showMenu);
-  };
+    setShowMenu(!showMenu)
+  }
 
   const handleLegalStatusChange = (selectedValue: string[]) => {
-    console.log("Legal status changed to:", selectedValue);
+    console.log("Legal status changed to:", selectedValue)
     setSearchTerm((prevSearchTerm) => ({
       ...prevSearchTerm,
       legalStatusValue: selectedValue as never[],
-    }));
-  };
+    }))
+  }
 
   const handleActivityAreaChange = (selectedValue: string[]) => {
-    console.log("Activity area changed to:", selectedValue);
+    console.log("Activity area changed to:", selectedValue)
     setSearchTerm((prevSearchTerm) => ({
       ...prevSearchTerm,
       activityAreaValue: selectedValue as never[],
-    }));
-  };
+    }))
+  }
 
   const handleRegionChange = (selectedValue: string[]) => {
-    console.log("Region changed to:", selectedValue);
+    console.log("Region changed to:", selectedValue)
     setSearchTerm((prevSearchTerm) => ({
       ...prevSearchTerm,
       regionValue: selectedValue as never[],
-    }));
-  };
+    }))
+  }
 
   const handleSearch = () => {
     setSearchParams({
       legalStatus: searchTerm.legalStatusValue as [],
       activityArea: searchTerm.activityAreaValue as [],
       region: searchTerm.regionValue as [],
-    });
+    })
 
     // Use the callback function to log the updated state
     setSearchTerm((prevSearchTerm) => {
-      console.log("Search term:", prevSearchTerm);
-      return prevSearchTerm;
-    });
-  };
+      console.log("Search term:", prevSearchTerm)
+      return prevSearchTerm
+    })
+  }
 
   return (
     <div>
@@ -132,12 +132,12 @@ const AdvancedSearch = () => {
                   legalStatusValue: [],
                   activityAreaValue: [],
                   regionValue: [],
-                });
+                })
                 setSearchParams({
                   legalStatus: [],
                   activityArea: [],
                   region: [],
-                });
+                })
               }}
               variant="outlined"
               style={{ marginTop: "20px" }}
@@ -158,16 +158,16 @@ const AdvancedSearch = () => {
         </Grid>
       </div>
     </div>
-  );
-};
+  )
+}
 
 /**
  *
  * @returns The dashboard page
  */
 export default function Dashboard() {
-  const { searchParams } = useCompanyFilterStore();
-  const [url, setUrl] = useState(`api/v1/random-companies?`);
+  const { searchParams } = useCompanyFilterStore()
+  const [url, setUrl] = useState(`random?`)
 
   useEffect(() => {
     const changeURL = () => {
@@ -176,17 +176,17 @@ export default function Dashboard() {
         searchParams.region.length == 0 &&
         searchParams.legalStatus.length == 0
       ) {
-        setUrl("api/v1/random-companies?");
-        return;
+        setUrl("random?")
+        return
       }
 
       setUrl(
-        `api/v1/companies?secteurActivite=${searchParams.activityArea}&region=${searchParams.region}&`
-      );
-    };
+        `filter-by-parameters?sector=${searchParams.activityArea}&region=${searchParams.region}&`
+      )
+    }
 
-    changeURL();
-  }, [searchParams]);
+    changeURL()
+  }, [searchParams])
   return (
     <Grid>
       <SEO
@@ -238,8 +238,8 @@ export default function Dashboard() {
         </Grid>
 
         {/* Container on the second row */}
-        <Grid container xs={12} sm={6} md={8} lg={6} spacing={3}>
-          {/* Details of the company */}
+        <Grid container xs={12} sm={6} spacing={3}>
+          {/* DetailsCompany of the company */}
           <Grid xs={12} sm={6} md={4}>
             <Card
               sx={{
@@ -253,7 +253,7 @@ export default function Dashboard() {
                 overflow: "hidden",
               }}
             >
-              <Details />
+              <DetailsCompany />
             </Card>
           </Grid>
 
@@ -281,9 +281,8 @@ export default function Dashboard() {
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                minHeight: 220,
+                height: 220,
                 minWidth: 400,
-                height: 200,
               }}
             >
               <Chart />
@@ -293,5 +292,5 @@ export default function Dashboard() {
         </Grid>
       </Grid>
     </Grid>
-  );
+  )
 }

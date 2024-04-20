@@ -6,17 +6,17 @@ import {
   TabPanel,
   Tabs,
   Typography,
-  tabClasses
-} from "@mui/joy";
-import Account from "../../components/Account";
-import useAuthStore from "../../store/authStore";
-import ViewInvoices from "../Purchasing/invoice";
+  tabClasses,
+} from "@mui/joy"
+import Account from "./component"
+import useAuthStore from "../../store/authStore"
+import ViewInvoices from "../Purchasing/invoice"
 
 export default function AccountPage() {
-  const { authUser, requestLoading } = useAuthStore();
+  const { authUser, requestLoading } = useAuthStore()
 
   if (requestLoading) {
-    return <div>Chargement...</div>;
+    return <div>Chargement...</div>
   } else {
     return (
       <Box sx={{ flex: 1, width: "100%" }}>
@@ -30,7 +30,7 @@ export default function AccountPage() {
         >
           <Box sx={{ px: { xs: 2, md: 6 } }}>
             <Typography level="h1" component="h1" style={{ marginTop: 20 }}>
-              Bienvenue, {authUser?.name}
+              Bienvenue, {authUser?.firstName}
             </Typography>
           </Box>
 
@@ -89,6 +89,6 @@ export default function AccountPage() {
           </Tabs>
         </Box>
       </Box>
-    );
+    )
   }
 }

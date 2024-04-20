@@ -1,4 +1,4 @@
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline"
 import {
   Button,
   Divider,
@@ -7,15 +7,15 @@ import {
   ListItemContent,
   Sheet,
   Typography,
-} from "@mui/joy";
-import { useNavigate } from "react-router-dom";
-import useAuthStore from "../../store/authStore";
-import { LoadUserFromLocalStorage } from "../../utils/Load/loadUser";
+} from "@mui/joy"
+import { useNavigate } from "react-router-dom"
+import useAuthStore from "../../store/authStore"
+import { loadUserFromLocalStorage } from "../../utils/loadFromLocalStorage"
 
 const OrderConfirmation = () => {
-  const queryParams = new URLSearchParams(window.location.search);
-  const navigate = useNavigate();
-  const { authUser, setAuthUser } = useAuthStore();
+  const queryParams = new URLSearchParams(window.location.search)
+  const navigate = useNavigate()
+  const { authUser, setAuthUser } = useAuthStore()
 
   return (
     <div
@@ -80,22 +80,22 @@ const OrderConfirmation = () => {
           fullWidth
           style={{ marginTop: "20px" }}
           onClick={() => {
-            const user = LoadUserFromLocalStorage("authUser");
+            const user = loadUserFromLocalStorage("authUser")
             if (user) {
-              user.setVerified(true);
-              setAuthUser(user); // Clear the authenticated user
+              user.isVerified = true
+              setAuthUser(user) // Clear the authenticated user
             }
-            console.log("test " + authUser);
+            console.log("test " + authUser)
             setTimeout(() => {
-              navigate("/dashboard");
-            }, 500);
+              navigate("/dashboard")
+            }, 500)
           }}
         >
           Let's go !
         </Button>
       </Sheet>
     </div>
-  );
-};
+  )
+}
 
-export default OrderConfirmation;
+export default OrderConfirmation

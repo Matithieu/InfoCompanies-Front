@@ -1,35 +1,35 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 
-import { useLocation } from "react-router-dom";
-import { ItemData } from "../../data/Stripe/itemData.tsx";
-import useAuthStore from "../../store/authStore.tsx";
-import Loading from "../Loading/index.tsx";
+import { useLocation } from "react-router-dom"
+import { ItemData } from "../../data/Stripe/itemData.ts"
+import useAuthStore from "../../store/authStore.tsx"
+import Loading from "../Loading/index.tsx"
 
 // Make this a functional component that takes in the item data as a prop
 function Payment() {
-  const location = useLocation();
+  const location = useLocation()
 
-  const itemData = (location.state as any)?.item as ItemData;
+  const itemData = (location.state as any)?.item as ItemData
 
-  const { authUser } = useAuthStore();
+  const { authUser } = useAuthStore()
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   //const [stripePromise, setStripePromise] = useState<Promise<Stripe | null>>(Promise.resolve(null));
-  const [loading, setLoading] = useState(true); // New loading state
+  const [loading, setLoading] = useState(true) // New loading state
 
   /**
-   * Check if the user is verified when the component is mounted 
+   * Check if the user is verified when the component is mounted
    * and redirect to the previous page if the user is verified
    */
   useEffect(() => {
     if (authUser) {
-      if (authUser.getVerified()) {
-        window.history.back();
+      if (authUser.isVerified) {
+        window.history.back()
       } else {
-        setLoading(false); // Set loading to false if user is not verified
+        setLoading(false) // Set loading to false if user is not verified
       }
     }
-  }, [authUser]);
+  }, [authUser])
 
   /*
   useEffect(() => {
@@ -40,31 +40,30 @@ function Payment() {
   */
 
   useEffect(() => {
-    console.log("itemData ", itemData);
-    fetch(import.meta.env.VITE_SERVER_URL + "/subscriptions/trial", {
+    console.log("itemData ", itemData)
+    fetch(import.meta.env.VITE_API_BASE_URL + "/subscriptions/trial", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         item: itemData.id,
-        customerName: authUser?.getName(),
-        customerEmail: authUser?.getEmail(),
+        customerName: authUser?.lastName,
+        customerEmail: authUser?.email,
         subscriptionId: "",
       }),
-    }).then(r => r.text())
-      .then(r => {
-        window.location.replace(r);
-      });
-  }, []);
+    })
+      .then((r) => r.text())
+      .then((r) => {
+        window.location.replace(r)
+      })
+  }, [])
 
   if (loading) {
-    return <Loading />;
+    return <Loading />
   }
 
-  return (
-    <Loading />
-  );
+  return <Loading />
 }
 
-export default Payment;
+export default Payment

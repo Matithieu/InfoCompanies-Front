@@ -1,46 +1,48 @@
-import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
-import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
-import PendingIcon from "@mui/icons-material/Pending";
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
-import SupportRoundedIcon from "@mui/icons-material/SupportRounded";
-import Avatar from "@mui/joy/Avatar";
-import Box from "@mui/joy/Box";
-import Divider from "@mui/joy/Divider";
-import GlobalStyles from "@mui/joy/GlobalStyles";
-import IconButton from "@mui/joy/IconButton";
-import Input from "@mui/joy/Input";
-import List from "@mui/joy/List";
-import ListItem from "@mui/joy/ListItem";
-import ListItemButton, { listItemButtonClasses } from "@mui/joy/ListItemButton";
-import ListItemContent from "@mui/joy/ListItemContent";
-import Sheet from "@mui/joy/Sheet";
-import Typography from "@mui/joy/Typography";
+import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded"
+import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded"
+import PendingIcon from "@mui/icons-material/Pending"
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded"
+import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded"
+import SupportRoundedIcon from "@mui/icons-material/SupportRounded"
+import Avatar from "@mui/joy/Avatar"
+import Box from "@mui/joy/Box"
+import Divider from "@mui/joy/Divider"
+import GlobalStyles from "@mui/joy/GlobalStyles"
+import IconButton from "@mui/joy/IconButton"
+import Input from "@mui/joy/Input"
+import List from "@mui/joy/List"
+import ListItem from "@mui/joy/ListItem"
+import ListItemButton, { listItemButtonClasses } from "@mui/joy/ListItemButton"
+import ListItemContent from "@mui/joy/ListItemContent"
+import Sheet from "@mui/joy/Sheet"
+import Typography from "@mui/joy/Typography"
 
-import { useState } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
-import useAuthStore from "../../store/authStore";
-import { linkStyles } from "./ListItems/listItems";
-import ColorSchemeToggle from "./colorScheme";
-import Header from "./header";
-import { closeSidebar } from "./utils";
+import { useState } from "react"
+import { Link, Outlet, useNavigate } from "react-router-dom"
+import useAuthStore from "../../store/authStore"
+import { linkStyles } from "./ListItems/listItems"
+import ColorSchemeToggle from "./colorScheme"
+import Header from "./header"
+import { closeSidebar } from "./utils"
+import useAuthManager from "../../hooks/useAuthManager"
 
 export function Sidebar() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const { authUser, setAuthUser, setRequestLoading } = useAuthStore();
+  const { authUser } = useAuthStore()
+  const authManager = useAuthManager()
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState("")
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (searchTerm.trim() !== "") {
-      console.log(`/search/${searchTerm}`);
+      console.log(`/search/${searchTerm}`)
       // Redirigez vers la page des résultats avec le terme de recherche
-      navigate(`/search/${searchTerm}`, { state: { searchTerm } });
+      navigate(`/search/${searchTerm}`, { state: { searchTerm } })
     }
-  };
+  }
 
   return (
     <Sheet
@@ -184,13 +186,16 @@ export function Sidebar() {
       </Box>
       <Divider />
       <Link to="/account" style={linkStyles}>
-        <Box sx={{ display: "flex", gap: 1, alignItems: "center" }} id="user-page">
+        <Box
+          sx={{ display: "flex", gap: 1, alignItems: "center" }}
+          id="user-page"
+        >
           <Avatar variant="outlined" size="sm">
-            {authUser?.name?.charAt(0).toLocaleUpperCase()}
+            {authUser?.firstName?.charAt(0).toLocaleUpperCase()}
           </Avatar>
           <Box sx={{ minWidth: 0, flex: 1 }}>
             <Typography level="title-sm">
-              {authUser?.name ?? "Error"}
+              {authUser?.firstName ?? "Error"}
             </Typography>
             <Typography level="body-xs">
               {authUser?.email ?? "Error"}
@@ -201,10 +206,8 @@ export function Sidebar() {
             variant="plain"
             color="neutral"
             onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-              e.preventDefault();
-              setRequestLoading(true);
-              setAuthUser(null);
-              setRequestLoading(false);
+              e.preventDefault()
+              authManager.redirectedLogout()
             }}
           >
             <LogoutRoundedIcon />
@@ -212,12 +215,12 @@ export function Sidebar() {
         </Box>
       </Link>
     </Sheet>
-  );
+  )
 }
 
 export default function Layout() {
   return (
-    <Box sx={{ display: "flex", minHeight: "100dvh", fontFamily: 'Poppins' }}>
+    <Box sx={{ display: "flex", minHeight: "100dvh", fontFamily: "Poppins" }}>
       <Sidebar />
       <Header />
       <Box
@@ -234,11 +237,11 @@ export default function Layout() {
           gap: 1,
           overflowY: "auto",
           overflowX: "hidden",
-          fontFamily: 'Poppins'
+          fontFamily: "Poppins",
         }}
       >
         <Outlet />
       </Box>
     </Box>
-  );
+  )
 }

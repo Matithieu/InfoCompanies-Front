@@ -1,61 +1,60 @@
 // https://github.com/sjoerdvanBommel/threeveloper/blob/025-simplistic-landing-pages-are-taking-over-the-internet/style.css
 
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import "./Landing.css";
+import React, { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import "./Landing.css"
+import useAuthManager from "../../hooks/useAuthManager"
 
 const Landing: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const authManager = useAuthManager()
   const between = (min: number, max: number) =>
-    Math.random() * (max - min) + min;
+    Math.random() * (max - min) + min
 
   useEffect(() => {
-    const bubblesContainer = document.getElementById("bubbles");
-    const colors = ["#e44141", "#4f2af3"];
+    const bubblesContainer = document.getElementById("bubbles")
+    const colors = ["#e44141", "#4f2af3"]
 
     const createBubble = () => {
-      const bubble = document.createElement("div");
-      bubble.classList.add("bubble");
+      const bubble = document.createElement("div")
+      bubble.classList.add("bubble")
 
       if (bubblesContainer) {
-        bubblesContainer.appendChild(bubble);
+        bubblesContainer.appendChild(bubble)
 
-        bubble.style.left = `${between(0, 100)}%`;
+        bubble.style.left = `${between(0, 100)}%`
 
-        const sizePx = `${between(4, 8)}px`;
+        const sizePx = `${between(4, 8)}px`
 
-        const floatingBubbleKeyFrames = [
-          { top: "100%" },
-          { top: `-${sizePx}` },
-        ];
+        const floatingBubbleKeyFrames = [{ top: "100%" }, { top: `-${sizePx}` }]
 
         const floatingAnimation = bubble.animate(
           floatingBubbleKeyFrames,
           between(10000, 40000)
-        );
+        )
 
         floatingAnimation.onfinish = () => {
           if (bubblesContainer.contains(bubble)) {
-            bubblesContainer.removeChild(bubble);
+            bubblesContainer.removeChild(bubble)
           }
-        };
+        }
 
-        bubble.style.width = sizePx;
-        bubble.style.height = sizePx;
+        bubble.style.width = sizePx
+        bubble.style.height = sizePx
 
-        const randomColorIndex = Math.floor(Math.random() * colors.length);
-        bubble.style.background = colors[randomColorIndex];
+        const randomColorIndex = Math.floor(Math.random() * colors.length)
+        bubble.style.background = colors[randomColorIndex]
 
-        bubble.style.opacity = `${between(20, 100)}%`;
+        bubble.style.opacity = `${between(20, 100)}%`
       }
-    };
+    }
 
-    const intervalId = setInterval(createBubble, 100);
+    const intervalId = setInterval(createBubble, 100)
 
     return () => {
-      clearInterval(intervalId);
-    };
-  }, []);
+      clearInterval(intervalId)
+    }
+  }, [])
 
   return (
     <div style={{ height: "100%" }}>
@@ -74,7 +73,7 @@ const Landing: React.FC = () => {
             height="10"
             patternUnits="userSpaceOnUse"
           >
-            <rect stroke-width="0.2" width="100%" height="100%"></rect>
+            <rect strokeWidth="0.2" width="100%" height="100%"></rect>
           </pattern>
 
           <pattern
@@ -100,15 +99,25 @@ const Landing: React.FC = () => {
           </span>
         </div>
         <a target="_blank" className="landing-link">
-          <span onClick={() => navigate("/login")}>Login</span>
+          <span
+            onClick={() => {
+              console.log("redirectedLogin")
+              authManager.redirectedLogin()
+            }}
+          >
+            Login
+          </span>
         </a>
         <a target="_blank" className="landing-link">
           <span onClick={() => navigate("/dashboard")}>Dashboard</span>
         </a>
+        <a target="_blank" className="landing-link">
+          <span onClick={() => authManager.silentLogout()}>SignOut</span>
+        </a>
       </div>
       <div id="bubbles"></div>
     </div>
-  );
-};
+  )
+}
 
-export default Landing;
+export default Landing

@@ -1,6 +1,6 @@
-import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined"
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft"
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"
 import {
   Box,
   Button,
@@ -11,40 +11,21 @@ import {
   Tooltip,
   Typography,
   iconButtonClasses,
-} from "@mui/joy";
-import { useQuery } from "@tanstack/react-query";
-import React, { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import { CompanyDetails, Page } from "../../data/companyDetails.tsx";
-import { ErrorJwtAuth } from "../../data/errorAuthJwt.ts";
-import useAuthStore from "../../store/authStore.tsx";
+} from "@mui/joy"
+import { useQuery } from "@tanstack/react-query"
+import React, { useEffect } from "react"
+import { useNavigate, useParams } from "react-router-dom"
+import { CompanyDetails, Page } from "../../data/types/companyDetails.ts"
+import useAuthStore from "../../store/authStore.tsx"
+import { fetchCompanyBySearchTerm } from "../../utils/api/index.ts"
+import LogoutButton from "../../components/common/buttons/logout.tsx"
 
 async function fetchCompanies(searchTerm: string, page: number) {
-  const response = await fetch(
-    `${
-      import.meta.env.VITE_SERVER_URL
-    }/api/v1/search?name=${searchTerm}&page=${page}`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const response = await fetchCompanyBySearchTerm(searchTerm, page)
 
-  if (response.ok) {
-    const data: Page<CompanyDetails> = await response.json();
-    return data;
-  } else {
-    const error: ErrorJwtAuth = await response.json();
-    if (response.status === 401) {
-      toast.error(error.message);
-      throw new Error(error.message);
-    } else {
-      throw new Error(error.message);
-    }
+  if (response) {
+    const data: Page<CompanyDetails> = response
+    return data
   }
 }
 
@@ -53,31 +34,30 @@ async function fetchCompanies(searchTerm: string, page: number) {
  * @returns A table of companies with their details for the search page
  */
 function TableOfDetails() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const { setAuthUser, setRequestLoading } = useAuthStore();
-  const { searchTerm } = useParams();
+  const { searchTerm } = useParams()
 
   const [dataPagniation, setDataPagination] = React.useState({
     page: 0,
     rowsPerPage: 10,
     totalPages: 0,
-  });
+  })
 
   const { isPending, isError, data, error } = useQuery({
     queryKey: ["companies", searchTerm, dataPagniation.page],
     queryFn: () => fetchCompanies(searchTerm ?? "", dataPagniation.page),
     retry: 1,
     refetchOnWindowFocus: false,
-  });
+  })
 
   // Reset the page number to 0 when searchTerm changes
   useEffect(() => {
     setDataPagination((prevDataPagination) => ({
       ...prevDataPagination,
       page: 0,
-    }));
-  }, [searchTerm]);
+    }))
+  }, [searchTerm])
 
   // Update the total pages when data changes
   useEffect(() => {
@@ -85,16 +65,16 @@ function TableOfDetails() {
       setDataPagination((prevDataPagination) => ({
         ...prevDataPagination,
         totalPages: data.totalPages,
-      }));
+      }))
     }
-  }, [data]);
+  }, [data])
 
   const handleChangePage = (newPage: number) => {
     setDataPagination((prevDataPagination) => ({
       ...prevDataPagination,
       page: newPage,
-    }));
-  };
+    }))
+  }
 
   if (error != null && isError) {
     return (
@@ -108,19 +88,9 @@ function TableOfDetails() {
         }}
       >
         <h1>{error.message}</h1>
-        <Button
-          variant="soft"
-          color="primary"
-          onClick={() => {
-            setRequestLoading(true);
-            setAuthUser(null);
-            setRequestLoading(false);
-          }}
-        >
-          Se reconnecter
-        </Button>
+        <LogoutButton />
       </div>
-    );
+    )
   }
   if (isPending || data === undefined) {
     return (
@@ -135,7 +105,7 @@ function TableOfDetails() {
       >
         <h1>Chargement des données...</h1>
       </div>
-    );
+    )
   } else if (data.empty) {
     return (
       <div
@@ -149,7 +119,7 @@ function TableOfDetails() {
       >
         <h1>Aucune entreprise trouvée</h1>
       </div>
-    );
+    )
   } else if (data.empty === false) {
     return (
       <React.Fragment>
@@ -193,16 +163,16 @@ function TableOfDetails() {
                   id={`company-${row.id}`}
                   key={row.id}
                   onClick={() => {
-                    navigate(`/company/${row.id}`, {});
+                    navigate(`/company/${row.id}`, {})
                   }}
                   style={{ cursor: "pointer", alignItems: "left" }}
                 >
                   <td align="left">
                     <ApartmentOutlinedIcon />
                   </td>
-                  <td scope="row">{row.denomination}</td>
-                  <td align="center">{row.secteurActivite}</td>
-                  <td align="center">{row.ville}</td>
+                  <td scope="row">{row.companyName}</td>
+                  <td align="center">{row.industrySector}</td>
+                  <td align="center">{row.city}</td>
                   <td align="center">{row.region}</td>
                 </tr>
               ))}
@@ -263,7 +233,7 @@ function TableOfDetails() {
           </Box>
         </Box>
       </React.Fragment>
-    );
+    )
   }
 }
 
@@ -272,7 +242,7 @@ function TableOfDetails() {
  * @returns The search page
  */
 export default function Search() {
-  const { searchTerm } = useParams();
+  const { searchTerm } = useParams()
 
   return (
     <Box sx={{ flex: 1, width: "100%" }}>
@@ -312,5 +282,5 @@ export default function Search() {
         </Grid>
       </Grid>
     </Box>
-  );
+  )
 }

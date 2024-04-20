@@ -1,6 +1,6 @@
 import { Box, Grid, Sheet, Typography } from "@mui/joy";
 import DetailsLeaders from "../../components/DetailsLeader/index.tsx";
-import Leader from "../../data/leader.tsx";
+import { Leader } from "../../data/types/leader.ts";
 
 const idTest = window.location.pathname.split("/")[2];
 console.log("Leader id : " + idTest);
@@ -8,15 +8,15 @@ console.log("Leader id : " + idTest);
 // TODO: Replace this with the data from the API
 // Fetch at /api/leaders/{id}
 
-const leader1 = new Leader(
-  1,
-  "DUPONT",
-  "Jean",
-  new Date("1990-01-01"),
-  " 06 00 00 00 00",
-  "email@email.com",
-  [{ id: 1, denomination: "Entreprise 1" }]
-);
+const leader1: Leader = {
+  id: 1,
+  lastName: "DUPONT",
+  firstName: "Jean",
+  dateOfBirth: new Date("1990-01-01"),
+  phone: "06 00 00 00 00",
+  email: "email@email.com",
+  listOfCompanies: [{ id: 1, name: "Entreprise 1" }],
+};
 
 const initialLeaderData: Leader = leader1;
 
@@ -37,7 +37,7 @@ export default function LeaderDetails() {
               alignSelf: "flex-start",
             }}
           >
-            {initialLeaderData.getNom()} {initialLeaderData.getPrenom()}
+            {initialLeaderData.lastName} {initialLeaderData.firstName}
           </Typography>
 
           <Grid
