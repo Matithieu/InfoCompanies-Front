@@ -45,6 +45,8 @@ module.exports = {
 
     // disabled rules
     "@typescript-eslint/no-explicit-any": "off",
+    "react/react-in-jsx-scope": "off",
+
     // controlled by typescript
     "react/prop-types": "off",
     // // controlled by typescript
@@ -103,10 +105,11 @@ module.exports = {
         shorthandFirst: true,
       },
     ],
-    "no-console": ["error", { allow: ["error", "info", "warn"] }],
+    "no-console": ["warn", { allow: ["error", "info", "warn"] }],
     "@tanstack/query/exhaustive-deps": "error",
-    "@tanstack/query/no-deprecated-options": "error",
-    "@tanstack/query/prefer-query-object-syntax": "error",
+    "@tanstack/query/no-deprecated-options": "off",
+    "@tanstack/query/prefer-query-object-syntax": "off",
+    "@tanstack/query/no-rest-destructuring": "warn",
     "@tanstack/query/stable-query-client": "error",
   },
 }
