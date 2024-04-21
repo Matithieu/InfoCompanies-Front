@@ -111,7 +111,7 @@ function TableOfDetails() {
     return (
       <React.Fragment>
         <Sheet
-          className="OrderTableContainer"
+          aria-label="order-table-container"
           sx={{
             display: { xs: "none", sm: "initial" },
             width: "100%",
