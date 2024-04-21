@@ -35,7 +35,7 @@ export const fetchWithConfig = async (
       body: options?.body ? JSON.stringify(options.body) : undefined,
     })
 
-    if (response.status == 401) {
+    if (response.status === 401 || response.status === 403) {
       const errorData: ErrorJwtAuth = await response.json()
 
       toast.error(errorData.message)
