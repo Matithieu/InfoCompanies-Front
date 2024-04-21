@@ -31,12 +31,12 @@ export function parseJsonToCompany(companyObj: JSONObject) {
       deregistrationDate: companyObj.deregistrationDate,
       checked: CheckStatus.NOT_DONE,
       financialYears: {
-        "2018": parseJsonToFinancialYear(companyObj, "2018"),
-        "2019": parseJsonToFinancialYear(companyObj, "2019"),
-        "2020": parseJsonToFinancialYear(companyObj, "2020"),
-        "2021": parseJsonToFinancialYear(companyObj, "2021"),
-        "2022": parseJsonToFinancialYear(companyObj, "2022"),
-        "2023": parseJsonToFinancialYear(companyObj, "2023"),
+        2018: parseJsonToFinancialYear(companyObj, 2018),
+        2019: parseJsonToFinancialYear(companyObj, 2019),
+        2020: parseJsonToFinancialYear(companyObj, 2020),
+        2021: parseJsonToFinancialYear(companyObj, 2021),
+        2022: parseJsonToFinancialYear(companyObj, 2022),
+        2023: parseJsonToFinancialYear(companyObj, 2023),
       },
       industrySector: companyObj.industrySector,
       phoneNumber: companyObj.phoneNumber,
@@ -61,7 +61,7 @@ export function parseJsonToCompany(companyObj: JSONObject) {
 
 export const parseJsonToFinancialYear = (
   companyObj: any,
-  year: string
+  year: number
 ): FinancialYear => {
   return {
     closingDate1: companyObj[`closingDate_${year}_1`],

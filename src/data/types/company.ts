@@ -38,7 +38,7 @@ export type Company = {
   dateRegistration: string
   deregistrationDate: string
   checked: CheckStatus
-  financialYears: Record<string, FinancialYear>
+  financialYears: Record<number, FinancialYear>
   industrySector: string
   phoneNumber: string
   website: string
@@ -51,28 +51,28 @@ export type Company = {
 
 export function getTurnOverByYear(company: Company, year: number): number {
   return (
-    company.financialYears[year.toString()].turnover1 +
-    company.financialYears[year.toString()].turnover2 +
-    company.financialYears[year.toString()].turnover3
+    company.financialYears[year].turnover1 +
+    company.financialYears[year].turnover2 +
+    company.financialYears[year].turnover3
   )
 }
 
 export function getResultsByYear(company: Company, year: number): number {
   return (
-    company.financialYears[year.toString()].result1 +
-    company.financialYears[year.toString()].result2 +
-    company.financialYears[year.toString()].result3
+    company.financialYears[year].result1 +
+    company.financialYears[year].result2 +
+    company.financialYears[year].result3
   )
 }
 
 export type TurnOver = {
-  date: string[]
+  date: number[]
   turnOver: number[]
 }
 
 export function getTotalOfTurnOver(company: Company): TurnOver {
   const turnOver = {
-    date: ["2018", "2019", "2020", "2021", "2022", "2023"],
+    date: [2018, 2019, 2020, 2021, 2022, 2023],
     turnOver: [
       getTurnOverByYear(company, 2018),
       getTurnOverByYear(company, 2019),

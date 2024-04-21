@@ -1,6 +1,6 @@
 import { Company } from "../../data/types/company"
 import { CompanyDetails, Page } from "../../data/types/companyDetails"
-import { parseJsonToUser } from "../parseJsonToObject"
+import { parseJsonToCompany, parseJsonToUser } from "../parseJsonToObject"
 
 import { fetchWithConfig } from "./config"
 
@@ -79,7 +79,7 @@ export async function fetchCompnayById(id: string) {
     )
 
     if (response) {
-      return response
+      return parseJsonToCompany(response)
     }
   } catch (error) {
     throw new Error("Failed to fetch company data")

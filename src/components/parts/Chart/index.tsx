@@ -10,7 +10,7 @@ import {
   YAxis,
 } from "recharts"
 
-import { getTotalOfTurnOver,TurnOver } from "../../../data/types/company"
+import { getTotalOfTurnOver, TurnOver } from "../../../data/types/company"
 import { useCompanyStore } from "../../../store/companyStore"
 
 import { useTheme } from "@mui/joy/styles"
@@ -23,14 +23,13 @@ export default function Chart() {
   React.useEffect(() => {
     if (selectedCompany !== null) {
       setTurnOver(getTotalOfTurnOver(selectedCompany))
-      console.log(turnOver)
     } else {
       setTurnOver(null as unknown as TurnOver)
     }
   }, [selectedCompany, setTurnOver])
 
   function insertData() {
-    const data: { date: string; amount: number }[] = []
+    const data: { date: number; amount: number }[] = []
 
     if (turnOver !== null) {
       for (let i = 0; i < turnOver.date.length; i++) {
@@ -63,7 +62,7 @@ export default function Chart() {
   } else {
     return (
       <React.Fragment>
-        <Typography level="h4">Chiffre d'affaire</Typography>
+        <Typography level="h4">Chiffre d&apos;affaire</Typography>
         <ResponsiveContainer>
           <LineChart
             data={insertData()}
