@@ -15,7 +15,7 @@ import {
 } from "@mui/joy"
 import { useQuery } from "@tanstack/react-query"
 
-import LogoutButton from "../../components/common/buttons/logout.tsx"
+import { ErrorButton } from "../../components/common/buttons/logout.tsx"
 import { CompanyDetails, Page } from "../../data/types/companyDetails.ts"
 import { fetchCompanyBySearchTerm } from "../../utils/api/index.ts"
 
@@ -60,7 +60,7 @@ function TableOfDetails() {
 
   // Update the total pages when data changes
   useEffect(() => {
-    if (data != null) {
+    if (data !== null && data) {
       setDataPagination((prevDataPagination) => ({
         ...prevDataPagination,
         totalPages: data.totalPages,
@@ -75,21 +75,8 @@ function TableOfDetails() {
     }))
   }
 
-  if (error != null && isError) {
-    return (
-      <div
-        style={{
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          display: "flex",
-          height: "200px",
-        }}
-      >
-        <h1>{error.message}</h1>
-        <LogoutButton />
-      </div>
-    )
+  if (error !== null && isError) {
+    return <ErrorButton error={error} />
   }
 
   if (isPending || data === undefined) {
@@ -152,7 +139,7 @@ function TableOfDetails() {
               <tr style={{ fontSize: 16, alignItems: "left" }}>
                 <th align="left"></th>
                 <th align="left">Dénomination</th>
-                <th align="center">Secteur d'activité</th>
+                <th align="center">Secteur d&apos;activité</th>
                 <th align="center">Ville</th>
                 <th align="center">Region</th>
               </tr>
@@ -252,7 +239,7 @@ export default function Search() {
         }}
       >
         <Typography component="h1" level="h1" style={{ marginTop: 20 }}>
-          Entreprises pour "{searchTerm}"
+          Entreprises pour &quot;{searchTerm}&quot;
         </Typography>
       </Box>
       <Grid

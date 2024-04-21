@@ -17,3 +17,24 @@ export default function LogoutButton() {
     </Button>
   )
 }
+
+interface ErrorButtonProps {
+  error: Error
+}
+
+export function ErrorButton({ error }: ErrorButtonProps) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        overflow: "visible",
+      }}
+    >
+      <h1>{error.message + `: ${error.name}}`}</h1>
+      <LogoutButton />
+    </div>
+  )
+}

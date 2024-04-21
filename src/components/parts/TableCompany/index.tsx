@@ -20,14 +20,14 @@ import {
 import { useQuery } from "@tanstack/react-query"
 
 import { columnsTableCompany } from "../../../data/types/columns.ts"
-import { CheckStatus,Company } from "../../../data/types/company.ts"
+import { CheckStatus, Company } from "../../../data/types/company.ts"
 import { useCompanyStore } from "../../../store/companyStore.tsx"
 import { useCompanyFilterStore } from "../../../store/filtersStore.tsx"
 import { fetchCompaniesWithUrlAndPage } from "../../../utils/api/index.ts"
 import { parseJsonToCompany } from "../../../utils/parseJsonToObject.ts"
-import LogoutButton from "../../common/buttons/logout.tsx"
+import { ErrorButton } from "../../common/buttons/logout.tsx"
 import { TableSkeleton } from "../../common/Loaders/Skeleton/index.tsx"
-import { manageIsChecked,StatutIcon } from "../../common/StatutIcon/index.tsx"
+import { manageIsChecked, StatutIcon } from "../../common/StatutIcon/index.tsx"
 
 // https://www.material-react-table.com/
 // agGrid
@@ -98,7 +98,7 @@ export default function TableCompany({ url }: Props) {
   })
 
   useEffect(() => {
-    if (data != null) {
+    if (data !== null && data) {
       setDataPagination((prevDataPagination) => ({
         ...prevDataPagination,
         totalPages: data.totalPages,
@@ -153,21 +153,8 @@ export default function TableCompany({ url }: Props) {
     return newStatus
   }
 
-  if (error != null && isError) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          overflow: "visible",
-        }}
-      >
-        <h1>{error.message}</h1>
-        <LogoutButton />
-      </div>
-    )
+  if (error !== null && isError) {
+    return <ErrorButton error={error} />
   }
 
   if (isPending) {
@@ -192,15 +179,15 @@ export default function TableCompany({ url }: Props) {
     return (
       <React.Fragment>
         <Sheet
-          className="OrderTableContainer"
+          aria-label="order-table-container"
           sx={{
             display: { xs: "none", sm: "initial" },
             width: "100%",
             borderRadius: "sm",
             flexShrink: 1,
-            overflow: "auto",
+            overflowX: "auto",
             minHeight: 0,
-            fontFamily: "Poppins",
+            overflow: "auto",
           }}
           variant="outlined"
         >
@@ -209,7 +196,6 @@ export default function TableCompany({ url }: Props) {
             stickyHeader
             aria-labelledby="tableTitle"
             sx={{
-              overflow: "auto",
               "--TableCell-headBackground":
                 "var(--joy-palette-background-level1)",
               "--Table-headerUnderlineThickness": "1px",
@@ -217,6 +203,7 @@ export default function TableCompany({ url }: Props) {
                 "var(--joy-palette-background-level1)",
               "--TableCell-paddingY": "4px",
               "--TableCell-paddingX": "8px",
+              overflow: "auto",
             }}
           >
             <thead>
@@ -365,8 +352,8 @@ export default function TableCompany({ url }: Props) {
                             onClick={(e) => {
                               if (
                                 e.target === e.currentTarget &&
-                                row.website != null &&
-                                row.website != ""
+                                row.website !== null &&
+                                row.website !== ""
                               ) {
                                 e.stopPropagation() // To avoid triggering handleDetailsClick
                                 window.open(row.website, "_blank")

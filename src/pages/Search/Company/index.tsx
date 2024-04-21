@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { Box, Card, Grid, IconButton, Typography } from "@mui/joy"
 import { useQuery } from "@tanstack/react-query"
 
-import LogoutButton from "../../../components/common/buttons/logout.tsx"
+import { ErrorButton } from "../../../components/common/buttons/logout.tsx"
 import {
   manageIsChecked,
   StatutIcon,
@@ -12,7 +12,7 @@ import {
 import Chart from "../../../components/parts/Chart/index.tsx"
 import DetailsCompany from "../../../components/parts/DetailsCompany/index.tsx"
 import ListOfLeaders from "../../../components/parts/ListOfLeaders/index.tsx"
-import { CheckStatus,Company } from "../../../data/types/company.ts"
+import { CheckStatus, Company } from "../../../data/types/company.ts"
 import { useCompanyStore } from "../../../store/companyStore.tsx"
 import { fetchCompnayById } from "../../../utils/api/index.ts"
 
@@ -55,7 +55,7 @@ export default function CompanyPage() {
   })
 
   useEffect(() => {
-    if (data != null) {
+    if (data !== null && data) {
       setSelectedCompany(data)
       setCompany(data)
       setStatut(data.checked)
@@ -82,33 +82,19 @@ export default function CompanyPage() {
     return newStatus
   }
 
-  if (error != null && isError) {
-    return (
-      <div
-        style={{
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          display: "flex",
-        }}
-      >
-        <h1>{error.message}</h1>
-        <LogoutButton />
-      </div>
-    )
+  if (error !== null && isError) {
+    return <ErrorButton error={error} />
   }
 
   if (isPending) {
     return <div>Chargement des données...</div>
-  } else if (company != null) {
+  } else if (company !== null && company) {
     return (
       <Box sx={{ display: "flex" }}>
         <Box
           component="main"
           sx={{
             flexGrow: 1,
-            height: "100vh",
-            overflow: "auto",
           }}
         >
           <div key={company.id} style={{}}>
@@ -123,7 +109,6 @@ export default function CompanyPage() {
               <Typography
                 level="h1"
                 sx={{
-                  marginTop: 5,
                   marginLeft: 0,
                   marginBottom: 5,
                   alignSelf: "flex-start",
