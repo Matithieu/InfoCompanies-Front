@@ -5,7 +5,6 @@ import SearchIcon from "@mui/icons-material/Search"
 import { Box, Button, Card, Grid, Stack, Typography } from "@mui/joy"
 
 import CustomSelect from "../../components/common/CustomSelect/index.tsx"
-import SEO from "../../components/common/SEO/index.tsx"
 import Chart from "../../components/parts/Chart/index.tsx"
 import DetailsCompany from "../../components/parts/DetailsCompany/index.tsx"
 import ListOfLeaders from "../../components/parts/ListOfLeaders/index.tsx"
@@ -14,6 +13,7 @@ import { activityArea } from "../../data/ListOfOptions/Activity.tsx"
 import { legalStatus } from "../../data/ListOfOptions/Legal.tsx"
 import { region } from "../../data/ListOfOptions/Region.tsx"
 import { useCompanyFilterStore } from "../../store/filtersStore.tsx"
+import Seo from "../../components/common/Seo/index.tsx"
 
 /**
  *
@@ -174,9 +174,9 @@ export default function Dashboard() {
   useEffect(() => {
     const changeURL = () => {
       if (
-        searchParams.activityArea.length == 0 &&
-        searchParams.region.length == 0 &&
-        searchParams.legalStatus.length == 0
+        searchParams.activityArea.length === 0 &&
+        searchParams.region.length === 0 &&
+        searchParams.legalStatus.length === 0
       ) {
         setUrl("random?")
         return
@@ -191,7 +191,7 @@ export default function Dashboard() {
   }, [searchParams])
   return (
     <Grid>
-      <SEO
+      <Seo
         description="Dashboard"
         name="Dashboard"
         title="Dashboard"
@@ -225,11 +225,11 @@ export default function Dashboard() {
             sx={{
               display: "flex",
               flexDirection: "column",
-              minWidth: "100%",
-              width: "100%",
-              height: "100%",
-              alignItems: "center",
               justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              minWidth: "100%",
+              height: "100%",
               minHeight: 550,
               maxHeight: 550,
               borderRadius: 3,

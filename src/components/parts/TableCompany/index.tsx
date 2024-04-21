@@ -213,7 +213,7 @@ export default function TableCompany({ url }: Props) {
                     key={column.id}
                     align={column.align}
                     style={{
-                      minWidth: column.minWidth,
+                      width: column.minWidth,
                       fontSize: 16,
                     }}
                   >
@@ -246,7 +246,7 @@ export default function TableCompany({ url }: Props) {
                           cursor: "pointer",
                         }}
                         onClick={(e) => {
-                          e.stopPropagation() // Pour éviter de déclencher handleDetailsClick
+                          e.stopPropagation()
                           row.checked = handleChangeStatut(row)
                         }}
                       >
@@ -255,7 +255,7 @@ export default function TableCompany({ url }: Props) {
                     </td>
                     {/* Slice to exclude the id */}
                     {columnsTableCompany.slice(1).map((column) => {
-                      if (column.id === "social") {
+                      if (column.id === "socialMedia") {
                         return (
                           <td key={column.id} align={column.align}>
                             {row.socialMedia.facebook && (
@@ -278,37 +278,37 @@ export default function TableCompany({ url }: Props) {
                             <StatutIcon statut={row.checked} />
                           </td>
                         )
-                      } else if (column.id === "dateImmatriculation") {
+                      } else if (column.id === "dateRegistration") {
                         return (
                           <td key={column.id} align={column.align}>
                             {row.dateRegistration ?? "N/A"}
                           </td>
                         )
-                      } else if (column.id === "secteurActivite") {
+                      } else if (column.id === "industrySector") {
                         return (
                           <td key={column.id} align={column.align}>
                             {row.industrySector ?? "N/A"}
                           </td>
                         )
-                      } else if (column.id === "formeJuridique") {
+                      } else if (column.id === "legalForm") {
                         return (
                           <td key={column.id} align={column.align}>
                             {row.checked ?? "N/A"}
                           </td>
                         )
-                      } else if (column.id === "adresse") {
+                      } else if (column.id === "address") {
                         return (
                           <td key={column.id} align={column.align}>
                             {row.address ?? "N/A"}
                           </td>
                         )
-                      } else if (column.id === "codePostal") {
+                      } else if (column.id === "postalCode") {
                         return (
                           <td key={column.id} align={column.align}>
                             {row.postalCode ?? "N/A"}
                           </td>
                         )
-                      } else if (column.id === "ville") {
+                      } else if (column.id === "city") {
                         return (
                           <td key={column.id} align={column.align}>
                             {row.city ?? "N/A"}
@@ -320,13 +320,13 @@ export default function TableCompany({ url }: Props) {
                             {row.region}
                           </td>
                         )
-                      } else if (column.id === "denomination") {
+                      } else if (column.id === "companyName") {
                         return (
                           <td key={column.id} align={column.align}>
                             {row.companyName ?? "N/A"}
                           </td>
                         )
-                      } else if (column.id === "phone") {
+                      } else if (column.id === "phoneNumber") {
                         return (
                           <td key={column.id} align={column.align}>
                             {row.phoneNumber ?? "N/A"}
