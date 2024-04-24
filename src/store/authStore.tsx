@@ -4,19 +4,16 @@ import { User } from "../data/types/user"
 
 type Store = {
   authUser: User | null
-  requestLoading: boolean
   setAuthUser: (user: User | null) => void
+  requestLoading: boolean
   setRequestLoading: (isLoading: boolean) => void
 }
 
 const useAuthStore = create<Store>((set) => ({
   authUser: null,
+  setAuthUser: (user) => set(() => ({ authUser: user })),
   requestLoading: false,
-  setAuthUser: (user) => {
-    set((state) => ({ ...state, authUser: user }))
-  },
-  setRequestLoading: (isLoading) =>
-    set((state) => ({ ...state, requestLoading: isLoading })),
+  setRequestLoading: (isLoading) => set(() => ({ requestLoading: isLoading })),
 }))
 
 export default useAuthStore
