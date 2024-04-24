@@ -20,12 +20,12 @@ import Sheet from "@mui/joy/Sheet"
 import Typography from "@mui/joy/Typography"
 
 import useAuthManager from "../../hooks/useAuthManager"
-import useAuthStore from "../../store/authStore"
 
 import { linkStyles } from "./ListItems/listItems"
 import ColorSchemeToggle from "./colorScheme"
 import Header from "./header"
 import { closeSidebar } from "./utils"
+import useAuthStore from "../../store/authStore"
 
 export function Sidebar() {
   const navigate = useNavigate()
@@ -98,7 +98,7 @@ export function Sidebar() {
         onClick={() => closeSidebar()}
       />
       <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-        <Typography level="title-lg">Info'Companies</Typography>
+        <Typography level="title-lg">Info&apos;Companies</Typography>
         <ColorSchemeToggle sx={{ ml: "auto" }} />
       </Box>
 
@@ -192,14 +192,23 @@ export function Sidebar() {
           sx={{ display: "flex", gap: 1, alignItems: "center" }}
         >
           <Avatar size="sm" variant="outlined">
-            {authUser?.firstName?.charAt(0).toLocaleUpperCase()}
+            {authUser?.firstName?.charAt(0).toLocaleUpperCase() ??
+              authManager
+                .getUser()
+                ?.profile.given_name?.charAt(0)
+                .toLocaleUpperCase() ??
+              "E"}
           </Avatar>
           <Box sx={{ minWidth: 0, flex: 1 }}>
             <Typography level="title-sm">
-              {authUser?.firstName ?? "Error"}
+              {authUser?.firstName ??
+                authManager.getUser()?.profile.given_name ??
+                "Error"}
             </Typography>
             <Typography level="body-xs">
-              {authUser?.email ?? "Error"}
+              {authUser?.email ??
+                authManager.getUser()?.profile.email ??
+                "Error"}
             </Typography>
           </Box>
           <IconButton
