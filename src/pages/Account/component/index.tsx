@@ -10,12 +10,12 @@ import {
   Input,
   Typography,
 } from "@mui/joy"
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 
 import { User } from "../../../data/types/user"
 import useAuthStore from "../../../store/authStore"
-import { fetchUser } from "../../../utils/api"
-import { parseJsonToUser } from "../../../utils/parseJsonToObject"
+import { fetchUser, updateUser } from "../../../utils/api"
+import { toast } from "react-toastify"
 
 export default function Account() {
   const { authUser, requestLoading, setAuthUser, setRequestLoading } =
@@ -23,17 +23,31 @@ export default function Account() {
   const [editMode, setEditMode] = useState(false)
   const [editedUser, setEditedUser] = useState<User | null>(null)
 
-  const { isPending, isError, data, error } = useQuery({
-    queryKey: ["user" + authUser?.email],
+  const { isPending, isError, data, error, refetch } = useQuery({
+    queryKey: ["user"], // Include authUser in the queryKey
     queryFn: () => fetchUser(),
     retry: 1,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
+  })
+
+  const mutation = useMutation({
+    mutationFn: () => updateUser(editedUser as User),
+    mutationKey: ["updateUser" + editedUser?.email],
+    retry: 0,
+    onError: (error) => {
+      toast.error(`Error updating user: ${error.message}`)
+    },
+    onSuccess: () => {
+      refetch()
+      toast.success("User updated")
+    },
   })
 
   useEffect(() => {
     if (data) {
-      setAuthUser(parseJsonToUser(data))
-      setEditedUser(parseJsonToUser(data))
+      setEditedUser(data)
+      setAuthUser(data)
     }
   }, [data, setAuthUser])
 
@@ -42,13 +56,12 @@ export default function Account() {
   }
 
   const handleSave = () => {
-    setRequestLoading(true)
-    setEditMode(false)
-    setAuthUser(editedUser as User)
-    setRequestLoading(false)
-    // Add your logic here to save the modifications
-    // Example: simulate a save
-    setTimeout(() => setRequestLoading(false), 2000)
+    if (authUser !== null) {
+      setRequestLoading(true)
+      setEditMode(false)
+      mutation.mutate()
+      setRequestLoading(false)
+    }
   }
 
   const handleChange = (
@@ -62,7 +75,7 @@ export default function Account() {
     return <CircularProgress />
   } else if (isError) {
     return <div>{error?.message}</div>
-  } else if (authUser != null) {
+  } else if (authUser !== null) {
     return (
       <Card>
         <Typography gutterBottom level="h3">
@@ -122,14 +135,26 @@ export default function Account() {
           >
             {requestLoading ? (
               <CircularProgress />
-            ) : !editMode ? (
-              <Button color="primary" variant="outlined" onClick={handleEdit}>
-                Editer
-              </Button>
             ) : (
-              <Button color="neutral" variant="outlined" onClick={handleSave}>
-                Sauvegarder
-              </Button>
+              <>
+                {editMode ? (
+                  <Button
+                    color="neutral"
+                    variant="outlined"
+                    onClick={handleSave}
+                  >
+                    Sauvegarder
+                  </Button>
+                ) : (
+                  <Button
+                    color="primary"
+                    variant="outlined"
+                    onClick={handleEdit}
+                  >
+                    Editer
+                  </Button>
+                )}
+              </>
             )}
           </div>
         </form>
