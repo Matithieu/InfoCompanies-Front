@@ -1,5 +1,5 @@
-import { Box, Typography } from "@mui/joy";
-import CircularProgress from "@mui/joy/CircularProgress";
+import { Box, Typography } from "@mui/joy"
+import CircularProgress from "@mui/joy/CircularProgress"
 
 function Loading() {
   return (
@@ -20,7 +20,9 @@ function Loading() {
         Loading...
       </Typography>
     </Box>
-  );
+  )
 }
 
-export default Loading;
+export default Loading
+
+// If authUser is null, the fetch the user data from the server
