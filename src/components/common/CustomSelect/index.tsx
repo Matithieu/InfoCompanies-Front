@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { FixedSizeList } from "react-window";
-import SearchIcon from "@mui/icons-material/Search";
+import React, { useEffect, useMemo, useState } from "react"
+import { FixedSizeList } from "react-window"
+import SearchIcon from "@mui/icons-material/Search"
 import {
   Box,
   Checkbox,
@@ -12,27 +12,27 @@ import {
   ListSubheader,
   MenuButton,
   Select,
-  useTheme
-} from "@mui/joy";
+  useTheme,
+} from "@mui/joy"
 
 const containsText = (text: string, searchText: string) =>
-  text.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
+  text.toLowerCase().indexOf(searchText.toLowerCase()) > -1
 
 type RenderRowProps = {
-  index: number;
-  style: React.CSSProperties;
+  index: number
+  style: React.CSSProperties
   data: {
-    displayedOptions: string[];
-    selectedOptions: string[];
-    handleToggle: (value: string) => void;
-  };
-};
+    displayedOptions: string[]
+    selectedOptions: string[]
+    handleToggle: (value: string) => void
+  }
+}
 
 const RenderRow = ({ index, style, data }: RenderRowProps) => {
-  const { displayedOptions, selectedOptions, handleToggle } = data;
-  const option = displayedOptions[index];
+  const { displayedOptions, selectedOptions, handleToggle } = data
+  const option = displayedOptions[index]
 
-  const theme = useTheme();
+  const theme = useTheme()
 
   return (
     <FormControl>
@@ -67,17 +67,17 @@ const RenderRow = ({ index, style, data }: RenderRowProps) => {
         </MenuButton>
       </Dropdown>
     </FormControl>
-  );
-};
+  )
+}
 
 type CustomSelectProps = {
-  options: string[];
-  onSelectionChange: (selectedValues: string[]) => void;
-  selectedValues?: string[];
-  label: string;
-  placeholder: string;
-  value?: string[];
-};
+  options: string[]
+  onSelectionChange: (selectedValues: string[]) => void
+  selectedValues?: string[]
+  label: string
+  placeholder: string
+  value?: string[]
+}
 
 const CustomSelect = ({
   options,
@@ -88,43 +88,44 @@ const CustomSelect = ({
   value,
 }: CustomSelectProps) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>(
-    selectedValues || [""]
-  );
-  const [searchText, setSearchText] = useState("");
+    selectedValues ?? [""]
+  )
+  const [searchText, setSearchText] = useState("")
 
   useEffect(() => {
-    setSelectedOptions(value || []);
-  }, [value]);
+    setSelectedOptions(value ?? [])
+  }, [value])
 
   const displayedOptions = useMemo(
     () => options.filter((option) => containsText(option, searchText)),
     [searchText, options]
-  );
+  )
 
   const handleToggle = (value: string) => {
-    const currentIndex = selectedOptions.indexOf(value);
-    const newChecked = [...selectedOptions];
+    const currentIndex = selectedOptions.indexOf(value)
+    const newChecked = [...selectedOptions]
 
     if (currentIndex === -1) {
-      newChecked.push(value);
+      newChecked.push(value)
     } else {
-      newChecked.splice(currentIndex, 1);
+      newChecked.splice(currentIndex, 1)
     }
 
-    setSelectedOptions(newChecked);
-    onSelectionChange(newChecked);
-  };
+    setSelectedOptions(newChecked)
+    onSelectionChange(newChecked)
+  }
 
   return (
     <FormControl>
       <FormLabel id="universal-select-label">{label}</FormLabel>
       <Select
         multiple
+        defaultValue={["Lol"]}
         id="universal-select"
-        renderValue={(selected) => (
+        renderValue={(selectedOptions) => (
           <Box sx={{ display: "flex", gap: "0.25rem" }}>
-            {selected.map((selectedOption) => (
-              <Chip color="primary" variant="soft">
+            {selectedOptions.map((selectedOption) => (
+              <Chip key={selectedOption.id} color="primary" variant="soft">
                 {selectedOption.label}
               </Chip>
             ))}
@@ -137,7 +138,9 @@ const CustomSelect = ({
             },
           },
         }}
-        style={{ minWidth: "15rem", maxWidth: "15rem" }}
+        sx={{
+          minWidth: "15rem",
+        }}
         value={selectedOptions}
       >
         <FormControl>
@@ -151,13 +154,13 @@ const CustomSelect = ({
               onChange={(e) => setSearchText(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === "Escape") {
-                  e.preventDefault();
+                  e.preventDefault()
 
                   if (displayedOptions.length > 0) {
-                    handleToggle(displayedOptions[0]);
+                    handleToggle(displayedOptions[0])
                   }
 
-                  return;
+                  return
                 }
               }}
             />
@@ -178,7 +181,7 @@ const CustomSelect = ({
         </FormControl>
       </Select>
     </FormControl>
-  );
-};
+  )
+}
 
-export default CustomSelect;
+export default CustomSelect
