@@ -28,10 +28,10 @@ export function loadUserFromLocalStorage(key: string) {
 
   console.log("User data found: " + userData)
 
-  if (userData != "undefined") {
+  if (userData !== "undefined") {
     const userObjs = JSON.parse(userData)
 
-    if (userObjs != undefined) {
+    if (userObjs !== undefined) {
       console.log("User data format is valid")
       return {
         id: userObjs.id,
