@@ -20,7 +20,7 @@ export const fetchWithConfig = async (
   url: string,
   method: HttpMethod,
   options?: { body?: any; headers?: Record<string, string> }
-): Promise<any> => {
+): Promise<Response> => {
   const user = getUser()
 
   if (user !== null) {
@@ -50,8 +50,10 @@ export const fetchWithConfig = async (
       throw new Error(`Failed to fetch data from ${url} - ${response.status}`)
     }
 
-    return response.json()
+    return response
   } else {
     localStorage.removeItem("authUser")
   }
+
+  return Promise.resolve(new Response())
 }

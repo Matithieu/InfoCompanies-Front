@@ -1,4 +1,5 @@
 import { Company } from "../../data/types/company"
+import { User } from "../../data/types/user"
 import { CompanyDetails, Page } from "../../data/types/companyDetails"
 import { parseJsonToCompany, parseJsonToUser } from "../parseJsonToObject"
 
@@ -9,7 +10,7 @@ export const fetchUser = async () => {
     const response = await fetchWithConfig("/api/v1/user", "GET")
 
     if (response) {
-      return parseJsonToUser(response)
+      return parseJsonToUser(await response.json())
     }
   } catch (error) {
     throw new Error("Failed to fetch user data")
@@ -40,7 +41,7 @@ export async function fetchCompaniesWithUrlAndPage(url: string, page: number) {
     )
 
     if (response) {
-      const data: Page<Company> = response
+      const data: Page<Company> = await response.json()
       return data
     }
   } catch (error) {
@@ -61,7 +62,7 @@ export async function fetchCompanyBySearchTerm(
     )
 
     if (response) {
-      const data: Page<CompanyDetails> = response
+      const data: Page<CompanyDetails> = await response.json()
       return data
     }
   } catch (error) {
@@ -79,10 +80,26 @@ export async function fetchCompnayById(id: string) {
     )
 
     if (response) {
-      return parseJsonToCompany(response)
+      return parseJsonToCompany(await response.json())
     }
   } catch (error) {
     throw new Error("Failed to fetch company data")
+  }
+
+  return null
+}
+
+export async function updateUser(user: User) {
+  try {
+    const response = await fetchWithConfig("/api/v1/update-user", "PUT", {
+      body: user,
+    })
+
+    if (response.ok) {
+      return
+    }
+  } catch (error) {
+    throw new Error("Failed to update user data")
   }
 
   return null
