@@ -1,6 +1,6 @@
+import { useQuery } from "@tanstack/react-query"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { useQuery } from "@tanstack/react-query"
 
 import useAuthStore from "../../store/authStore"
 import { fetchUser } from "../../utils/api"

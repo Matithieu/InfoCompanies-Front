@@ -1,6 +1,6 @@
 import { Company } from "../../data/types/company"
-import { User } from "../../data/types/user"
 import { CompanyDetails, Page } from "../../data/types/companyDetails"
+import { User } from "../../data/types/user"
 import { parseJsonToCompany, parseJsonToUser } from "../parseJsonToObject"
 
 import { fetchWithConfig } from "./config"
