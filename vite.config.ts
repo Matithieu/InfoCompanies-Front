@@ -1,6 +1,6 @@
-import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react-swc"
 import dotenv from "dotenv"
+import { defineConfig } from "vite"
 import vitePluginEnvCompatible from "vite-plugin-env-compatible"
 
 dotenv.config()
