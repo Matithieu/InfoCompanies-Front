@@ -22,9 +22,5 @@ RUN pnpm run build
 # Stage 2: Serve the application from Nginx
 FROM nginx:alpine
 
-COPY ./config/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build-stage /app/dist /usr/share/nginx/html
-
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
-

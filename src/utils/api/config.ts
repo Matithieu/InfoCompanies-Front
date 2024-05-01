@@ -3,8 +3,6 @@ import { toast } from "react-toastify"
 import { ErrorJwtAuth } from "../../data/errors/errorAuthJwt"
 import { getUser } from "../slice"
 
-const baseURL = import.meta.env.VITE_API_BASE_URL
-
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE"
 
 /**
@@ -24,7 +22,7 @@ export const fetchWithConfig = async (
   const user = getUser()
 
   if (user !== null) {
-    const response = await fetch(baseURL + url, {
+    const response = await fetch(url, {
       ...options,
       method: method,
       headers: {

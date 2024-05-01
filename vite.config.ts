@@ -13,6 +13,14 @@ export default defineConfig({
       prefix: "VITE_",
     }),
   ],
+  server: {
+    proxy: {
+      "/api": {
+        target: process.env.VITE_API_BASE_URL,
+        changeOrigin: true,
+      },
+    },
+  },
   define: {
     "process.env": process.env,
   },
