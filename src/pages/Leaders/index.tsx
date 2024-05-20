@@ -3,9 +3,6 @@ import { Box, Grid, Sheet, Typography } from "@mui/joy"
 import DetailsLeader from "../../components/parts/DetailsLeader/index.tsx"
 import { Leader } from "../../data/types/leader.ts"
 
-const idTest = window.location.pathname.split("/")[2]
-console.log("Leader id : " + idTest)
-
 // TODO: Replace this with the data from the API
 // Fetch at /api/leaders/{id}
 
@@ -22,7 +19,7 @@ const leader1: Leader = {
 const initialLeaderData: Leader = leader1
 
 export default function LeaderDetails() {
-  if (initialLeaderData == null) {
+  if (initialLeaderData === null) {
     return <a>Aucunes données trouvées</a>
   } else {
     return (

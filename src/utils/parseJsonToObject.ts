@@ -12,8 +12,6 @@ export interface JSONObject {
   [x: string]: JSONValue
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-
 export function parseJsonToCompany(companyObj: JSONObject) {
   try {
     return {
@@ -79,7 +77,6 @@ export const parseJsonToFinancialYear = (
 // https://github.com/typestack/class-transformer
 // use this library to transform json to class ??
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseJsonToUser(userObjs: JSONObject) {
   try {
     return {

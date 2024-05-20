@@ -13,7 +13,6 @@ function Payment() {
 
   const { authUser } = useAuthStore()
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   //const [stripePromise, setStripePromise] = useState<Promise<Stripe | null>>(Promise.resolve(null));
   const [loading, setLoading] = useState(true) // New loading state
 

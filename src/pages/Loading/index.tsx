@@ -1,5 +1,5 @@
-import { Box, Typography } from "@mui/joy"
-import CircularProgress from "@mui/joy/CircularProgress"
+import { Box, Typography } from "@mui/joy";
+import CircularProgress from "@mui/joy/CircularProgress";
 
 function Loading() {
   return (

@@ -1,10 +1,11 @@
 import "./style.css"
 
-import { useEffect, useState } from "react"
 import SearchIcon from "@mui/icons-material/Search"
 import { Box, Button, Card, Grid, Stack, Typography } from "@mui/joy"
+import { useEffect, useState } from "react"
 
 import CustomSelect from "../../components/common/CustomSelect/index.tsx"
+import Seo from "../../components/common/Seo/index.tsx"
 import Chart from "../../components/parts/Chart/index.tsx"
 import DetailsCompany from "../../components/parts/DetailsCompany/index.tsx"
 import ListOfLeaders from "../../components/parts/ListOfLeaders/index.tsx"
@@ -13,7 +14,6 @@ import { activityArea } from "../../data/ListOfOptions/Activity.tsx"
 import { legalStatus } from "../../data/ListOfOptions/Legal.tsx"
 import { region } from "../../data/ListOfOptions/Region.tsx"
 import { useCompanyFilterStore } from "../../store/filtersStore.tsx"
-import Seo from "../../components/common/Seo/index.tsx"
 
 /**
  *
@@ -212,15 +212,16 @@ export default function Dashboard() {
       </Grid>
 
       <Grid
-        container
-        alignItems="center"
+        container 
+        display="flex"
+        flexDirection="column"
         justifyContent="center"
-        paddingLeft={8}
+        paddingLeft={10}
         paddingRight={10}
         spacing={3}
       >
         {/* Container on the first row */}
-        <Grid lg={6} md={8} sm={6} xs={12}>
+        <Grid lg={6} md={8} sm={6} xs={1}>
           <Stack
             sx={{
               display: "flex",
@@ -240,7 +241,7 @@ export default function Dashboard() {
         </Grid>
 
         {/* Container on the second row */}
-        <Grid container sm={6} spacing={3} xs={12}>
+        <Grid container aria-label="tabs" justifyContent="center" sm={6} spacing={3} xs={12}>
           {/* DetailsCompany of the company */}
           <Grid md={4} sm={6} xs={12}>
             <Card
@@ -251,7 +252,6 @@ export default function Dashboard() {
                 justifyContent: "center",
                 minHeight: 220,
                 minWidth: 400,
-                maxWidth: 400,
                 overflow: "hidden",
               }}
             >
@@ -260,7 +260,7 @@ export default function Dashboard() {
           </Grid>
 
           {/* Leaders of the company */}
-          <Grid justifyContent="space-evenly" md={4} sm={6} xs={12}>
+          <Grid md={4} sm={6} xs={12}>
             <Card
               sx={{
                 display: "flex",

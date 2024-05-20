@@ -1,8 +1,8 @@
+import AccountCircleIcon from "@mui/icons-material/AccountCircle"
+import { Container, Table } from "@mui/joy"
 import * as React from "react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import AccountCircleIcon from "@mui/icons-material/AccountCircle"
-import { Container, Table } from "@mui/joy"
 
 import { Leader } from "../../../data/types/leader"
 import { useCompanyStore } from "../../../store/companyStore"
