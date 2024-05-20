@@ -1,9 +1,10 @@
 import "react-toastify/dist/ReactToastify.css"
 
-import { useEffect, useState } from "react"
 import { Box, Card, Grid, IconButton, Typography } from "@mui/joy"
 import { useQuery } from "@tanstack/react-query"
+import { useEffect, useState } from "react"
 
+import { useParams } from "react-router-dom"
 import { ErrorButton } from "../../../components/common/buttons/logout.tsx"
 import {
   manageIsChecked,
@@ -45,12 +46,12 @@ export default function CompanyPage() {
   const [company, setCompany] = useState<Company>()
   const [statut, setStatut] = useState<CheckStatus>(CheckStatus.NOT_DONE)
 
-  const id = window.location.pathname.split("/")[2]
+  const { id } = useParams()
   const { setSelectedCompany } = useCompanyStore()
 
   const { isPending, isError, data, error } = useQuery({
     queryKey: ["company" + id],
-    queryFn: () => fetchCompanies(id),
+    queryFn: () => fetchCompanies(id ?? ""),
     retry: 1,
   })
 

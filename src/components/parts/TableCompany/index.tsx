@@ -1,7 +1,5 @@
 import "./style.css"
 
-import * as React from "react"
-import { useEffect } from "react"
 import FacebookIcon from "@mui/icons-material/Facebook"
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft"
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"
@@ -18,6 +16,8 @@ import {
   Typography,
 } from "@mui/joy"
 import { useQuery } from "@tanstack/react-query"
+import * as React from "react"
+import { useEffect } from "react"
 
 import { columnsTableCompany } from "../../../data/types/columns.ts"
 import { CheckStatus, Company } from "../../../data/types/company.ts"
@@ -154,7 +154,9 @@ export default function TableCompany({ url }: Props) {
   }
 
   if (error !== null && isError) {
-    return <ErrorButton error={error} />
+    return (
+        <ErrorButton error={error} />
+    )
   }
 
   if (isPending) {
