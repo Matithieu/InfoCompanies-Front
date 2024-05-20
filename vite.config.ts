@@ -14,11 +14,12 @@ export default defineConfig({
     }),
   ],
   server: {
+    port: 3000,
     proxy: {
       "/api": {
-        target: process.env.VITE_API_BASE_URL,
+        target: process.env.VITE_PROXY_BASE_URL + ":" + process.env.VITE_PROXY_PORT,
         changeOrigin: true,
-      },
+      }
     },
   },
   define: {

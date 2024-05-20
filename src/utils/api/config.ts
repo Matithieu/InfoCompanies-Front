@@ -1,9 +1,8 @@
-import { toast } from "react-toastify"
+import { toast } from "react-toastify";
 
-import { ErrorJwtAuth } from "../../data/errors/errorAuthJwt"
-import { getUser } from "../slice"
+import { ErrorJwtAuth } from "../../data/errors/errorAuthJwt";
 
-type HttpMethod = "GET" | "POST" | "PUT" | "DELETE"
+export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE"
 
 /**
  * Fetches data from the API with the provided configuration.
@@ -19,14 +18,11 @@ export const fetchWithConfig = async (
   method: HttpMethod,
   options?: { body?: any; headers?: Record<string, string> }
 ): Promise<Response> => {
-  const user = getUser()
 
-  if (user !== null) {
     const response = await fetch(url, {
       ...options,
       method: method,
       headers: {
-        Authorization: `Bearer ${user?.access_token}`,
         "Content-Type": "application/json",
         ...options?.headers,
       },
@@ -49,9 +45,4 @@ export const fetchWithConfig = async (
     }
 
     return response
-  } else {
-    localStorage.removeItem("authUser")
-  }
-
-  return Promise.resolve(new Response())
 }

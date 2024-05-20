@@ -1,18 +1,23 @@
-import { useAuth } from "react-oidc-context"
+import { fetchUserEmail } from "../utils/proxy";
 
 export default function useAuthManager() {
-  const auth = useAuth()
+  const LOGIN_URL = import.meta.env.VITE_OAUTH_SIGNIN_URL;
+  const LOGOUT_URL = import.meta.env.VITE_OAUTH_SIGNOUT_URL;
+
+  const LOGIN_REDIRECT_URL = import.meta.env.VITE_OAUTH_SIGNIN_REDIRECT_URL;
+  const LOGOUT_REDIRECT_URL = import.meta.env.VITE_OAUTH_SIGNOUT_REDIRECT_URL;
 
   return {
-    redirectedLogin: () => auth.signinRedirect(),
-    silentLogin: () => auth.signinSilent(),
-
-    redirectedLogout: () => auth.signoutRedirect(),
-    silentLogout: () => auth.signoutSilent(),
-
-    isLoading: () => auth.isLoading,
-    isAuthenticated: () => auth.isAuthenticated,
-    getAccessToken: () => auth.user?.access_token,
-    getUser: () => auth.user,
-  }
+    signIn: () => {
+      const signInUrl = new URL(LOGIN_URL);
+      signInUrl.searchParams.set('rd', LOGIN_REDIRECT_URL);
+      window.open(signInUrl.toString(), "_self");
+    },
+    signOut: () => {
+      const signOutUrl = new URL(LOGOUT_URL);
+      signOutUrl.searchParams.set('rd', LOGOUT_REDIRECT_URL);
+      window.open(signOutUrl.toString(), "_self");
+    },
+    getUserEmail: async () => await fetchUserEmail(),
+  };
 }
