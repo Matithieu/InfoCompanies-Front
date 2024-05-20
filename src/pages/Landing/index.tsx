@@ -3,12 +3,14 @@
 import "./Landing.css"
 
 import React, { useEffect } from "react"
-import { useNavigate } from "react-router-dom"
 
 import useAuthManager from "../../hooks/useAuthManager"
+import { fetchUser } from "../../utils/api"
+import { useAppNavigate } from "../../utils/navigation/navigation"
+import { fetchUserEmail } from "../../utils/proxy"
 
 const Landing: React.FC = () => {
-  const navigate = useNavigate()
+  const { navigation } = useAppNavigate();
   const authManager = useAuthManager()
   const between = (min: number, max: number) =>
     Math.random() * (max - min) + min
@@ -97,24 +99,29 @@ const Landing: React.FC = () => {
           <span className="span-class">Bienvenue</span>
           <br />
           <span className="big">
-            sur <span className="gradient-text fancy">Info'Companies</span>
+            sur <span className="gradient-text fancy">Info&apos;Companies</span>
           </span>
         </div>
         <a className="landing-link" target="_blank">
           <span
             onClick={() => {
-              console.log("redirectedLogin")
-              authManager.redirectedLogin()
+              authManager.signIn()
             }}
           >
             Login
           </span>
         </a>
         <a className="landing-link" target="_blank">
-          <span onClick={() => navigate("/dashboard")}>Dashboard</span>
+          <span onClick={() => navigation.toDashboard()}>Dashboard</span>
         </a>
         <a className="landing-link" target="_blank">
-          <span onClick={() => authManager.silentLogout()}>SignOut</span>
+          <span onClick={() => authManager.signOut()}>SignOut</span>
+        </a>
+        <a className="landing-link" target="_blank">
+          <span onClick={async () => await fetchUser()}>TEST</span>
+        </a>
+        <a className="landing-link" target="_blank">
+          <span onClick={async () => await fetchUserEmail()}>USER</span>
         </a>
       </div>
       <div id="bubbles"></div>

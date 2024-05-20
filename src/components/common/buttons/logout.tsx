@@ -10,7 +10,7 @@ export default function LogoutButton() {
       color="primary"
       variant="soft"
       onClick={() => {
-        authUser.redirectedLogout()
+        authUser.signOut()
       }}
     >
       Se reconnecter
@@ -30,7 +30,6 @@ export function ErrorButton({ error }: ErrorButtonProps) {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        overflow: "visible",
       }}
     >
       <h1>{error.message + `: ${error.name}}`}</h1>

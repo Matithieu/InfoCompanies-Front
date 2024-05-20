@@ -1,5 +1,3 @@
-import { useState } from "react"
-import { Link, Outlet, useNavigate } from "react-router-dom"
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded"
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded"
 import PendingIcon from "@mui/icons-material/Pending"
@@ -18,17 +16,19 @@ import ListItemButton, { listItemButtonClasses } from "@mui/joy/ListItemButton"
 import ListItemContent from "@mui/joy/ListItemContent"
 import Sheet from "@mui/joy/Sheet"
 import Typography from "@mui/joy/Typography"
+import { useState } from "react"
+import { Outlet } from "react-router-dom"
 
 import useAuthManager from "../../hooks/useAuthManager"
-
+import useAuthStore from "../../store/authStore"
+import { useAppNavigate } from "../../utils/navigation/navigation"
 import { linkStyles } from "./ListItems/listItems"
 import ColorSchemeToggle from "./colorScheme"
 import Header from "./header"
 import { closeSidebar } from "./utils"
-import useAuthStore from "../../store/authStore"
 
 export function Sidebar() {
-  const navigate = useNavigate()
+  const { navigation } = useAppNavigate();
 
   const { authUser } = useAuthStore()
   const authManager = useAuthManager()
@@ -39,9 +39,7 @@ export function Sidebar() {
     e.preventDefault()
 
     if (searchTerm.trim() !== "") {
-      console.log(`/search/${searchTerm}`)
-      // Redirigez vers la page des résultats avec le terme de recherche
-      navigate(`/search/${searchTerm}`, { state: { searchTerm } })
+      navigation.toSearch(searchTerm)
     }
   }
 
@@ -133,27 +131,23 @@ export function Sidebar() {
             "--ListItem-radius": (theme) => theme.vars.radius.sm,
           }}
         >
-          <Link style={linkStyles} to="/dashboard">
             <ListItem>
-              <ListItemButton>
+              <ListItemButton onClick={() => {navigation.toDashboard()}}>
                 <DashboardRoundedIcon />
                 <ListItemContent>
                   <Typography level="title-sm">Dashboard</Typography>
                 </ListItemContent>
               </ListItemButton>
             </ListItem>
-          </Link>
 
-          <Link style={linkStyles} to="/favorites">
             <ListItem>
-              <ListItemButton>
+              <ListItemButton onClick={() => {navigation.toFavorites()}}>
                 <PendingIcon />
                 <ListItemContent>
                   <Typography level="title-sm">To Do</Typography>
                 </ListItemContent>
               </ListItemButton>
             </ListItem>
-          </Link>
         </List>
 
         <List
@@ -173,41 +167,39 @@ export function Sidebar() {
             </ListItemButton>
           </ListItem>
 
-          <Link style={linkStyles} to="/settings">
-            <ListItem>
-              <ListItemButton>
-                <SettingsRoundedIcon />
-                <ListItemContent>
-                  <Typography level="title-sm">Settings</Typography>
-                </ListItemContent>
-              </ListItemButton>
-            </ListItem>
-          </Link>
+          <ListItem>
+            <ListItemButton onClick={() => { navigation.toSettings()}}>
+              <SettingsRoundedIcon />
+              <ListItemContent>
+                <Typography level="title-sm">Settings</Typography>
+              </ListItemContent>
+            </ListItemButton>
+          </ListItem>
         </List>
       </Box>
       <Divider />
-      <Link style={linkStyles} to="/account">
+      <div aria-label="user-panel" style={{...linkStyles, cursor: "pointer"}} onClick={() => { navigation.toAccount()}}>
         <Box
           id="user-page"
           sx={{ display: "flex", gap: 1, alignItems: "center" }}
         >
-          <Avatar size="sm" variant="outlined">
-            {authUser?.firstName?.charAt(0).toLocaleUpperCase() ??
-              authManager
-                .getUser()
-                ?.profile.given_name?.charAt(0)
-                .toLocaleUpperCase() ??
-              "E"}
-          </Avatar>
+          <IconButton onClick={(e) => {
+            e.stopPropagation() 
+            navigation.toSettings()
+          }}>
+            <Avatar size="sm" variant="outlined">
+              {authUser?.firstName?.charAt(0).toLocaleUpperCase()
+                  .toLocaleUpperCase() ??
+                "E"}
+            </Avatar>
+          </IconButton>
           <Box sx={{ minWidth: 0, flex: 1 }}>
             <Typography level="title-sm">
               {authUser?.firstName ??
-                authManager.getUser()?.profile.given_name ??
                 "Error"}
             </Typography>
             <Typography level="body-xs">
               {authUser?.email ??
-                authManager.getUser()?.profile.email ??
                 "Error"}
             </Typography>
           </Box>
@@ -217,13 +209,13 @@ export function Sidebar() {
             variant="plain"
             onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
               e.preventDefault()
-              authManager.redirectedLogout()
+              authManager.signOut()
             }}
           >
             <LogoutRoundedIcon />
           </IconButton>
         </Box>
-      </Link>
+      </div>
     </Sheet>
   )
 }

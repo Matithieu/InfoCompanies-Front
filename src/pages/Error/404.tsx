@@ -1,8 +1,8 @@
-import { useNavigate } from "react-router-dom";
 import { Box, Button, Container, Typography } from "@mui/joy";
+import { useAppNavigate } from "../../utils/navigation/navigation";
 
 export default function Page404() {
-  const navigate = useNavigate();
+  const { navigation } = useAppNavigate();
 
   return (
     <Container component="main" maxWidth="sm" sx={{ mt: 8, mb: 4 }}>
@@ -17,17 +17,17 @@ export default function Page404() {
           404
         </Typography>
         <Typography color="neutral" level="h4">
-          Oups! La page que vous cherchez n'existe pas.
+          Oups! La page que vous cherchez n&apos;existe pas.
         </Typography>
         <Button
           color="primary"
           sx={{ mt: 3, mb: 2 }}
           variant="soft"
           onClick={() => {
-            navigate("/dashboard");
+            navigation.toDashboard()
           }}
         >
-          Retour à l'accueil
+          Retour à l&apos;accueil
         </Button>
       </Box>
     </Container>

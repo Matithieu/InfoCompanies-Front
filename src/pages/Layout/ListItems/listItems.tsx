@@ -1,5 +1,3 @@
-import * as React from "react";
-import { Link } from "react-router-dom";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import AnalyticsIcon from "@mui/icons-material/Analytics";
 import BarChartIcon from "@mui/icons-material/BarChart";
@@ -16,6 +14,9 @@ import {
   ListSubheader,
   Typography,
 } from "@mui/joy";
+import * as React from "react";
+import { Link } from "react-router-dom";
+import { useAppNavigate } from "../../../utils/navigation/navigation";
 /*
 import useAuthStore from '../../../store/authStore';
 import { User } from '../../../data/user';
@@ -34,6 +35,9 @@ export const linkStyles = {
 //Si oui, on renvoie true, sinon false
 
 export const MainListItems = () => {
+  const {navigation} = useAppNavigate()
+
+
   return (
     <React.Fragment>
       <ListSubheader component="div">
@@ -48,7 +52,7 @@ export const MainListItems = () => {
       </ListSubheader>
 
       <Link style={linkStyles} to="/dashboard">
-        <ListItemButton>
+        <ListItemButton onClick={() => {navigation.toDashboard()}}>
           <ListItemDecorator>
             <DashboardIcon />
           </ListItemDecorator>
@@ -75,7 +79,7 @@ export const MainListItems = () => {
             <AnalyticsIcon />
           </ListItemDecorator>
           <ListItemContent>
-            <Typography>Outils d'analyse</Typography>
+            <Typography>Outils d&apos;analyse</Typography>
           </ListItemContent>
         </ListItemButton>
       </Link>

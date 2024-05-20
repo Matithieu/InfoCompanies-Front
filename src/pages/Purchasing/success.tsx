@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom"
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline"
 import {
   Button,
@@ -12,10 +11,11 @@ import {
 
 import useAuthStore from "../../store/authStore"
 import { loadUserFromLocalStorage } from "../../utils/loadFromLocalStorage"
+import { useAppNavigate } from "../../utils/navigation/navigation"
 
 const OrderConfirmation = () => {
   const queryParams = new URLSearchParams(window.location.search)
-  const navigate = useNavigate()
+  const { navigation } = useAppNavigate();
   const { authUser, setAuthUser } = useAuthStore()
 
   return (
@@ -90,11 +90,11 @@ const OrderConfirmation = () => {
 
             console.log("test " + authUser)
             setTimeout(() => {
-              navigate("/dashboard")
+              navigation.toHome()
             }, 500)
           }}
         >
-          Let's go !
+          Let&apos;s go !
         </Button>
       </Sheet>
     </div>

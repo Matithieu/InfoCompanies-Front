@@ -1,5 +1,3 @@
-import React, { useEffect } from "react"
-import { useNavigate, useParams } from "react-router-dom"
 import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined"
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft"
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"
@@ -14,10 +12,13 @@ import {
   Typography,
 } from "@mui/joy"
 import { useQuery } from "@tanstack/react-query"
+import React, { useEffect } from "react"
+import { useParams } from "react-router-dom"
 
 import { ErrorButton } from "../../components/common/buttons/logout.tsx"
 import { CompanyDetails, Page } from "../../data/types/companyDetails.ts"
 import { fetchCompanyBySearchTerm } from "../../utils/api/index.ts"
+import { useAppNavigate } from "../../utils/navigation/navigation.tsx"
 
 async function fetchCompanies(searchTerm: string, page: number) {
   const response = await fetchCompanyBySearchTerm(searchTerm, page)
@@ -33,7 +34,7 @@ async function fetchCompanies(searchTerm: string, page: number) {
  * @returns A table of companies with their details for the search page
  */
 function TableOfDetails() {
-  const navigate = useNavigate()
+  const { navigation } = useAppNavigate();
 
   const { searchTerm } = useParams()
 
@@ -151,7 +152,7 @@ function TableOfDetails() {
                   id={`company-${row.id}`}
                   style={{ cursor: "pointer", alignItems: "left" }}
                   onClick={() => {
-                    navigate(`/company/${row.id}`, {})
+                    navigation.toCompany(row.id.toString())
                   }}
                 >
                   <td align="left">

@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom"
 import BusinessIcon from "@mui/icons-material/Business"
 import CakeIcon from "@mui/icons-material/Cake"
 import EmailIcon from "@mui/icons-material/Email"
@@ -6,6 +5,7 @@ import PhoneIcon from "@mui/icons-material/Phone"
 import { Container, Sheet, Table, Tooltip } from "@mui/joy"
 
 import { Leader } from "../../../data/types/leader"
+import { useAppNavigate } from "../../../utils/navigation/navigation"
 
 export function toAgeFromDate(date: Date) {
   const today = new Date()
@@ -25,7 +25,7 @@ export default function DetailsLeader({
 }: {
   leaderDetails: Leader | null
 }) {
-  const navigate = useNavigate()
+  const { navigation } = useAppNavigate();
 
   if (leaderDetails === null) {
     return (
@@ -87,11 +87,7 @@ export default function DetailsLeader({
                     {index > 0 ? ", " : ""}
                     <a
                       onClick={() => {
-                        navigate(`/search/${company.id}`, {
-                          state: {
-                            searchTerm: company.id,
-                          },
-                        })
+                        navigation.toCompany(company.id.toString())
                       }}
                     >
                       {company.name}

@@ -1,5 +1,3 @@
-import * as React from "react"
-import { Link } from "react-router-dom"
 import Logout from "@mui/icons-material/Logout"
 import Settings from "@mui/icons-material/Settings"
 import {
@@ -9,13 +7,16 @@ import {
   IconButton,
   ListItemContent,
   Menu,
+  MenuButton,
   MenuItem,
   Tooltip,
 } from "@mui/joy"
+import * as React from "react"
 
 import useAuthManager from "../../../hooks/useAuthManager"
 import { linkStyles } from "../../../pages/Layout/ListItems/listItems"
 import useAuthStore from "../../../store/authStore"
+import { useAppNavigate } from "../../../utils/navigation/navigation"
 
 /*
 async function deleteSessionAPI() {
@@ -43,6 +44,7 @@ export default function AccountMenu() {
   >(null)
   const authManager = useAuthManager()
   const { setAuthUser, setRequestLoading } = useAuthStore()
+  const { navigation } = useAppNavigate()
   const open = Boolean(anchorEl)
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -77,23 +79,24 @@ export default function AccountMenu() {
         onClick={handleClose}
         onClose={handleClose}
       >
-        <Link style={linkStyles} to="/account">
+        <MenuButton style={linkStyles} onClick={() => {navigation.toAccount()}}>
           <MenuItem onClick={handleClose}>
             <Avatar /> Profile
           </MenuItem>
-        </Link>
+        </MenuButton>
 
         <Divider />
 
-        <Link style={linkStyles} to="/settings">
+        <MenuButton style={linkStyles} onClick={() => {navigation.toSettings()}}>
           <MenuItem onClick={handleClose}>
             <ListItemContent>
               <Settings fontSize="small" />
             </ListItemContent>
             Settings
           </MenuItem>
-        </Link>
-        <div style={linkStyles} onClick={() => authManager.redirectedLogin()}>
+        </MenuButton>
+
+        <MenuButton style={linkStyles} onClick={() => authManager.signIn()}>
           <MenuItem
             onClick={() => {
               handleClose()
@@ -107,7 +110,7 @@ export default function AccountMenu() {
             </ListItemContent>
             Logout
           </MenuItem>
-        </div>
+        </MenuButton>
       </Menu>
     </React.Fragment>
   )
