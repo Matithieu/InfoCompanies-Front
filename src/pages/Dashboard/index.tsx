@@ -190,7 +190,7 @@ export default function Dashboard() {
     changeURL()
   }, [searchParams])
   return (
-    <Grid>
+    <Grid >
       <Seo
         description="Dashboard"
         name="Dashboard"
@@ -214,7 +214,6 @@ export default function Dashboard() {
       <Grid
         container 
         display="flex"
-        flexDirection="column"
         justifyContent="center"
         paddingLeft={10}
         paddingRight={10}
@@ -251,7 +250,8 @@ export default function Dashboard() {
                 alignItems: "center",
                 justifyContent: "center",
                 minHeight: 220,
-                minWidth: 400,
+                minWidth: "400",
+                maxWidth: "400px",
                 overflow: "hidden",
               }}
             >

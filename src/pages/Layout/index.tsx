@@ -199,7 +199,7 @@ export function Sidebar() {
                 "Error"}
             </Typography>
             <Typography level="body-xs">
-              {authUser?.email ??
+              {authUser?.lastName ??
                 "Error"}
             </Typography>
           </Box>

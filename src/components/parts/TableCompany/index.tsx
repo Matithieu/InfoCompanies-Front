@@ -95,6 +95,8 @@ export default function TableCompany({ url }: Props) {
     queryFn: () => fetchCompanies(url, dataPagniation.page),
     retry: 1,
     refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false
   })
 
   useEffect(() => {
