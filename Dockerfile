@@ -1,4 +1,4 @@
-# Stage 1: Build the application
+	# Stage 1: Build the application
 FROM node:latest as build-stage
 
 # Install pnpm
@@ -23,4 +23,4 @@ RUN pnpm run build
 FROM nginx:alpine
 
 COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build-stage /app/dist /usr/share/nginx/html
+COPY --from=build-stage /app/dist /usr/share/nginx/html/ui/
