@@ -1,36 +1,36 @@
-import { lazy } from "@loadable/component"
-import { Suspense, useEffect } from "react"
-import { HelmetProvider } from "react-helmet-async"
-import { Route, Routes } from "react-router-dom"
+import { lazy } from '@loadable/component'
+import { Suspense, useEffect } from 'react'
+import { HelmetProvider } from 'react-helmet-async'
+import { Route, Routes } from 'react-router-dom'
 
-import Error401 from "./pages/Error/401.tsx"
-import Error404 from "./pages/Error/404.tsx"
-import Test from "./pages/Error/test.tsx"
-import Landing from "./pages/Landing/index.tsx"
-import Layout from "./pages/Layout/index.tsx"
-import Loading from "./pages/Loading/index.tsx"
-import Failure from "./pages/Purchasing/failure.tsx"
-import OrderConfirmation from "./pages/Purchasing/success.tsx"
-import Payment from "./pages/Stripe/index.tsx"
-import Subscription from "./pages/Subscription/index.tsx"
+import Error401 from './pages/Error/401.tsx'
+import Error404 from './pages/Error/404.tsx'
+import Test from './pages/Error/test.tsx'
+import Landing from './pages/Landing/index.tsx'
+import Layout from './pages/Layout/index.tsx'
+import Loading from './pages/Loading/index.tsx'
+import Failure from './pages/Purchasing/failure.tsx'
+import OrderConfirmation from './pages/Purchasing/success.tsx'
+import Payment from './pages/Stripe/index.tsx'
+import Subscription from './pages/Subscription/index.tsx'
 import {
   ProtectedRoutes,
   ProtectedSimpleRoutes,
-} from "./utils/protectedRoute.tsx"
+} from './utils/protectedRoute.tsx'
 
 // Lazy loading components for security
-const Dashboard = lazy(() => import("./pages/Dashboard/index.tsx"))
-const Favorites = lazy(() => import("./pages/Favorites/index.tsx"))
-const Settings = lazy(() => import("./pages/Settings/index.tsx"))
-const Account = lazy(() => import("./pages/Account/index.tsx"))
-const Search = lazy(() => import("./pages/Search/index.tsx"))
-const Company = lazy(() => import("./pages/Search/Company/index.tsx"))
-const Leader = lazy(() => import("./pages/Leaders/index.tsx"))
+const Dashboard = lazy(() => import('./pages/Dashboard/index.tsx'))
+const Favorites = lazy(() => import('./pages/Favorites/index.tsx'))
+const Settings = lazy(() => import('./pages/Settings/index.tsx'))
+const Account = lazy(() => import('./pages/Account/index.tsx'))
+const Search = lazy(() => import('./pages/Search/index.tsx'))
+const Company = lazy(() => import('./pages/Search/Company/index.tsx'))
+const Leader = lazy(() => import('./pages/Leaders/index.tsx'))
 
 function App() {
   useEffect(() => {
-    if (window.location.pathname === "/") {
-      window.location.href = "/ui"
+    if (window.location.pathname === '/') {
+      window.location.href = '/ui'
     }
   }, [])
 
@@ -39,7 +39,7 @@ function App() {
       <Suspense fallback={<Loading />}>
         <Routes>
           <Route path="/ui">
-          <Route element={<Landing />} path="" />
+            <Route element={<Landing />} path="" />
             <Route element={<Test />} path="test" />
 
             <Route element="error">
@@ -61,7 +61,7 @@ function App() {
                 <Route element={<Settings />} path="settings" />
                 <Route element={<Account />} path="account" />
                 <Route element={<Search />} path="search/:searchTerm" />
-                <Route element={<Company />} path="company/*" />
+                <Route element={<Company />} path="company/:companyId" />
                 <Route element={<Leader />} path="leaders/*" />
               </Route>
             </Route>

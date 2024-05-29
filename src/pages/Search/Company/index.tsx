@@ -1,30 +1,31 @@
-import "react-toastify/dist/ReactToastify.css"
+import 'react-toastify/dist/ReactToastify.css'
 
-import { Box, Card, Grid, IconButton, Typography } from "@mui/joy"
-import { useQuery } from "@tanstack/react-query"
-import { useEffect, useState } from "react"
+import { Box, Card, Grid, IconButton, Typography } from '@mui/joy'
+import { useQuery } from '@tanstack/react-query'
+import { useEffect, useState } from 'react'
 
-import { useParams } from "react-router-dom"
-import { ErrorButton } from "../../../components/common/buttons/logout.tsx"
+import { useParams } from 'react-router-dom'
+import { ErrorButton } from '../../../components/common/buttons/logoutButton.tsx'
+import ScrapCompanyButton from '../../../components/common/buttons/scrapCompanyButton.tsx'
 import {
   manageIsChecked,
   StatutIcon,
-} from "../../../components/common/StatutIcon/index.tsx"
-import Chart from "../../../components/parts/Chart/index.tsx"
-import DetailsCompany from "../../../components/parts/DetailsCompany/index.tsx"
-import ListOfLeaders from "../../../components/parts/ListOfLeaders/index.tsx"
-import { CheckStatus, Company } from "../../../data/types/company.ts"
-import { useCompanyStore } from "../../../store/companyStore.tsx"
-import { fetchCompnayById } from "../../../utils/api/index.ts"
+} from '../../../components/common/StatutIcon/index.tsx'
+import Chart from '../../../components/parts/Chart/index.tsx'
+import DetailsCompany from '../../../components/parts/DetailsCompany/index.tsx'
+import ListOfLeaders from '../../../components/parts/ListOfLeaders/index.tsx'
+import { CheckStatus, Company } from '../../../data/types/company.ts'
+import { useCompanyStore } from '../../../store/companyStore.tsx'
+import { fetchCompnayById } from '../../../utils/api/index.ts'
 
-async function fetchCompanies(id: string) {
-  const response = await fetchCompnayById(id)
+async function fetchCompanies(companyId: string) {
+  const response = await fetchCompnayById(companyId)
 
   if (response) {
     const company: Company = response
 
-    const checkedDone = JSON.parse(localStorage.getItem("checkedDone") || "[]")
-    const checkedToDo = JSON.parse(localStorage.getItem("checkedToDo") || "[]")
+    const checkedDone = JSON.parse(localStorage.getItem('checkedDone') || '[]')
+    const checkedToDo = JSON.parse(localStorage.getItem('checkedToDo') || '[]')
 
     if (company !== null) {
       if (checkedDone.includes(company.id)) {
@@ -46,12 +47,12 @@ export default function CompanyPage() {
   const [company, setCompany] = useState<Company>()
   const [statut, setStatut] = useState<CheckStatus>(CheckStatus.NOT_DONE)
 
-  const { id } = useParams()
+  const { companyId } = useParams()
   const { setSelectedCompany } = useCompanyStore()
 
   const { isPending, isError, data, error } = useQuery({
-    queryKey: ["company" + id],
-    queryFn: () => fetchCompanies(id ?? ""),
+    queryKey: ['company' + companyId],
+    queryFn: () => fetchCompanies(companyId ?? ''),
     retry: 1,
   })
 
@@ -74,8 +75,6 @@ export default function CompanyPage() {
       newStatus = CheckStatus.NOT_DONE
     }
 
-    console.log("checked", newStatus)
-
     company.checked = newStatus
     manageIsChecked(company.id, newStatus)
     setCompany(company)
@@ -91,7 +90,7 @@ export default function CompanyPage() {
     return <div>Chargement des données...</div>
   } else if (company !== null && company) {
     return (
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: 'flex' }}>
         <Box
           component="main"
           sx={{
@@ -101,10 +100,10 @@ export default function CompanyPage() {
           <div key={company.id} style={{}}>
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
+                display: 'flex',
+                alignItems: 'center',
                 marginTop: 10,
-                justifyContent: "center",
+                justifyContent: 'center',
               }}
             >
               <Typography
@@ -112,14 +111,14 @@ export default function CompanyPage() {
                 sx={{
                   marginLeft: 0,
                   marginBottom: 5,
-                  alignSelf: "flex-start",
+                  alignSelf: 'flex-start',
                 }}
               >
                 <IconButton
                   style={{
-                    border: "none",
-                    backgroundColor: "transparent",
-                    cursor: "pointer",
+                    border: 'none',
+                    backgroundColor: 'transparent',
+                    cursor: 'pointer',
                   }}
                   onClick={() => {
                     company.checked = handleChangeStatut(company)
@@ -131,15 +130,19 @@ export default function CompanyPage() {
               </Typography>
             </div>
 
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <ScrapCompanyButton key={company.scrapingDate} />
+            </div>
+
             <Grid>
               <Grid container justifyContent="center" marginTop={5} spacing={3}>
                 <Grid md={4} xs={12}>
                   <Card
                     sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                       minHeight: 220,
                       maxWidth: 400,
                     }}
@@ -150,10 +153,10 @@ export default function CompanyPage() {
                 <Grid md={4} xs={12}>
                   <Card
                     sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                       minHeight: 220,
                     }}
                   >
@@ -165,10 +168,10 @@ export default function CompanyPage() {
                 <Grid md={4} xs={8}>
                   <Card
                     sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                       height: 220,
                       minWidth: 400,
                     }}
