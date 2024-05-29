@@ -1,5 +1,5 @@
-import { CheckStatus, Company, FinancialYear } from "../data/types/company"
-import { User } from "../data/types/user"
+import { CheckStatus, Company, FinancialYear } from '../data/types/company'
+import { User } from '../data/types/user'
 
 type JSONValue =
   | string
@@ -52,14 +52,14 @@ export function parseJsonToCompany(companyObj: JSONObject) {
       },
     } as Company
   } catch (e) {
-    console.error("Error converting company JSON to company object: " + e)
+    console.error('Error converting company JSON to company object: ' + e)
     return null
   }
 }
 
 export const parseJsonToFinancialYear = (
   companyObj: any,
-  year: number
+  year: number,
 ): FinancialYear => {
   return {
     closingDate1: companyObj[`closingDate_${year}_1`],
@@ -97,7 +97,7 @@ export function parseJsonToUser(userObjs: JSONObject) {
       isVerified: userObjs.verified,
     } as User
   } catch (e) {
-    new Error("Error converting user JSON to user object: " + e)
+    new Error('Error converting user JSON to user object: ' + e)
     return null
   }
 }

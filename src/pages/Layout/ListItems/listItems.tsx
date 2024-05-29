@@ -1,22 +1,22 @@
-import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import AnalyticsIcon from "@mui/icons-material/Analytics";
-import BarChartIcon from "@mui/icons-material/BarChart";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import HelpIcon from "@mui/icons-material/Help";
-import LayersIcon from "@mui/icons-material/Layers";
-import RefreshIcon from "@mui/icons-material/Refresh";
-import SettingsIcon from "@mui/icons-material/Settings";
+import AccountBoxIcon from '@mui/icons-material/AccountBox'
+import AnalyticsIcon from '@mui/icons-material/Analytics'
+import BarChartIcon from '@mui/icons-material/BarChart'
+import DashboardIcon from '@mui/icons-material/Dashboard'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import HelpIcon from '@mui/icons-material/Help'
+import LayersIcon from '@mui/icons-material/Layers'
+import RefreshIcon from '@mui/icons-material/Refresh'
+import SettingsIcon from '@mui/icons-material/Settings'
 import {
   ListItemButton,
   ListItemContent,
   ListItemDecorator,
   ListSubheader,
   Typography,
-} from "@mui/joy";
-import * as React from "react";
-import { Link } from "react-router-dom";
-import { useAppNavigate } from "../../../utils/navigation/navigation";
+} from '@mui/joy'
+import * as React from 'react'
+import { Link } from 'react-router-dom'
+import { useAppNavigate } from '../../../utils/navigation/navigation'
 /*
 import useAuthStore from '../../../store/authStore';
 import { User } from '../../../data/user';
@@ -26,25 +26,24 @@ import { useState } from 'react';
 
 // Styles CSS pour supprimer le surlignage bleu des liens
 export const linkStyles = {
-  textDecoration: "none", // Supprime la décoration de texte
-  outline: "none", // Supprime le surlignage bleu
-  color: "inherit", // Garde la couleur du texte par défaut
-};
+  textDecoration: 'none', // Supprime la décoration de texte
+  outline: 'none', // Supprime le surlignage bleu
+  color: 'inherit', // Garde la couleur du texte par défaut
+}
 
 //A chaque fois que l'on clique sur un lien, on vérifie si le lien est le même que celui de la page actuelle
 //Si oui, on renvoie true, sinon false
 
 export const MainListItems = () => {
-  const {navigation} = useAppNavigate()
-
+  const { navigation } = useAppNavigate()
 
   return (
     <React.Fragment>
       <ListSubheader component="div">
         <Typography
           style={{
-            marginTop: "10px",
-            marginBottom: "10px",
+            marginTop: '10px',
+            marginBottom: '10px',
           }}
         >
           MENU
@@ -52,7 +51,11 @@ export const MainListItems = () => {
       </ListSubheader>
 
       <Link style={linkStyles} to="/dashboard">
-        <ListItemButton onClick={() => {navigation.toDashboard()}}>
+        <ListItemButton
+          onClick={() => {
+            navigation.toDashboard()
+          }}
+        >
           <ListItemDecorator>
             <DashboardIcon />
           </ListItemDecorator>
@@ -106,8 +109,8 @@ export const MainListItems = () => {
         </ListItemButton>
       </Link>
     </React.Fragment>
-  );
-};
+  )
+}
 
 export const SecondaryListItems = () => {
   /*
@@ -184,5 +187,5 @@ export const SecondaryListItems = () => {
         </ListItemContent>
       </ListItemButton>
     </React.Fragment>
-  );
-};
+  )
+}

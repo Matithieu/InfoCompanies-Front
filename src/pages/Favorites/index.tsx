@@ -1,20 +1,20 @@
-import { Box, Card, Grid, Stack, Typography } from "@mui/joy"
-import { useEffect, useState } from "react"
+import { Box, Card, Grid, Stack, Typography } from '@mui/joy'
+import { useEffect, useState } from 'react'
 
-import { TableSkeleton } from "../../components/common/Loaders/Skeleton/index.tsx"
-import Chart from "../../components/parts/Chart/index.tsx"
-import DetailsCompany from "../../components/parts/DetailsCompany/index.tsx"
-import ListOfLeaders from "../../components/parts/ListOfLeaders/index.tsx"
-import TableCompany from "../../components/parts/TableCompany/index.tsx"
-import { columnsTableCompany } from "../../data/types/columns.ts"
+import { TableSkeleton } from '../../components/common/Loaders/Skeleton/index.tsx'
+import Chart from '../../components/parts/Chart/index.tsx'
+import DetailsCompany from '../../components/parts/DetailsCompany/index.tsx'
+import ListOfLeaders from '../../components/parts/ListOfLeaders/index.tsx'
+import TableCompany from '../../components/parts/TableCompany/index.tsx'
+import { columnsTableCompany } from '../../data/types/columns.ts'
 
 export default function Favorites() {
-  const [url, setUrl] = useState<string>("")
+  const [url, setUrl] = useState<string>('')
   const [checkedCompanies, setCheckedCompanies] = useState<Array<string>>([])
 
   useEffect(() => {
     const idsOfCheckedCompanies: Array<string> = JSON.parse(
-      localStorage.getItem("checkedToDo") || "[]"
+      localStorage.getItem('checkedToDo') || '[]',
     )
     setCheckedCompanies(idsOfCheckedCompanies)
 
@@ -53,21 +53,21 @@ export default function Favorites() {
                 url ? (
                   <Box
                     sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "center",
-                      alignItems: "center",
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      alignItems: 'center',
                       gap: 5,
                     }}
                   >
                     <Stack
                       sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        justifyContent: "center",
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
                         minHeight: 400,
-                        minWidth: "70%",
+                        minWidth: '70%',
                         maxHeight: 550,
                         borderRadius: 3,
                       }}
@@ -76,13 +76,13 @@ export default function Favorites() {
                     </Stack>
                     <Card
                       sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        justifyContent: "center",
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
                         minHeight: 200,
                         borderRadius: 3,
-                        minWidth: "30%",
+                        minWidth: '30%',
                         maxWidth: 400,
                       }}
                     >
@@ -95,10 +95,10 @@ export default function Favorites() {
               ) : (
                 <h1
                   style={{
-                    fontSize: "19px",
-                    color: "#888",
-                    textAlign: "center",
-                    marginTop: "20px",
+                    fontSize: '19px',
+                    color: '#888',
+                    textAlign: 'center',
+                    marginTop: '20px',
                   }}
                 >
                   Aucun ToDO sélectionné
@@ -117,10 +117,10 @@ export default function Favorites() {
                 <Grid md={6} xs={12}>
                   <Card
                     sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                       height: 220,
                       minWidth: 400,
                     }}
@@ -132,10 +132,10 @@ export default function Favorites() {
                 <Grid md={6} xs={12}>
                   <Card
                     sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                       height: 220,
                       borderRadius: 3,
                     }}

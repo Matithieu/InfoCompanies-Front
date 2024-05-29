@@ -1,18 +1,18 @@
-import { Box, Typography } from "@mui/joy";
-import CircularProgress from "@mui/joy/CircularProgress";
+import { Box, Typography } from '@mui/joy'
+import CircularProgress from '@mui/joy/CircularProgress'
 
 function Loading() {
   return (
     <Box
       sx={{
-        id: "suspense-fallback",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh", // Full viewport height
-        bgcolor: "background.default",
-        color: "text.primary",
+        id: 'suspense-fallback',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh', // Full viewport height
+        bgcolor: 'background.default',
+        color: 'text.primary',
       }}
     >
       <CircularProgress />

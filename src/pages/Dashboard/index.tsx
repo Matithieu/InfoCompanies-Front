@@ -1,19 +1,19 @@
-import "./style.css"
+import './style.css'
 
-import SearchIcon from "@mui/icons-material/Search"
-import { Box, Button, Card, Grid, Stack, Typography } from "@mui/joy"
-import { useEffect, useState } from "react"
+import SearchIcon from '@mui/icons-material/Search'
+import { Box, Button, Card, Grid, Stack, Typography } from '@mui/joy'
+import { useEffect, useState } from 'react'
 
-import CustomSelect from "../../components/common/CustomSelect/index.tsx"
-import Seo from "../../components/common/Seo/index.tsx"
-import Chart from "../../components/parts/Chart/index.tsx"
-import DetailsCompany from "../../components/parts/DetailsCompany/index.tsx"
-import ListOfLeaders from "../../components/parts/ListOfLeaders/index.tsx"
-import TableCompany from "../../components/parts/TableCompany/index.tsx"
-import { activityArea } from "../../data/ListOfOptions/Activity.tsx"
-import { legalStatus } from "../../data/ListOfOptions/Legal.tsx"
-import { region } from "../../data/ListOfOptions/Region.tsx"
-import { useCompanyFilterStore } from "../../store/filtersStore.tsx"
+import CustomSelect from '../../components/common/CustomSelect/index.tsx'
+import Seo from '../../components/common/Seo/index.tsx'
+import Chart from '../../components/parts/Chart/index.tsx'
+import DetailsCompany from '../../components/parts/DetailsCompany/index.tsx'
+import ListOfLeaders from '../../components/parts/ListOfLeaders/index.tsx'
+import TableCompany from '../../components/parts/TableCompany/index.tsx'
+import { activityArea } from '../../data/ListOfOptions/Activity.tsx'
+import { legalStatus } from '../../data/ListOfOptions/Legal.tsx'
+import { region } from '../../data/ListOfOptions/Region.tsx'
+import { useCompanyFilterStore } from '../../store/filtersStore.tsx'
 
 /**
  *
@@ -42,7 +42,7 @@ const AdvancedSearch = () => {
   }
 
   const handleLegalStatusChange = (selectedValue: string[]) => {
-    console.log("Legal status changed to:", selectedValue)
+    console.log('Legal status changed to:', selectedValue)
     setSearchTerm((prevSearchTerm) => ({
       ...prevSearchTerm,
       legalStatusValue: selectedValue as never[],
@@ -50,7 +50,7 @@ const AdvancedSearch = () => {
   }
 
   const handleActivityAreaChange = (selectedValue: string[]) => {
-    console.log("Activity area changed to:", selectedValue)
+    console.log('Activity area changed to:', selectedValue)
     setSearchTerm((prevSearchTerm) => ({
       ...prevSearchTerm,
       activityAreaValue: selectedValue as never[],
@@ -58,7 +58,7 @@ const AdvancedSearch = () => {
   }
 
   const handleRegionChange = (selectedValue: string[]) => {
-    console.log("Region changed to:", selectedValue)
+    console.log('Region changed to:', selectedValue)
     setSearchTerm((prevSearchTerm) => ({
       ...prevSearchTerm,
       regionValue: selectedValue as never[],
@@ -74,7 +74,7 @@ const AdvancedSearch = () => {
 
     // Use the callback function to log the updated state
     setSearchTerm((prevSearchTerm) => {
-      console.log("Search term:", prevSearchTerm)
+      console.log('Search term:', prevSearchTerm)
       return prevSearchTerm
     })
   }
@@ -88,7 +88,7 @@ const AdvancedSearch = () => {
       >
         Recherche avancée
       </Button>
-      <div className={`search-menu ${showMenu ? "show" : ""}`}>
+      <div className={`search-menu ${showMenu ? 'show' : ''}`}>
         <Grid
           container
           alignItems="center"
@@ -129,7 +129,7 @@ const AdvancedSearch = () => {
           </Grid>
           <Grid md={4} sm={6} xs={12}>
             <Button
-              style={{ marginTop: "20px" }}
+              style={{ marginTop: '20px' }}
               variant="outlined"
               onClick={() => {
                 setSearchTerm({
@@ -147,14 +147,14 @@ const AdvancedSearch = () => {
               Réinitialiser
             </Button>
 
-            <span style={{ marginRight: "20px" }}></span>
+            <span style={{ marginRight: '20px' }}></span>
 
             <Button
-              style={{ marginTop: "20px" }}
+              style={{ marginTop: '20px' }}
               variant="soft"
               onClick={handleSearch}
             >
-              Rechercher <SearchIcon style={{ marginLeft: "6px" }} />
+              Rechercher <SearchIcon style={{ marginLeft: '6px' }} />
             </Button>
           </Grid>
         </Grid>
@@ -178,19 +178,19 @@ export default function Dashboard() {
         searchParams.region.length === 0 &&
         searchParams.legalStatus.length === 0
       ) {
-        setUrl("random?")
+        setUrl('random?')
         return
       }
 
       setUrl(
-        `filter-by-parameters?sector=${searchParams.activityArea}&region=${searchParams.region}&`
+        `filter-by-parameters?sector=${searchParams.activityArea}&region=${searchParams.region}&`,
       )
     }
 
     changeURL()
   }, [searchParams])
   return (
-    <Grid >
+    <Grid>
       <Seo
         description="Dashboard"
         name="Dashboard"
@@ -212,7 +212,7 @@ export default function Dashboard() {
       </Grid>
 
       <Grid
-        container 
+        container
         display="flex"
         justifyContent="center"
         paddingLeft={10}
@@ -223,13 +223,13 @@ export default function Dashboard() {
         <Grid lg={6} md={8} sm={6} xs={1}>
           <Stack
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "100%",
-              minWidth: "100%",
-              height: "100%",
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100%',
+              minWidth: '100%',
+              height: '100%',
               minHeight: 550,
               maxHeight: 550,
               borderRadius: 3,
@@ -240,19 +240,26 @@ export default function Dashboard() {
         </Grid>
 
         {/* Container on the second row */}
-        <Grid container aria-label="tabs" justifyContent="center" sm={6} spacing={3} xs={12}>
+        <Grid
+          container
+          aria-label="tabs"
+          justifyContent="center"
+          sm={6}
+          spacing={3}
+          xs={12}
+        >
           {/* DetailsCompany of the company */}
           <Grid md={4} sm={6} xs={12}>
             <Card
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
                 minHeight: 220,
-                minWidth: "400",
-                maxWidth: "400px",
-                overflow: "hidden",
+                minWidth: '400',
+                maxWidth: '400px',
+                overflow: 'hidden',
               }}
             >
               <DetailsCompany />
@@ -263,10 +270,10 @@ export default function Dashboard() {
           <Grid md={4} sm={6} xs={12}>
             <Card
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
                 minHeight: 220,
                 minWidth: 400,
               }}
@@ -279,10 +286,10 @@ export default function Dashboard() {
           <Grid md={4} sm={6} xs={12}>
             <Card
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
                 height: 220,
                 minWidth: 400,
               }}

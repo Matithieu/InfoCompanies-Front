@@ -1,9 +1,9 @@
-import * as React from "react"
-import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded"
-import LightModeIcon from "@mui/icons-material/LightMode"
-import IconButton, { IconButtonProps } from "@mui/joy/IconButton"
+import * as React from 'react'
+import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded'
+import LightModeIcon from '@mui/icons-material/LightMode'
+import IconButton, { IconButtonProps } from '@mui/joy/IconButton'
 
-import { useColorScheme } from "@mui/joy/styles"
+import { useColorScheme } from '@mui/joy/styles'
 
 export default function ColorSchemeToggle(props: IconButtonProps) {
   const { onClick, sx, ...other } = props
@@ -37,20 +37,20 @@ export default function ColorSchemeToggle(props: IconButtonProps) {
       {...other}
       sx={[
         {
-          "& > *:first-of-type": {
-            display: mode === "dark" ? "none" : "initial",
+          '& > *:first-of-type': {
+            display: mode === 'dark' ? 'none' : 'initial',
           },
-          "& > *:last-child": {
-            display: mode === "light" ? "none" : "initial",
+          '& > *:last-child': {
+            display: mode === 'light' ? 'none' : 'initial',
           },
         },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
       onClick={(event) => {
-        if (mode === "light") {
-          setMode("dark")
+        if (mode === 'light') {
+          setMode('dark')
         } else {
-          setMode("light")
+          setMode('light')
         }
 
         onClick?.(event)

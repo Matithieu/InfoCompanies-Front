@@ -1,11 +1,11 @@
-import AccountCircleIcon from "@mui/icons-material/AccountCircle"
-import { Container, Table } from "@mui/joy"
-import * as React from "react"
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import { Container, Table } from '@mui/joy'
+import * as React from 'react'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-import { Leader } from "../../../data/types/leader"
-import { useCompanyStore } from "../../../store/companyStore"
+import { Leader } from '../../../data/types/leader'
+import { useCompanyStore } from '../../../store/companyStore'
 
 /**
  *
@@ -29,23 +29,23 @@ export default function ListOfLeaders() {
 
   if (leaders === null) {
     return (
-      <a style={{ fontSize: "19px" }}>Veuillez sélectionner une entreprise</a>
+      <a style={{ fontSize: '19px' }}>Veuillez sélectionner une entreprise</a>
     )
   }
 
   if (leaders.length === 0) {
     return (
-      <a style={{ fontSize: "19px" }}>Pas de données pour cette entreprise</a>
+      <a style={{ fontSize: '19px' }}>Pas de données pour cette entreprise</a>
     )
   } else {
     return (
       <Container>
         <div
           style={{
-            display: "flex",
-            justifyContent: "center",
+            display: 'flex',
+            justifyContent: 'center',
             marginTop: 5,
-            top: "0",
+            top: '0',
           }}
         >
           Liste des dirigeants
@@ -58,7 +58,7 @@ export default function ListOfLeaders() {
                   key={row.id}
                   style={{
                     border: 0,
-                    cursor: "pointer",
+                    cursor: 'pointer',
                   }}
                   onClick={() => {
                     navigate(`/leaders/${row.id}`)

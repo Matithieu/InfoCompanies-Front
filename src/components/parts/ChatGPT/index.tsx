@@ -1,9 +1,9 @@
 type Props = {
-  selectedValue: string;
-};
-
-function ChatGPT({ selectedValue }: Props) {
-  return <div>{selectedValue}</div>;
+  selectedValue: string
 }
 
-export default ChatGPT;
+function ChatGPT({ selectedValue }: Props) {
+  return <div>{selectedValue}</div>
+}
+
+export default ChatGPT

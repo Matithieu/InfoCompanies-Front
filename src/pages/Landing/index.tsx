@@ -1,27 +1,27 @@
 // https://github.com/sjoerdvanBommel/threeveloper/blob/025-simplistic-landing-pages-are-taking-over-the-internet/style.css
 
-import "./Landing.css"
+import './Landing.css'
 
-import React, { useEffect } from "react"
+import React, { useEffect } from 'react'
 
-import useAuthManager from "../../hooks/useAuthManager"
-import { fetchUser } from "../../utils/api"
-import { useAppNavigate } from "../../utils/navigation/navigation"
-import { fetchUserEmail } from "../../utils/proxy"
+import useAuthManager from '../../hooks/useAuthManager'
+import { fetchUser } from '../../utils/api'
+import { useAppNavigate } from '../../utils/navigation/navigation'
+import { fetchUserEmail } from '../../utils/proxy'
 
 const Landing: React.FC = () => {
-  const { navigation } = useAppNavigate();
+  const { navigation } = useAppNavigate()
   const authManager = useAuthManager()
   const between = (min: number, max: number) =>
     Math.random() * (max - min) + min
 
   useEffect(() => {
-    const bubblesContainer = document.getElementById("bubbles")
-    const colors = ["#e44141", "#4f2af3"]
+    const bubblesContainer = document.getElementById('bubbles')
+    const colors = ['#e44141', '#4f2af3']
 
     const createBubble = () => {
-      const bubble = document.createElement("div")
-      bubble.classList.add("bubble")
+      const bubble = document.createElement('div')
+      bubble.classList.add('bubble')
 
       if (bubblesContainer) {
         bubblesContainer.appendChild(bubble)
@@ -30,11 +30,11 @@ const Landing: React.FC = () => {
 
         const sizePx = `${between(4, 8)}px`
 
-        const floatingBubbleKeyFrames = [{ top: "100%" }, { top: `-${sizePx}` }]
+        const floatingBubbleKeyFrames = [{ top: '100%' }, { top: `-${sizePx}` }]
 
         const floatingAnimation = bubble.animate(
           floatingBubbleKeyFrames,
-          between(10000, 40000)
+          between(10000, 40000),
         )
 
         floatingAnimation.onfinish = () => {
@@ -61,7 +61,7 @@ const Landing: React.FC = () => {
   }, [])
 
   return (
-    <div style={{ height: "100%" }}>
+    <div style={{ height: '100%' }}>
       <div>
         <div className="glow"></div>
 

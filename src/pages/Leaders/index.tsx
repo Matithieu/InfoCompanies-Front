@@ -1,19 +1,19 @@
-import { Box, Grid, Sheet, Typography } from "@mui/joy"
+import { Box, Grid, Sheet, Typography } from '@mui/joy'
 
-import DetailsLeader from "../../components/parts/DetailsLeader/index.tsx"
-import { Leader } from "../../data/types/leader.ts"
+import DetailsLeader from '../../components/parts/DetailsLeader/index.tsx'
+import { Leader } from '../../data/types/leader.ts'
 
 // TODO: Replace this with the data from the API
 // Fetch at /api/leaders/{id}
 
 const leader1: Leader = {
   id: 1,
-  lastName: "DUPONT",
-  firstName: "Jean",
-  dateOfBirth: new Date("1990-01-01"),
-  phone: "06 00 00 00 00",
-  email: "email@email.com",
-  listOfCompanies: [{ id: 1, name: "Entreprise 1" }],
+  lastName: 'DUPONT',
+  firstName: 'Jean',
+  dateOfBirth: new Date('1990-01-01'),
+  phone: '06 00 00 00 00',
+  email: 'email@email.com',
+  listOfCompanies: [{ id: 1, name: 'Entreprise 1' }],
 }
 
 const initialLeaderData: Leader = leader1
@@ -23,7 +23,7 @@ export default function LeaderDetails() {
     return <a>Aucunes données trouvées</a>
   } else {
     return (
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: 'flex' }}>
         <Box component="main">
           <Typography
             component="div"
@@ -32,7 +32,7 @@ export default function LeaderDetails() {
               marginTop: 5,
               marginLeft: 10,
               marginBottom: 5,
-              alignSelf: "flex-start",
+              alignSelf: 'flex-start',
             }}
           >
             {initialLeaderData.lastName} {initialLeaderData.firstName}
@@ -55,12 +55,12 @@ export default function LeaderDetails() {
               <Grid md={6} xs={12}>
                 <Sheet
                   sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                     minHeight: 200,
-                    height: "100%",
+                    height: '100%',
                   }}
                 >
                   <DetailsLeader leaderDetails={initialLeaderData} />

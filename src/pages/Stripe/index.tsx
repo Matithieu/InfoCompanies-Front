@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom"
+import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
-import { ItemData } from "../../data/Stripe/itemData.ts"
-import useAuthStore from "../../store/authStore.tsx"
-import Loading from "../Loading/index.tsx"
+import { ItemData } from '../../data/Stripe/itemData.ts'
+import useAuthStore from '../../store/authStore.tsx'
+import Loading from '../Loading/index.tsx'
 
 // Make this a functional component that takes in the item data as a prop
 function Payment() {
@@ -39,17 +39,17 @@ function Payment() {
   */
 
   useEffect(() => {
-    console.log("itemData ", itemData)
-    fetch(import.meta.env.VITE_API_BASE_URL + "/subscriptions/trial", {
-      method: "POST",
+    console.log('itemData ', itemData)
+    fetch(import.meta.env.VITE_API_BASE_URL + '/subscriptions/trial', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         item: itemData.id,
         customerName: authUser?.lastName,
         customerEmail: authUser?.email,
-        subscriptionId: "",
+        subscriptionId: '',
       }),
     })
       .then((r) => r.text())

@@ -2,7 +2,9 @@
 
 /* Animation pour développer le menu */
 .search-menu {
-  transition: height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transition:
+    height 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
   height: 0;
   opacity: 0;
   overflow: hidden;
@@ -24,11 +26,11 @@
   font-size: 17px;
   font-size: 17;
   border-radius: 5;
-  border: 1px solid ;
+  border: 1px solid;
   margin: 7px;
   padding: 5;
-  color: #5A6ACF;
-  border-color: #5A6ACF ;
+  color: #5a6acf;
+  border-color: #5a6acf;
   min-width: 100%;
   max-width: 100%;
 }
@@ -37,12 +39,12 @@
   border-radius: 5px;
   font-size: 17px;
   text-align: center;
-  border: 1px solid #5A6ACF;
-  color: #5A6ACF;
+  border: 1px solid #5a6acf;
+  color: #5a6acf;
   background-color: white;
   margin: 7px;
   padding: 5px;
-  min-width: "100%";
-  min-height: "100%";
+  min-width: '100%';
+  min-height: '100%';
   cursor: pointer;
 }

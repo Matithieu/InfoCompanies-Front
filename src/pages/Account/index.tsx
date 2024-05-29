@@ -7,12 +7,12 @@ import {
   TabPanel,
   Tabs,
   Typography,
-} from "@mui/joy"
+} from '@mui/joy'
 
-import useAuthStore from "../../store/authStore"
-import ViewInvoices from "../Purchasing/invoice"
+import useAuthStore from '../../store/authStore'
+import ViewInvoices from '../Purchasing/invoice'
 
-import Account from "./component"
+import Account from './component'
 
 export default function AccountPage() {
   const { authUser, requestLoading } = useAuthStore()
@@ -21,12 +21,12 @@ export default function AccountPage() {
     return <div>Chargement...</div>
   } else {
     return (
-      <Box sx={{ flex: 1, width: "100%" }}>
+      <Box sx={{ flex: 1, width: '100%' }}>
         <Box
           sx={{
-            position: "sticky",
+            position: 'sticky',
             top: { sm: -100, md: -110 },
-            bgcolor: "background.body",
+            bgcolor: 'background.body',
             zIndex: 9995,
           }}
         >
@@ -36,44 +36,44 @@ export default function AccountPage() {
             </Typography>
           </Box>
 
-          <Tabs defaultValue={0} sx={{ backgroundColor: "transparent" }}>
+          <Tabs defaultValue={0} sx={{ backgroundColor: 'transparent' }}>
             <TabList
               size="sm"
               sx={{
                 pl: { xs: 0, md: 4 },
-                justifyContent: "left",
+                justifyContent: 'left',
                 [`&& .${tabClasses.root}`]: {
-                  fontWeight: "600",
-                  flex: "initial",
-                  color: "text.tertiary",
+                  fontWeight: '600',
+                  flex: 'initial',
+                  color: 'text.tertiary',
                   [`&.${tabClasses.selected}`]: {
-                    bgcolor: "transparent",
-                    color: "text.primary",
-                    "&::after": {
-                      height: "2px",
-                      bgcolor: "primary.500",
+                    bgcolor: 'transparent',
+                    color: 'text.primary',
+                    '&::after': {
+                      height: '2px',
+                      bgcolor: 'primary.500',
                     },
                   },
                 },
               }}
               tabFlex={1}
             >
-              <Tab indicatorInset sx={{ borderRadius: "6px 6px 0 0" }}>
+              <Tab indicatorInset sx={{ borderRadius: '6px 6px 0 0' }}>
                 Profile
               </Tab>
-              <Tab indicatorInset sx={{ borderRadius: "6px 6px 0 0" }}>
+              <Tab indicatorInset sx={{ borderRadius: '6px 6px 0 0' }}>
                 Test
               </Tab>
-              <Tab indicatorInset sx={{ borderRadius: "6px 6px 0 0" }}>
+              <Tab indicatorInset sx={{ borderRadius: '6px 6px 0 0' }}>
                 Factures
               </Tab>
             </TabList>
             <Stack
               spacing={4}
               sx={{
-                display: "flex",
-                maxWidth: "800px",
-                mx: "auto",
+                display: 'flex',
+                maxWidth: '800px',
+                mx: 'auto',
                 px: { xs: 2, md: 6 },
                 py: { xs: 2, md: 3 },
               }}

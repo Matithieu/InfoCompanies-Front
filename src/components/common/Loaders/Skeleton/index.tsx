@@ -1,6 +1,6 @@
-import { Box, Container, Skeleton, Table } from "@mui/joy"
+import { Box, Container, Skeleton, Table } from '@mui/joy'
 
-import { Column } from "../../../../data/types/columns"
+import { Column } from '../../../../data/types/columns'
 
 interface TableSkeletonProps {
   columns: Column[]
@@ -10,7 +10,7 @@ export const TableSkeleton = ({ columns }: TableSkeletonProps) => {
   return (
     <Box
       sx={{
-        overflow: "hidden",
+        overflow: 'hidden',
       }}
     >
       <Container>
@@ -32,11 +32,11 @@ export const TableSkeleton = ({ columns }: TableSkeletonProps) => {
           </thead>
           <tbody>
             {Array.from({ length: 5 }).map((_, index) => (
-              <tr key={index} style={{ alignItems: "center" }}>
+              <tr key={index} style={{ alignItems: 'center' }}>
                 <td
-                  key={index + "status"}
+                  key={index + 'status'}
                   align="center"
-                  style={{ justifyItems: "center", display: "flex" }}
+                  style={{ justifyItems: 'center', display: 'flex' }}
                 >
                   <Skeleton
                     animation="wave"

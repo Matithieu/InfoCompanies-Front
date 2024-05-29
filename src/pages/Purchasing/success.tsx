@@ -1,4 +1,4 @@
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline"
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import {
   Button,
   Divider,
@@ -7,31 +7,31 @@ import {
   ListItemContent,
   Sheet,
   Typography,
-} from "@mui/joy"
+} from '@mui/joy'
 
-import useAuthStore from "../../store/authStore"
-import { loadUserFromLocalStorage } from "../../utils/loadFromLocalStorage"
-import { useAppNavigate } from "../../utils/navigation/navigation"
+import useAuthStore from '../../store/authStore'
+import { loadUserFromLocalStorage } from '../../utils/loadFromLocalStorage'
+import { useAppNavigate } from '../../utils/navigation/navigation'
 
 const OrderConfirmation = () => {
   const queryParams = new URLSearchParams(window.location.search)
-  const { navigation } = useAppNavigate();
+  const { navigation } = useAppNavigate()
   const { authUser, setAuthUser } = useAuthStore()
 
   return (
     <div
       style={{
-        display: "flex",
-        justifyContent: "center",
-        padding: "20px",
-        marginTop: "7rem",
+        display: 'flex',
+        justifyContent: 'center',
+        padding: '20px',
+        marginTop: '7rem',
       }}
     >
-      <Sheet style={{ padding: "20px", maxWidth: "400px" }} variant="soft">
-        <div style={{ textAlign: "center", marginBottom: "20px" }}>
+      <Sheet style={{ padding: '20px', maxWidth: '400px' }} variant="soft">
+        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
           <CheckCircleOutlineIcon
             color="success"
-            style={{ fontSize: "60px" }}
+            style={{ fontSize: '60px' }}
           />
           <Typography gutterBottom level="h4">
             Thank you for your purchase!
@@ -42,14 +42,14 @@ const OrderConfirmation = () => {
           </Typography>
         </div>
 
-        <Divider style={{ marginBottom: "20px" }} />
+        <Divider style={{ marginBottom: '20px' }} />
 
         <Typography gutterBottom level="h4">
           Order Details
         </Typography>
 
         <Typography color="neutral" level="h4">
-          {queryParams.toString().split("&").join("\n")}
+          {queryParams.toString().split('&').join('\n')}
         </Typography>
 
         <List>
@@ -78,17 +78,17 @@ const OrderConfirmation = () => {
         <Button
           fullWidth
           color="primary"
-          style={{ marginTop: "20px" }}
+          style={{ marginTop: '20px' }}
           variant="soft"
           onClick={() => {
-            const user = loadUserFromLocalStorage("authUser")
+            const user = loadUserFromLocalStorage('authUser')
 
             if (user) {
               user.isVerified = true
               setAuthUser(user) // Clear the authenticated user
             }
 
-            console.log("test " + authUser)
+            console.log('test ' + authUser)
             setTimeout(() => {
               navigation.toHome()
             }, 500)

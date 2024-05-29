@@ -1,16 +1,16 @@
-import { Box, Button, Container, Typography } from "@mui/joy";
-import { useAppNavigate } from "../../utils/navigation/navigation";
+import { Box, Button, Container, Typography } from '@mui/joy'
+import { useAppNavigate } from '../../utils/navigation/navigation'
 
 export default function Page404() {
-  const { navigation } = useAppNavigate();
+  const { navigation } = useAppNavigate()
 
   return (
     <Container component="main" maxWidth="sm" sx={{ mt: 8, mb: 4 }}>
       <Box
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
         }}
       >
         <Typography component="h1" level="h2">
@@ -31,5 +31,5 @@ export default function Page404() {
         </Button>
       </Box>
     </Container>
-  );
+  )
 }

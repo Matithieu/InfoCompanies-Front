@@ -1,13 +1,13 @@
-import { create } from "zustand";
+import { create } from 'zustand'
 
-import { Company } from "../data/types/company";
+import { Company } from '../data/types/company'
 
 type CompanyState = {
-  selectedCompany: Company | null;
-  setSelectedCompany: (company: Company | null) => void;
-  selectedCompanyChecked: Company | null;
-  setSelectedCompanyChecked: (company: Company | null) => void;
-};
+  selectedCompany: Company | null
+  setSelectedCompany: (company: Company | null) => void
+  selectedCompanyChecked: Company | null
+  setSelectedCompanyChecked: (company: Company | null) => void
+}
 
 // Create a store using Zustand
 export const useCompanyStore = create<CompanyState>((set) => ({
@@ -16,7 +16,7 @@ export const useCompanyStore = create<CompanyState>((set) => ({
   selectedCompanyChecked: null,
   setSelectedCompanyChecked: (company) =>
     set(() => ({ selectedCompanyChecked: company })),
-}));
+}))
 
 // Usage in components remains the same
 // const { selectedCompany, setSelectedCompany, ... } = useCompanyStore();

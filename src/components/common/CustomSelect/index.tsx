@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useState } from "react"
-import { FixedSizeList } from "react-window"
-import SearchIcon from "@mui/icons-material/Search"
+import React, { useEffect, useMemo, useState } from 'react'
+import { FixedSizeList } from 'react-window'
+import SearchIcon from '@mui/icons-material/Search'
 import {
   Box,
   Checkbox,
@@ -13,7 +13,7 @@ import {
   MenuButton,
   Select,
   useTheme,
-} from "@mui/joy"
+} from '@mui/joy'
 
 const containsText = (text: string, searchText: string) =>
   text.toLowerCase().indexOf(searchText.toLowerCase()) > -1
@@ -41,18 +41,18 @@ const RenderRow = ({ index, style, data }: RenderRowProps) => {
           key={index}
           style={style}
           sx={{
-            display: "flex",
-            justifyContent: "flex-start",
-            width: "100%",
-            padding: "0.5rem",
+            display: 'flex',
+            justifyContent: 'flex-start',
+            width: '100%',
+            padding: '0.5rem',
             backgroundColor:
               selectedOptions.indexOf(option) !== -1
                 ? theme.palette.primary.mainChannel // Utilisez la couleur principale du thème
                 : theme.palette.background.surface, // Utilisez la couleur de fond du thème
-            "&:hover": {
+            '&:hover': {
               backgroundColor: theme.palette.primary.mainChannel,
             },
-            overflowY: "hidden",
+            overflowY: 'hidden',
             borderRadius: 0,
           }}
           value={option}
@@ -60,7 +60,7 @@ const RenderRow = ({ index, style, data }: RenderRowProps) => {
         >
           <Checkbox
             checked={selectedOptions.indexOf(option) !== -1}
-            sx={{ marginRight: "0.5rem" }}
+            sx={{ marginRight: '0.5rem' }}
             value={option}
           />
           {option}
@@ -88,9 +88,9 @@ const CustomSelect = ({
   value,
 }: CustomSelectProps) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>(
-    selectedValues ?? [""]
+    selectedValues ?? [''],
   )
-  const [searchText, setSearchText] = useState("")
+  const [searchText, setSearchText] = useState('')
 
   useEffect(() => {
     setSelectedOptions(value ?? [])
@@ -98,7 +98,7 @@ const CustomSelect = ({
 
   const displayedOptions = useMemo(
     () => options.filter((option) => containsText(option, searchText)),
-    [searchText, options]
+    [searchText, options],
   )
 
   const handleToggle = (value: string) => {
@@ -120,10 +120,10 @@ const CustomSelect = ({
       <FormLabel id="universal-select-label">{label}</FormLabel>
       <Select
         multiple
-        defaultValue={["Lol"]}
+        defaultValue={['Lol']}
         id="universal-select"
         renderValue={(selectedOptions) => (
-          <Box sx={{ display: "flex", gap: "0.25rem" }}>
+          <Box sx={{ display: 'flex', gap: '0.25rem' }}>
             {selectedOptions.map((selectedOption) => (
               <Chip key={selectedOption.id} color="primary" variant="soft">
                 {selectedOption.label}
@@ -134,12 +134,12 @@ const CustomSelect = ({
         slotProps={{
           listbox: {
             sx: {
-              width: "100%",
+              width: '100%',
             },
           },
         }}
         sx={{
-          minWidth: "15rem",
+          minWidth: '15rem',
         }}
         value={selectedOptions}
       >
@@ -153,7 +153,7 @@ const CustomSelect = ({
               style={{ marginBottom: 5 }}
               onChange={(e) => setSearchText(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === "Escape") {
+                if (e.key === 'Enter' || e.key === 'Escape') {
                   e.preventDefault()
 
                   if (displayedOptions.length > 0) {

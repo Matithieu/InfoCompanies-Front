@@ -19,9 +19,9 @@ type SocialMedia = {
 }
 
 export enum CheckStatus {
-  DONE = "DONE",
-  NOT_DONE = "NOT_DONE",
-  TO_DO = "TO_DO",
+  DONE = 'DONE',
+  NOT_DONE = 'NOT_DONE',
+  TO_DO = 'TO_DO',
 }
 
 export type Company = {

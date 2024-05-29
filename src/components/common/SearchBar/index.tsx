@@ -1,19 +1,19 @@
-import SearchIcon from "@mui/icons-material/Search";
-import { Input } from "@mui/joy";
-import { useState } from "react";
-import { useAppNavigate } from "../../../utils/navigation/navigation";
+import SearchIcon from '@mui/icons-material/Search'
+import { Input } from '@mui/joy'
+import { useState } from 'react'
+import { useAppNavigate } from '../../../utils/navigation/navigation'
 
 export default function SearchAppBar() {
-  const { navigation } = useAppNavigate();
-  const [searchTerm, setSearchTerm] = useState("");
+  const { navigation } = useAppNavigate()
+  const [searchTerm, setSearchTerm] = useState('')
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    if (searchTerm.trim() !== "") {
-      navigation.toSearch(searchTerm);
+    if (searchTerm.trim() !== '') {
+      navigation.toSearch(searchTerm)
     }
-  };
+  }
 
   return (
     <form onSubmit={handleSearch}>
@@ -24,5 +24,5 @@ export default function SearchAppBar() {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
     </form>
-  );
+  )
 }

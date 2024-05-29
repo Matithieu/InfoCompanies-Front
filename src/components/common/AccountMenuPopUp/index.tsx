@@ -1,5 +1,5 @@
-import Logout from "@mui/icons-material/Logout"
-import Settings from "@mui/icons-material/Settings"
+import Logout from '@mui/icons-material/Logout'
+import Settings from '@mui/icons-material/Settings'
 import {
   Avatar,
   Box,
@@ -10,13 +10,13 @@ import {
   MenuButton,
   MenuItem,
   Tooltip,
-} from "@mui/joy"
-import * as React from "react"
+} from '@mui/joy'
+import * as React from 'react'
 
-import useAuthManager from "../../../hooks/useAuthManager"
-import { linkStyles } from "../../../pages/Layout/ListItems/listItems"
-import useAuthStore from "../../../store/authStore"
-import { useAppNavigate } from "../../../utils/navigation/navigation"
+import useAuthManager from '../../../hooks/useAuthManager'
+import { linkStyles } from '../../../pages/Layout/ListItems/listItems'
+import useAuthStore from '../../../store/authStore'
+import { useAppNavigate } from '../../../utils/navigation/navigation'
 
 /*
 async function deleteSessionAPI() {
@@ -59,10 +59,10 @@ export default function AccountMenu() {
     <React.Fragment>
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
-          textAlign: "center",
-          justifyContent: "flex-end",
+          display: 'flex',
+          alignItems: 'center',
+          textAlign: 'center',
+          justifyContent: 'flex-end',
         }}
       >
         <Tooltip arrow title="Account settings">
@@ -79,7 +79,12 @@ export default function AccountMenu() {
         onClick={handleClose}
         onClose={handleClose}
       >
-        <MenuButton style={linkStyles} onClick={() => {navigation.toAccount()}}>
+        <MenuButton
+          style={linkStyles}
+          onClick={() => {
+            navigation.toAccount()
+          }}
+        >
           <MenuItem onClick={handleClose}>
             <Avatar /> Profile
           </MenuItem>
@@ -87,7 +92,12 @@ export default function AccountMenu() {
 
         <Divider />
 
-        <MenuButton style={linkStyles} onClick={() => {navigation.toSettings()}}>
+        <MenuButton
+          style={linkStyles}
+          onClick={() => {
+            navigation.toSettings()
+          }}
+        >
           <MenuItem onClick={handleClose}>
             <ListItemContent>
               <Settings fontSize="small" />

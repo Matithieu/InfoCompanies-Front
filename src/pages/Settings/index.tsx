@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react'
 import {
   Container,
   Grid,
@@ -6,25 +6,25 @@ import {
   Select,
   Sheet,
   Switch,
-  Typography
-} from "@mui/joy";
+  Typography,
+} from '@mui/joy'
 
 export default function Settings() {
-  const [language, setLanguage] = React.useState("English");
-  const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
+  const [language, setLanguage] = React.useState('English')
+  const [notificationsEnabled, setNotificationsEnabled] = React.useState(true)
 
   const handleChange = (
     _event: React.SyntheticEvent | null,
-    newValue: string | null
+    newValue: string | null,
   ) => {
-    setLanguage(newValue as string);
-  };
+    setLanguage(newValue as string)
+  }
 
   const handleNotificationsChange = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    setNotificationsEnabled(event.target.checked);
-  };
+    setNotificationsEnabled(event.target.checked)
+  }
 
   return (
     <Container maxWidth="lg">
@@ -35,7 +35,7 @@ export default function Settings() {
           marginTop: 5,
           marginLeft: 10,
           marginBottom: 5,
-          alignSelf: "flex-start",
+          alignSelf: 'flex-start',
         }}
       >
         Settings
@@ -45,18 +45,18 @@ export default function Settings() {
         container
         spacing={3}
         sx={{
-          paddingBottom: "10vh",
-          paddingLeft: "10vh",
-          paddingRight: "10vh",
-          justifyContent: "center",
+          paddingBottom: '10vh',
+          paddingLeft: '10vh',
+          paddingRight: '10vh',
+          justifyContent: 'center',
         }}
       >
         <Grid md={6} xs={12}>
           <Sheet
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
               padding: 2,
             }}
           >
@@ -65,7 +65,7 @@ export default function Settings() {
             </Typography>
             <Select
               placeholder="Language"
-              value={language ?? ""}
+              value={language ?? ''}
               onChange={handleChange}
             >
               <Option value="english">English</Option>
@@ -85,5 +85,5 @@ export default function Settings() {
         </Grid>
       </Grid>
     </Container>
-  );
+  )
 }

@@ -1,5 +1,5 @@
-import * as React from "react"
-import { Typography } from "@mui/joy"
+import { Typography } from '@mui/joy'
+import * as React from 'react'
 import {
   Label,
   Line,
@@ -8,12 +8,12 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from "recharts"
+} from 'recharts'
 
-import { getTotalOfTurnOver, TurnOver } from "../../../data/types/company"
-import { useCompanyStore } from "../../../store/companyStore"
+import { getTotalOfTurnOver, TurnOver } from '../../../data/types/company'
+import { useCompanyStore } from '../../../store/companyStore'
 
-import { useTheme } from "@mui/joy/styles"
+import { useTheme } from '@mui/joy/styles'
 
 export default function Chart() {
   const theme = useTheme()
@@ -48,7 +48,7 @@ export default function Chart() {
 
   if (turnOver === null) {
     return (
-      <a style={{ fontSize: "19px" }}>Veuillez sélectionner une entreprise</a>
+      <a style={{ fontSize: '19px' }}>Veuillez sélectionner une entreprise</a>
     )
   }
 
@@ -57,7 +57,7 @@ export default function Chart() {
     getTotalOfTurnOver(selectedCompany).turnOver.length === 0
   ) {
     return (
-      <a style={{ fontSize: "19px" }}>Pas de données pour cette entreprise</a>
+      <a style={{ fontSize: '19px' }}>Pas de données pour cette entreprise</a>
     )
   } else {
     return (
@@ -80,7 +80,7 @@ export default function Chart() {
                 angle={270}
                 position="left"
                 style={{
-                  textAnchor: "middle",
+                  textAnchor: 'middle',
                   fill: theme.palette.text.primary,
                 }}
               >
@@ -91,17 +91,17 @@ export default function Chart() {
               contentStyle={{
                 backgroundColor: theme.palette.background.body,
                 color: theme.palette.text.primary,
-                border: "none",
+                border: 'none',
                 borderRadius: 3,
               }}
-              cursor={{ strokeDasharray: "3 3" }}
+              cursor={{ strokeDasharray: '3 3' }}
               formatter={(value) => {
                 if (value === 0) {
-                  return ["Pas de données"]
+                  return ['Pas de données']
                 } else {
-                  const formattedValue = new Intl.NumberFormat("fr-FR", {
-                    style: "currency",
-                    currency: "EUR",
+                  const formattedValue = new Intl.NumberFormat('fr-FR', {
+                    style: 'currency',
+                    currency: 'EUR',
                   }).format(Number(value))
                   return [formattedValue, "Chiffre d'affaire"]
                 }

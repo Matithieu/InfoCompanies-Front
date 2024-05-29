@@ -1,8 +1,8 @@
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify'
 
-import { ErrorJwtAuth } from "../../data/errors/errorAuthJwt";
+import { ErrorJwtAuth } from '../../data/errors/errorAuthJwt'
 
-export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE"
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
 
 /**
  * Fetches data from the API with the provided configuration.
@@ -16,33 +16,32 @@ export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE"
 export const fetchWithConfig = async (
   url: string,
   method: HttpMethod,
-  options?: { body?: any; headers?: Record<string, string> }
+  options?: { body?: any; headers?: Record<string, string> },
 ): Promise<Response> => {
+  const response = await fetch(url, {
+    ...options,
+    method: method,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options?.headers,
+    },
+    body: options?.body ? JSON.stringify(options.body) : undefined,
+  })
 
-    const response = await fetch(url, {
-      ...options,
-      method: method,
-      headers: {
-        "Content-Type": "application/json",
-        ...options?.headers,
-      },
-      body: options?.body ? JSON.stringify(options.body) : undefined,
-    })
+  if (response.status === 401 || response.status === 403) {
+    const errorData: ErrorJwtAuth = await response.json()
 
-    if (response.status === 401 || response.status === 403) {
-      const errorData: ErrorJwtAuth = await response.json()
+    toast.error(errorData.message)
+    throw new Error(errorData.message)
+  }
 
-      toast.error(errorData.message)
-      throw new Error(errorData.message)
-    }
+  if (
+    response.status !== 200 &&
+    response.status !== 201 &&
+    response.status !== 204
+  ) {
+    throw new Error(`Failed to fetch data from ${url} - ${response.status}`)
+  }
 
-    if (
-      response.status !== 200 &&
-      response.status !== 201 &&
-      response.status !== 204
-    ) {
-      throw new Error(`Failed to fetch data from ${url} - ${response.status}`)
-    }
-
-    return response
+  return response
 }

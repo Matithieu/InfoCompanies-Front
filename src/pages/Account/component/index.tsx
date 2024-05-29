@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react"
+import { ChangeEvent, useEffect, useState } from 'react'
 import {
   Button,
   Card,
@@ -9,13 +9,13 @@ import {
   Grid,
   Input,
   Typography,
-} from "@mui/joy"
-import { useMutation, useQuery } from "@tanstack/react-query"
+} from '@mui/joy'
+import { useMutation, useQuery } from '@tanstack/react-query'
 
-import { User } from "../../../data/types/user"
-import useAuthStore from "../../../store/authStore"
-import { fetchUser, updateUser } from "../../../utils/api"
-import { toast } from "react-toastify"
+import { User } from '../../../data/types/user'
+import useAuthStore from '../../../store/authStore'
+import { fetchUser, updateUser } from '../../../utils/api'
+import { toast } from 'react-toastify'
 
 export default function Account() {
   const { authUser, requestLoading, setAuthUser, setRequestLoading } =
@@ -24,7 +24,7 @@ export default function Account() {
   const [editedUser, setEditedUser] = useState<User | null>(null)
 
   const { isPending, isError, data, error, refetch } = useQuery({
-    queryKey: ["user"], // Include authUser in the queryKey
+    queryKey: ['user'], // Include authUser in the queryKey
     queryFn: () => fetchUser(),
     retry: 1,
     refetchOnWindowFocus: true,
@@ -33,14 +33,14 @@ export default function Account() {
 
   const mutation = useMutation({
     mutationFn: () => updateUser(editedUser as User),
-    mutationKey: ["updateUser" + editedUser?.email],
+    mutationKey: ['updateUser' + editedUser?.email],
     retry: 0,
     onError: (error) => {
       toast.error(`Error updating user: ${error.message}`)
     },
     onSuccess: () => {
       refetch()
-      toast.success("User updated")
+      toast.success('User updated')
     },
   })
 
@@ -66,7 +66,7 @@ export default function Account() {
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    key: string
+    key: string,
   ) => {
     setEditedUser({ ...editedUser, [key]: e.target.value } as User)
   }
@@ -91,15 +91,15 @@ export default function Account() {
                 <Input
                   disabled={!editMode}
                   id="firstName"
-                  value={editedUser?.firstName ?? ""}
-                  onChange={(e) => handleChange(e, "firstName")}
+                  value={editedUser?.firstName ?? ''}
+                  onChange={(e) => handleChange(e, 'firstName')}
                 />
                 <FormLabel htmlFor="name">Name</FormLabel>
                 <Input
                   disabled={!editMode}
                   id="name"
-                  value={editedUser?.lastName ?? ""}
-                  onChange={(e) => handleChange(e, "name")}
+                  value={editedUser?.lastName ?? ''}
+                  onChange={(e) => handleChange(e, 'name')}
                 />
               </FormControl>
             </Grid>
@@ -109,8 +109,8 @@ export default function Account() {
                 <Input
                   disabled
                   id="email"
-                  value={editedUser?.email ?? ""}
-                  onChange={(e) => handleChange(e, "email")}
+                  value={editedUser?.email ?? ''}
+                  onChange={(e) => handleChange(e, 'email')}
                 />
               </FormControl>
             </Grid>
@@ -120,17 +120,17 @@ export default function Account() {
                 <Input
                   disabled={!editMode}
                   id="phone"
-                  value={editedUser?.phone ?? ""}
-                  onChange={(e) => handleChange(e, "phone")}
+                  value={editedUser?.phone ?? ''}
+                  onChange={(e) => handleChange(e, 'phone')}
                 />
               </FormControl>
             </Grid>
           </Grid>
           <div
             style={{
-              marginTop: "20px",
-              display: "flex",
-              justifyContent: "flex-end",
+              marginTop: '20px',
+              display: 'flex',
+              justifyContent: 'flex-end',
             }}
           >
             {requestLoading ? (

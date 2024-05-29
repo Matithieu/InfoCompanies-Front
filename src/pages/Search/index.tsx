@@ -1,6 +1,6 @@
-import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined"
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft"
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"
+import ApartmentOutlinedIcon from '@mui/icons-material/ApartmentOutlined'
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import {
   Box,
   Grid,
@@ -10,15 +10,15 @@ import {
   Table,
   Tooltip,
   Typography,
-} from "@mui/joy"
-import { useQuery } from "@tanstack/react-query"
-import React, { useEffect } from "react"
-import { useParams } from "react-router-dom"
+} from '@mui/joy'
+import { useQuery } from '@tanstack/react-query'
+import React, { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 
-import { ErrorButton } from "../../components/common/buttons/logout.tsx"
-import { CompanyDetails, Page } from "../../data/types/companyDetails.ts"
-import { fetchCompanyBySearchTerm } from "../../utils/api/index.ts"
-import { useAppNavigate } from "../../utils/navigation/navigation.tsx"
+import { ErrorButton } from '../../components/common/buttons/logoutButton.tsx'
+import { CompanyDetails, Page } from '../../data/types/companyDetails.ts'
+import { fetchCompanyBySearchTerm } from '../../utils/api/index.ts'
+import { useAppNavigate } from '../../utils/navigation/navigation.tsx'
 
 async function fetchCompanies(searchTerm: string, page: number) {
   const response = await fetchCompanyBySearchTerm(searchTerm, page)
@@ -34,7 +34,7 @@ async function fetchCompanies(searchTerm: string, page: number) {
  * @returns A table of companies with their details for the search page
  */
 function TableOfDetails() {
-  const { navigation } = useAppNavigate();
+  const { navigation } = useAppNavigate()
 
   const { searchTerm } = useParams()
 
@@ -45,8 +45,8 @@ function TableOfDetails() {
   })
 
   const { isPending, isError, data, error } = useQuery({
-    queryKey: ["companies", searchTerm, dataPagniation.page],
-    queryFn: () => fetchCompanies(searchTerm ?? "", dataPagniation.page),
+    queryKey: ['companies', searchTerm, dataPagniation.page],
+    queryFn: () => fetchCompanies(searchTerm ?? '', dataPagniation.page),
     retry: 1,
     refetchOnWindowFocus: false,
   })
@@ -84,11 +84,11 @@ function TableOfDetails() {
     return (
       <div
         style={{
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          display: "flex",
-          height: "200px",
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          display: 'flex',
+          height: '200px',
         }}
       >
         <h1>Chargement des données...</h1>
@@ -98,11 +98,11 @@ function TableOfDetails() {
     return (
       <div
         style={{
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          display: "flex",
-          height: "200px",
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          display: 'flex',
+          height: '200px',
         }}
       >
         <h1>Aucune entreprise trouvée</h1>
@@ -114,9 +114,9 @@ function TableOfDetails() {
         <Sheet
           aria-label="order-table-container"
           sx={{
-            display: { xs: "none", sm: "initial" },
-            width: "100%",
-            borderRadius: "sm",
+            display: { xs: 'none', sm: 'initial' },
+            width: '100%',
+            borderRadius: 'sm',
             flexShrink: 1,
             minHeight: 0,
           }}
@@ -127,17 +127,17 @@ function TableOfDetails() {
             stickyHeader
             aria-labelledby="tableTitle"
             sx={{
-              "--TableCell-headBackground":
-                "var(--joy-palette-background-level1)",
-              "--Table-headerUnderlineThickness": "1px",
-              "--TableRow-hoverBackground":
-                "var(--joy-palette-background-level1)",
-              "--TableCell-paddingY": "4px",
-              "--TableCell-paddingX": "8px",
+              '--TableCell-headBackground':
+                'var(--joy-palette-background-level1)',
+              '--Table-headerUnderlineThickness': '1px',
+              '--TableRow-hoverBackground':
+                'var(--joy-palette-background-level1)',
+              '--TableCell-paddingY': '4px',
+              '--TableCell-paddingX': '8px',
             }}
           >
             <thead>
-              <tr style={{ fontSize: 16, alignItems: "left" }}>
+              <tr style={{ fontSize: 16, alignItems: 'left' }}>
                 <th align="left"></th>
                 <th align="left">Dénomination</th>
                 <th align="center">Secteur d&apos;activité</th>
@@ -150,7 +150,7 @@ function TableOfDetails() {
                 <tr
                   key={row.id}
                   id={`company-${row.id}`}
-                  style={{ cursor: "pointer", alignItems: "left" }}
+                  style={{ cursor: 'pointer', alignItems: 'left' }}
                   onClick={() => {
                     navigation.toCompany(row.id.toString())
                   }}
@@ -172,19 +172,19 @@ function TableOfDetails() {
             sx={{
               pt: 2,
               gap: 1,
-              [`& .${iconButtonClasses.root}`]: { borderRadius: "50%" },
+              [`& .${iconButtonClasses.root}`]: { borderRadius: '50%' },
               display: {
-                xs: "none",
-                md: "flex",
+                xs: 'none',
+                md: 'flex',
               },
             }}
           >
             <Box
               sx={{
-                flexDirection: "row",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
+                flexDirection: 'row',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
                 gap: 1.5,
               }}
             >
@@ -193,7 +193,7 @@ function TableOfDetails() {
                   color="neutral"
                   disabled={dataPagniation.page === 0}
                   size="sm"
-                  sx={{ bgcolor: "background.surface" }}
+                  sx={{ bgcolor: 'background.surface' }}
                   variant="outlined"
                   onClick={() => handleChangePage(dataPagniation.page - 1)}
                 >
@@ -210,7 +210,7 @@ function TableOfDetails() {
                     dataPagniation.page === dataPagniation.totalPages - 1
                   }
                   size="sm"
-                  sx={{ bgcolor: "background.surface" }}
+                  sx={{ bgcolor: 'background.surface' }}
                   variant="outlined"
                   onClick={() => handleChangePage(dataPagniation.page + 1)}
                 >
@@ -233,7 +233,7 @@ export default function Search() {
   const { searchTerm } = useParams()
 
   return (
-    <Box sx={{ flex: 1, width: "100%" }}>
+    <Box sx={{ flex: 1, width: '100%' }}>
       <Box
         sx={{
           px: { xs: 2, md: 6 },
@@ -255,14 +255,14 @@ export default function Search() {
         <Grid md={12} xs={12}>
           <Box
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
               minHeight: 320,
-              height: "100%",
-              width: "100%",
-              margin: "auto", // Center horizontally
+              height: '100%',
+              width: '100%',
+              margin: 'auto', // Center horizontally
             }}
           >
             <TableOfDetails />

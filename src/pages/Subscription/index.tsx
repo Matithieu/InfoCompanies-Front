@@ -1,12 +1,12 @@
-import { Button, Card, CardActions, CardContent, Typography } from "@mui/joy";
-import React from "react";
+import { Button, Card, CardActions, CardContent, Typography } from '@mui/joy'
+import React from 'react'
 
-import { ItemData } from "../../data/Stripe/itemData";
-import { Products } from "../../data/Stripe/subscription";
-import { useAppNavigate } from "../../utils/navigation/navigation";
+import { ItemData } from '../../data/Stripe/itemData'
+import { Products } from '../../data/Stripe/subscription'
+import { useAppNavigate } from '../../utils/navigation/navigation'
 
 function SubscriptionOption(item: ItemData) {
-  const { navigation } = useAppNavigate();
+  const { navigation } = useAppNavigate()
 
   return (
     <Card>
@@ -24,32 +24,32 @@ function SubscriptionOption(item: ItemData) {
           color="primary"
           variant="soft"
           onClick={() => {
-            navigation.toPayment(item, "/subscriptions/trial");
+            navigation.toPayment(item, '/subscriptions/trial')
           }}
         >
           Subscribe
         </Button>
       </CardActions>
     </Card>
-  );
+  )
 }
 
 const Subscription: React.FC = () => {
-  const subscriptions = Products.sort((a, b) => a.price - b.price);
+  const subscriptions = Products.sort((a, b) => a.price - b.price)
   // Ajoutez d'autres options ici
   return (
     <div
       style={{
-        display: "flex",
-        justifyContent: "space-around",
-        padding: "20px",
+        display: 'flex',
+        justifyContent: 'space-around',
+        padding: '20px',
       }}
     >
       {subscriptions.map((option, index) => (
         <SubscriptionOption key={index} {...option} />
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default Subscription;
+export default Subscription
