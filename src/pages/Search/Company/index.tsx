@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 
 import { useParams } from 'react-router-dom'
-import { ErrorButton } from '../../../components/common/buttons/logoutButton.tsx'
+import { ErrorButton } from '../../../components/common/buttons/AuthButtons.tsx'
 import ScrapCompanyButton from '../../../components/common/buttons/scrapCompanyButton.tsx'
 import {
   manageIsChecked,

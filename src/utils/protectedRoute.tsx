@@ -1,7 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
-import { toast } from 'react-toastify'
+import {
+  toastErrorConnect,
+  toastErrorReconnect,
+  toastWarnSelectSubscription,
+} from '../components/common/Toasts/toasts'
 import Loading from '../pages/Loading'
 import useAuthStore from '../store/authStore'
 import { fetchUser } from './api'
@@ -30,12 +34,12 @@ export const ProtectedRoutes = () => {
   }
 
   if (authUser === null && !isSuccess) {
-    toast.error('Please connect to continue.')
+    toastErrorReconnect()
     return <Navigate to={routesPath.base} />
   }
 
   if (authUser?.isVerified === false && !isSuccess) {
-    toast.error('Please select a subscription to continue.')
+    toastWarnSelectSubscription()
     return <Navigate to={routesPath.base} />
   }
 
@@ -65,7 +69,7 @@ export const ProtectedSimpleRoutes = () => {
   }
 
   if (authUser === null && !isSuccess) {
-    toast.error('Please connect to continue.')
+    toastErrorConnect()
     return <Navigate to={routesPath.base} />
   }
 
@@ -74,7 +78,7 @@ export const ProtectedSimpleRoutes = () => {
     window.location.pathname !== '/subscription' &&
     !isSuccess
   ) {
-    toast.error('Please select a subscription to continue.')
+    toastWarnSelectSubscription()
     return <Navigate to={routesPath.subscription} />
   }
 
