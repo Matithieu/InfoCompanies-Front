@@ -3,9 +3,10 @@ import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined
 import EmailIcon from '@mui/icons-material/Email'
 import PhoneIcon from '@mui/icons-material/Phone'
 import WebAssetIcon from '@mui/icons-material/WebAsset'
-import { Box, Table, Tooltip, Typography } from '@mui/joy'
+import { Box, Table } from '@mui/joy'
 
 import { useCompanyStore } from '../../../store/companyStore'
+import DetailsCompanyRow from './components/DetailsCompanyRow'
 
 export default function DetailsCompany() {
   const { selectedCompany } = useCompanyStore()
@@ -23,85 +24,45 @@ export default function DetailsCompany() {
             justifyContent: 'center',
           }}
         >
-          Détails
+          Details
         </a>
         <Table aria-label="List Of Leaders">
           <tbody>
-            <tr style={{ border: 0 }}>
-              <td scope="row">
-                <span style={{ marginLeft: '10px' }}></span>
-                <Typography
-                  startDecorator={
-                    <Tooltip arrow placement="top" title="Numéro de téléphone">
-                      <PhoneIcon />
-                    </Tooltip>
-                  }
-                  style={{ fontSize: '18px', overflow: 'hidden ' }}
-                >
-                  {selectedCompany.phoneNumber ?? 'No phone found'}
-                </Typography>
-              </td>
-            </tr>
-            <tr style={{ border: 0 }}>
-              <td scope="row">
-                <span style={{ marginLeft: '10px' }}></span>
-                <Typography
-                  startDecorator={
-                    <Tooltip arrow placement="top" title="Adresse email">
-                      <EmailIcon />
-                    </Tooltip>
-                  }
-                  style={{ fontSize: '18px', overflow: 'hidden ' }}
-                >
-                  {selectedCompany.email ?? 'No email found'}
-                </Typography>
-              </td>
-            </tr>
-            <tr style={{ border: 0 }}>
-              <td scope="row">
-                <span style={{ marginLeft: '10px' }}></span>
-                <Typography
-                  startDecorator={
-                    <Tooltip arrow placement="top" title="Site web">
-                      <WebAssetIcon />
-                    </Tooltip>
-                  }
-                  style={{ fontSize: '18px', overflow: 'auto' }}
-                >
-                  {selectedCompany.website ?? 'No website found'}
-                </Typography>
-              </td>
-            </tr>
-            <tr style={{ border: 0 }}>
-              <td scope="row">
-                <span style={{ marginLeft: '10px' }}></span>
-                <Typography
-                  startDecorator={
-                    <Tooltip arrow placement="top" title="Adresse">
-                      <BusinessIcon />
-                    </Tooltip>
-                  }
-                  style={{ fontSize: '18px', overflow: 'hidden ' }}
-                >
-                  {selectedCompany.address ?? 'No address found'}
-                </Typography>
-              </td>
-            </tr>
-            <tr style={{ border: 0 }}>
-              <td scope="row">
-                <span style={{ marginLeft: '10px' }}></span>
-                <Typography
-                  startDecorator={
-                    <Tooltip arrow placement="top" title="Date de création">
-                      <CalendarTodayOutlinedIcon />
-                    </Tooltip>
-                  }
-                  style={{ fontSize: '18px', overflow: 'hidden ' }}
-                >
-                  {selectedCompany.dateRegistration ?? 'No date found'}
-                </Typography>
-              </td>
-            </tr>
+            <DetailsCompanyRow
+              content={selectedCompany.phoneNumber}
+              icon={<PhoneIcon />}
+              noContent="No phone found"
+              tooltipContent="Phone Number"
+            />
+
+            <DetailsCompanyRow
+              content={selectedCompany.email}
+              icon={<EmailIcon />}
+              noContent="No email found"
+              tooltipContent="Email"
+            />
+
+            <DetailsCompanyRow
+              isLink
+              content={selectedCompany.website}
+              icon={<WebAssetIcon />}
+              noContent="No website found"
+              tooltipContent="Website"
+            />
+
+            <DetailsCompanyRow
+              content={selectedCompany.address}
+              icon={<BusinessIcon />}
+              noContent="No address found"
+              tooltipContent="Address"
+            />
+
+            <DetailsCompanyRow
+              content={selectedCompany.dateRegistration}
+              icon={<CalendarTodayOutlinedIcon />}
+              noContent="No creation date found"
+              tooltipContent="Creation Date"
+            />
           </tbody>
         </Table>
       </Box>
