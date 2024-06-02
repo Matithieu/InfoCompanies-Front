@@ -95,36 +95,37 @@ const AdvancedSearch = () => {
           justifyContent="flex-start"
           padding="10px"
           spacing={1}
+          sx={{
+            flexDirection: { xs: 'column', sm: 'row' },
+            flexWrap: 'wrap',
+          }}
           width="100%"
         >
           <Grid md={4} sm={6} xs={12}>
             <CustomSelect
+              key="legal-status"
+              handleSelectChange={handleLegalStatusChange}
               label="Status légaux"
               options={legalStatus}
-              placeholder="Status légaux"
               selectedValues={searchTerm.legalStatusValue}
-              value={searchTerm.legalStatusValue}
-              onSelectionChange={handleLegalStatusChange}
             />
           </Grid>
           <Grid md={4} sm={6} xs={12}>
             <CustomSelect
+              key="activity-area"
+              handleSelectChange={handleActivityAreaChange}
               label="Secteur d'activité"
               options={activityArea}
-              placeholder="Secteur d'activité"
               selectedValues={searchTerm.activityAreaValue}
-              value={searchTerm.activityAreaValue}
-              onSelectionChange={handleActivityAreaChange}
             />
           </Grid>
           <Grid md={4} sm={6} xs={12}>
             <CustomSelect
+              key="region"
+              handleSelectChange={handleRegionChange}
               label="Région"
               options={region}
-              placeholder="Région"
               selectedValues={searchTerm.regionValue}
-              value={searchTerm.regionValue}
-              onSelectionChange={handleRegionChange}
             />
           </Grid>
           <Grid md={4} sm={6} xs={12}>
@@ -208,7 +209,13 @@ export default function Dashboard() {
       </Box>
 
       <Grid lg={3} md={4} paddingLeft={8} sm={6} xs={12}>
-        <AdvancedSearch />
+        <AdvancedSearch
+          key={
+            searchParams.activityArea.length +
+            searchParams.region.length +
+            searchParams.legalStatus.length
+          }
+        />
       </Grid>
 
       <Grid
