@@ -1,9 +1,31 @@
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
+import { useQuery } from '@tanstack/react-query'
 import { ItemData } from '../../data/Stripe/itemData.ts'
+import { User } from '../../data/types/user.ts'
 import useAuthStore from '../../store/authStore.tsx'
 import Loading from '../Loading/index.tsx'
+
+const fetchSubscription = async (itemData: ItemData, user: User) => {
+  const response = await fetch(
+    import.meta.env.VITE_API_BASE_URL + '/subscriptions/trial',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        item: itemData.id,
+        customerName: user?.lastName,
+        customerEmail: user?.email,
+        subscriptionId: '',
+      }),
+    },
+  )
+
+  return response.text()
+}
 
 // Make this a functional component that takes in the item data as a prop
 function Payment() {
@@ -38,29 +60,24 @@ function Payment() {
   }, []);
   */
 
-  useEffect(() => {
-    console.log('itemData ', itemData)
-    fetch(import.meta.env.VITE_API_BASE_URL + '/subscriptions/trial', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        item: itemData.id,
-        customerName: authUser?.lastName,
-        customerEmail: authUser?.email,
-        subscriptionId: '',
-      }),
-    })
-      .then((r) => r.text())
-      .then((r) => {
-        window.location.replace(r)
-      })
-  }, [])
+  const { isPending, isError, data, error, isSuccess } = useQuery({
+    queryKey: ['subcription', itemData, authUser],
+    queryFn: () => {
+      if (authUser) {
+        return fetchSubscription(itemData, authUser)
+      }
+    },
+    retry: 1,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+  })
 
-  if (loading) {
-    return <Loading />
-  }
+  if (loading || isPending) return <Loading />
+
+  if (isSuccess && data) window.location.replace(data)
+
+  if (isError) return <div>{error.message}</div>
 
   return <Loading />
 }
