@@ -16,7 +16,9 @@
   background: linear-gradient(45deg, #c0c0c0, #a0a0a0);
   border-radius: 10px;
   border: 2px solid #e0e0e0;
-  transition: background 0.3s, border 0.3s;
+  transition:
+    background 0.3s,
+    border 0.3s;
 }
 
 /* Handle on hover */
