@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify'
 
-import { ErrorJwtAuth } from '../../data/errors/errorAuthJwt'
+import { toastErrorQuotaExceeded } from '../../components/common/Toasts/toasts'
+import { ErrorFromApi } from '../../data/errors/errorFromApi'
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
 
@@ -28,19 +29,21 @@ export const fetchWithConfig = async (
     body: options?.body ? JSON.stringify(options.body) : undefined,
   })
 
-  if (response.status === 401 || response.status === 403) {
-    const errorData: ErrorJwtAuth = await response.json()
-
-    toast.error(errorData.message)
-    throw new Error(errorData.message)
-  }
-
-  if (
-    response.status !== 200 &&
-    response.status !== 201 &&
-    response.status !== 204
-  ) {
-    throw new Error(`Failed to fetch data from ${url} - ${response.status}`)
+  switch (response.status) {
+    case 401:
+    case 403:
+      const errorData: ErrorFromApi = await response.json()
+      toast.error(errorData.message)
+      throw new Error(errorData.message)
+    case 429:
+      toastErrorQuotaExceeded()
+      throw new Error('Too many requests')
+    case 200:
+    case 201:
+    case 204:
+      break
+    default:
+      throw new Error(`Failed to fetch data from ${url} - ${response.status}`)
   }
 
   return response

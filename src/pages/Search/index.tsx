@@ -15,7 +15,7 @@ import { useQuery } from '@tanstack/react-query'
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { ErrorButton } from '../../components/common/buttons/AuthButtons.tsx'
+import { GlobalErrorButton } from '../../components/common/buttons/GlobalErrorButton.tsx'
 import { CompanyDetails, Page } from '../../data/types/companyDetails.ts'
 import { fetchCompanyBySearchTerm } from '../../utils/api/index.ts'
 import { useAppNavigate } from '../../utils/navigation/navigation.tsx'
@@ -77,7 +77,7 @@ function TableOfDetails() {
   }
 
   if (error !== null && isError) {
-    return <ErrorButton error={error} />
+    return <GlobalErrorButton error={error} />
   }
 
   if (isPending || data === undefined) {

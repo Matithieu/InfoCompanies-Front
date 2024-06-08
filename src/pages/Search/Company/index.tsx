@@ -5,12 +5,12 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 
 import { useParams } from 'react-router-dom'
-import { ErrorButton } from '../../../components/common/buttons/AuthButtons.tsx'
+import { GlobalErrorButton } from '../../../components/common/buttons/GlobalErrorButton.tsx'
 import ScrapCompanyButton from '../../../components/common/buttons/scrapCompanyButton.tsx'
 import {
   manageIsChecked,
   StatutIcon,
-} from '../../../components/common/StatutIcon/index.tsx'
+} from '../../../components/common/Icons/StatutIcon.tsx'
 import Chart from '../../../components/parts/Chart/index.tsx'
 import DetailsCompany from '../../../components/parts/DetailsCompany/index.tsx'
 import ListOfLeaders from '../../../components/parts/ListOfLeaders/index.tsx'
@@ -83,7 +83,7 @@ export default function CompanyPage() {
   }
 
   if (error !== null && isError) {
-    return <ErrorButton error={error} />
+    return <GlobalErrorButton error={error} />
   }
 
   if (isPending) {

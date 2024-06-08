@@ -1,12 +1,13 @@
 import { Button, Typography } from '@mui/joy'
 
 import useAuthManager from '../../../hooks/useAuthManager'
+import { useAppNavigate } from '../../../utils/navigation/navigation'
 
-type AuthButtonProps = {
+type ButtonProps = {
   message?: string
 }
 
-export function LoginButton({ message }: AuthButtonProps) {
+export function LoginButton({ message }: ButtonProps) {
   const authUser = useAuthManager()
 
   return (
@@ -27,7 +28,7 @@ export function LoginButton({ message }: AuthButtonProps) {
   )
 }
 
-export function LogoutButton({ message }: AuthButtonProps) {
+export function LogoutButton({ message }: ButtonProps) {
   const authUser = useAuthManager()
 
   return (
@@ -46,27 +47,7 @@ export function LogoutButton({ message }: AuthButtonProps) {
   )
 }
 
-interface ErrorButtonProps {
-  error: Error
-}
-
-export function ErrorButton({ error }: ErrorButtonProps) {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <h1>{error.message + `: ${error.name}}`}</h1>
-      <LogoutButton />
-    </div>
-  )
-}
-
-export function SelectSubscriptionButton({ message }: AuthButtonProps) {
+export function SelectSubscriptionButton({ message }: ButtonProps) {
   return (
     <Typography>
       {message}
@@ -80,5 +61,30 @@ export function SelectSubscriptionButton({ message }: AuthButtonProps) {
         Select Subscription
       </Button>
     </Typography>
+  )
+}
+
+export function QuotaExceededButton({ message }: ButtonProps) {
+  const { navigation } = useAppNavigate()
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+      }}
+    >
+      <Typography>{message}</Typography>
+      <Button
+        color="primary"
+        variant="soft"
+        onClick={() => {
+          navigation.toAccount()
+        }}
+      >
+        Change Plan
+      </Button>
+    </div>
   )
 }

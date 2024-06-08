@@ -11,10 +11,10 @@ import { useCompanyStore } from '../../../store/companyStore.tsx'
 import { useCompanyFilterStore } from '../../../store/filtersStore.tsx'
 import { fetchCompaniesWithUrlAndPage } from '../../../utils/api/index.ts'
 import { parseJsonToCompany } from '../../../utils/parseJsonToObject.ts'
-import { ErrorButton } from '../../common/buttons/AuthButtons.tsx'
+import { GlobalErrorButton } from '../../common/buttons/GlobalErrorButton.tsx'
 import Pagination from '../../common/buttons/Pagination.tsx'
+import { manageIsChecked, StatutIcon } from '../../common/Icons/StatutIcon.tsx'
 import { TableSkeleton } from '../../common/Loaders/Skeleton/index.tsx'
-import { manageIsChecked, StatutIcon } from '../../common/StatutIcon/index.tsx'
 import TableCompanyRow from './components/TableCompanyRow.tsx'
 
 // https://www.material-react-table.com/
@@ -145,7 +145,18 @@ export default function TableCompany({ url }: Props) {
   }
 
   if (error !== null && isError) {
-    return <ErrorButton error={error} />
+    return (
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <GlobalErrorButton error={error} />
+      </div>
+    )
   }
 
   if (isPending) {

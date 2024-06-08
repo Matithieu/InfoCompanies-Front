@@ -1,5 +1,9 @@
 import { toast } from 'react-toastify'
-import { LoginButton, SelectSubscriptionButton } from '../buttons/AuthButtons'
+import {
+  LoginButton,
+  QuotaExceededButton,
+  SelectSubscriptionButton,
+} from '../buttons/AuthButtons'
 
 export function toastErrorConnect() {
   return toast.error(<LoginButton message="Please connect to continue." />)
@@ -12,5 +16,15 @@ export function toastErrorReconnect() {
 export function toastWarnSelectSubscription() {
   return toast.warn(
     <SelectSubscriptionButton message="Please select a subscription to continue." />,
+  )
+}
+
+export function toastErrorQuotaExceeded() {
+  return toast.error(
+    <QuotaExceededButton
+      message="
+          Quota dépassé! Changez de plan pour continuer ou veuillez attendre la
+          fin du mois."
+    />,
   )
 }

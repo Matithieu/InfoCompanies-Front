@@ -264,8 +264,7 @@ export default function Dashboard() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 minHeight: 220,
-                minWidth: '400',
-                maxWidth: '400px',
+                minWidth: 400,
                 overflow: 'hidden',
               }}
             >

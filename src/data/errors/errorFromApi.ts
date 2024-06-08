@@ -1,4 +1,4 @@
-export interface ErrorJwtAuth {
+export interface ErrorFromApi {
   path: string
   message: string
   status: string
