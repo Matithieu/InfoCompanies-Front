@@ -1,10 +1,7 @@
 import { Column } from '../../../../data/types/columns'
 import { Company } from '../../../../data/types/company'
 
-import FacebookIcon from '@mui/icons-material/Facebook'
-import LinkedInIcon from '@mui/icons-material/LinkedIn'
-import TwitterIcon from '@mui/icons-material/Twitter'
-import YouTubeIcon from '@mui/icons-material/YouTube'
+import TableCompanySocial from './TableCompanySocial'
 
 type TableCompanyRowProps = {
   column: Column
@@ -14,20 +11,7 @@ type TableCompanyRowProps = {
 export default function TableCompanyRow({ column, row }: TableCompanyRowProps) {
   switch (column.id) {
     case 'socialMedia':
-      return (
-        <>
-          {row.socialMedia.facebook && (
-            <FacebookIcon style={{ color: '#3b5998' }} />
-          )}
-          {row.socialMedia.twitter && (
-            <TwitterIcon style={{ color: '#1DA1F2' }} />
-          )}
-          {row.socialMedia.linkedin && (
-            <LinkedInIcon style={{ color: '#0e76a8' }} />
-          )}
-          {row.socialMedia.youtube && <YouTubeIcon style={{ color: 'red' }} />}
-        </>
-      )
+      return <TableCompanySocial socialMedia={row.socialMedia} />
     case 'dateRegistration':
     case 'industrySector':
     case 'legalForm':

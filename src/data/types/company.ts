@@ -10,7 +10,7 @@ export type FinancialYear = {
   result3: number
 }
 
-type SocialMedia = {
+export type SocialMedia = {
   instagram: string
   facebook: string
   twitter: string
