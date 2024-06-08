@@ -145,18 +145,7 @@ export default function TableCompany({ url }: Props) {
   }
 
   if (error !== null && isError) {
-    return (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <GlobalErrorButton error={error} />
-      </div>
-    )
+    return <GlobalErrorButton error={error} />
   }
 
   if (isPending) {

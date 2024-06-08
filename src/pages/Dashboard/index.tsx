@@ -191,7 +191,7 @@ export default function Dashboard() {
     changeURL()
   }, [searchParams])
   return (
-    <Grid>
+    <Grid flexDirection="column">
       <Seo
         description="Dashboard"
         name="Dashboard"
