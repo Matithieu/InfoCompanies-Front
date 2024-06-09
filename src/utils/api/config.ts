@@ -19,7 +19,9 @@ export const fetchWithConfig = async (
   method: HttpMethod,
   options?: { body?: any; headers?: Record<string, string> },
 ): Promise<Response> => {
-  const response = await fetch(url, {
+  const baseUrl = import.meta.env.VITE_API_PREFIX
+
+  const response = await fetch(baseUrl + url, {
     ...options,
     method: method,
     headers: {

@@ -5,7 +5,7 @@ import { parseJsonToCompany, parseJsonToUser } from '../parseJsonToObject'
 import { fetchWithConfig } from './config'
 
 export const fetchUser = async () => {
-  const response = await fetchWithConfig('/api/v1/user', 'GET')
+  const response = await fetchWithConfig('/v1/user', 'GET')
 
   if (response) {
     return parseJsonToUser(await response.json())
@@ -15,7 +15,7 @@ export const fetchUser = async () => {
 }
 
 export const fetchTest = async () => {
-  const response = await fetchWithConfig('api/v1/company/test', 'GET')
+  const response = await fetchWithConfig('/v1/company/test', 'GET')
 
   if (response) {
     return response.toString()
@@ -26,7 +26,7 @@ export const fetchTest = async () => {
 
 export async function fetchCompaniesWithUrlAndPage(url: string, page: number) {
   const response = await fetchWithConfig(
-    `/api/v1/company/${url}page=${page}`,
+    `/v1/company/${url}page=${page}`,
     'GET',
   )
 
@@ -43,7 +43,7 @@ export async function fetchCompanyBySearchTerm(
   page: number,
 ) {
   const response = await fetchWithConfig(
-    `/api/v1/company/search-by-name?companyName=${searchTerm}&page=${page}`,
+    `/v1/company/search-by-name?companyName=${searchTerm}&page=${page}`,
     'GET',
   )
 
@@ -56,10 +56,7 @@ export async function fetchCompanyBySearchTerm(
 }
 
 export async function fetchCompnayById(id: string) {
-  const response = await fetchWithConfig(
-    `/api/v1/company/get-by-id/${id}`,
-    'GET',
-  )
+  const response = await fetchWithConfig(`/v1/company/get-by-id/${id}`, 'GET')
 
   if (response) {
     return parseJsonToCompany(await response.json())
@@ -70,7 +67,7 @@ export async function fetchCompnayById(id: string) {
 
 export async function fetchCompanyScrap(companyId: number) {
   const response = await fetchWithConfig(
-    `/api/v1/company/scrap?companyId=${companyId}`,
+    `/v1/company/scrap?companyId=${companyId}`,
     'GET',
   )
 
@@ -82,7 +79,7 @@ export async function fetchCompanyScrap(companyId: number) {
 }
 
 export async function updateUser(user: User) {
-  const response = await fetchWithConfig('/api/v1/update-user', 'PUT', {
+  const response = await fetchWithConfig('/v1/update-user', 'PUT', {
     body: user,
   })
 

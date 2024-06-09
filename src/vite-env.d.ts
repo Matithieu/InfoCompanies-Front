@@ -16,6 +16,7 @@ interface ImportMetaEnv {
   VITE_OAUTH_SIGNOUT_REDIRECT_URL: string
 
   VITE_API_BASE_URL: string
+  VITE_API_PREFIX: string
   VITE_API_BASE_V1_URL: string
   VITE_API_COMPANY_ENDPOINT: string
 }
