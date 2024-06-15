@@ -1,7 +1,7 @@
 import './style.css'
 
 import { IconButton, Sheet, Table } from '@mui/joy'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import * as React from 'react'
 import { useEffect } from 'react'
 
@@ -9,26 +9,17 @@ import { columnsTableCompany } from '../../../data/types/columns.ts'
 import { CheckStatus, Company } from '../../../data/types/company.ts'
 import { useCompanyStore } from '../../../store/companyStore.tsx'
 import { useCompanyFilterStore } from '../../../store/filtersStore.tsx'
-import { fetchCompaniesWithUrlAndPage } from '../../../utils/api/index.ts'
+import {
+  fetchCompaniesWithUrlAndPage,
+  updateSeenCompany,
+} from '../../../utils/api/index.ts'
+import { manageIsChecked } from '../../../utils/manageIsChecked.tsx'
 import { parseJsonToCompany } from '../../../utils/parseJsonToObject.ts'
 import { GlobalErrorButton } from '../../common/buttons/GlobalErrorButton.tsx'
 import Pagination from '../../common/buttons/Pagination.tsx'
-import { manageIsChecked, StatutIcon } from '../../common/Icons/StatutIcon.tsx'
+import { StatutIcon } from '../../common/Icons/StatutIcon.tsx'
 import { TableSkeleton } from '../../common/Loaders/Skeleton/index.tsx'
 import TableCompanyRow from './components/TableCompanyRow.tsx'
-
-// https://www.material-react-table.com/
-// agGrid
-// Using this ?
-
-// TODO: Replace this with the data from the API
-/*
-const leader1 = new Leader(1, "JEAN", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 1, denomination: "Entreprise 1" }])
-const leader2 = new Leader(2, "JOSEPHE", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 2, denomination: "Entreprise 1" }])
-const leader3 = new Leader(3, "HENRI", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 4, denomination: "Entreprise 4" }])
-const leader4 = new Leader(4, "EUDES", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 5, denomination: "Entreprise 5" }])
-const leader5 = new Leader(5, "HERCUL", "Dupont", new Date("1990-01-01"), "06 00 00 00 00", "email", [{ id: 6, denomination: "Entreprise 6" }])
-*/
 
 async function fetchCompanies(url: string, page: number) {
   const data = await fetchCompaniesWithUrlAndPage(url, page)
@@ -63,13 +54,8 @@ type Props = {
   url: string
 }
 
-/**
- *
- * @param param0 Takes a callback function as a parameter and displays a table of companies
- * @returns A table of companies with their details
- */
 export default function TableCompany({ url }: Props) {
-  const [dataPagniation, setDataPagination] = React.useState({
+  const [dataPagination, setDataPagination] = React.useState({
     page: 0,
     rowsPerPage: 10,
     totalPages: 0,
@@ -80,11 +66,11 @@ export default function TableCompany({ url }: Props) {
   const { searchParams } = useCompanyFilterStore()
 
   const { isPending, isError, data, error } = useQuery({
-    queryKey: ['companies', url, dataPagniation.page, searchParams],
-    queryFn: () => fetchCompanies(url, dataPagniation.page),
+    queryKey: ['companies', url, dataPagination.page, searchParams],
+    queryFn: () => fetchCompanies(url, dataPagination.page),
     retry: 1,
     refetchOnWindowFocus: false,
-    refetchOnMount: false,
+    refetchOnMount: true,
     refetchOnReconnect: false,
   })
 
@@ -105,15 +91,12 @@ export default function TableCompany({ url }: Props) {
     }))
   }
 
-  // const handleChangeRowsPerPage = (
-  //   event: React.ChangeEvent<HTMLInputElement>
-  // ) => {
-  //   setDataPagination((prevDataPagination) => ({
-  //     ...prevDataPagination,
-  //     rowsPerPage: +event.target.value,
-  //     page: 0,
-  //   }));
-  // };
+  const mutation = useMutation({
+    mutationFn: (companyId: number) => updateSeenCompany([companyId]),
+    onError: (error) => {
+      console.error(`Error updating recommendations: ${error.message}`)
+    },
+  })
 
   const handleDetailsClick = (company: Company) => {
     if (company !== selectedCompany) {
@@ -122,22 +105,25 @@ export default function TableCompany({ url }: Props) {
     }
   }
 
-  // TODO : Another function is in the file src/pages/Company/index.tsx
   const handleChangeStatut = (company: Company) => {
     let newStatus: CheckStatus
 
-    if (company.checked === CheckStatus.NOT_DONE) {
-      newStatus = CheckStatus.TO_DO
-    } else if (company.checked === CheckStatus.TO_DO) {
-      newStatus = CheckStatus.DONE
-    } else {
-      newStatus = CheckStatus.NOT_DONE
+    switch (company.checked) {
+      case CheckStatus.NOT_DONE:
+        newStatus = CheckStatus.TO_DO
+        mutation.mutate(company.id)
+        break
+      case CheckStatus.TO_DO:
+        newStatus = CheckStatus.DONE
+        break
+      default:
+        newStatus = CheckStatus.NOT_DONE
+        mutation.mutate(company.id)
     }
 
     company.checked = newStatus
     manageIsChecked(company.id, newStatus)
 
-    // Change the status of the company in data
     setCompanies((prevCompanies) =>
       prevCompanies.map((item) => (item.id === company.id ? company : item)),
     )
@@ -249,7 +235,7 @@ export default function TableCompany({ url }: Props) {
           </Table>
         </Sheet>
         <Pagination
-          dataPagniation={dataPagniation}
+          dataPagination={dataPagination}
           handleChangePage={handleChangePage}
         />
       </React.Fragment>

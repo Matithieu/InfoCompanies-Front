@@ -31,33 +31,3 @@ export const StatutIcon = ({ statut }: StatutIconProps) => {
       )
   }
 }
-
-export const manageIsChecked = (
-  companyId: number | undefined,
-  currentStatus: CheckStatus,
-) => {
-  const checkedDone = JSON.parse(localStorage.getItem('checkedDone') || '[]')
-  const checkedToDo = JSON.parse(localStorage.getItem('checkedToDo') || '[]')
-
-  // Suppression du SIREN des deux listes
-  const removeFromList = (list: number[], id: number) => {
-    const index = list.indexOf(id)
-
-    if (index !== -1) {
-      list.splice(index, 1)
-    }
-  }
-
-  removeFromList(checkedDone, companyId as number)
-  removeFromList(checkedToDo, companyId as number)
-
-  // Ajout du SIREN à la liste appropriée
-  if (currentStatus === CheckStatus.DONE) {
-    checkedDone.push(companyId)
-  } else if (currentStatus === CheckStatus.TO_DO) {
-    checkedToDo.push(companyId)
-  }
-
-  localStorage.setItem('checkedDone', JSON.stringify(checkedDone))
-  localStorage.setItem('checkedToDo', JSON.stringify(checkedToDo))
-}

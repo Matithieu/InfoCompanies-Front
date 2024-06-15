@@ -13,6 +13,7 @@ import TableCompany from '../../components/parts/TableCompany/index.tsx'
 import { activityArea } from '../../data/ListOfOptions/Activity.tsx'
 import { legalStatus } from '../../data/ListOfOptions/Legal.tsx'
 import { region } from '../../data/ListOfOptions/Region.tsx'
+import { RANDOM_UNSEEN_ENDPOINT } from '../../data/types/common.ts'
 import { useCompanyFilterStore } from '../../store/filtersStore.tsx'
 
 /**
@@ -170,7 +171,7 @@ const AdvancedSearch = () => {
  */
 export default function Dashboard() {
   const { searchParams } = useCompanyFilterStore()
-  const [url, setUrl] = useState(`random?`)
+  const [url, setUrl] = useState(`${RANDOM_UNSEEN_ENDPOINT}?`)
 
   useEffect(() => {
     const changeURL = () => {
@@ -179,7 +180,7 @@ export default function Dashboard() {
         searchParams.region.length === 0 &&
         searchParams.legalStatus.length === 0
       ) {
-        setUrl('random?')
+        setUrl(`${RANDOM_UNSEEN_ENDPOINT}?`)
         return
       }
 

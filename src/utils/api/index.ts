@@ -89,3 +89,17 @@ export async function updateUser(user: User) {
 
   return null
 }
+
+export async function updateSeenCompany(companyIds: number[]) {
+  const response = await fetchWithConfig(
+    '/v1/company-seen/update-company-ids',
+    'POST',
+    { body: companyIds },
+  )
+
+  if (response.ok) {
+    return
+  }
+
+  return null
+}

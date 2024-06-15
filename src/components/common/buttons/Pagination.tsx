@@ -11,7 +11,7 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import React from 'react'
 
 type DataPaginationProps = {
-  dataPagniation: {
+  dataPagination: {
     page: number
     totalPages: number
   }
@@ -19,7 +19,7 @@ type DataPaginationProps = {
 }
 
 export default function Pagination({
-  dataPagniation,
+  dataPagination,
   handleChangePage,
 }: DataPaginationProps) {
   return (
@@ -48,26 +48,26 @@ export default function Pagination({
             <Tooltip title="Page précédente">
               <IconButton
                 color="neutral"
-                disabled={dataPagniation.page === 0}
+                disabled={dataPagination.page === 0}
                 size="sm"
                 sx={{ bgcolor: 'background.surface' }}
                 variant="outlined"
-                onClick={() => handleChangePage(dataPagniation.page - 1)}
+                onClick={() => handleChangePage(dataPagination.page - 1)}
               >
                 <KeyboardArrowLeftIcon />
               </IconButton>
             </Tooltip>
             <Typography level="body-md">
-              {dataPagniation.page + 1} / {dataPagniation.totalPages}
+              {dataPagination.page + 1} / {dataPagination.totalPages}
             </Typography>
             <Tooltip title="Page suivante">
               <IconButton
                 color="neutral"
-                disabled={dataPagniation.page === dataPagniation.totalPages - 1}
+                disabled={dataPagination.page === dataPagination.totalPages - 1}
                 size="sm"
                 sx={{ bgcolor: 'background.surface' }}
                 variant="outlined"
-                onClick={() => handleChangePage(dataPagniation.page + 1)}
+                onClick={() => handleChangePage(dataPagination.page + 1)}
               >
                 <KeyboardArrowRightIcon />
               </IconButton>

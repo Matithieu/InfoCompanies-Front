@@ -1,22 +1,23 @@
 import 'react-toastify/dist/ReactToastify.css'
 
 import { Box, Card, Grid, IconButton, Typography } from '@mui/joy'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 
 import { useParams } from 'react-router-dom'
 import { GlobalErrorButton } from '../../../components/common/buttons/GlobalErrorButton.tsx'
 import ScrapCompanyButton from '../../../components/common/buttons/scrapCompanyButton.tsx'
-import {
-  manageIsChecked,
-  StatutIcon,
-} from '../../../components/common/Icons/StatutIcon.tsx'
+import { StatutIcon } from '../../../components/common/Icons/StatutIcon.tsx'
 import Chart from '../../../components/parts/Chart/index.tsx'
 import DetailsCompany from '../../../components/parts/DetailsCompany/index.tsx'
 import ListOfLeaders from '../../../components/parts/ListOfLeaders/index.tsx'
 import { CheckStatus, Company } from '../../../data/types/company.ts'
 import { useCompanyStore } from '../../../store/companyStore.tsx'
-import { fetchCompnayById } from '../../../utils/api/index.ts'
+import {
+  fetchCompnayById,
+  updateSeenCompany,
+} from '../../../utils/api/index.ts'
+import { manageIsChecked } from '../../../utils/manageIsChecked.tsx'
 
 async function fetchCompanies(companyId: string) {
   const response = await fetchCompnayById(companyId)
@@ -64,15 +65,27 @@ export default function CompanyPage() {
     }
   }, [data, setSelectedCompany])
 
+  const mutation = useMutation({
+    mutationFn: (companyId: number) => updateSeenCompany([companyId]),
+    onError: (error) => {
+      console.error(`Error updating recommendations: ${error.message}`)
+    },
+  })
+
   const handleChangeStatut = (company: Company) => {
     let newStatus: CheckStatus
 
-    if (company.checked === CheckStatus.NOT_DONE) {
-      newStatus = CheckStatus.TO_DO
-    } else if (company.checked === CheckStatus.TO_DO) {
-      newStatus = CheckStatus.DONE
-    } else {
-      newStatus = CheckStatus.NOT_DONE
+    switch (company.checked) {
+      case CheckStatus.NOT_DONE:
+        newStatus = CheckStatus.TO_DO
+        mutation.mutate(company.id)
+        break
+      case CheckStatus.TO_DO:
+        newStatus = CheckStatus.DONE
+        break
+      default:
+        newStatus = CheckStatus.NOT_DONE
+        mutation.mutate(company.id)
     }
 
     company.checked = newStatus
