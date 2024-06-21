@@ -1,12 +1,10 @@
 import { Button, Card, CardActions, CardContent, Typography } from '@mui/joy'
-import React, { useEffect } from 'react'
-
 import { useQuery } from '@tanstack/react-query'
-import { ItemData } from '../../data/Stripe/itemData'
-import { Products } from '../../data/Stripe/subscription'
-import { stripeSubscription } from '../../utils/api'
+import { useEffect } from 'react'
+import { ItemData } from '../../../data/Stripe/itemData'
+import { stripeSubscription } from '../../../utils/api'
 
-function SubscriptionOption(item: ItemData) {
+export default function SubscriptionCard(item: ItemData) {
   const { data, refetch, isSuccess } = useQuery({
     queryKey: ['sub'], // Include authUser in the queryKey
     queryFn: () => stripeSubscription(item.id),
@@ -43,23 +41,3 @@ function SubscriptionOption(item: ItemData) {
     </Card>
   )
 }
-
-const Subscription: React.FC = () => {
-  const subscriptions = Products.sort((a, b) => a.price - b.price)
-  // Ajoutez d'autres options ici
-  return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'space-around',
-        padding: '20px',
-      }}
-    >
-      {subscriptions.map((option, index) => (
-        <SubscriptionOption key={index} {...option} />
-      ))}
-    </div>
-  )
-}
-
-export default Subscription

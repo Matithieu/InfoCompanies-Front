@@ -48,6 +48,8 @@ export function LogoutButton({ message }: ButtonProps) {
 }
 
 export function SelectSubscriptionButton({ message }: ButtonProps) {
+  const { navigation } = useAppNavigate()
+
   return (
     <Typography>
       {message}
@@ -55,7 +57,7 @@ export function SelectSubscriptionButton({ message }: ButtonProps) {
         color="primary"
         variant="soft"
         onClick={() => {
-          console.log('Select Subscription')
+          navigation.toSubscription()
         }}
       >
         Select Subscription

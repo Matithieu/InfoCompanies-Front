@@ -19,6 +19,10 @@ export function toastWarnSelectSubscription() {
   )
 }
 
+export function toastSuccessAlreadySubscribed() {
+  return toast.success("You're already subscribed!")
+}
+
 export function toastErrorQuotaExceeded() {
   return toast.error(
     <QuotaExceededButton

@@ -103,3 +103,22 @@ export async function updateSeenCompany(companyIds: number[]) {
 
   return null
 }
+
+export async function stripeSubscription(priceId: string) {
+  const response = await fetchWithConfig(
+    '/v1/stripe/subscriptions/trial',
+    'POST',
+    {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-priceId': priceId,
+      },
+    },
+  )
+
+  if (response.ok) {
+    return response.text()
+  }
+
+  return null
+}

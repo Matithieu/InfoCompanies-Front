@@ -4,6 +4,7 @@ import { Navigate, Outlet } from 'react-router-dom'
 import {
   toastErrorConnect,
   toastErrorReconnect,
+  toastSuccessAlreadySubscribed,
   toastWarnSelectSubscription,
 } from '../components/common/Toasts/toasts'
 import Loading from '../pages/Loading'
@@ -38,7 +39,7 @@ export const ProtectedRoutes = () => {
     return <Navigate to={routesPath.base} />
   }
 
-  if (authUser?.isVerified === false && !isSuccess) {
+  if (authUser?.isVerified === false && isSuccess) {
     toastWarnSelectSubscription()
     return <Navigate to={routesPath.base} />
   }
@@ -48,6 +49,7 @@ export const ProtectedRoutes = () => {
 
 export const ProtectedSimpleRoutes = () => {
   const { authUser, setAuthUser, requestLoading } = useAuthStore()
+  const urlLocation = window.location.pathname
 
   const { data, isFetching, isSuccess } = useQuery({
     queryKey: ['user query', authUser],
@@ -75,11 +77,16 @@ export const ProtectedSimpleRoutes = () => {
 
   if (
     authUser?.isVerified === false &&
-    window.location.pathname !== '/subscription' &&
-    !isSuccess
+    urlLocation !== '/ui/subscription' &&
+    isSuccess
   ) {
     toastWarnSelectSubscription()
     return <Navigate to={routesPath.subscription} />
+  }
+
+  if (authUser?.isVerified && urlLocation === '/ui/subscription') {
+    toastSuccessAlreadySubscribed()
+    return <Navigate to={routesPath.dashboard} />
   }
 
   return <Outlet />
