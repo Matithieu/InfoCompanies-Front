@@ -17,19 +17,13 @@ import {
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import { useAppNavigate } from '../../../utils/navigation/navigation'
+import { linkStyles } from './types'
 /*
 import useAuthStore from '../../../store/authStore';
 import { User } from '../../../data/user';
 import { useState } from 'react';
 */
 //import Cookies from 'js-cookie';
-
-// Styles CSS pour supprimer le surlignage bleu des liens
-export const linkStyles = {
-  textDecoration: 'none', // Supprime la décoration de texte
-  outline: 'none', // Supprime le surlignage bleu
-  color: 'inherit', // Garde la couleur du texte par défaut
-}
 
 //A chaque fois que l'on clique sur un lien, on vérifie si le lien est le même que celui de la page actuelle
 //Si oui, on renvoie true, sinon false

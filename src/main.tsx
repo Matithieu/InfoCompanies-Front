@@ -7,6 +7,11 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
+import {
+  experimental_extendTheme as materialExtendTheme,
+  Experimental_CssVarsProvider as MaterialCssVarsProvider,
+  THEME_ID as MATERIAL_THEME_ID,
+} from '@mui/material/styles'
 
 import App from './App.jsx'
 import { fontFamily } from './pages/Layout/utils.js'
@@ -24,25 +29,29 @@ const queryClient = new QueryClient({
   },
 })
 
+const materialTheme = materialExtendTheme()
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <Router>
-        <CssVarsProvider theme={fontFamily}>
-          <CssBaseline />
-          <App />
-          <ToastContainer
-            closeOnClick
-            draggable
-            pauseOnFocusLoss
-            pauseOnHover
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            position="top-right"
-            rtl={false}
-          />
-        </CssVarsProvider>
+        <MaterialCssVarsProvider theme={{ [MATERIAL_THEME_ID]: materialTheme }}>
+          <CssVarsProvider theme={fontFamily}>
+            <CssBaseline />
+            <App />
+            <ToastContainer
+              closeOnClick
+              draggable
+              pauseOnFocusLoss
+              pauseOnHover
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              position="top-right"
+              rtl={false}
+            />
+          </CssVarsProvider>
+        </MaterialCssVarsProvider>
       </Router>
     </QueryClientProvider>
   </React.StrictMode>,

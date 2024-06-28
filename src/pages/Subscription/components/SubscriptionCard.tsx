@@ -23,7 +23,7 @@ export default function SubscriptionCard(item: ItemData) {
   }, [data, isSuccess])
 
   return (
-    <Card>
+    <Card sx={{ wordBreak: 'break-word', width: '350px' }}>
       <CardContent>
         <Typography level="h3">{item.name}</Typography>
         <Typography level="h4">{item.price} €</Typography>

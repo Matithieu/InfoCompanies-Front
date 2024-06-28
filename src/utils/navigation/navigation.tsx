@@ -9,6 +9,9 @@ export const useAppNavigate = () => {
   // Simplified navigation functions
   const toHome = () => navigate('/ui')
   const toDashboard = () => navigate('/ui/dashboard')
+  const toTerms = () => navigate('/ui/terms')
+  const toPrivacy = () => navigate('/ui/privacy')
+  const toLegal = () => navigate('/ui/legal')
   const toFavorites = () => navigate('/ui/favorites')
   const toSettings = () => navigate('/ui/settings')
   const toAccount = () => navigate('/ui/account')
@@ -31,6 +34,9 @@ export const useAppNavigate = () => {
     navigation: {
       toHome,
       toDashboard,
+      toTerms,
+      toPrivacy,
+      toLegal,
       toFavorites,
       toSettings,
       toAccount,

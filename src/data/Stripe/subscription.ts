@@ -2,6 +2,13 @@ import { ItemData } from './itemData'
 
 export const Products: ItemData[] = [
   {
+    description: 'Free subscription. Limited retrieval of data.',
+    image: 'https://source.unsplash.com/NUoPWImmjCU',
+    name: 'Free subscription',
+    price: 0,
+    id: '',
+  },
+  {
     description: 'Basic subscription at 30€/month. Limited retrieval of data.',
     image: 'https://source.unsplash.com/NUoPWImmjCU',
     name: 'Basic subscription',

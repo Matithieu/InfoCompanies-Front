@@ -17,6 +17,9 @@ import {
   ProtectedRoutes,
   ProtectedSimpleRoutes,
 } from './utils/protectedRoute.tsx'
+import TermsAndConditions from './pages/Legal/terms.tsx'
+import PrivacyPolicy from './pages/Legal/privacy.tsx'
+import LegalInformation from './pages/Legal/legal.tsx'
 
 // Lazy loading components for security
 const Dashboard = lazy(() => import('./pages/Dashboard/index.tsx'))
@@ -40,6 +43,9 @@ function App() {
         <Routes>
           <Route path="/ui">
             <Route element={<Landing />} path="" />
+            <Route element={<TermsAndConditions />} path="terms" />
+            <Route element={<PrivacyPolicy />} path="privacy" />
+            <Route element={<LegalInformation />} path="legal" />
             <Route element={<Test />} path="test" />
 
             <Route element="error">
