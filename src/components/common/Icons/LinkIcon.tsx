@@ -10,11 +10,11 @@ type LinkIconProps = {
 export default function LinkIcon({ url, icon, style }: LinkIconProps) {
   return (
     <IconButton
+      style={{ ...style }}
       onClick={(e) => {
         e.stopPropagation()
         window.open(url, '_blank')
       }}
-      style={{ ...style }}
     >
       {icon}
     </IconButton>

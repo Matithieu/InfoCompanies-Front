@@ -8,7 +8,7 @@ import { stripeSubscription } from '../../utils/api'
 
 function SubscriptionOption(item: ItemData) {
   const { data, refetch, isSuccess } = useQuery({
-    queryKey: ['sub'], // Include authUser in the queryKey
+    queryKey: ['sub' + item.id], // Include authUser in the queryKey
     queryFn: () => stripeSubscription(item.id),
     enabled: false,
   })

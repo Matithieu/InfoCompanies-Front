@@ -1,8 +1,8 @@
 import AdbIcon from '@mui/icons-material/Adb'
 
-import useAuthManager from '../../../hooks/useAuthManager'
-import { Container, Typography, Box, Link } from '@mui/joy'
+import { Box, Container, Link, Typography } from '@mui/joy'
 import { AppBar, Toolbar } from '@mui/material'
+import useAuthManager from '../../../hooks/useAuthManager'
 import { useAppNavigate } from '../../../utils/navigation/navigation'
 
 export default function HeaderLanding() {
@@ -32,11 +32,10 @@ export default function HeaderLanding() {
             }}
           >
             <AdbIcon
-              onClick={() => navigation.toHome()}
               sx={{ display: { md: 'flex' }, mr: 1, cursor: 'pointer' }}
+              onClick={() => navigation.toHome()}
             />
             <Typography
-              variant="plain"
               noWrap
               sx={{
                 justifyContent: 'flex-end',
@@ -46,6 +45,7 @@ export default function HeaderLanding() {
                 color: 'inherit',
                 textDecoration: 'none',
               }}
+              variant="plain"
             >
               LOGO
             </Typography>

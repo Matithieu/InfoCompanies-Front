@@ -9,14 +9,11 @@ import {
   Typography,
 } from '@mui/joy'
 
-import useAuthStore from '../../store/authStore'
-import { loadUserFromLocalStorage } from '../../utils/loadFromLocalStorage'
 import { useAppNavigate } from '../../utils/navigation/navigation'
 
 const OrderConfirmation = () => {
   const queryParams = new URLSearchParams(window.location.search)
   const { navigation } = useAppNavigate()
-  const { authUser, setAuthUser } = useAuthStore()
 
   return (
     <div
@@ -81,17 +78,7 @@ const OrderConfirmation = () => {
           style={{ marginTop: '20px' }}
           variant="soft"
           onClick={() => {
-            const user = loadUserFromLocalStorage('authUser')
-
-            if (user) {
-              user.isVerified = true
-              setAuthUser(user) // Clear the authenticated user
-            }
-
-            console.log('test ' + authUser)
-            setTimeout(() => {
-              navigation.toHome()
-            }, 500)
+            navigation.toHome()
           }}
         >
           Let&apos;s go !

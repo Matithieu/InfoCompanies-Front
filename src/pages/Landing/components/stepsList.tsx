@@ -1,5 +1,3 @@
-import { Paper } from '@mui/material'
-
 interface Step {
   id: string
   description: string
@@ -33,8 +31,8 @@ const StepsList: React.FC<StepsListProps> = ({ onStepClick }) => {
   return (
     <div>
       <ul>
-        {Steps.map((step) => (
-          <li>
+        {Steps.map((step, index) => (
+          <li key={index}>
             <div
               style={{
                 borderRadius: '20px',

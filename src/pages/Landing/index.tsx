@@ -1,13 +1,13 @@
-import './Landing.css'
+import { Grid, useColorScheme } from '@mui/joy'
 import React, { useEffect } from 'react'
+import Footer from '../../components/pages/footer'
+import Subscription from '../Subscription'
 import HeaderLanding from './components/header'
+import StepsList from './components/stepsList'
+import './Landing.css'
 import testImg from '/test.webp'
 import video1 from '/videos/step-1.gif'
 import video2 from '/videos/step-2.gif'
-import { Grid, useColorScheme } from '@mui/joy'
-import StepsList from './components/stepsList'
-import Subscription from '../Subscription'
-import Footer from '../../components/pages/footer'
 
 const Landing: React.FC = () => {
   const { mode } = useColorScheme()
@@ -44,11 +44,13 @@ const Landing: React.FC = () => {
           floatingBubbleKeyFrames,
           between(10000, 40000),
         )
+
         floatingAnimation.onfinish = () => {
           if (bubblesContainer.contains(bubble)) {
             bubblesContainer.removeChild(bubble)
           }
         }
+
         bubble.style.width = sizePx
         bubble.style.height = sizePx
         const randomColorIndex = Math.floor(Math.random() * colors.length)
@@ -58,6 +60,7 @@ const Landing: React.FC = () => {
     }
 
     const intervalId = setInterval(createBubble, 100)
+
     return () => {
       clearInterval(intervalId)
     }
@@ -143,7 +146,7 @@ const Landing: React.FC = () => {
         <div id="bubbles"></div>
         <div className="dashboard-border">
           <div className="dashboard">
-            <img src={testImg} style={{}} loading="lazy" />
+            <img loading="lazy" src={testImg} style={{}} />
           </div>
         </div>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -170,13 +173,13 @@ const Landing: React.FC = () => {
             alignItems: 'center',
           }}
         >
-          {<StepsList onStepClick={handleVideoPlayed} />}
+          <StepsList onStepClick={handleVideoPlayed} />
           <div className="video-container">
             {playedVideo === 1 && (
-              <img src={video1} alt="Step 1" loading="lazy" />
+              <img alt="Step 1" loading="lazy" src={video1} />
             )}
             {playedVideo === 2 && (
-              <img src={video2} alt="Step 2" loading="lazy" />
+              <img alt="Step 2" loading="lazy" src={video2} />
             )}
           </div>
         </Grid>

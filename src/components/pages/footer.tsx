@@ -1,4 +1,4 @@
-import { Link, Box } from '@mui/material'
+import { Box, Link } from '@mui/material'
 import { useAppNavigate } from '../../utils/navigation/navigation'
 
 export default function Footer() {
@@ -17,7 +17,6 @@ export default function Footer() {
       }}
     >
       <Link
-        onClick={() => navigation.toTerms()}
         sx={{
           cursor: 'pointer',
           margin: '0 10px',
@@ -27,11 +26,11 @@ export default function Footer() {
             textDecoration: 'underline',
           },
         }}
+        onClick={() => navigation.toTerms()}
       >
         Terms
       </Link>
       <Link
-        onClick={() => navigation.toPrivacy()}
         sx={{
           cursor: 'pointer',
           margin: '0 10px',
@@ -41,11 +40,11 @@ export default function Footer() {
             textDecoration: 'underline',
           },
         }}
+        onClick={() => navigation.toPrivacy()}
       >
         Privacy
       </Link>
       <Link
-        onClick={() => navigation.toLegal()}
         sx={{
           cursor: 'pointer',
           margin: '0 10px',
@@ -55,6 +54,7 @@ export default function Footer() {
             textDecoration: 'underline',
           },
         }}
+        onClick={() => navigation.toLegal()}
       >
         Legal
       </Link>

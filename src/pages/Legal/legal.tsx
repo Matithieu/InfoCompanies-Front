@@ -1,18 +1,18 @@
+import { Box, Container, Typography } from '@mui/material'
 import React from 'react'
-import { Container, Typography, Box } from '@mui/material'
 
 const LegalInformation: React.FC = () => {
   return (
     <Container>
       <Box sx={{ padding: '20px' }}>
-        <Typography variant="h4" gutterBottom>
+        <Typography gutterBottom variant="h4">
           Legal Information
         </Typography>
-        <Typography variant="subtitle1" gutterBottom>
+        <Typography gutterBottom variant="subtitle1">
           Effective Date: September 3, 2023
         </Typography>
 
-        <Typography variant="h6" gutterBottom>
+        <Typography gutterBottom variant="h6">
           Website Editor
         </Typography>
         <Typography paragraph>
@@ -34,7 +34,7 @@ const LegalInformation: React.FC = () => {
           VAT number:
         </Typography>
 
-        <Typography variant="h6" gutterBottom>
+        <Typography gutterBottom variant="h6">
           Publication Director
         </Typography>
         <Typography paragraph>
@@ -50,7 +50,7 @@ const LegalInformation: React.FC = () => {
           Email:
         </Typography>
 
-        <Typography variant="h6" gutterBottom>
+        <Typography gutterBottom variant="h6">
           Website Hosting
         </Typography>
         <Typography paragraph>

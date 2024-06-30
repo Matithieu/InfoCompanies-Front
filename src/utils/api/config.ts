@@ -33,10 +33,14 @@ export const fetchWithConfig = async (
 
   switch (response.status) {
     case 401:
-    case 403:
+      break
+
+    case 403: {
       const errorData: ErrorFromApi = await response.json()
       toast.error(errorData.message)
       throw new Error(errorData.message)
+    }
+
     case 429:
       toastErrorQuotaExceeded()
       throw new Error('Too many requests')

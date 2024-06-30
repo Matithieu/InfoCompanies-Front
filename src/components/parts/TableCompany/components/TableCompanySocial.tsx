@@ -16,30 +16,30 @@ export default function TableCompanySocial({
     <>
       {socialMedia.facebook && (
         <LinkIcon
-          url={socialMedia.facebook}
           icon={<FacebookIcon />}
           style={{ color: '#3b5998' }}
+          url={socialMedia.facebook}
         />
       )}
       {socialMedia.twitter && (
         <LinkIcon
-          url={socialMedia.twitter}
           icon={<TwitterIcon />}
           style={{ color: '#1DA1F2' }}
+          url={socialMedia.twitter}
         />
       )}
       {socialMedia.linkedin && (
         <LinkIcon
-          url={socialMedia.linkedin}
           icon={<LinkedInIcon />}
           style={{ color: '#0e76a8' }}
+          url={socialMedia.linkedin}
         />
       )}
       {socialMedia.youtube && (
         <LinkIcon
-          url={socialMedia.youtube}
           icon={<YouTubeIcon />}
           style={{ color: 'red' }}
+          url={socialMedia.youtube}
         />
       )}
     </>
