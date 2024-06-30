@@ -13,7 +13,7 @@ export default defineConfig({
       prefix: 'VITE_',
     }),
   ],
-  base: process.env.VITE_FRONTEND_PREFIX,
+  base: '/',
   server: {
     port: 3000,
     proxy: {
