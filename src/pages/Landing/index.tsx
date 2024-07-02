@@ -127,7 +127,7 @@ const Landing: React.FC = () => {
                   console.log('Test')
                 }}
               >
-                Récupérer les téléphone
+                Récupérer les téléphones
               </span>
             </a>
             <span style={{ fontSize: '1.3rem' }}>ou</span>
