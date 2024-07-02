@@ -78,6 +78,19 @@ export async function fetchCompanyScrap(companyId: number) {
   return null
 }
 
+export async function fetchCompanySeen() {
+  const response = await fetchWithConfig(
+    `/v1/company-seen/companies-seen`,
+    'GET',
+  )
+
+  if (response) {
+    return await response.json()
+  }
+
+  return null
+}
+
 export async function updateUser(user: User) {
   const response = await fetchWithConfig('/v1/update-user', 'PUT', {
     body: user,
