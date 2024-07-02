@@ -18,20 +18,18 @@ import { useTheme } from '@mui/joy/styles'
 export default function Chart() {
   const theme = useTheme()
   const { selectedCompany } = useCompanyStore()
-  const [turnOver, setTurnOver] = React.useState<TurnOver | null>(null)
+  const [turnOver, setTurnOver] = React.useState<TurnOver>()
 
   React.useEffect(() => {
     if (selectedCompany !== null) {
       setTurnOver(getTotalOfTurnOver(selectedCompany))
-    } else {
-      setTurnOver(null as unknown as TurnOver)
     }
   }, [selectedCompany, setTurnOver])
 
-  function insertData() {
+  const insertData = () => {
     const data: { date: number; amount: number }[] = []
 
-    if (turnOver !== null) {
+    if (turnOver) {
       for (let i = 0; i < turnOver.date.length; i++) {
         const turnOverIndex = turnOver.turnOver[i]
 
@@ -46,16 +44,13 @@ export default function Chart() {
     return data
   }
 
-  if (turnOver === null) {
+  if (turnOver === undefined) {
     return (
       <a style={{ fontSize: '19px' }}>Veuillez sélectionner une entreprise</a>
     )
   }
 
-  if (
-    selectedCompany !== null &&
-    getTotalOfTurnOver(selectedCompany).turnOver.length === 0
-  ) {
+  if (selectedCompany !== null && turnOver.turnOver.map((e) => e === 0)) {
     return (
       <a style={{ fontSize: '19px' }}>Pas de données pour cette entreprise</a>
     )
