@@ -7,21 +7,22 @@ import DetailsCompany from '../../components/parts/DetailsCompany/index.tsx'
 import ListOfLeaders from '../../components/parts/ListOfLeaders/index.tsx'
 import TableCompany from '../../components/parts/TableCompany/index.tsx'
 import { columnsTableCompany } from '../../data/types/columns.ts'
+import { companiesSeenStorage } from '../../utils/localStorage/companiesSeenStorage.ts'
 
 export default function Favorites() {
+  const { companiesToDo } = companiesSeenStorage()
+
   const [url, setUrl] = useState<string>('')
-  const [checkedCompanies, setCheckedCompanies] = useState<Array<string>>([])
+  const [checkedCompanies, setCheckedCompanies] = useState<number[]>([])
 
   useEffect(() => {
-    const idsOfCheckedCompanies: Array<string> = JSON.parse(
-      localStorage.getItem('checkedToDo') || '[]',
-    )
+    const idsOfCheckedCompanies: number[] = companiesToDo.getCompaniesTodo()
     setCheckedCompanies(idsOfCheckedCompanies)
 
     if (idsOfCheckedCompanies.length > 0) {
       setUrl(`get-by-ids?ids=${idsOfCheckedCompanies.join(',')}&`)
     }
-  }, [])
+  }, [companiesToDo])
 
   const renderContent = () => {
     if (checkedCompanies.length === 0) {

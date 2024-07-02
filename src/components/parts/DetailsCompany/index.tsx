@@ -3,10 +3,11 @@ import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined
 import EmailIcon from '@mui/icons-material/Email'
 import PhoneIcon from '@mui/icons-material/Phone'
 import WebAssetIcon from '@mui/icons-material/WebAsset'
-import { Box, Table } from '@mui/joy'
+import { Table, Typography } from '@mui/joy'
 
 import { useCompanyStore } from '../../../store/companyStore'
 import DetailsCompanyRow from './components/DetailsCompanyRow'
+import React from 'react'
 
 export default function DetailsCompany() {
   const { selectedCompany } = useCompanyStore()
@@ -17,15 +18,8 @@ export default function DetailsCompany() {
     )
   } else if (selectedCompany !== null) {
     return (
-      <Box>
-        <a
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
-          Details
-        </a>
+      <React.Fragment>
+        <Typography level="h4">Details</Typography>
         <Table aria-label="List Of Leaders">
           <tbody>
             <DetailsCompanyRow
@@ -65,7 +59,7 @@ export default function DetailsCompany() {
             />
           </tbody>
         </Table>
-      </Box>
+      </React.Fragment>
     )
   }
 }

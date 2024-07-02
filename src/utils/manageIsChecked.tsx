@@ -1,11 +1,13 @@
 import { CheckStatus } from '../data/types/company'
+import { companiesSeenStorage } from './localStorage/companiesSeenStorage'
 
 export const manageIsChecked = (
   companyId: number,
   currentStatus: CheckStatus,
 ) => {
-  const checkedDone = JSON.parse(localStorage.getItem('checkedDone') || '[]')
-  const checkedToDo = JSON.parse(localStorage.getItem('checkedToDo') || '[]')
+  const { companiesToDo, companiesDone } = companiesSeenStorage()
+  const checkedToDo = companiesToDo.getCompaniesTodo()
+  const checkedDone = companiesDone.getCompaniesDone()
 
   const removeFromList = (list: number[], id: number) => {
     const index = list.indexOf(id)
@@ -15,8 +17,8 @@ export const manageIsChecked = (
     }
   }
 
-  removeFromList(checkedDone, companyId as number)
-  removeFromList(checkedToDo, companyId as number)
+  removeFromList(checkedDone, companyId)
+  removeFromList(checkedToDo, companyId)
 
   switch (currentStatus) {
     case CheckStatus.DONE:
@@ -27,6 +29,6 @@ export const manageIsChecked = (
       break
   }
 
-  localStorage.setItem('checkedDone', JSON.stringify(checkedDone))
-  localStorage.setItem('checkedToDo', JSON.stringify(checkedToDo))
+  companiesToDo.updateCompaniesTodo(checkedToDo)
+  companiesDone.updateCompaniesDone(checkedDone)
 }

@@ -6,45 +6,29 @@ import * as React from 'react'
 import { useEffect } from 'react'
 
 import { columnsTableCompany } from '../../../data/types/columns.ts'
-import { CheckStatus, Company } from '../../../data/types/company.ts'
+import { Company } from '../../../data/types/company.ts'
 import { useCompanyStore } from '../../../store/companyStore.tsx'
 import { useCompanyFilterStore } from '../../../store/filtersStore.tsx'
 import {
   fetchCompaniesWithUrlAndPage,
   updateSeenCompany,
 } from '../../../utils/api/index.ts'
-import { manageIsChecked } from '../../../utils/manageIsChecked.tsx'
-import { parseJsonToCompany } from '../../../utils/parseJsonToObject.ts'
 import { GlobalErrorButton } from '../../common/buttons/GlobalErrorButton.tsx'
 import Pagination from '../../common/buttons/Pagination.tsx'
 import { StatutIcon } from '../../common/Icons/StatutIcon.tsx'
 import { TableSkeleton } from '../../common/Loaders/Skeleton/index.tsx'
 import TableCompanyRow from './components/TableCompanyRow.tsx'
+import {
+  handleChangeStatut,
+  updateCompaniesIcon,
+} from '../../common/Icons/stautIcon.util.ts'
 
 async function fetchCompanies(url: string, page: number) {
   const data = await fetchCompaniesWithUrlAndPage(url, page)
 
   if (data) {
-    const companies: Company[] = data.content
-      .map((companyObj) => parseJsonToCompany(companyObj))
-      .filter(Boolean) as Company[]
-
-    const checkedDone = JSON.parse(localStorage.getItem('checkedDone') || '[]')
-    const checkedToDo = JSON.parse(localStorage.getItem('checkedToDo') || '[]')
-
-    const updatedCompanyData = companies.map((company) => {
-      if (checkedDone.includes(company.id)) {
-        company.checked = CheckStatus.DONE
-      } else if (checkedToDo.includes(company.id)) {
-        company.checked = CheckStatus.TO_DO
-      } else {
-        company.checked = CheckStatus.NOT_DONE
-      }
-
-      return company
-    })
-
-    data.content = updatedCompanyData
+    const updatedCompanies = updateCompaniesIcon(data.content)
+    data.content = updatedCompanies
 
     return data
   }
@@ -103,31 +87,6 @@ export default function TableCompany({ url }: Props) {
       setSelectedCompany(company)
       console.log('Company selected: ', selectedCompany)
     }
-  }
-
-  const handleChangeStatut = (company: Company) => {
-    let newStatus: CheckStatus
-
-    switch (company.checked) {
-      case CheckStatus.NOT_DONE:
-        newStatus = CheckStatus.TO_DO
-        mutation.mutate(company.id)
-        break
-      case CheckStatus.TO_DO:
-        newStatus = CheckStatus.DONE
-        break
-      default:
-        newStatus = CheckStatus.NOT_DONE
-        mutation.mutate(company.id)
-    }
-
-    company.checked = newStatus
-    manageIsChecked(company.id, newStatus)
-
-    setCompanies((prevCompanies) =>
-      prevCompanies.map((item) => (item.id === company.id ? company : item)),
-    )
-    return newStatus
   }
 
   if (error !== null && isError) {
@@ -218,7 +177,11 @@ export default function TableCompany({ url }: Props) {
                       }}
                       onClick={(e) => {
                         e.stopPropagation()
-                        row.checked = handleChangeStatut(row)
+                        row.checked = handleChangeStatut({
+                          company: row,
+                          mutation,
+                          setCompanies,
+                        })
                       }}
                     >
                       <StatutIcon statut={row.checked} />

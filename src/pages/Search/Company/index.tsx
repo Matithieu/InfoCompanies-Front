@@ -1,7 +1,7 @@
 import 'react-toastify/dist/ReactToastify.css'
 
 import { Box, Card, Grid, IconButton, Typography } from '@mui/joy'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 
 import { useParams } from 'react-router-dom'
@@ -11,59 +11,52 @@ import { StatutIcon } from '../../../components/common/Icons/StatutIcon.tsx'
 import Chart from '../../../components/parts/Chart/index.tsx'
 import DetailsCompany from '../../../components/parts/DetailsCompany/index.tsx'
 import ListOfLeaders from '../../../components/parts/ListOfLeaders/index.tsx'
-import { CheckStatus, Company } from '../../../data/types/company.ts'
+import { Company } from '../../../data/types/company.ts'
 import { useCompanyStore } from '../../../store/companyStore.tsx'
 import {
   fetchCompnayById,
   updateSeenCompany,
 } from '../../../utils/api/index.ts'
-import { manageIsChecked } from '../../../utils/manageIsChecked.tsx'
-
-async function fetchCompanies(companyId: string) {
-  const response = await fetchCompnayById(companyId)
-
-  if (response) {
-    const company: Company = response
-
-    const checkedDone = JSON.parse(localStorage.getItem('checkedDone') || '[]')
-    const checkedToDo = JSON.parse(localStorage.getItem('checkedToDo') || '[]')
-
-    if (company !== null) {
-      if (checkedDone.includes(company.id)) {
-        company.checked = CheckStatus.DONE
-      } else if (checkedToDo.includes(company.id)) {
-        company.checked = CheckStatus.TO_DO
-      } else {
-        company.checked = CheckStatus.NOT_DONE
-      }
-
-      return company
-    }
-
-    return company
-  }
-}
+import {
+  handleChangeStatut,
+  updateCompaniesIcon,
+} from '../../../components/common/Icons/stautIcon.util.ts'
+import { asserts } from '../../../utils/assertion.util.ts'
 
 export default function CompanyPage() {
-  const [company, setCompany] = useState<Company>()
-  const [statut, setStatut] = useState<CheckStatus>(CheckStatus.NOT_DONE)
+  const queryClient = useQueryClient()
+  const [company, setCompany] = useState<Company>({} as Company)
 
   const { companyId } = useParams()
+  asserts(companyId !== undefined, "companyId can't be undefined")
+
   const { setSelectedCompany } = useCompanyStore()
 
   const { isPending, isError, data, error } = useQuery({
-    queryKey: ['company' + companyId],
-    queryFn: () => fetchCompanies(companyId ?? ''),
-    retry: 1,
+    queryKey: ['company', companyId],
+    queryFn: () => fetchCompnayById(companyId),
+    initialData: () => {
+      const cachedData = queryClient.getQueryData<Company>([
+        'company',
+        companyId,
+      ])
+
+      if (cachedData) {
+        return updateCompaniesIcon([cachedData])[0]
+      }
+
+      return undefined
+    },
   })
 
   useEffect(() => {
-    if (data !== null && data) {
-      setSelectedCompany(data)
-      setCompany(data)
-      setStatut(data.checked)
+    if (data) {
+      const updatedData = updateCompaniesIcon([data])[0] // Update the icon
+      queryClient.setQueryData(['company', companyId], updatedData)
+      setSelectedCompany(updatedData)
+      setCompany(updatedData)
     }
-  }, [data, setSelectedCompany])
+  }, [data, setSelectedCompany, companyId, queryClient])
 
   const mutation = useMutation({
     mutationFn: (companyId: number) => updateSeenCompany([companyId]),
@@ -71,29 +64,6 @@ export default function CompanyPage() {
       console.error(`Error updating recommendations: ${error.message}`)
     },
   })
-
-  const handleChangeStatut = (company: Company) => {
-    let newStatus: CheckStatus
-
-    switch (company.checked) {
-      case CheckStatus.NOT_DONE:
-        newStatus = CheckStatus.TO_DO
-        mutation.mutate(company.id)
-        break
-      case CheckStatus.TO_DO:
-        newStatus = CheckStatus.DONE
-        break
-      default:
-        newStatus = CheckStatus.NOT_DONE
-        mutation.mutate(company.id)
-    }
-
-    company.checked = newStatus
-    manageIsChecked(company.id, newStatus)
-    setCompany(company)
-    setStatut(newStatus)
-    return newStatus
-  }
 
   if (error !== null && isError) {
     return <GlobalErrorButton error={error} />
@@ -134,10 +104,14 @@ export default function CompanyPage() {
                     cursor: 'pointer',
                   }}
                   onClick={() => {
-                    company.checked = handleChangeStatut(company)
+                    company.checked = handleChangeStatut({
+                      company: company,
+                      mutation,
+                      setCompany,
+                    })
                   }}
                 >
-                  <StatutIcon statut={statut} />
+                  <StatutIcon statut={company.checked} />
                 </IconButton>
                 {company.companyName}
               </Typography>
