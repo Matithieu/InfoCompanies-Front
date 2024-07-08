@@ -1,5 +1,6 @@
+import { updateCompaniesIcon } from '../../components/common/Icons/stautIcon.util'
 import { Company } from '../../data/types/company'
-import { CompanyDetails, Page } from '../../data/types/companyDetails'
+import { Page } from '../../data/types/companyDetails'
 import { User } from '../../data/types/user'
 import { parseJsonToCompany, parseJsonToUser } from '../parseJsonToObject'
 import { fetchWithConfig } from './config'
@@ -32,6 +33,9 @@ export async function fetchCompaniesWithUrlAndPage(url: string, page: number) {
 
   if (response) {
     const data: Page<Company> = await response.json()
+    const updatedCompanies = updateCompaniesIcon(data.content)
+    data.content = updatedCompanies
+
     return data
   }
 
@@ -48,18 +52,38 @@ export async function fetchCompanyBySearchTerm(
   )
 
   if (response) {
-    const data: Page<CompanyDetails> = await response.json()
+    const data: Page<Company> = await response.json()
+    const updatedCompanies = updateCompaniesIcon(data.content)
+    data.content = updatedCompanies
+
     return data
   }
 
   return null
 }
 
-export async function fetchCompnayById(id: string) {
+export async function fetchCompanyById(id: string) {
   const response = await fetchWithConfig(`/v1/company/get-by-id/${id}`, 'GET')
 
   if (response) {
     return parseJsonToCompany(await response.json())
+  }
+
+  return null
+}
+
+export async function fetchCompanyByIds(ids: number[], page: number) {
+  const response = await fetchWithConfig(
+    `/v1/company/get-by-ids?ids=${ids.join(',')}&page=${page}`,
+    'GET',
+  )
+
+  if (response) {
+    const data: Page<Company> = await response.json()
+    const updatedCompanies = updateCompaniesIcon(data.content)
+    data.content = updatedCompanies
+
+    return data
   }
 
   return null
