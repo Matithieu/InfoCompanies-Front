@@ -1,79 +1,35 @@
 import './style.css'
 
 import { IconButton, Sheet, Table } from '@mui/joy'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import * as React from 'react'
-import { useEffect } from 'react'
 
 import { columnsTableCompany } from '../../../data/types/columns.ts'
 import { Company } from '../../../data/types/company.ts'
 import { useCompanyStore } from '../../../store/companyStore.tsx'
-import { useCompanyFilterStore } from '../../../store/filtersStore.tsx'
-import {
-  fetchCompaniesWithUrlAndPage,
-  updateSeenCompany,
-} from '../../../utils/api/index.ts'
+import { updateSeenCompany } from '../../../utils/api/index.ts'
 import { GlobalErrorButton } from '../../common/buttons/GlobalErrorButton.tsx'
 import Pagination from '../../common/buttons/Pagination.tsx'
 import { StatutIcon } from '../../common/Icons/StatutIcon.tsx'
 import { TableSkeleton } from '../../common/Loaders/Skeleton/index.tsx'
 import TableCompanyRow from './components/TableCompanyRow.tsx'
-import {
-  handleChangeStatut,
-  updateCompaniesIcon,
-} from '../../common/Icons/stautIcon.util.ts'
+import { handleChangeStatut } from '../../common/Icons/stautIcon.util.ts'
+import { Page } from '../../../data/types/companyDetails.ts'
 
-async function fetchCompanies(url: string, page: number) {
-  const data = await fetchCompaniesWithUrlAndPage(url, page)
-
-  if (data) {
-    const updatedCompanies = updateCompaniesIcon(data.content)
-    data.content = updatedCompanies
-
-    return data
-  }
+interface TableCompanyProps {
+  data: Page<Company> | undefined | null
+  handleChangePage: (newPage: number) => void
+  isPending: boolean
+  error: Error | null
 }
 
-type Props = {
-  url: string
-}
-
-export default function TableCompany({ url }: Props) {
-  const [dataPagination, setDataPagination] = React.useState({
-    page: 0,
-    rowsPerPage: 10,
-    totalPages: 0,
-  })
-  const [companies, setCompanies] = React.useState<Company[]>([])
+export default function TableCompany({
+  data,
+  isPending,
+  error,
+  handleChangePage,
+}: TableCompanyProps) {
   const { selectedCompany, setSelectedCompany } = useCompanyStore()
-
-  const { searchParams } = useCompanyFilterStore()
-
-  const { isPending, isError, data, error } = useQuery({
-    queryKey: ['companies', url, dataPagination.page, searchParams],
-    queryFn: () => fetchCompanies(url, dataPagination.page),
-    retry: 1,
-    refetchOnWindowFocus: false,
-    refetchOnMount: true,
-    refetchOnReconnect: false,
-  })
-
-  useEffect(() => {
-    if (data !== null && data) {
-      setDataPagination((prevDataPagination) => ({
-        ...prevDataPagination,
-        totalPages: data.totalPages,
-      }))
-      setCompanies(data.content)
-    }
-  }, [data])
-
-  const handleChangePage = (newPage: number) => {
-    setDataPagination((prevDataPagination) => ({
-      ...prevDataPagination,
-      page: newPage,
-    }))
-  }
 
   const mutation = useMutation({
     mutationFn: (companyId: number) => updateSeenCompany([companyId]),
@@ -89,13 +45,13 @@ export default function TableCompany({ url }: Props) {
     }
   }
 
-  if (error !== null && isError) {
+  if (error) {
     return <GlobalErrorButton error={error} />
   }
 
   if (isPending) {
     return <TableSkeleton columns={columnsTableCompany} />
-  } else if (data !== undefined && data.empty) {
+  } else if (data && data !== null && data.empty) {
     return (
       <a
         style={{
@@ -111,7 +67,7 @@ export default function TableCompany({ url }: Props) {
         Aucune entreprise trouvée
       </a>
     )
-  } else if (data !== undefined && !data.empty && Array.isArray(data.content)) {
+  } else if (data !== undefined && data !== null && !data.empty) {
     return (
       <React.Fragment>
         <Sheet
@@ -159,7 +115,7 @@ export default function TableCompany({ url }: Props) {
               </tr>
             </thead>
             <tbody style={{ wordBreak: 'break-word' }}>
-              {companies.map((row, number) => (
+              {data.content.map((row, number) => (
                 <tr
                   key={row.id + 'rowdetails'}
                   role="checkbox"
@@ -180,7 +136,10 @@ export default function TableCompany({ url }: Props) {
                         row.checked = handleChangeStatut({
                           company: row,
                           mutation,
-                          setCompanies,
+                          setCompanies: (value) => {
+                            data.content = value
+                            return value
+                          },
                         })
                       }}
                     >
@@ -198,7 +157,7 @@ export default function TableCompany({ url }: Props) {
           </Table>
         </Sheet>
         <Pagination
-          dataPagination={dataPagination}
+          dataPagination={{ page: data.number, totalPages: data.totalPages }}
           handleChangePage={handleChangePage}
         />
       </React.Fragment>

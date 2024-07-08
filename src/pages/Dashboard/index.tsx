@@ -15,6 +15,9 @@ import { legalStatus } from '../../data/ListOfOptions/Legal.tsx'
 import { region } from '../../data/ListOfOptions/Region.tsx'
 import { RANDOM_UNSEEN_ENDPOINT } from '../../data/types/common.ts'
 import { useCompanyFilterStore } from '../../store/filtersStore.tsx'
+import { useQuery } from '@tanstack/react-query'
+import { fetchCompaniesWithUrlAndPage } from '../../utils/api/index.ts'
+import { PaginationTableCompany } from '../../components/parts/TableCompany/type.ts'
 
 /**
  *
@@ -172,6 +175,27 @@ const AdvancedSearch = () => {
 export default function Dashboard() {
   const { searchParams } = useCompanyFilterStore()
   const [url, setUrl] = useState(`${RANDOM_UNSEEN_ENDPOINT}?`)
+  const [dataPagination, setDataPagination] = useState<PaginationTableCompany>({
+    page: 0,
+    rowsPerPage: 10,
+    totalPages: 0,
+  })
+
+  const { isPending, data, error } = useQuery({
+    queryKey: ['companies', url, dataPagination.page, searchParams],
+    queryFn: () => fetchCompaniesWithUrlAndPage(url, dataPagination.page),
+    retry: 1,
+    refetchOnWindowFocus: false,
+    refetchOnMount: true,
+    refetchOnReconnect: false,
+  })
+
+  const handleChangePage = (page: number) => {
+    setDataPagination((prevDataPagination) => ({
+      ...prevDataPagination,
+      page,
+    }))
+  }
 
   useEffect(() => {
     const changeURL = () => {
@@ -191,6 +215,7 @@ export default function Dashboard() {
 
     changeURL()
   }, [searchParams])
+
   return (
     <Grid flexDirection="column">
       <Seo
@@ -243,7 +268,12 @@ export default function Dashboard() {
               borderRadius: 3,
             }}
           >
-            <TableCompany url={url} />
+            <TableCompany
+              data={data}
+              error={error}
+              handleChangePage={handleChangePage}
+              isPending={isPending}
+            />
           </Stack>
         </Grid>
 

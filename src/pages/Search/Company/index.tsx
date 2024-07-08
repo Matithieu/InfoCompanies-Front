@@ -14,7 +14,7 @@ import ListOfLeaders from '../../../components/parts/ListOfLeaders/index.tsx'
 import { Company } from '../../../data/types/company.ts'
 import { useCompanyStore } from '../../../store/companyStore.tsx'
 import {
-  fetchCompnayById,
+  fetchCompanyById,
   updateSeenCompany,
 } from '../../../utils/api/index.ts'
 import {
@@ -34,7 +34,7 @@ export default function CompanyPage() {
 
   const { isPending, isError, data, error } = useQuery({
     queryKey: ['company', companyId],
-    queryFn: () => fetchCompnayById(companyId),
+    queryFn: () => fetchCompanyById(companyId),
     initialData: () => {
       const cachedData = queryClient.getQueryData<Company>([
         'company',

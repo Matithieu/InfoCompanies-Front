@@ -33,7 +33,7 @@ interface handleChangeStatutProps {
   company: Company
   mutation: UseMutationResult<null | undefined, Error, number, unknown>
   setCompany?: (value: React.SetStateAction<Company>) => void
-  setCompanies?: (value: React.SetStateAction<Company[]>) => void
+  setCompanies?: (value: Company[]) => void
 }
 
 export const handleChangeStatut = ({
@@ -61,8 +61,8 @@ export const handleChangeStatut = ({
   manageIsChecked(company.id, newStatus)
 
   if (setCompanies) {
-    setCompanies((prevCompanies) =>
-      prevCompanies.map((item) => (item.id === company.id ? company : item)),
+    setCompanies(
+      [company].map((item) => (item.id === company.id ? company : item)),
     )
   } else if (setCompany) {
     setCompany(company)

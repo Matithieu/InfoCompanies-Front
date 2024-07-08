@@ -1,5 +1,5 @@
 import { Box, Card, Grid, Stack, Typography } from '@mui/joy'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { TableSkeleton } from '../../components/common/Loaders/Skeleton/index.tsx'
 import Chart from '../../components/parts/Chart/index.tsx'
@@ -8,24 +8,41 @@ import ListOfLeaders from '../../components/parts/ListOfLeaders/index.tsx'
 import TableCompany from '../../components/parts/TableCompany/index.tsx'
 import { columnsTableCompany } from '../../data/types/columns.ts'
 import { companiesSeenStorage } from '../../utils/localStorage/companiesSeenStorage.ts'
+import { PaginationTableCompany } from '../../components/parts/TableCompany/type.ts'
+import { useQuery } from '@tanstack/react-query'
+import { fetchCompanyByIds } from '../../utils/api/index.ts'
 
 export default function Favorites() {
   const { companiesToDo } = companiesSeenStorage()
+  const [dataPagination, setDataPagination] = useState<PaginationTableCompany>({
+    page: 0,
+    rowsPerPage: 10,
+    totalPages: 0,
+  })
 
-  const [url, setUrl] = useState<string>('')
-  const [checkedCompanies, setCheckedCompanies] = useState<number[]>([])
+  const { isPending, data, error } = useQuery({
+    queryKey: [
+      'companies',
+      dataPagination.page,
+      companiesToDo.getCompaniesTodo(),
+    ],
+    queryFn: () =>
+      fetchCompanyByIds(companiesToDo.getCompaniesTodo(), dataPagination.page),
+    retry: 1,
+    refetchOnWindowFocus: false,
+    refetchOnMount: true,
+    refetchOnReconnect: false,
+  })
 
-  useEffect(() => {
-    const idsOfCheckedCompanies: number[] = companiesToDo.getCompaniesTodo()
-    setCheckedCompanies(idsOfCheckedCompanies)
-
-    if (idsOfCheckedCompanies.length > 0) {
-      setUrl(`get-by-ids?ids=${idsOfCheckedCompanies.join(',')}&`)
-    }
-  }, [companiesToDo])
+  const handleChangePage = (page: number) => {
+    setDataPagination((prevDataPagination) => ({
+      ...prevDataPagination,
+      page,
+    }))
+  }
 
   const renderContent = () => {
-    if (checkedCompanies.length === 0) {
+    if (data?.content.length === 0) {
       return (
         <Typography
           sx={{
@@ -40,7 +57,7 @@ export default function Favorites() {
       )
     }
 
-    if (!url) {
+    if (isPending) {
       return <TableSkeleton columns={columnsTableCompany} />
     }
 
@@ -67,7 +84,12 @@ export default function Favorites() {
               borderRadius: 3,
             }}
           >
-            <TableCompany url={url} />
+            <TableCompany
+              data={data}
+              error={error}
+              handleChangePage={handleChangePage}
+              isPending={isPending}
+            />
           </Stack>
           <Card
             sx={{
