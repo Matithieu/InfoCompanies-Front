@@ -1,71 +1,80 @@
 import 'react-toastify/dist/ReactToastify.css'
 
 import { Box, Card, Grid, IconButton, Typography } from '@mui/joy'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
-
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { FC, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+
 import { GlobalErrorButton } from '../../../components/common/buttons/GlobalErrorButton.tsx'
 import ScrapCompanyButton from '../../../components/common/buttons/scrapCompanyButton.tsx'
-import { StatutIcon } from '../../../components/common/Icons/StatutIcon.tsx'
-import Chart from '../../../components/parts/Chart/index.tsx'
-import DetailsCompany from '../../../components/parts/DetailsCompany/index.tsx'
-import ListOfLeaders from '../../../components/parts/ListOfLeaders/index.tsx'
-import { Company } from '../../../data/types/company.ts'
-import { useCompanyStore } from '../../../store/companyStore.tsx'
-import {
-  fetchCompanyById,
-  updateSeenCompany,
-} from '../../../utils/api/index.ts'
+import StatutIcon from '../../../components/common/Icons/StatutIcon.tsx'
 import {
   handleChangeStatut,
   updateCompaniesIcon,
 } from '../../../components/common/Icons/stautIcon.util.ts'
+import Chart from '../../../components/parts/Chart/index.tsx'
+import DetailsCompany from '../../../components/parts/DetailsCompany/index.tsx'
+import ListOfLeaders from '../../../components/parts/ListOfLeaders/index.tsx'
+import { Company } from '../../../data/types/company.ts'
+import {
+  fetchCompanyById,
+  updateSeenCompany,
+} from '../../../utils/api/index.ts'
 import { asserts } from '../../../utils/assertion.util.ts'
 
-export default function CompanyPage() {
-  const queryClient = useQueryClient()
-  const [company, setCompany] = useState<Company>({} as Company)
-
+const CompanyPage: FC = () => {
   const { companyId } = useParams()
+  const [company, setCompany] = useState<Company>()
   asserts(companyId !== undefined, "companyId can't be undefined")
 
-  const { setSelectedCompany } = useCompanyStore()
-
-  const { isPending, isError, data, error } = useQuery({
+  const { isPending, data, error } = useQuery({
     queryKey: ['company', companyId],
     queryFn: () => fetchCompanyById(companyId),
-    initialData: () => {
-      const cachedData = queryClient.getQueryData<Company>([
-        'company',
-        companyId,
-      ])
-
-      if (cachedData) {
-        return updateCompaniesIcon([cachedData])[0]
-      }
-
-      return undefined
-    },
   })
-
-  useEffect(() => {
-    if (data) {
-      const updatedData = updateCompaniesIcon([data])[0] // Update the icon
-      queryClient.setQueryData(['company', companyId], updatedData)
-      setSelectedCompany(updatedData)
-      setCompany(updatedData)
-    }
-  }, [data, setSelectedCompany, companyId, queryClient])
 
   const mutation = useMutation({
     mutationFn: (companyId: number) => updateSeenCompany([companyId]),
     onError: (error) => {
       console.error(`Error updating recommendations: ${error.message}`)
     },
+    onSuccess: () => {
+      setCompany((prevData) => {
+        if (prevData) {
+          return {
+            ...prevData,
+            ...updateCompaniesIcon([prevData]),
+          }
+        }
+
+        return prevData
+      })
+    },
   })
 
-  if (error !== null && isError) {
+  const handleStatusChange = (company: Company) => {
+    const updatedCompany = handleChangeStatut({
+      company,
+      mutation,
+    })
+    setCompany((prevData) => {
+      if (prevData) {
+        return {
+          ...prevData,
+          updatedCompany,
+        }
+      }
+
+      return prevData
+    })
+  }
+
+  useEffect(() => {
+    if (data !== null) {
+      setCompany(data)
+    }
+  }, [data])
+
+  if (error !== null) {
     return <GlobalErrorButton error={error} />
   }
 
@@ -104,11 +113,7 @@ export default function CompanyPage() {
                     cursor: 'pointer',
                   }}
                   onClick={() => {
-                    company.checked = handleChangeStatut({
-                      company: company,
-                      mutation,
-                      setCompany,
-                    })
+                    handleStatusChange(company)
                   }}
                 >
                   <StatutIcon statut={company.checked} />
@@ -134,7 +139,7 @@ export default function CompanyPage() {
                       maxWidth: 400,
                     }}
                   >
-                    <DetailsCompany />
+                    <DetailsCompany company={company} />
                   </Card>
                 </Grid>
                 <Grid md={4} xs={12}>
@@ -163,7 +168,7 @@ export default function CompanyPage() {
                       minWidth: 400,
                     }}
                   >
-                    <Chart />
+                    <Chart company={company} />
                   </Card>
                 </Grid>
               </Grid>
@@ -174,3 +179,5 @@ export default function CompanyPage() {
     )
   }
 }
+
+export default CompanyPage

@@ -1,179 +1,24 @@
 import './style.css'
 
-import SearchIcon from '@mui/icons-material/Search'
-import { Box, Button, Card, Grid, Stack, Typography } from '@mui/joy'
-import { useEffect, useState } from 'react'
+import { Box, Card, Grid, Stack, Typography } from '@mui/joy'
+import { useQuery } from '@tanstack/react-query'
+import { FC, useEffect, useState } from 'react'
 
-import CustomSelect from '../../components/common/CustomSelect/index.tsx'
 import Seo from '../../components/common/Seo/index.tsx'
 import Chart from '../../components/parts/Chart/index.tsx'
 import DetailsCompany from '../../components/parts/DetailsCompany/index.tsx'
+import Filters from '../../components/parts/Filters/index.tsx'
 import ListOfLeaders from '../../components/parts/ListOfLeaders/index.tsx'
 import TableCompany from '../../components/parts/TableCompany/index.tsx'
-import { activityArea } from '../../data/ListOfOptions/Activity.tsx'
-import { legalStatus } from '../../data/ListOfOptions/Legal.tsx'
-import { region } from '../../data/ListOfOptions/Region.tsx'
-import { RANDOM_UNSEEN_ENDPOINT } from '../../data/types/common.ts'
-import { useCompanyFilterStore } from '../../store/filtersStore.tsx'
-import { useQuery } from '@tanstack/react-query'
-import { fetchCompaniesWithUrlAndPage } from '../../utils/api/index.ts'
 import { PaginationTableCompany } from '../../components/parts/TableCompany/type.ts'
+import { RANDOM_UNSEEN_ENDPOINT } from '../../data/types/common.ts'
+import { Company } from '../../data/types/company.ts'
+import { useCompanyFilterStore } from '../../store/filtersStore.tsx'
+import { fetchCompaniesWithUrlAndPage } from '../../utils/api/index.ts'
 
-/**
- *
- * @returns Multiple components to filter the list of companies
- */
-const AdvancedSearch = () => {
-  const [showMenu, setShowMenu] = useState(false)
-  const [searchTerm, setSearchTerm] = useState({
-    legalStatusValue: [],
-    activityAreaValue: [],
-    regionValue: [],
-  })
-
-  const { searchParams, setSearchParams } = useCompanyFilterStore()
-
-  useEffect(() => {
-    setSearchTerm({
-      legalStatusValue: searchParams.legalStatus,
-      activityAreaValue: searchParams.activityArea,
-      regionValue: searchParams.region,
-    })
-  }, [searchParams])
-
-  const toggleMenu = () => {
-    setShowMenu(!showMenu)
-  }
-
-  const handleLegalStatusChange = (selectedValue: string[]) => {
-    console.log('Legal status changed to:', selectedValue)
-    setSearchTerm((prevSearchTerm) => ({
-      ...prevSearchTerm,
-      legalStatusValue: selectedValue as never[],
-    }))
-  }
-
-  const handleActivityAreaChange = (selectedValue: string[]) => {
-    console.log('Activity area changed to:', selectedValue)
-    setSearchTerm((prevSearchTerm) => ({
-      ...prevSearchTerm,
-      activityAreaValue: selectedValue as never[],
-    }))
-  }
-
-  const handleRegionChange = (selectedValue: string[]) => {
-    console.log('Region changed to:', selectedValue)
-    setSearchTerm((prevSearchTerm) => ({
-      ...prevSearchTerm,
-      regionValue: selectedValue as never[],
-    }))
-  }
-
-  const handleSearch = () => {
-    setSearchParams({
-      legalStatus: searchTerm.legalStatusValue as [],
-      activityArea: searchTerm.activityAreaValue as [],
-      region: searchTerm.regionValue as [],
-    })
-
-    // Use the callback function to log the updated state
-    setSearchTerm((prevSearchTerm) => {
-      console.log('Search term:', prevSearchTerm)
-      return prevSearchTerm
-    })
-  }
-
-  return (
-    <div>
-      <Button
-        style={{ marginBottom: 30, marginTop: 20 }}
-        variant="outlined"
-        onClick={toggleMenu}
-      >
-        Recherche avancée
-      </Button>
-      <div className={`search-menu ${showMenu ? 'show' : ''}`}>
-        <Grid
-          container
-          alignItems="center"
-          justifyContent="flex-start"
-          padding="10px"
-          spacing={1}
-          sx={{
-            flexDirection: { xs: 'column', sm: 'row' },
-            flexWrap: 'wrap',
-          }}
-          width="100%"
-        >
-          <Grid md={4} sm={6} xs={12}>
-            <CustomSelect
-              key="legal-status"
-              handleSelectChange={handleLegalStatusChange}
-              label="Status légaux"
-              options={legalStatus}
-              selectedValues={searchTerm.legalStatusValue}
-            />
-          </Grid>
-          <Grid md={4} sm={6} xs={12}>
-            <CustomSelect
-              key="activity-area"
-              handleSelectChange={handleActivityAreaChange}
-              label="Secteur d'activité"
-              options={activityArea}
-              selectedValues={searchTerm.activityAreaValue}
-            />
-          </Grid>
-          <Grid md={4} sm={6} xs={12}>
-            <CustomSelect
-              key="region"
-              handleSelectChange={handleRegionChange}
-              label="Région"
-              options={region}
-              selectedValues={searchTerm.regionValue}
-            />
-          </Grid>
-          <Grid md={4} sm={6} xs={12}>
-            <Button
-              style={{ marginTop: '20px' }}
-              variant="outlined"
-              onClick={() => {
-                setSearchTerm({
-                  legalStatusValue: [],
-                  activityAreaValue: [],
-                  regionValue: [],
-                })
-                setSearchParams({
-                  legalStatus: [],
-                  activityArea: [],
-                  region: [],
-                })
-              }}
-            >
-              Réinitialiser
-            </Button>
-
-            <span style={{ marginRight: '20px' }}></span>
-
-            <Button
-              style={{ marginTop: '20px' }}
-              variant="soft"
-              onClick={handleSearch}
-            >
-              Rechercher <SearchIcon style={{ marginLeft: '6px' }} />
-            </Button>
-          </Grid>
-        </Grid>
-      </div>
-    </div>
-  )
-}
-
-/**
- *
- * @returns The dashboard page
- */
-export default function Dashboard() {
+const Dashboard: FC = () => {
   const { searchParams } = useCompanyFilterStore()
+  const [company, setCompany] = useState<Company>()
   const [url, setUrl] = useState(`${RANDOM_UNSEEN_ENDPOINT}?`)
   const [dataPagination, setDataPagination] = useState<PaginationTableCompany>({
     page: 0,
@@ -235,7 +80,7 @@ export default function Dashboard() {
       </Box>
 
       <Grid lg={3} md={4} paddingLeft={8} sm={6} xs={12}>
-        <AdvancedSearch
+        <Filters
           key={
             searchParams.activityArea.length +
             searchParams.region.length +
@@ -272,6 +117,7 @@ export default function Dashboard() {
               data={data}
               error={error}
               handleChangePage={handleChangePage}
+              handleDetailsClick={(company) => setCompany(company)}
               isPending={isPending}
             />
           </Stack>
@@ -299,7 +145,7 @@ export default function Dashboard() {
                 overflow: 'hidden',
               }}
             >
-              <DetailsCompany />
+              <DetailsCompany company={company} />
             </Card>
           </Grid>
 
@@ -331,7 +177,7 @@ export default function Dashboard() {
                 minWidth: 400,
               }}
             >
-              <Chart />
+              <Chart company={company} />
             </Card>
           </Grid>
           {/* . */}
@@ -340,3 +186,5 @@ export default function Dashboard() {
     </Grid>
   )
 }
+
+export default Dashboard

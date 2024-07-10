@@ -1,19 +1,21 @@
 import { Box, Card, Grid, Stack, Typography } from '@mui/joy'
-import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { FC, useState } from 'react'
 
 import { TableSkeleton } from '../../components/common/Loaders/Skeleton/index.tsx'
 import Chart from '../../components/parts/Chart/index.tsx'
 import DetailsCompany from '../../components/parts/DetailsCompany/index.tsx'
 import ListOfLeaders from '../../components/parts/ListOfLeaders/index.tsx'
 import TableCompany from '../../components/parts/TableCompany/index.tsx'
-import { columnsTableCompany } from '../../data/types/columns.ts'
-import { companiesSeenStorage } from '../../utils/localStorage/companiesSeenStorage.ts'
 import { PaginationTableCompany } from '../../components/parts/TableCompany/type.ts'
-import { useQuery } from '@tanstack/react-query'
+import { columnsTableCompany } from '../../data/types/columns.ts'
+import { Company } from '../../data/types/company.ts'
 import { fetchCompanyByIds } from '../../utils/api/index.ts'
+import { companiesSeenStorage } from '../../utils/localStorage/companiesSeenStorage.ts'
 
-export default function Favorites() {
+const Favorites: FC = () => {
   const { companiesToDo } = companiesSeenStorage()
+  const [company, setCompany] = useState<Company>()
   const [dataPagination, setDataPagination] = useState<PaginationTableCompany>({
     page: 0,
     rowsPerPage: 10,
@@ -88,6 +90,7 @@ export default function Favorites() {
               data={data}
               error={error}
               handleChangePage={handleChangePage}
+              handleDetailsClick={(company) => setCompany(company)}
               isPending={isPending}
             />
           </Stack>
@@ -103,7 +106,7 @@ export default function Favorites() {
               maxWidth: '50%',
             }}
           >
-            <DetailsCompany />
+            <DetailsCompany company={company} />
           </Card>
         </Box>
 
@@ -120,7 +123,7 @@ export default function Favorites() {
                 borderRadius: 3,
               }}
             >
-              <Chart />
+              <Chart company={company} />
             </Card>
           </Grid>
           <Grid md={6} xs={12}>
@@ -161,3 +164,5 @@ export default function Favorites() {
     </Grid>
   )
 }
+
+export default Favorites
