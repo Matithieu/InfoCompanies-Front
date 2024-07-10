@@ -88,6 +88,26 @@ module.exports = {
         propElementValues: 'always',
       },
     ],
+    'simple-import-sort/imports': [
+      'error',
+      {
+        groups: [
+          // side-effect imports
+          ['^\\u0000'],
+          // node, scoped, no-scoped packages
+          ['^node:', '^@', '^\\w'],
+
+          // Alias imports
+          ['^#/utils', '^#/configs'],
+          ['^#/types'],
+          ['^#/fixtures'],
+          ['^#/modules'],
+
+          // Parent, sibling imports.
+          ['^\\.\\./', '^\\./'],
+        ],
+      },
+    ],
     'react/jsx-handler-names': 'error',
     'react/jsx-no-constructed-context-values': 'error',
     'react/jsx-pascal-case': [
