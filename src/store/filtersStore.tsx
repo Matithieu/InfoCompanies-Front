@@ -1,36 +1,34 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
+
+interface SearchParams {
+  legalStatus: string[]
+  activityArea: string[]
+  region: string[]
+}
 
 interface CompanyFilterState {
-  searchParams: {
-    legalStatus: []
-    activityArea: []
-    region: []
-  }
-  setSearchParams: (params: {
-    legalStatus?: []
-    activityArea?: []
-    region?: []
-  }) => void
+  searchParams: SearchParams
+  setSearchParams: (params: Partial<SearchParams>) => void
 }
 
-const loadFiltersFromLocalStorage = () => {
-  const storedFilters = JSON.parse(localStorage.getItem('searchParams') || '{}')
-  return {
-    searchParams: {
-      legalStatus: storedFilters.legalStatus || [],
-      activityArea: storedFilters.activityArea || [],
-      region: storedFilters.region || [],
+export const useCompanyFilterStore = create<CompanyFilterState>()(
+  persist(
+    (set) => ({
+      searchParams: {
+        legalStatus: [],
+        activityArea: [],
+        region: [],
+      },
+      setSearchParams: (params) => {
+        set((state) => {
+          const newParams = { ...state.searchParams, ...params }
+          return { searchParams: newParams }
+        })
+      },
+    }),
+    {
+      name: 'searchParams', // name of the item in the storage (must be unique)
     },
-  }
-}
-
-export const useCompanyFilterStore = create<CompanyFilterState>((set) => ({
-  ...loadFiltersFromLocalStorage(),
-  setSearchParams: (params) => {
-    set((state) => {
-      const newParams = { ...state.searchParams, ...params }
-      localStorage.setItem('searchParams', JSON.stringify(newParams))
-      return { searchParams: newParams }
-    })
-  },
-}))
+  ),
+)
