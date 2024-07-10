@@ -1,4 +1,5 @@
 import { Box, Link } from '@mui/material'
+
 import { useAppNavigate } from '../../utils/navigation/navigation'
 
 export default function Footer() {

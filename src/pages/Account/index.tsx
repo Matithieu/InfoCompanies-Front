@@ -11,7 +11,6 @@ import {
 
 import useAuthStore from '../../store/authStore'
 import ViewInvoices from '../Purchasing/invoice'
-
 import Account from './component'
 
 export default function AccountPage() {

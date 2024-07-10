@@ -2,16 +2,16 @@ import 'react-toastify/dist/ReactToastify.css'
 import './index.css'
 
 import { CssBaseline, CssVarsProvider } from '@mui/joy'
+import {
+  Experimental_CssVarsProvider as MaterialCssVarsProvider,
+  experimental_extendTheme as materialExtendTheme,
+  THEME_ID as MATERIAL_THEME_ID,
+} from '@mui/material/styles'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
-import {
-  experimental_extendTheme as materialExtendTheme,
-  Experimental_CssVarsProvider as MaterialCssVarsProvider,
-  THEME_ID as MATERIAL_THEME_ID,
-} from '@mui/material/styles'
 
 import App from './App.jsx'
 import { fontFamily } from './pages/Layout/utils.js'

@@ -1,8 +1,9 @@
+import { Box } from '@mui/material'
+import { useMediaQuery, useTheme } from '@mui/material'
 import React from 'react'
+
 import { Products } from '../../data/Stripe/subscription'
 import SubscriptionCard from './components/SubscriptionCard'
-import { Box } from '@mui/material'
-import { useTheme, useMediaQuery } from '@mui/material'
 
 const Subscription: React.FC = () => {
   const subscriptions = Products.sort((a, b) => a.price - b.price)

@@ -1,4 +1,3 @@
-import * as React from 'react'
 import {
   Container,
   Grid,
@@ -8,6 +7,7 @@ import {
   Switch,
   Typography,
 } from '@mui/joy'
+import * as React from 'react'
 
 export default function Settings() {
   const [language, setLanguage] = React.useState('English')

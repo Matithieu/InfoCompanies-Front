@@ -1,6 +1,7 @@
 import SearchIcon from '@mui/icons-material/Search'
 import { Input } from '@mui/joy'
 import { useState } from 'react'
+
 import { useAppNavigate } from '../../../utils/navigation/navigation'
 
 export default function SearchAppBar() {

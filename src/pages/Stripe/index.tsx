@@ -1,7 +1,7 @@
+import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import { useQuery } from '@tanstack/react-query'
 import { ItemData } from '../../data/Stripe/itemData.ts'
 import { User } from '../../data/types/user.ts'
 import useAuthStore from '../../store/authStore.tsx'

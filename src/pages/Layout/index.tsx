@@ -22,9 +22,9 @@ import { Outlet } from 'react-router-dom'
 import useAuthManager from '../../hooks/useAuthManager'
 import useAuthStore from '../../store/authStore'
 import { useAppNavigate } from '../../utils/navigation/navigation'
-import { linkStyles } from './ListItems/types'
 import ColorSchemeToggle from './colorScheme'
 import Header from './header'
+import { linkStyles } from './ListItems/types'
 import { closeSidebar } from './utils'
 
 export function Sidebar() {

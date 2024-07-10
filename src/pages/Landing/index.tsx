@@ -1,10 +1,13 @@
+import './Landing.css'
+
 import { Grid, useColorScheme } from '@mui/joy'
 import React, { useEffect } from 'react'
+
 import Footer from '../../components/pages/footer'
 import Subscription from '../Subscription'
 import HeaderLanding from './components/header'
 import StepsList from './components/stepsList'
-import './Landing.css'
+
 import testImg from '/test.webp'
 import video1 from '/videos/step-1.gif'
 import video2 from '/videos/step-2.gif'

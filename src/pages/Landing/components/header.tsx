@@ -1,7 +1,7 @@
 import AdbIcon from '@mui/icons-material/Adb'
-
 import { Box, Container, Link, Typography } from '@mui/joy'
 import { AppBar, Toolbar } from '@mui/material'
+
 import useAuthManager from '../../../hooks/useAuthManager'
 import { useAppNavigate } from '../../../utils/navigation/navigation'
 

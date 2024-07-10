@@ -8,6 +8,9 @@ import Error404 from './pages/Error/404.tsx'
 import Test from './pages/Error/test.tsx'
 import Landing from './pages/Landing/index.tsx'
 import Layout from './pages/Layout/index.tsx'
+import LegalInformation from './pages/Legal/legal.tsx'
+import PrivacyPolicy from './pages/Legal/privacy.tsx'
+import TermsAndConditions from './pages/Legal/terms.tsx'
 import Loading from './pages/Loading/index.tsx'
 import Failure from './pages/Purchasing/failure.tsx'
 import OrderConfirmation from './pages/Purchasing/success.tsx'
@@ -17,9 +20,6 @@ import {
   ProtectedRoutes,
   ProtectedSimpleRoutes,
 } from './utils/protectedRoute.tsx'
-import TermsAndConditions from './pages/Legal/terms.tsx'
-import PrivacyPolicy from './pages/Legal/privacy.tsx'
-import LegalInformation from './pages/Legal/legal.tsx'
 
 // Lazy loading components for security
 const Dashboard = lazy(() => import('./pages/Dashboard/index.tsx'))

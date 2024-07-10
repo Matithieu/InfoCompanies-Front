@@ -1,6 +1,6 @@
 export interface ErrorFromApi {
   path: string
-  message: string
+  error: string
   status: string
   timestamp: number
 }

@@ -1,3 +1,5 @@
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import {
   Box,
   IconButton,
@@ -5,9 +7,6 @@ import {
   Tooltip,
   Typography,
 } from '@mui/joy'
-
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import React from 'react'
 
 type DataPaginationProps = {

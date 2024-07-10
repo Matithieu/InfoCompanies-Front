@@ -1,4 +1,3 @@
-import { ChangeEvent, useEffect, useState } from 'react'
 import {
   Button,
   Card,
@@ -11,11 +10,12 @@ import {
   Typography,
 } from '@mui/joy'
 import { useMutation, useQuery } from '@tanstack/react-query'
+import { ChangeEvent, useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 import { User } from '../../../data/types/user'
 import useAuthStore from '../../../store/authStore'
 import { fetchUser, updateUser } from '../../../utils/api'
-import { toast } from 'react-toastify'
 
 export default function Account() {
   const { authUser, requestLoading, setAuthUser, setRequestLoading } =

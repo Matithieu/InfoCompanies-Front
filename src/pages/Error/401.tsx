@@ -1,4 +1,5 @@
 import { Box, Button, Container, Typography } from '@mui/joy'
+
 import { useAppNavigate } from '../../utils/navigation/navigation'
 
 export default function Page401() {
