@@ -2,47 +2,80 @@ import './style.css'
 
 import { IconButton, Sheet, Table } from '@mui/joy'
 import { useMutation } from '@tanstack/react-query'
-import * as React from 'react'
+import { FC, useEffect, useState } from 'react'
 
 import { columnsTableCompany } from '../../../data/types/columns.ts'
 import { Company } from '../../../data/types/company.ts'
-import { useCompanyStore } from '../../../store/companyStore.tsx'
+import { Page } from '../../../data/types/companyDetails.ts'
 import { updateSeenCompany } from '../../../utils/api/index.ts'
 import { GlobalErrorButton } from '../../common/buttons/GlobalErrorButton.tsx'
 import Pagination from '../../common/buttons/Pagination.tsx'
-import { StatutIcon } from '../../common/Icons/StatutIcon.tsx'
+import StatutIcon from '../../common/Icons/StatutIcon.tsx'
+import {
+  handleChangeStatut,
+  updateCompaniesIcon,
+} from '../../common/Icons/stautIcon.util.ts'
 import { TableSkeleton } from '../../common/Loaders/Skeleton/index.tsx'
+import TableCompanyHeaders from './components/TableCompanyHeaders.tsx'
 import TableCompanyRow from './components/TableCompanyRow.tsx'
-import { handleChangeStatut } from '../../common/Icons/stautIcon.util.ts'
-import { Page } from '../../../data/types/companyDetails.ts'
 
-interface TableCompanyProps {
+type TableCompanyProps = {
   data: Page<Company> | undefined | null
+  handleDetailsClick: (company: Company) => void
   handleChangePage: (newPage: number) => void
   isPending: boolean
   error: Error | null
 }
 
-export default function TableCompany({
+const TableCompany: FC<TableCompanyProps> = ({
   data,
   isPending,
   error,
+  handleDetailsClick,
   handleChangePage,
-}: TableCompanyProps) {
-  const { selectedCompany, setSelectedCompany } = useCompanyStore()
+}) => {
+  const [tableData, setTableData] = useState(data)
+
+  useEffect(() => {
+    setTableData(data)
+  }, [data])
 
   const mutation = useMutation({
     mutationFn: (companyId: number) => updateSeenCompany([companyId]),
     onError: (error) => {
       console.error(`Error updating recommendations: ${error.message}`)
     },
+    onSuccess: () => {
+      setTableData((prevData) => {
+        if (prevData) {
+          return {
+            ...prevData,
+            content: updateCompaniesIcon(prevData.content),
+          }
+        }
+
+        return prevData
+      })
+    },
   })
 
-  const handleDetailsClick = (company: Company) => {
-    if (company !== selectedCompany) {
-      setSelectedCompany(company)
-      console.log('Company selected: ', selectedCompany)
-    }
+  const handleStatusChange = (company: Company) => {
+    const updatedCompany = handleChangeStatut({
+      company,
+      mutation,
+    })
+    setTableData((prevData) => {
+      if (prevData) {
+        return {
+          ...prevData,
+          content: prevData.content.map((row) =>
+            row.id === updatedCompany.id ? updatedCompany : row,
+          ),
+        }
+      }
+
+      return prevData
+    })
   }
 
   if (error) {
@@ -67,9 +100,9 @@ export default function TableCompany({
         Aucune entreprise trouvée
       </a>
     )
-  } else if (data !== undefined && data !== null && !data.empty) {
+  } else if (data !== undefined && data !== null && !data.empty && tableData) {
     return (
-      <React.Fragment>
+      <>
         <Sheet
           aria-label="order-table-container"
           sx={{
@@ -98,34 +131,22 @@ export default function TableCompany({
               overflow: 'auto',
             }}
           >
-            <thead>
-              <tr>
-                {columnsTableCompany.map((column) => (
-                  <th
-                    key={column.id}
-                    align={column.align}
-                    style={{
-                      width: column.minWidth,
-                      fontSize: 16,
-                    }}
-                  >
-                    {column.label}
-                  </th>
-                ))}
-              </tr>
-            </thead>
+            <TableCompanyHeaders columns={columnsTableCompany} />
             <tbody style={{ wordBreak: 'break-word' }}>
-              {data.content.map((row, number) => (
+              {tableData.content.map((row, index) => (
                 <tr
-                  key={row.id + 'rowdetails'}
-                  role="checkbox"
+                  key={row.id}
+                  role="row"
                   style={{ cursor: 'pointer' }}
                   tabIndex={-1}
-                  onClick={() => handleDetailsClick(row)}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleDetailsClick(row)
+                  }}
                 >
-                  <td key={row.id + 'checkbox'} align="center">
+                  <td align="center">
                     <IconButton
-                      id={`checkbox-${number}`}
+                      id={`checkbox-${index}`}
                       style={{
                         border: 'none',
                         backgroundColor: 'transparent',
@@ -133,14 +154,7 @@ export default function TableCompany({
                       }}
                       onClick={(e) => {
                         e.stopPropagation()
-                        row.checked = handleChangeStatut({
-                          company: row,
-                          mutation,
-                          setCompanies: (value) => {
-                            data.content = value
-                            return value
-                          },
-                        })
+                        handleStatusChange(row)
                       }}
                     >
                       <StatutIcon statut={row.checked} />
@@ -160,7 +174,9 @@ export default function TableCompany({
           dataPagination={{ page: data.number, totalPages: data.totalPages }}
           handleChangePage={handleChangePage}
         />
-      </React.Fragment>
+      </>
     )
   }
 }
+
+export default TableCompany

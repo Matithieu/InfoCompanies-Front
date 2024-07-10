@@ -1,6 +1,7 @@
+import { FC } from 'react'
+
 import { Column } from '../../../../data/types/columns'
 import { Company } from '../../../../data/types/company'
-
 import TableCompanySocial from './TableCompanySocial'
 
 type TableCompanyRowProps = {
@@ -8,7 +9,7 @@ type TableCompanyRowProps = {
   row: Company
 }
 
-export default function TableCompanyRow({ column, row }: TableCompanyRowProps) {
+const TableCompanyRow: FC<TableCompanyRowProps> = ({ column, row }) => {
   switch (column.id) {
     case 'socialMedia':
       return <TableCompanySocial socialMedia={row.socialMedia} />
@@ -37,7 +38,7 @@ export default function TableCompanyRow({ column, row }: TableCompanyRowProps) {
               row.website !== null &&
               row.website !== ''
             ) {
-              e.stopPropagation() // To avoid triggering handleDetailsClick
+              e.stopPropagation()
               window.open(row.website, '_blank')
             }
           }}
@@ -49,3 +50,5 @@ export default function TableCompanyRow({ column, row }: TableCompanyRowProps) {
       return null
   }
 }
+
+export default TableCompanyRow
