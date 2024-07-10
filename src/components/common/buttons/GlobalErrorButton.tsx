@@ -1,4 +1,6 @@
 import { Button, Typography } from '@mui/joy'
+import { toast } from 'react-toastify'
+
 import useAuthManager from '../../../hooks/useAuthManager'
 import { useAppNavigate } from '../../../utils/navigation/navigation'
 
@@ -11,38 +13,29 @@ export function GlobalErrorButton({ error }: ErrorButtonProps) {
   const authUser = useAuthManager()
 
   const handleButtonClick = () => {
-    switch (error.message) {
-      case 'Subscription Error':
-        console.log('Select Subscription')
-        break
-      case 'Too many requests':
-        navigation.toAccount()
-        break
-      case 'Network Error':
-        console.log('Check Network Connection')
-        break
-      case 'Unauthorized':
-        authUser.signIn()
-        break
-      default:
-        console.log('Unknown Error')
-        break
+    const actionMap: Record<string, () => void> = {
+      'Subscription Error': () => navigation.toAccount(),
+      Forbidden: () => navigation.toSubscription(),
+      'Too many requests': () => navigation.toAccount(),
+      'Network Error': () => authUser.signOut(),
+      Unauthorized: () => authUser.signIn(),
     }
+
+    const action =
+      actionMap[error.message] || (() => toast.error('Unknown error'))
+    action()
   }
 
   const getButtonLabel = () => {
-    switch (error.message) {
-      case 'Too many requests':
-        return 'Select Subscription'
-      case 'Subscription Error':
-        return 'Change Plan'
-      case 'Network Error':
-        return 'Retry Connection'
-      case 'Unauthorized':
-        return 'Login'
-      default:
-        return 'Try Again'
+    const labelMap: Record<string, string> = {
+      'Subscription Error': 'Change Plan',
+      Forbidden: 'Change Plan',
+      'Too many requests': 'Select Subscription',
+      'Network Error': 'Retry Connection',
+      Unauthorized: 'Login',
     }
+
+    return labelMap[error.message] || 'Try Again'
   }
 
   return (
@@ -52,7 +45,7 @@ export function GlobalErrorButton({ error }: ErrorButtonProps) {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        gap: '16px', // Added a gap for better spacing between the elements
+        gap: '16px',
       }}
     >
       <Typography>{error.message}</Typography>

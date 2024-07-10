@@ -37,8 +37,8 @@ export const fetchWithConfig = async (
 
     case 403: {
       const errorData: ErrorFromApi = await response.json()
-      toast.error(errorData.message)
-      throw new Error(errorData.message)
+      toast.error(errorData.error)
+      throw new Error(errorData.error)
     }
 
     case 429:
