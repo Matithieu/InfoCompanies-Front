@@ -1,5 +1,6 @@
 import { Typography } from '@mui/joy'
-import * as React from 'react'
+import { useTheme } from '@mui/joy/styles'
+import { FC, Fragment, useEffect, useState } from 'react'
 import {
   Label,
   Line,
@@ -10,21 +11,25 @@ import {
   YAxis,
 } from 'recharts'
 
-import { getTotalOfTurnOver, TurnOver } from '../../../data/types/company'
-import { useCompanyStore } from '../../../store/companyStore'
+import {
+  Company,
+  getTotalOfTurnOver,
+  TurnOver,
+} from '../../../data/types/company'
 
-import { useTheme } from '@mui/joy/styles'
+type ChartProps = {
+  company: Company | undefined
+}
 
-export default function Chart() {
+const Chart: FC<ChartProps> = ({ company }) => {
   const theme = useTheme()
-  const { selectedCompany } = useCompanyStore()
-  const [turnOver, setTurnOver] = React.useState<TurnOver>()
+  const [turnOver, setTurnOver] = useState<TurnOver>()
 
-  React.useEffect(() => {
-    if (selectedCompany !== null) {
-      setTurnOver(getTotalOfTurnOver(selectedCompany))
+  useEffect(() => {
+    if (company !== undefined) {
+      setTurnOver(getTotalOfTurnOver(company))
     }
-  }, [selectedCompany, setTurnOver])
+  }, [company])
 
   const insertData = () => {
     const data: { date: number; amount: number }[] = []
@@ -50,13 +55,11 @@ export default function Chart() {
     )
   }
 
-  if (selectedCompany !== null && turnOver.turnOver.map((e) => e === 0)) {
+  if (company === undefined || turnOver.turnOver.map((e) => e === 0)) {
+    return <a style={{ fontSize: '19px' }}>Pas de données</a>
+  } else if (turnOver) {
     return (
-      <a style={{ fontSize: '19px' }}>Pas de données pour cette entreprise</a>
-    )
-  } else {
-    return (
-      <React.Fragment>
+      <Fragment>
         <Typography level="h4">Chiffre d&apos;affaire</Typography>
         <ResponsiveContainer>
           <LineChart
@@ -112,7 +115,9 @@ export default function Chart() {
             />
           </LineChart>
         </ResponsiveContainer>
-      </React.Fragment>
+      </Fragment>
     )
   }
 }
+
+export default Chart
