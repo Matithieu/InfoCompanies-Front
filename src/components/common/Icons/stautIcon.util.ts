@@ -1,8 +1,9 @@
 import { UseMutationResult } from '@tanstack/react-query'
+
 import { CheckStatus, Company } from '../../../data/types/company'
 import { companiesSeenStorage } from '../../../utils/localStorage/companiesSeenStorage'
-import { parseJsonToCompany } from '../../../utils/parseJsonToObject'
 import { manageIsChecked } from '../../../utils/manageIsChecked'
+import { parseJsonToCompany } from '../../../utils/parseJsonToObject'
 
 export const updateCompaniesIcon = (companies: Company[]) => {
   const { companiesToDo, companiesDone } = companiesSeenStorage()
@@ -32,15 +33,11 @@ export const updateCompaniesIcon = (companies: Company[]) => {
 interface handleChangeStatutProps {
   company: Company
   mutation: UseMutationResult<null | undefined, Error, number, unknown>
-  setCompany?: (value: React.SetStateAction<Company>) => void
-  setCompanies?: (value: Company[]) => void
 }
 
 export const handleChangeStatut = ({
   company,
   mutation,
-  setCompany,
-  setCompanies,
 }: handleChangeStatutProps) => {
   let newStatus: CheckStatus
 
@@ -52,21 +49,14 @@ export const handleChangeStatut = ({
     case CheckStatus.TO_DO:
       newStatus = CheckStatus.DONE
       break
-    default:
+    case CheckStatus.DONE:
       newStatus = CheckStatus.NOT_DONE
       mutation.mutate(company.id)
+      break
   }
 
   company.checked = newStatus
   manageIsChecked(company.id, newStatus)
 
-  if (setCompanies) {
-    setCompanies(
-      [company].map((item) => (item.id === company.id ? company : item)),
-    )
-  } else if (setCompany) {
-    setCompany(company)
-  }
-
-  return newStatus
+  return company
 }
