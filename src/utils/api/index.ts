@@ -2,6 +2,7 @@ import { updateCompaniesIcon } from '../../components/common/Icons/stautIcon.uti
 import { Company } from '../../data/types/company'
 import { Page } from '../../data/types/companyDetails'
 import { User } from '../../data/types/user'
+import { NNU } from '../assertion.util'
 import { parseJsonToCompany, parseJsonToUser } from '../parseJsonToObject'
 import { fetchWithConfig } from './config'
 
@@ -66,7 +67,10 @@ export async function fetchCompanyById(id: string) {
   const response = await fetchWithConfig(`/v1/company/get-by-id/${id}`, 'GET')
 
   if (response) {
-    return parseJsonToCompany(await response.json())
+    const data = parseJsonToCompany(await response.json())
+    const updatedCompanies = updateCompaniesIcon([NNU(data)])[0]
+
+    return updatedCompanies
   }
 
   return null
