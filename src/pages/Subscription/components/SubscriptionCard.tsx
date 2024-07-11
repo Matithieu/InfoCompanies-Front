@@ -1,11 +1,21 @@
 import { Button, Card, CardActions, CardContent, Typography } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
-import { useEffect } from 'react'
+import { FC, useEffect } from 'react'
 
 import { ItemData } from '../../../data/Stripe/itemData'
 import { stripeSubscription } from '../../../utils/api'
 
-export default function SubscriptionCard(item: ItemData) {
+type SubscriptionCardProps = {
+  item: ItemData
+  disabled: boolean
+  onCardClick: () => void
+}
+
+const SubscriptionCard: FC<SubscriptionCardProps> = ({
+  item,
+  disabled,
+  onCardClick,
+}) => {
   const { data, refetch, isSuccess } = useQuery({
     queryKey: ['sub' + item.id],
     queryFn: () => stripeSubscription(item.id),
@@ -13,10 +23,10 @@ export default function SubscriptionCard(item: ItemData) {
   })
 
   const handleClick = () => {
+    onCardClick()
     refetch()
   }
 
-  // Overkill for a onSuccess replacement
   useEffect(() => {
     if (isSuccess && data) {
       window.open(data, '__blank')
@@ -24,7 +34,12 @@ export default function SubscriptionCard(item: ItemData) {
   }, [data, isSuccess])
 
   return (
-    <Card sx={{ wordBreak: 'break-word', width: '350px' }}>
+    <Card
+      sx={{
+        wordBreak: 'break-word',
+        width: '350px',
+      }}
+    >
       <CardContent>
         <Typography level="h3">{item.name}</Typography>
         <Typography level="h4">{item.price} €</Typography>
@@ -35,10 +50,17 @@ export default function SubscriptionCard(item: ItemData) {
         </ul>
       </CardContent>
       <CardActions>
-        <Button color="primary" variant="soft" onClick={handleClick}>
+        <Button
+          color="primary"
+          disabled={disabled}
+          variant="soft"
+          onClick={handleClick}
+        >
           Subscribe
         </Button>
       </CardActions>
     </Card>
   )
 }
+
+export default SubscriptionCard
