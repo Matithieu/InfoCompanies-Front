@@ -15,11 +15,15 @@ export default defineConfig({
   ],
   base: '/',
   server: {
+    https: {
+      key: '../config/certs/key.pem',
+      cert: '../config/certs/cert.pem',
+    },
     port: 3000,
     proxy: {
       '/api': {
-        target:
-          process.env.VITE_PROXY_BASE_URL + ':' + process.env.VITE_PROXY_PORT,
+        target: process.env.VITE_PROXY_BASE_URL,
+        secure: false,
       },
     },
   },
