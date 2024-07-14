@@ -19,7 +19,7 @@ export const fetchToProxy = async ({
   method,
   options,
 }: fetchToProxyProps): Promise<Response> => {
-  const response = await fetch('http://localhost' + url, {
+  const response = await fetch(import.meta.env.VITE_API_BASE_URL + url, {
     ...options,
     method: method,
     headers: {

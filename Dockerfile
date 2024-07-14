@@ -1,4 +1,4 @@
-	# Stage 1: Build the application
+# Stage 1: Build the application
 FROM node:latest as build-stage
 
 # Install pnpm
@@ -8,13 +8,13 @@ RUN pnpm config set registry http://registry.npmjs.org
 WORKDIR /app
 
 # Copy package.json and pnpm-lock.yaml
-COPY package.json ./
+COPY InfoCompanies-Front/package.json ./
 
 # Install dependencies
 RUN pnpm install
 
 # Copy the rest of your application code
-COPY . .
+COPY InfoCompanies-Front .
 
 # Build the application
 RUN pnpm run build
@@ -22,5 +22,6 @@ RUN pnpm run build
 # Stage 2: Serve the application from Nginx
 FROM nginx:alpine
 
-COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
+ARG CONFIG_PATH
+
 COPY --from=build-stage /app/dist /usr/share/nginx/html/ui/
