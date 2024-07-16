@@ -1,19 +1,34 @@
 import { ItemData } from './itemData'
 
-export const Products: ItemData[] = [
+const STRIPE_PRICE_ID_FREE = import.meta.env.VITE_STRIPE_PRICE_ID_FREE
+const STRIPE_PRICE_ID_BASIC = import.meta.env.VITE_STRIPE_PRICE_ID_BASIC
+const STRIPE_PRICE_ID_PREMIUM = import.meta.env.VITE_STRIPE_PRICE_ID_PREMIUM
+
+const returnIdIfEmpty = (data: string | undefined, id: string) => {
+  if (data === '' || data === undefined) {
+    return id
+  }
+
+  return data
+}
+
+export const products: ItemData[] = [
   {
     description: 'Free subscription. Limited retrieval of data.',
     image: 'https://source.unsplash.com/NUoPWImmjCU',
     name: 'Free subscription',
     price: 0,
-    id: '',
+    id: returnIdIfEmpty(STRIPE_PRICE_ID_FREE, 'price_1PdHWLKjCboMtBPjo3G7vEiC'),
   },
   {
     description: 'Basic subscription at 30€/month. Limited retrieval of data.',
     image: 'https://source.unsplash.com/NUoPWImmjCU',
     name: 'Basic subscription',
     price: 25,
-    id: 'price_1PSHHDKjCboMtBPj4zELJ1ZY',
+    id: returnIdIfEmpty(
+      STRIPE_PRICE_ID_BASIC,
+      'price_1PSHL4KjCboMtBPjAF9ZID55',
+    ),
   },
   {
     description:
@@ -21,6 +36,9 @@ export const Products: ItemData[] = [
     image: 'https://source.unsplash.com/NUoPWImmjCU',
     name: 'Premium subscription',
     price: 35,
-    id: 'price_1PSHHqKjCboMtBPjl0FIvbmE',
+    id: returnIdIfEmpty(
+      STRIPE_PRICE_ID_PREMIUM,
+      'price_1PSHL1KjCboMtBPjlaDDyTTo',
+    ),
   },
 ]

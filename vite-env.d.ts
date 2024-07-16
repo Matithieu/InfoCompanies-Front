@@ -19,6 +19,10 @@ interface ImportMetaEnv {
   readonly VITE_API_PREFIX: string
   readonly VITE_API_BASE_V1_URL: string
   readonly VITE_API_COMPANY_ENDPOINT: string
+
+  readonly STRIPE_PRICE_ID_FREE: string
+  readonly STRIPE_PRICE_ID_BASIC: string
+  readonly STRIPE_PRICE_ID_PREMIUM: string
 }
 
 interface ImportMeta {

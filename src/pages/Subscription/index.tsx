@@ -1,12 +1,11 @@
-import { Box } from '@mui/material'
-import { useMediaQuery, useTheme } from '@mui/material'
+import { Box, useMediaQuery, useTheme } from '@mui/material'
 import React, { useState } from 'react'
 
-import { Products } from '../../data/Stripe/subscription'
+import { products } from '../../data/Stripe/subscription'
 import SubscriptionCard from './components/SubscriptionCard'
 
 const Subscription: React.FC = () => {
-  const subscriptions = Products.sort((a, b) => a.price - b.price)
+  const subscriptions = products.sort((a, b) => a.price - b.price)
   const theme = useTheme()
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
