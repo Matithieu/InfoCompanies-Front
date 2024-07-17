@@ -123,7 +123,12 @@ const CompanyPage: FC = () => {
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <ScrapCompanyButton key={company.scrapingDate} />
+              <ScrapCompanyButton
+                company={company}
+                onScraped={(updatedCompany) => {
+                  setCompany(updatedCompany)
+                }}
+              />
             </div>
 
             <Grid>
