@@ -14,15 +14,14 @@ const CustomSelect = ({
   handleSelectChange,
 }: CustomSelectProps) => {
   return (
-    <FormControl sx={{ width: '100%', marginBottom: 2 }}>
+    <FormControl sx={{ marginBottom: 2 }}>
       <FormLabel>{label}</FormLabel>
       <Autocomplete
         multiple
         getOptionLabel={(option) => option}
-        limitTags={2}
+        limitTags={1}
         options={options}
         placeholder={label}
-        sx={{ width: '100%' }}
         value={selectedValues}
         onChange={(_e, newValue) => handleSelectChange(newValue)}
       />

@@ -80,7 +80,7 @@ const Dashboard: FC = () => {
         </Typography>
       </Box>
 
-      <Grid lg={3} md={4} paddingLeft={8} sm={6} xs={12}>
+      <Grid item lg={3} md={4} paddingLeft={8} sm={6} xs={12}>
         <Filters />
       </Grid>
 
@@ -91,7 +91,7 @@ const Dashboard: FC = () => {
         paddingRight={10}
       >
         {/* Container on the first row */}
-        <Grid lg={11} md={11} sm={10} xs={12}>
+        <Grid item lg={11} md={11} sm={10} xs={12}>
           <Stack
             sx={{
               display: 'flex',
