@@ -10,14 +10,14 @@ import {
   Typography,
 } from '@mui/joy'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent, FC, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { User } from '../../../data/types/user'
 import useAuthStore from '../../../store/authStore'
 import { fetchUser, updateUser } from '../../../utils/api'
 
-export default function Account() {
+const Account: FC = () => {
   const { authUser, requestLoading, setAuthUser, setRequestLoading } =
     useAuthStore()
   const [editMode, setEditMode] = useState(false)
@@ -164,3 +164,5 @@ export default function Account() {
     )
   }
 }
+
+export default Account

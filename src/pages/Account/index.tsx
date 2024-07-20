@@ -8,12 +8,13 @@ import {
   Tabs,
   Typography,
 } from '@mui/joy'
+import { FC } from 'react'
 
 import useAuthStore from '../../store/authStore'
 import ViewInvoices from '../Purchasing/invoice'
 import Account from './component'
 
-export default function AccountPage() {
+const AccountPage: FC = () => {
   const { authUser, requestLoading } = useAuthStore()
 
   if (requestLoading) {
@@ -61,9 +62,6 @@ export default function AccountPage() {
                 Profile
               </Tab>
               <Tab indicatorInset sx={{ borderRadius: '6px 6px 0 0' }}>
-                Test
-              </Tab>
-              <Tab indicatorInset sx={{ borderRadius: '6px 6px 0 0' }}>
                 Factures
               </Tab>
             </TabList>
@@ -81,9 +79,6 @@ export default function AccountPage() {
                 <Account />
               </TabPanel>
               <TabPanel value={1}>
-                <div>Test</div>
-              </TabPanel>
-              <TabPanel value={2}>
                 <ViewInvoices />
               </TabPanel>
             </Stack>
@@ -93,3 +88,5 @@ export default function AccountPage() {
     )
   }
 }
+
+export default AccountPage
