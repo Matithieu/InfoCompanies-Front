@@ -24,7 +24,7 @@ export default function Account() {
   const [editedUser, setEditedUser] = useState<User | null>(null)
 
   const { isPending, isError, data, error, refetch } = useQuery({
-    queryKey: ['user'], // Include authUser in the queryKey
+    queryKey: ['user'],
     queryFn: () => fetchUser(),
     retry: 1,
     refetchOnWindowFocus: true,
@@ -94,12 +94,14 @@ export default function Account() {
                   value={editedUser?.firstName ?? ''}
                   onChange={(e) => handleChange(e, 'firstName')}
                 />
-                <FormLabel htmlFor="name">Name</FormLabel>
+              </FormControl>
+              <FormControl>
+                <FormLabel htmlFor="lastName">Last Name</FormLabel>
                 <Input
                   disabled={!editMode}
-                  id="name"
+                  id="lastName"
                   value={editedUser?.lastName ?? ''}
-                  onChange={(e) => handleChange(e, 'name')}
+                  onChange={(e) => handleChange(e, 'lastName')}
                 />
               </FormControl>
             </Grid>
