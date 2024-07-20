@@ -23,6 +23,7 @@ interface ImportMetaEnv {
   readonly STRIPE_PRICE_ID_FREE: string
   readonly STRIPE_PRICE_ID_BASIC: string
   readonly STRIPE_PRICE_ID_PREMIUM: string
+  readonly VITE_STRIPE_BILLING_PORTAL_CODE: string
 }
 
 interface ImportMeta {
