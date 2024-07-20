@@ -1,4 +1,5 @@
-import { Box, Card, Grid, Stack, Typography } from '@mui/joy'
+import { Card, Stack, Typography } from '@mui/joy'
+import { Grid } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import { FC, useState } from 'react'
 
@@ -43,37 +44,34 @@ const Favorites: FC = () => {
     }))
   }
 
-  const renderContent = () => {
-    if (data?.content.length === 0) {
-      return (
-        <Typography
-          sx={{
-            fontSize: '19px',
-            color: '#888',
-            textAlign: 'center',
-            mt: 2,
-          }}
-        >
-          Aucun ToDO sélectionné
-        </Typography>
-      )
-    }
-
-    if (isPending) {
-      return <TableSkeleton columns={columnsTableCompany} />
-    }
-
+  if (data?.content.length === 0) {
     return (
-      <>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: 5,
-          }}
-        >
+      <Typography
+        sx={{
+          fontSize: '19px',
+          color: '#888',
+          textAlign: 'center',
+          mt: 2,
+        }}
+      >
+        Aucun ToDO sélectionné
+      </Typography>
+    )
+  }
+
+  if (isPending) {
+    return <TableSkeleton columns={columnsTableCompany} />
+  }
+
+  return (
+    <>
+      <Grid container spacing={3} sx={{ px: { xs: 2, md: 6 } }}>
+        <Grid item xs={12}>
+          <Typography component="h1" level="h1" sx={{ mt: 2, mb: 2 }}>
+            Favoris
+          </Typography>
+        </Grid>
+        <Grid item md={8} xs={12}>
           <Stack
             sx={{
               display: 'flex',
@@ -81,7 +79,6 @@ const Favorites: FC = () => {
               alignItems: 'center',
               justifyContent: 'center',
               minHeight: 400,
-              minWidth: '60%',
               maxHeight: 550,
               borderRadius: 3,
             }}
@@ -94,74 +91,43 @@ const Favorites: FC = () => {
               isPending={isPending}
             />
           </Stack>
+        </Grid>
+        <Grid item md={4} xs={12}>
           <Card
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
               justifyContent: 'center',
               minHeight: 200,
               borderRadius: 3,
-              minWidth: '40%',
-              maxWidth: '50%',
+              height: '100%',
             }}
           >
             <DetailsCompany company={company} />
           </Card>
-        </Box>
-
-        <Grid container flexDirection="row" marginTop={5} spacing={3}>
-          <Grid md={6} xs={12}>
-            <Card
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: 220,
-                minWidth: '80%',
-                borderRadius: 3,
-              }}
-            >
-              <Chart company={company} />
-            </Card>
-          </Grid>
-          <Grid md={6} xs={12}>
-            <Card
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: 220,
-                borderRadius: 3,
-              }}
-            >
-              <ListOfLeaders />
-            </Card>
-          </Grid>
         </Grid>
-      </>
-    )
-  }
-
-  return (
-    <Grid>
-      <Box sx={{ px: { xs: 2, md: 6 } }}>
-        <Typography component="h1" level="h1" sx={{ mt: 2, mb: 2 }}>
-          Favoris
-        </Typography>
-      </Box>
-      <Grid container alignItems="center" px={{ xs: 2, md: 6 }} spacing={3}>
-        <Grid lg={6} md={8} sm={6} xs={12}>
-          <Grid container spacing={6}>
-            <Grid md={8} xs={12}>
-              {renderContent()}
-            </Grid>
-          </Grid>
+        <Grid item md={6} xs={12}>
+          <Card
+            sx={{
+              justifyContent: 'center',
+              height: 220,
+              borderRadius: 3,
+            }}
+          >
+            <Chart company={company} />
+          </Card>
+        </Grid>
+        <Grid item md={6} xs={12}>
+          <Card
+            sx={{
+              justifyContent: 'center',
+              height: 220,
+              borderRadius: 3,
+            }}
+          >
+            <ListOfLeaders />
+          </Card>
         </Grid>
       </Grid>
-    </Grid>
+    </>
   )
 }
 

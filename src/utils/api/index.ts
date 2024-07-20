@@ -91,7 +91,12 @@ export async function fetchCompanyByIds(ids: number[], page: number) {
 
   if (response) {
     const data: Page<Company> = await response.json()
-    const updatedCompanies = updateCompaniesIcon(data.content)
+    const parsedCompanies = data.content.map((company) =>
+      parseJsonToCompany(company),
+    )
+    asserts(parsedCompanies.every(isNotNU), 'Some companies are undefined')
+
+    const updatedCompanies = updateCompaniesIcon(parsedCompanies)
     data.content = updatedCompanies
 
     return data
