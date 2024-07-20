@@ -2,7 +2,7 @@ import { updateCompaniesIcon } from '../../components/common/Icons/stautIcon.uti
 import { Company } from '../../data/types/company'
 import { Page } from '../../data/types/companyDetails'
 import { User } from '../../data/types/user'
-import { NNU } from '../assertion.util'
+import { asserts, isNotNU, NNU } from '../assertion.util'
 import { parseJsonToCompany, parseJsonToUser } from '../parseJsonToObject'
 import { fetchWithConfig } from './config'
 
@@ -34,7 +34,12 @@ export async function fetchCompaniesWithUrlAndPage(url: string, page: number) {
 
   if (response) {
     const data: Page<Company> = await response.json()
-    const updatedCompanies = updateCompaniesIcon(data.content)
+    const parsedCompanies = data.content.map((company) =>
+      parseJsonToCompany(company),
+    )
+    asserts(parsedCompanies.every(isNotNU), 'Some companies are undefined')
+
+    const updatedCompanies = updateCompaniesIcon(parsedCompanies)
     data.content = updatedCompanies
 
     return data
@@ -68,7 +73,9 @@ export async function fetchCompanyById(id: string) {
 
   if (response) {
     const data = parseJsonToCompany(await response.json())
-    const updatedCompanies = updateCompaniesIcon([NNU(data)])[0]
+    const [updatedCompanies] = updateCompaniesIcon([
+      NNU(data, 'Error while fething company by id'),
+    ])
 
     return updatedCompanies
   }

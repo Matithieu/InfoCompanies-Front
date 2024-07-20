@@ -53,25 +53,30 @@ export function parseJsonToCompany(companyObj: JSONObject) {
     } as Company
   } catch (e) {
     console.error('Error converting company JSON to company object: ' + e)
-    return null
   }
 }
 
 export const parseJsonToFinancialYear = (
-  companyObj: any,
+  companyObj: JSONObject,
   year: number,
-): FinancialYear => {
-  return {
-    closingDate1: companyObj[`closingDate_${year}_1`],
-    turnover1: companyObj[`revenue_${year}_1`],
-    result1: companyObj[`turnover_${year}_1`],
-    closingDate2: companyObj[`closingDate_${year}_2`],
-    turnover2: companyObj[`revenue_${year}_2`],
-    result2: companyObj[`turnover_${year}_2`],
-    closingDate3: companyObj[`closingDate_${year}_3`],
-    turnover3: companyObj[`revenue_${year}_3`],
-    result3: companyObj[`turnover_${year}_3`],
-  } as FinancialYear
+) => {
+  try {
+    return {
+      closingDate1: companyObj[`closingDate_${year}_1`],
+      turnover1: companyObj[`revenue_${year}_1`],
+      result1: companyObj[`turnover_${year}_1`],
+      closingDate2: companyObj[`closingDate_${year}_2`],
+      turnover2: companyObj[`revenue_${year}_2`],
+      result2: companyObj[`turnover_${year}_2`],
+      closingDate3: companyObj[`closingDate_${year}_3`],
+      turnover3: companyObj[`revenue_${year}_3`],
+      result3: companyObj[`turnover_${year}_3`],
+    } as FinancialYear
+  } catch (error) {
+    console.error(
+      'Error converting financial year JSON to financial year object: ' + error,
+    )
+  }
 }
 
 // https://github.com/typestack/class-transformer
@@ -98,6 +103,5 @@ export function parseJsonToUser(userObjs: JSONObject) {
     } as User
   } catch (e) {
     new Error('Error converting user JSON to user object: ' + e)
-    return null
   }
 }

@@ -3,7 +3,6 @@ import { UseMutationResult } from '@tanstack/react-query'
 import { CheckStatus, Company } from '../../../data/types/company'
 import { companiesSeenStorage } from '../../../utils/localStorage/companiesSeenStorage'
 import { manageIsChecked } from '../../../utils/manageIsChecked'
-import { parseJsonToCompany } from '../../../utils/parseJsonToObject'
 
 export const updateCompaniesIcon = (companies: Company[]) => {
   const { companiesToDo, companiesDone } = companiesSeenStorage()
@@ -11,11 +10,7 @@ export const updateCompaniesIcon = (companies: Company[]) => {
   const checkedToDo = companiesToDo.getCompaniesTodo()
   const checkedDone = companiesDone.getCompaniesDone()
 
-  const companiesUpdated = companies
-    .map((companyObj) => parseJsonToCompany(companyObj))
-    .filter(Boolean) as Company[]
-
-  const updatedCompanyData = companiesUpdated.map((company) => {
+  const updatedCompanyData = companies.map((company) => {
     if (checkedDone.includes(company.id)) {
       company.checked = CheckStatus.DONE
     } else if (checkedToDo.includes(company.id)) {
