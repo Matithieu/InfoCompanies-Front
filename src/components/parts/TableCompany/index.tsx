@@ -8,6 +8,7 @@ import { columnsTableCompany } from '../../../data/types/columns.ts'
 import { Company } from '../../../data/types/company.ts'
 import { Page } from '../../../data/types/companyDetails.ts'
 import { updateSeenCompany } from '../../../utils/api/index.ts'
+import { isNotNU } from '../../../utils/assertion.util.ts'
 import { GlobalErrorButton } from '../../common/buttons/GlobalErrorButton.tsx'
 import Pagination from '../../common/buttons/Pagination.tsx'
 import StatutIcon from '../../common/Icons/StatutIcon.tsx'
@@ -89,28 +90,21 @@ const TableCompany: FC<TableCompanyProps> = ({
       <a
         style={{
           display: 'flex',
-          flexDirection: 'column',
           justifyContent: 'center',
-          alignItems: 'center',
           fontSize: '19px',
-          color: '#666',
-          height: '100%',
         }}
       >
         Aucune entreprise trouvée
       </a>
     )
-  } else if (data !== undefined && data !== null && !data.empty && tableData) {
+  } else if (isNotNU(tableData)) {
     return (
       <>
         <Sheet
           aria-label="order-table-container"
           sx={{
-            display: { xs: 'none', sm: 'initial' },
             width: '100%',
             borderRadius: 'sm',
-            flexShrink: 1,
-            overflowX: 'auto',
             minHeight: 0,
             overflow: 'auto',
           }}
@@ -171,7 +165,10 @@ const TableCompany: FC<TableCompanyProps> = ({
           </Table>
         </Sheet>
         <Pagination
-          dataPagination={{ page: data.number, totalPages: data.totalPages }}
+          dataPagination={{
+            page: tableData.number,
+            totalPages: tableData.totalPages,
+          }}
           handleChangePage={handleChangePage}
         />
       </>

@@ -8,10 +8,14 @@ import { SocialMedia } from '../../../../data/types/company'
 import LinkIcon from '../../../common/Icons/LinkIcon'
 
 type TableCompanySocialProps = {
-  socialMedia: SocialMedia
+  socialMedia: SocialMedia | undefined
 }
 
 const TableCompanySocial: FC<TableCompanySocialProps> = ({ socialMedia }) => {
+  if (socialMedia === undefined) {
+    return null
+  }
+
   return (
     <>
       {socialMedia.facebook && (

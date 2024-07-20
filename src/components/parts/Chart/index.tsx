@@ -16,6 +16,7 @@ import {
   getTotalOfTurnOver,
   TurnOver,
 } from '../../../data/types/company'
+import { PleaseSelectACompanyText } from '../../common/Texts'
 
 type ChartProps = {
   company: Company | undefined
@@ -26,7 +27,7 @@ const Chart: FC<ChartProps> = ({ company }) => {
   const [turnOver, setTurnOver] = useState<TurnOver>()
 
   useEffect(() => {
-    if (company !== undefined) {
+    if (company) {
       setTurnOver(getTotalOfTurnOver(company))
     }
   }, [company])
@@ -50,17 +51,21 @@ const Chart: FC<ChartProps> = ({ company }) => {
   }
 
   if (turnOver === undefined) {
-    return (
-      <a style={{ fontSize: '19px' }}>Veuillez sélectionner une entreprise</a>
-    )
+    return <PleaseSelectACompanyText />
   }
 
-  if (company === undefined || turnOver.turnOver.map((e) => e === 0)) {
-    return <a style={{ fontSize: '19px' }}>Pas de données</a>
+  if (company === undefined) {
+    return (
+      <a style={{ display: 'flex', justifyContent: 'center' }}>
+        Pas de données
+      </a>
+    )
   } else if (turnOver) {
     return (
       <Fragment>
-        <Typography level="h4">Chiffre d&apos;affaire</Typography>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Typography level="h4">Chiffre d&apos;affaire</Typography>
+        </div>
         <ResponsiveContainer>
           <LineChart
             data={insertData()}

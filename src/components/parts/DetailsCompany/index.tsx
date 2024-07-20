@@ -7,6 +7,7 @@ import { Table, Typography } from '@mui/joy'
 import React, { FC } from 'react'
 
 import { Company } from '../../../data/types/company'
+import { PleaseSelectACompanyText } from '../../common/Texts'
 import DetailsCompanyRow from './components/DetailsCompanyRow'
 
 type DetailsCompanyProps = {
@@ -15,12 +16,14 @@ type DetailsCompanyProps = {
 
 const DetailsCompany: FC<DetailsCompanyProps> = ({ company }) => {
   if (company === undefined) {
-    return <a>No company selected</a>
+    return <PleaseSelectACompanyText />
   }
 
   return (
     <React.Fragment>
-      <Typography level="h4">Details</Typography>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <Typography level="h4">Details</Typography>
+      </div>
       <Table aria-label="List Of Leaders">
         <tbody>
           <DetailsCompanyRow

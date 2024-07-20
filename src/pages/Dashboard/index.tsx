@@ -1,6 +1,7 @@
 import './style.css'
 
-import { Box, Card, Grid, Stack, Typography } from '@mui/joy'
+import { Box, Card, Stack, Typography } from '@mui/joy'
+import { Grid } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import { FC, useEffect, useState } from 'react'
 
@@ -74,42 +75,31 @@ const Dashboard: FC = () => {
           px: { xs: 2, md: 6 },
         }}
       >
-        <Typography component="h1" level="h1" style={{ marginTop: 20 }}>
+        <Typography level="h1" style={{ marginTop: 20 }}>
           Dashboard
         </Typography>
       </Box>
 
       <Grid lg={3} md={4} paddingLeft={8} sm={6} xs={12}>
-        <Filters
-          key={
-            searchParams.activityArea.length +
-            searchParams.region.length +
-            searchParams.legalStatus.length
-          }
-        />
+        <Filters />
       </Grid>
 
       <Grid
         container
-        display="flex"
         justifyContent="center"
         paddingLeft={10}
         paddingRight={10}
-        spacing={3}
       >
         {/* Container on the first row */}
-        <Grid lg={6} md={8} sm={6} xs={1}>
+        <Grid lg={11} md={11} sm={10} xs={12}>
           <Stack
             sx={{
               display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
               alignItems: 'center',
-              width: '100%',
-              minWidth: '100%',
-              height: '100%',
+              flexDirection: 'column',
               minHeight: 550,
               maxHeight: 550,
+
               borderRadius: 3,
             }}
           >
@@ -128,53 +118,29 @@ const Dashboard: FC = () => {
           container
           aria-label="tabs"
           justifyContent="center"
-          sm={6}
-          spacing={3}
-          xs={12}
+          marginTop={5}
+          spacing={1}
         >
           {/* DetailsCompany of the company */}
-          <Grid md={4} sm={6} xs={12}>
-            <Card
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                minHeight: 220,
-                minWidth: 400,
-                overflow: 'hidden',
-              }}
-            >
+          <Grid item lg={4} md={12} sm={12} xs={12}>
+            <Card sx={{ minHeight: 220 }}>
               <DetailsCompany company={company} />
             </Card>
           </Grid>
 
           {/* Leaders of the company */}
-          <Grid md={4} sm={6} xs={12}>
-            <Card
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                minHeight: 220,
-                minWidth: 400,
-              }}
-            >
+          <Grid item lg={4} md={12} sm={12} xs={12}>
+            <Card sx={{ minHeight: 220 }}>
               <ListOfLeaders />
             </Card>
           </Grid>
 
           {/* Chart of the company */}
-          <Grid md={4} sm={6} xs={12}>
+          <Grid item lg={4} md={12} sm={12} xs={12}>
             <Card
               sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
                 height: 220,
-                minWidth: 400,
+                minWidth: 1,
               }}
             >
               <Chart company={company} />

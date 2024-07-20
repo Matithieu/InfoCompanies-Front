@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { Leader } from '../../../data/types/leader'
 import { useCompanyStore } from '../../../store/companyStore'
+import { PleaseSelectACompanyText } from '../../common/Texts'
 
 /**
  *
@@ -28,15 +29,7 @@ export default function ListOfLeaders() {
   }, [selectedCompany])
 
   if (leaders === null) {
-    return (
-      <a style={{ fontSize: '19px' }}>Veuillez sélectionner une entreprise</a>
-    )
-  }
-
-  if (leaders.length === 0) {
-    return (
-      <a style={{ fontSize: '19px' }}>Pas de données pour cette entreprise</a>
-    )
+    return <PleaseSelectACompanyText />
   } else {
     return (
       <Container>
@@ -44,8 +37,6 @@ export default function ListOfLeaders() {
           style={{
             display: 'flex',
             justifyContent: 'center',
-            marginTop: 5,
-            top: '0',
           }}
         >
           Liste des dirigeants
