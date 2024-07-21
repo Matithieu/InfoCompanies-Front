@@ -12,7 +12,7 @@ export default function Footer() {
         display: 'flex',
         justifyContent: 'center',
         padding: '10px',
-        backgroundColor: '#050510',
+        backgroundColor: 'transparent',
         color: 'white',
         fontSize: '14px',
       }}

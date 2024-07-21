@@ -3,11 +3,13 @@ import { Box, Container, Link, Typography } from '@mui/joy'
 import { AppBar, Toolbar } from '@mui/material'
 
 import useAuthManager from '../../../hooks/useAuthManager'
+import useAuthStore from '../../../store/authStore'
 import { useAppNavigate } from '../../../utils/navigation/navigation'
 
 export default function HeaderLanding() {
   const { navigation } = useAppNavigate()
   const authManager = useAuthManager()
+  const { authUser } = useAuthStore()
 
   return (
     <AppBar style={{ backgroundColor: 'transparent', boxShadow: 'none' }}>
@@ -51,16 +53,38 @@ export default function HeaderLanding() {
             </Typography>
           </div>
           <Box>
-            <Link
-              sx={{
-                color: 'inherit',
-                textDecoration: 'none',
-                cursor: 'pointer',
-              }}
-              onClick={() => authManager.signIn()}
-            >
-              Sign in
-            </Link>
+            {authUser ? (
+              <Box>
+                {authUser.isVerified ? (
+                  <Link
+                    sx={{ color: 'inherit' }}
+                    onClick={() => navigation.toDashboard()}
+                  >
+                    Dashboard
+                  </Link>
+                ) : (
+                  <Link
+                    sx={{ color: 'inherit' }}
+                    onClick={() => navigation.toSubscription()}
+                  >
+                    Subscription
+                  </Link>
+                )}
+                <Link
+                  sx={{ color: 'inherit', ml: 2 }}
+                  onClick={() => authManager.signOut()}
+                >
+                  Logout
+                </Link>
+              </Box>
+            ) : (
+              <Link
+                sx={{ color: 'inherit' }}
+                onClick={() => authManager.signIn()}
+              >
+                Login
+              </Link>
+            )}
           </Box>
         </Toolbar>
       </Container>
