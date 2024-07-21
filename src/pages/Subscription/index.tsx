@@ -1,41 +1,32 @@
-import { Box, useMediaQuery, useTheme } from '@mui/material'
-import React, { useState } from 'react'
+import ReusableContainer from '../../components/common/ReusableContainer'
+import Footer from '../../components/pages/footer'
+import PageStyleWrapper from '../../components/pages/PageStyleWrapper/pageStyleWrapper'
+import Subscriptions from '../../components/parts/Subscription'
+import HeaderLanding from '../Landing/components/header'
 
-import { products } from '../../data/Stripe/subscription'
-import SubscriptionCard from './components/SubscriptionCard'
-
-const Subscription: React.FC = () => {
-  const subscriptions = products.sort((a, b) => a.price - b.price)
-  const theme = useTheme()
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
-
-  // State to manage if a button is clicked
-  const [buttonClicked, setButtonClicked] = useState(false)
-
-  const handleCardClick = () => {
-    setButtonClicked(true)
-  }
-
+const SubscriptionPage: React.FC = () => {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: isSmallScreen ? 'column' : 'row',
-        justifyContent: 'center',
-        padding: '20px',
-        gap: '30px',
-      }}
-    >
-      {subscriptions.map((option, index) => (
-        <SubscriptionCard
-          key={index}
-          disabled={buttonClicked}
-          item={option}
-          onCardClick={handleCardClick}
-        />
-      ))}
-    </Box>
+    <PageStyleWrapper>
+      <div>
+        <HeaderLanding />
+        <ReusableContainer style={{}}>
+          <div className="landing-container">
+            <Subscriptions />
+          </div>
+        </ReusableContainer>
+        <div
+          style={{
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+          }}
+        >
+          <Footer />
+        </div>
+      </div>
+    </PageStyleWrapper>
   )
 }
 
-export default Subscription
+export default SubscriptionPage
