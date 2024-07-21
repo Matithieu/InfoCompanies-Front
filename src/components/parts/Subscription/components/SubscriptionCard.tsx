@@ -2,8 +2,8 @@ import { Button, Card, CardActions, CardContent, Typography } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
 import { FC, useEffect } from 'react'
 
-import { ItemData } from '../../../data/Stripe/itemData'
-import { stripeSubscription } from '../../../utils/api'
+import { ItemData } from '../../../../data/Stripe/itemData'
+import { stripeSubscription } from '../../../../utils/api'
 
 type SubscriptionCardProps = {
   item: ItemData
