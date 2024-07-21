@@ -52,11 +52,11 @@ const Dashboard: FC = () => {
       ) {
         setUrl(`${RANDOM_UNSEEN_ENDPOINT}?`)
         return
+      } else {
+        setUrl(
+          `filter-by-parameters?sector=${searchParams.activityArea}&region=${searchParams.region}&`,
+        )
       }
-
-      setUrl(
-        `filter-by-parameters?sector=${searchParams.activityArea}&region=${searchParams.region}&`,
-      )
     }
 
     changeURL()
