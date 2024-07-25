@@ -1,4 +1,5 @@
 import { HttpMethod } from '../api/config'
+import handleErrors from '../api/handleErrors'
 
 interface fetchToProxyProps {
   url: string
@@ -29,13 +30,7 @@ export const fetchToProxy = async ({
     body: options?.body ? JSON.stringify(options.body) : undefined,
   })
 
-  if (
-    response.status !== 200 &&
-    response.status !== 201 &&
-    response.status !== 204
-  ) {
-    throw new Error(`Failed to fetch data from ${url} - ${response.status}`)
-  }
+  handleErrors(response, url)
 
   return response
 }
