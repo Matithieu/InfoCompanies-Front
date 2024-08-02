@@ -1,4 +1,5 @@
 import { updateCompaniesIcon } from '../../components/common/Icons/stautIcon.util'
+import { AutoCompleteType } from '../../data/types/common'
 import { Company } from '../../data/types/company'
 import { Page } from '../../data/types/companyDetails'
 import { User } from '../../data/types/user'
@@ -66,6 +67,22 @@ export async function fetchCompanyBySearchTerm(
   }
 
   return null
+}
+
+export async function fetchAutoComplete(
+  autoComplete: 'legal-form' | 'industry-sector' | 'city',
+  searchTerm: string,
+) {
+  const response = await fetchWithConfig(
+    `/v1/autocomplete/${autoComplete}?query=${searchTerm}`,
+    'GET',
+  )
+
+  if (response.ok) {
+    return (await response.json()) as AutoCompleteType[]
+  }
+
+  throw new Error(`Failed to fetch autocomplete ${autoComplete}`)
 }
 
 export async function fetchCompanyById(id: string) {

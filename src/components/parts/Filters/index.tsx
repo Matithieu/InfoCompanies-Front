@@ -2,37 +2,41 @@ import SearchIcon from '@mui/icons-material/Search'
 import { Button, Grid } from '@mui/joy'
 import { FC, useEffect, useState } from 'react'
 
-import { activityArea } from '../../../data/ListOfOptions/Activity'
-import { legalStatus } from '../../../data/ListOfOptions/Legal'
 import { region } from '../../../data/ListOfOptions/Region'
+import { AutoCompleteType } from '../../../data/types/common'
 import { useCompanyFilterStore } from '../../../store/filtersStore'
-import CustomSelect from '../../common/CustomSelect'
+import { fetchAutoComplete } from '../../../utils/api'
+import SimpleAutoComplete from '../../common/AutoComplete/autoComplete'
+import FetchAutoComplete from '../../common/AutoComplete/fetchAutoComplete'
 
 interface SearchTerm {
-  legalStatusValue: string[]
-  activityAreaValue: string[]
-  regionValue: string[]
+  cities: AutoCompleteType[]
+  industrySectors: AutoCompleteType[]
+  legalForms: AutoCompleteType[]
+  regions: string[]
 }
 
 const Filters: FC = () => {
   const { searchParams, setSearchParams } = useCompanyFilterStore()
 
   const [searchTerm, setSearchTerm] = useState<SearchTerm>({
-    legalStatusValue: [],
-    activityAreaValue: [],
-    regionValue: [],
+    cities: [],
+    industrySectors: [],
+    legalForms: [],
+    regions: [],
   })
 
   useEffect(() => {
     setSearchTerm({
-      legalStatusValue: searchParams.legalStatus,
-      activityAreaValue: searchParams.activityArea,
-      regionValue: searchParams.region,
+      cities: searchParams.city,
+      industrySectors: searchParams.industrySector,
+      legalForms: searchParams.legalForm,
+      regions: searchParams.region,
     })
   }, [searchParams])
 
   const handleSelectChange =
-    (field: keyof SearchTerm) => (selectedValue: string[]) => {
+    (field: keyof SearchTerm) => (selectedValue: string[] | unknown[]) => {
       setSearchTerm((prevSearchTerm) => ({
         ...prevSearchTerm,
         [field]: selectedValue,
@@ -41,9 +45,10 @@ const Filters: FC = () => {
 
   const handleSearch = () => {
     setSearchParams({
-      legalStatus: searchTerm.legalStatusValue,
-      activityArea: searchTerm.activityAreaValue,
-      region: searchTerm.regionValue,
+      legalForm: searchTerm.legalForms,
+      industrySector: searchTerm.industrySectors,
+      region: searchTerm.regions,
+      city: searchTerm.cities,
     })
   }
 
@@ -62,27 +67,44 @@ const Filters: FC = () => {
         width="100%"
       >
         <Grid md={4} sm={6} xs={12}>
-          <CustomSelect
-            handleSelectChange={handleSelectChange('legalStatusValue')}
-            label="Status légaux"
-            options={legalStatus}
-            selectedValues={searchTerm.legalStatusValue}
+          <FetchAutoComplete<AutoCompleteType>
+            fetchFunction={(searchTerm) =>
+              fetchAutoComplete('legal-form', searchTerm)
+            }
+            getOptionLabel={(option) => option.name}
+            handleSelectChange={handleSelectChange('legalForms')}
+            inputLabel="Forme juridique"
+            queryKeyBase="legal-form"
           />
         </Grid>
         <Grid md={4} sm={6} xs={12}>
-          <CustomSelect
-            handleSelectChange={handleSelectChange('activityAreaValue')}
-            label="Secteur d'activité"
-            options={activityArea}
-            selectedValues={searchTerm.activityAreaValue}
+          <FetchAutoComplete<AutoCompleteType>
+            fetchFunction={(searchTerm) =>
+              fetchAutoComplete('industry-sector', searchTerm)
+            }
+            getOptionLabel={(option) => option.name}
+            handleSelectChange={handleSelectChange('industrySectors')}
+            inputLabel="Secteur d'activité"
+            queryKeyBase="industry-sector"
           />
         </Grid>
         <Grid md={4} sm={6} xs={12}>
-          <CustomSelect
-            handleSelectChange={handleSelectChange('regionValue')}
+          <SimpleAutoComplete
+            handleSelectChange={handleSelectChange('regions')}
             label="Région"
             options={region}
-            selectedValues={searchTerm.regionValue}
+            selectedValues={searchTerm.regions}
+          />
+        </Grid>
+        <Grid md={4} sm={6} xs={12}>
+          <FetchAutoComplete<AutoCompleteType>
+            fetchFunction={(searchTerm) =>
+              fetchAutoComplete('city', searchTerm)
+            }
+            getOptionLabel={(option) => option.name}
+            handleSelectChange={handleSelectChange('cities')}
+            inputLabel="Ville"
+            queryKeyBase="cities"
           />
         </Grid>
         <Grid

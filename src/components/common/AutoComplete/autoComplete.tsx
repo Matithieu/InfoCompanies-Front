@@ -1,18 +1,18 @@
 import { Autocomplete, FormControl, FormLabel } from '@mui/joy'
 
-type CustomSelectProps = {
+type SimpleAutoCompleteProps = {
   label: string
   options: string[]
   selectedValues: string[]
   handleSelectChange: (selectedValue: string[]) => void
 }
 
-const CustomSelect = ({
+const SimpleAutoComplete = ({
   label,
   options,
   selectedValues,
   handleSelectChange,
-}: CustomSelectProps) => {
+}: SimpleAutoCompleteProps) => {
   return (
     <FormControl sx={{ marginBottom: 2 }}>
       <FormLabel>{label}</FormLabel>
@@ -29,4 +29,4 @@ const CustomSelect = ({
   )
 }
 
-export default CustomSelect
+export default SimpleAutoComplete

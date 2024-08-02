@@ -28,7 +28,7 @@ const Dashboard: FC = () => {
   })
 
   const { isPending, data, error } = useQuery({
-    queryKey: ['companies', url, dataPagination.page, searchParams],
+    queryKey: ['companies', url, dataPagination, searchParams],
     queryFn: () => fetchCompaniesWithUrlAndPage(url, dataPagination.page),
     retry: 1,
     refetchOnWindowFocus: false,
@@ -39,23 +39,40 @@ const Dashboard: FC = () => {
   const handleChangePage = (page: number) => {
     setDataPagination((prevDataPagination) => ({
       ...prevDataPagination,
-      page,
+      page: page,
     }))
   }
 
   useEffect(() => {
     const changeURL = () => {
       if (
-        searchParams.activityArea.length === 0 &&
-        searchParams.region.length === 0 &&
-        searchParams.legalStatus.length === 0
+        searchParams.city.length === 0 &&
+        searchParams.industrySector.length === 0 &&
+        searchParams.legalForm.length === 0 &&
+        searchParams.region.length === 0
       ) {
         setUrl(`${RANDOM_UNSEEN_ENDPOINT}?`)
         return
       } else {
-        setUrl(
-          `filter-by-parameters?sector=${searchParams.activityArea}&region=${searchParams.region}&`,
-        )
+        let url = 'filter-by-parameters?'
+
+        if (searchParams.region.length > 0) {
+          url += `regions=${searchParams.region.join(',')}&`
+        }
+
+        if (searchParams.city.length > 0) {
+          url += `cities=${searchParams.city.map((city) => city.name).join(',')}&`
+        }
+
+        if (searchParams.industrySector.length > 0) {
+          url += `industrySectors=${searchParams.industrySector.map((sector) => sector.name).join(',')}&`
+        }
+
+        if (searchParams.legalForm.length > 0) {
+          url += `legalForms=${searchParams.legalForm.map((form) => form.name).join(',')}&`
+        }
+
+        setUrl(url)
       }
     }
 
