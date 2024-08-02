@@ -28,8 +28,7 @@ export function toastErrorQuotaExceeded() {
   return toast.error(
     <QuotaExceededButton
       message="
-          Quota dépassé! Changez de plan pour continuer ou veuillez attendre la
-          fin du mois."
+          Quota dépassé! Changez de plan pour continuer ou veuillez attendre demain."
     />,
   )
 }
