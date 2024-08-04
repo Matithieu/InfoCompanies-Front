@@ -47,6 +47,10 @@ export type Company = {
   email: string
   scrapingDate: string
   socialMedia: SocialMedia
+  companyCategory: string
+  numberOfEmployee: number
+  lastProcessingDate: string
+  dateCreation: string
 }
 
 export function getTurnOverByYear(company: Company, year: number): number {

@@ -50,6 +50,10 @@ export function parseJsonToCompany(companyObj: JSONObject) {
         instagram: companyObj.instagram,
         youtube: companyObj.youtube,
       },
+      companyCategory: companyObj.companyCategory,
+      numberOfEmployee: companyObj.numberOfEmployee,
+      lastProcessingDate: companyObj.lastProcessingDate,
+      dateCreation: companyObj.dateCreation,
     } as Company
   } catch (e) {
     console.error('Error converting company JSON to company object: ' + e)
