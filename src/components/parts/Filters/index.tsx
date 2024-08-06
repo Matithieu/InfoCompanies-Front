@@ -66,7 +66,7 @@ const Filters: FC = () => {
         }}
         width="100%"
       >
-        <Grid md={4} sm={6} xs={12}>
+        <Grid md={3} sm={6} xs={12}>
           <FetchAutoComplete<AutoCompleteType>
             fetchFunction={(searchTerm) =>
               fetchAutoComplete('legal-form', searchTerm)
@@ -77,7 +77,7 @@ const Filters: FC = () => {
             queryKeyBase="legal-form"
           />
         </Grid>
-        <Grid md={4} sm={6} xs={12}>
+        <Grid md={3} sm={6} xs={12}>
           <FetchAutoComplete<AutoCompleteType>
             fetchFunction={(searchTerm) =>
               fetchAutoComplete('industry-sector', searchTerm)
@@ -88,7 +88,7 @@ const Filters: FC = () => {
             queryKeyBase="industry-sector"
           />
         </Grid>
-        <Grid md={4} sm={6} xs={12}>
+        <Grid md={3} sm={6} xs={12}>
           <SimpleAutoComplete
             handleSelectChange={handleSelectChange('regions')}
             label="Région"
@@ -96,7 +96,7 @@ const Filters: FC = () => {
             selectedValues={searchTerm.regions}
           />
         </Grid>
-        <Grid md={4} sm={6} xs={12}>
+        <Grid md={3} sm={6} xs={12}>
           <FetchAutoComplete<AutoCompleteType>
             fetchFunction={(searchTerm) =>
               fetchAutoComplete('city', searchTerm)
