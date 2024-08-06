@@ -145,6 +145,7 @@ const TableCompany: FC<TableCompanyProps> = ({
                         border: 'none',
                         backgroundColor: 'transparent',
                         cursor: 'pointer',
+                        fontSize: '22px',
                       }}
                       onClick={(e) => {
                         e.stopPropagation()
