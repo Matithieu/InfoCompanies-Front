@@ -68,7 +68,7 @@ function App() {
                 <Route element={<Account />} path="account" />
                 <Route element={<Search />} path="search/:searchTerm" />
                 <Route element={<Company />} path="company/:companyId" />
-                <Route element={<Leader />} path="leaders/*" />
+                <Route element={<Leader />} path="leaders/:siren" />
               </Route>
             </Route>
           </Route>

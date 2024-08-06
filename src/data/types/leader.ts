@@ -1,12 +1,14 @@
 export type Leader = {
-  id: number
-  firstName: string
+  siren: string
+  role: string
   lastName: string
-  dateOfBirth: Date
-  phone: string
-  email: string
-  listOfCompanies: {
-    id: number
-    name: string
-  }[]
+  firstName: string
+  gestionNumber: string
+  type: string
+  eventName: string
+  usageName: string
+  pseudo: string
+  companyName: string
+  legalForm: string
+  idData: number
 }

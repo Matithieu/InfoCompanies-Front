@@ -157,7 +157,7 @@ const CompanyPage: FC = () => {
                       minHeight: 220,
                     }}
                   >
-                    <ListOfLeaders />
+                    <ListOfLeaders siren={company.sirenNumber} />
                   </Card>
                 </Grid>
               </Grid>

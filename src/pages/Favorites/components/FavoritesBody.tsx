@@ -11,10 +11,10 @@ import { Page } from '../../../data/types/companyDetails'
 
 type FavoritesBodyProps = {
   data: Page<Company> | null | undefined
-  error: any
+  error: Error | null
   handleChangePage: (page: number) => void
-  setCompany: (company: any) => void
-  company: any
+  setCompany: (company: Company) => void
+  company: Company | undefined
   isPending: boolean
 }
 
@@ -80,7 +80,7 @@ const FavoritesBody: FC<FavoritesBodyProps> = ({
             borderRadius: 3,
           }}
         >
-          <ListOfLeaders />
+          <ListOfLeaders siren={company?.sirenNumber} />
         </Card>
       </Grid>
     </Grid>

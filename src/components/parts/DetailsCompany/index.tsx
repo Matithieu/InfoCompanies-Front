@@ -4,7 +4,7 @@ import EmailIcon from '@mui/icons-material/Email'
 import PhoneIcon from '@mui/icons-material/Phone'
 import WebAssetIcon from '@mui/icons-material/WebAsset'
 import { Table, Typography } from '@mui/joy'
-import React, { FC } from 'react'
+import { FC, Fragment } from 'react'
 
 import { Company } from '../../../data/types/company'
 import { PleaseSelectACompanyText } from '../../common/Texts'
@@ -20,11 +20,11 @@ const DetailsCompany: FC<DetailsCompanyProps> = ({ company }) => {
   }
 
   return (
-    <React.Fragment>
+    <Fragment>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Typography level="h4">Details</Typography>
       </div>
-      <Table aria-label="List Of Leaders">
+      <Table aria-label="Details Company">
         <tbody>
           <DetailsCompanyRow
             content={company.phoneNumber}
@@ -63,7 +63,7 @@ const DetailsCompany: FC<DetailsCompanyProps> = ({ company }) => {
           />
         </tbody>
       </Table>
-    </React.Fragment>
+    </Fragment>
   )
 }
 

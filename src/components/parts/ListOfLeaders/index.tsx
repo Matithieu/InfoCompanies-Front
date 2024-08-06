@@ -1,71 +1,71 @@
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import { Container, Table } from '@mui/joy'
-import * as React from 'react'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Divider, Table, Typography } from '@mui/joy'
+import { useQuery } from '@tanstack/react-query'
+import { FC, Fragment } from 'react'
 
-import { Leader } from '../../../data/types/leader'
-import { useCompanyStore } from '../../../store/companyStore'
+import { fetchLeadersBySirens } from '../../../utils/api/leaderAPI'
+import { isNotNU } from '../../../utils/assertion.util'
 import { PleaseSelectACompanyText } from '../../common/Texts'
+import DetailsLeader from '../DetailsLeader'
 
-/**
- *
- * @param companyDetails Takes a company as a parameter and displays its leaders in a table when selected
- * @returns A table of leaders
- */
-export default function ListOfLeaders() {
-  const navigate = useNavigate()
-  const { selectedCompany } = useCompanyStore()
-  const [leaders, setLeaders] = useState<Leader[]>(null as unknown as Leader[])
+type ListOfLeadersProps = {
+  siren: string | undefined
+}
 
-  React.useEffect(() => {
-    const leader: Leader[] = []
+const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
+  const { data: leaders, isLoading } = useQuery({
+    queryKey: ['leader', siren],
+    queryFn: () => {
+      if (siren) {
+        return fetchLeadersBySirens(siren)
+      }
+    },
+  })
 
-    if (selectedCompany !== null) {
-      setLeaders(leader)
-    } else {
-      setLeaders(null as unknown as Leader[])
-    }
-  }, [selectedCompany])
+  if (isLoading) {
+    return <a>Chargement ...</a>
+  }
 
-  if (leaders === null) {
+  if (leaders === undefined) {
     return <PleaseSelectACompanyText />
-  } else {
+  }
+
+  if (leaders === null || leaders.length === 0) {
+    return 'Pas de dirigeant trouvé'
+  }
+
+  if (isNotNU(leaders)) {
     return (
-      <Container>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
-          Liste des dirigeants
+      <Fragment>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Typography level="h4">Dirigeants</Typography>
         </div>
-        <Table aria-label="List Of Leaders">
+        <Table
+          aria-label="List Of Leaders"
+          style={{ display: 'flex', overflowY: 'auto', maxHeight: '320px' }}
+        >
           <tbody>
-            {leaders.length > 0 &&
-              leaders.map((row) => (
-                <tr
-                  key={row.id}
-                  style={{
-                    border: 0,
-                    cursor: 'pointer',
-                  }}
-                  onClick={() => {
-                    navigate(`/leaders/${row.id}`)
-                  }}
-                >
-                  <td align="left">
-                    <AccountCircleIcon />
+            <tr
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 25,
+                marginTop: 25,
+              }}
+            >
+              {leaders.map((leader, index) => {
+                return (
+                  <td key={index}>
+                    <DetailsLeader leader={leader} />
+                    <Divider />
                   </td>
-                  <td scope="row">
-                    {row.lastName} {row.firstName}
-                  </td>
-                </tr>
-              ))}
+                )
+              })}
+            </tr>
           </tbody>
         </Table>
-      </Container>
+      </Fragment>
     )
   }
 }
+
+export default ListOfLeaders

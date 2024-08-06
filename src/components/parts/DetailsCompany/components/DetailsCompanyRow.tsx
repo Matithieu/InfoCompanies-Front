@@ -34,7 +34,7 @@ export default function DetailsCompanyRow({
               {icon}
             </Tooltip>
           }
-          style={{ fontSize: '18px', overflow: 'hidden', ...style }}
+          style={{ fontSize: '16px', overflow: 'hidden', ...style }}
           tabIndex={isLink ? 0 : undefined}
           onClick={handleClick}
         >

@@ -61,7 +61,7 @@ const Favorites: FC = () => {
             mt: 2,
           }}
         >
-          Aucun ToDO sélectionné
+          Aucune entreprise en To Do !
         </Typography>
       ) : (
         <FavoritesBody
