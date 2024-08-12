@@ -3,25 +3,29 @@ import Autocomplete, { AutocompleteProps } from '@mui/joy/Autocomplete'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 
+import { AutoCompleteType } from '../../../data/types/common'
+
 type FetchAutoCompleteProps<T> = {
   handleSelectChange: (items: T[]) => void
   fetchFunction: (input: string) => Promise<T[]>
   queryKeyBase: string
   getOptionLabel: (option: T) => string
   inputLabel: string
+  isLabelHidden?: boolean
 } & Omit<
   AutocompleteProps<T, true, false, false>,
   'renderInput' | 'options' | 'loading' | 'onChange' | 'onInputChange'
 >
 
-const FetchAutoComplete = <T,>({
+const FetchAutoComplete = ({
   handleSelectChange,
   fetchFunction,
   queryKeyBase,
   getOptionLabel,
   inputLabel,
+  isLabelHidden,
   ...autocompleteProps
-}: FetchAutoCompleteProps<T>) => {
+}: FetchAutoCompleteProps<AutoCompleteType>) => {
   const [inputValue, setInputValue] = useState<string>('')
   const [debouncedInputValue, setDebouncedInputValue] = useState<string>('')
 
@@ -51,9 +55,13 @@ const FetchAutoComplete = <T,>({
     <FormControl sx={{ marginBottom: 2 }}>
       <FormLabel>{inputLabel}</FormLabel>
       <Autocomplete
+        key={queryKeyBase}
         multiple
         getOptionLabel={getOptionLabel}
         inputValue={inputValue}
+        isOptionEqualToValue={(option, value) =>
+          option.id.valueOf === value.id.valueOf
+        }
         limitTags={1}
         loading={isLoading}
         noOptionsText={
@@ -62,10 +70,10 @@ const FetchAutoComplete = <T,>({
             : 'Entrez au moins 3 caractères'
         }
         options={data || []}
-        placeholder={inputLabel}
+        placeholder={isLabelHidden ? undefined : inputLabel}
         onChange={(_, value) => {
           if (value) {
-            handleSelectChange(value as T[])
+            handleSelectChange(value as AutoCompleteType[])
           }
         }}
         onInputChange={(_, newInputValue) => {
@@ -75,7 +83,7 @@ const FetchAutoComplete = <T,>({
         slotProps={{
           input: {
             label: inputLabel,
-            endDecorator: (
+            enddecorator: (
               <>{isLoading ? <CircularProgress size="sm" /> : null}</>
             ),
           },
