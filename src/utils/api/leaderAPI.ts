@@ -1,6 +1,6 @@
 import { Leader } from '../../data/types/leader'
-import { cleanLeaders } from './cleaner'
 import { fetchWithConfig } from './config'
+import { cleanLeaders } from './util'
 
 export const fetchLeadersBySirens = async (siren: string) => {
   const response = await fetchWithConfig(
