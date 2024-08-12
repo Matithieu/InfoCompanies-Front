@@ -13,7 +13,6 @@ export default function Footer() {
         justifyContent: 'center',
         padding: '10px',
         backgroundColor: 'transparent',
-        color: 'white',
         fontSize: '14px',
       }}
     >
@@ -21,7 +20,6 @@ export default function Footer() {
         sx={{
           cursor: 'pointer',
           margin: '0 10px',
-          color: 'white',
           textDecoration: 'none',
           '&:hover': {
             textDecoration: 'underline',
@@ -35,7 +33,6 @@ export default function Footer() {
         sx={{
           cursor: 'pointer',
           margin: '0 10px',
-          color: 'white',
           textDecoration: 'none',
           '&:hover': {
             textDecoration: 'underline',
@@ -49,7 +46,6 @@ export default function Footer() {
         sx={{
           cursor: 'pointer',
           margin: '0 10px',
-          color: 'white',
           textDecoration: 'none',
           '&:hover': {
             textDecoration: 'underline',

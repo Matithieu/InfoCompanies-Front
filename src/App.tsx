@@ -6,7 +6,7 @@ import { Route, Routes } from 'react-router-dom'
 import Error401 from './pages/Error/401.tsx'
 import Error404 from './pages/Error/404.tsx'
 import Test from './pages/Error/test.tsx'
-import Landing from './pages/Landing/index.tsx'
+import LandingPage from './pages/Landing/index.tsx'
 import Layout from './pages/Layout/index.tsx'
 import LegalInformation from './pages/Legal/legal.tsx'
 import PrivacyPolicy from './pages/Legal/privacy.tsx'
@@ -42,7 +42,7 @@ function App() {
       <Suspense fallback={<Loading />}>
         <Routes>
           <Route path="/ui">
-            <Route element={<Landing />} path="" />
+            <Route element={<LandingPage />} path="" />
             <Route element={<TermsAndConditions />} path="terms" />
             <Route element={<PrivacyPolicy />} path="privacy" />
             <Route element={<LegalInformation />} path="legal" />

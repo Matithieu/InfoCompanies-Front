@@ -1,93 +1,174 @@
 import AdbIcon from '@mui/icons-material/Adb'
-import { Box, Container, Link, Typography } from '@mui/joy'
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
+import { Box, Button, Container, Divider, Link, Typography } from '@mui/joy'
 import { AppBar, Toolbar } from '@mui/material'
+import { FC } from 'react'
 
 import useAuthManager from '../../../hooks/useAuthManager'
 import useAuthStore from '../../../store/authStore'
 import { useAppNavigate } from '../../../utils/navigation/navigation'
+import { palette } from '../../../utils/palette'
 
-export default function HeaderLanding() {
+type HeaderLandingProps = {
+  scrollToSection: (ref: React.RefObject<HTMLDivElement>) => void
+  pricingRef: React.RefObject<HTMLDivElement>
+  produitRef: React.RefObject<HTMLDivElement>
+}
+
+const HeaderLanding: FC<HeaderLandingProps> = ({
+  scrollToSection,
+  pricingRef,
+  produitRef,
+}) => {
   const { navigation } = useAppNavigate()
   const authManager = useAuthManager()
   const { authUser } = useAuthStore()
 
   return (
-    <AppBar style={{ backgroundColor: 'transparent', boxShadow: 'none' }}>
-      <Container
-        maxWidth="lg"
-        sx={{
-          display: 'flex',
-          justifyItems: 'center',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexDirection: 'row',
-          gap: 2,
-          mx: 'auto',
+    <AppBar
+      style={{
+        backgroundColor: palette.background.primary,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        display: 'flex',
+        boxShadow: 'none',
+        position: 'sticky',
+      }}
+    >
+      <div
+        role="banner"
+        style={{
+          backgroundClip: 'border-box',
+          width: '100%',
+          marginBottom: 0,
         }}
       >
-        <Toolbar disableGutters sx={{ width: '100%' }}>
-          <div
-            style={{
+        <Container
+          sx={{
+            width: '100%',
+            maxWidth: '1150px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          }}
+        >
+          <Toolbar
+            disableGutters
+            sx={{
               display: 'flex',
-              flexDirection: 'row',
-              flexGrow: 1,
+              justifyContent: 'space-between',
+              alignItems: 'center',
             }}
           >
-            <AdbIcon
-              sx={{ display: { md: 'flex' }, mr: 1, cursor: 'pointer' }}
-              onClick={() => navigation.toHome()}
-            />
-            <Typography
-              noWrap
+            {/* Left section: Logo */}
+            <Box
               sx={{
-                justifyContent: 'flex-end',
-                display: { xs: 'none', md: 'flex' },
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
+                flex: 1,
+                display: 'flex',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
               }}
-              variant="plain"
             >
-              LOGO
-            </Typography>
-          </div>
-          <Box>
-            {authUser ? (
-              <Box>
-                {authUser.isVerified ? (
-                  <Link
-                    sx={{ color: 'inherit' }}
-                    onClick={() => navigation.toDashboard()}
-                  >
-                    Dashboard
-                  </Link>
-                ) : (
-                  <Link
-                    sx={{ color: 'inherit' }}
-                    onClick={() => navigation.toSubscription()}
-                  >
-                    Subscription
-                  </Link>
-                )}
-                <Link
-                  sx={{ color: 'inherit', ml: 2 }}
-                  onClick={() => authManager.signOut()}
-                >
-                  Logout
-                </Link>
-              </Box>
-            ) : (
-              <Link
-                sx={{ color: 'inherit' }}
-                onClick={() => authManager.signIn()}
+              <Typography
+                noWrap
+                startDecorator={
+                  <AdbIcon
+                    sx={{ cursor: 'pointer' }}
+                    onClick={() => navigation.toHome()}
+                  />
+                }
+                sx={{
+                  display: 'flex',
+                  fontWeight: 700,
+                }}
               >
-                Login
+                LOGO
+              </Typography>
+            </Box>
+
+            {/* Center section: Links */}
+            <Box
+              role="navigation"
+              sx={{
+                display: { xs: 'none', sm: 'flex', md: 'flex', lg: 'flex' },
+                justifyContent: 'center',
+                alignItems: 'center',
+                flex: 1,
+                marginRight: '50px',
+              }}
+            >
+              <Link
+                sx={{ color: 'black', mx: 2, cursor: 'pointer' }}
+                onClick={() => scrollToSection(pricingRef)}
+              >
+                Pricing
               </Link>
-            )}
-          </Box>
-        </Toolbar>
-      </Container>
+              <Link
+                sx={{ color: 'black', mx: 2, cursor: 'pointer' }}
+                onClick={() => scrollToSection(produitRef)}
+              >
+                Produit
+              </Link>
+            </Box>
+
+            {/* Right section: Auth buttons */}
+            <Box
+              sx={{
+                flex: 1,
+                display: 'flex',
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+              }}
+            >
+              {authUser ? (
+                <Box>
+                  {authUser.isVerified ? (
+                    <Link
+                      sx={{ color: 'black', mx: 2 }}
+                      onClick={() => navigation.toDashboard()}
+                    >
+                      Dashboard
+                    </Link>
+                  ) : (
+                    <Link
+                      sx={{ color: 'black', mx: 2 }}
+                      onClick={() => navigation.toSubscription()}
+                    >
+                      Subscription
+                    </Link>
+                  )}
+                  <Link
+                    sx={{ color: 'black', mx: 2 }}
+                    onClick={() => authManager.signOut()}
+                  >
+                    Logout
+                  </Link>
+                </Box>
+              ) : (
+                <Box>
+                  <Link
+                    sx={{ color: 'black', mx: 2 }}
+                    onClick={() => authManager.signIn()}
+                  >
+                    Login
+                  </Link>
+                  <Button
+                    endDecorator={<ArrowForwardIosIcon />}
+                    sx={{ ml: 2 }}
+                    onClick={() => authManager.signIn()}
+                  >
+                    Essai gratuit
+                  </Button>
+                </Box>
+              )}
+            </Box>
+          </Toolbar>
+        </Container>
+      </div>
+      <Divider />
     </AppBar>
   )
 }
+
+export default HeaderLanding
