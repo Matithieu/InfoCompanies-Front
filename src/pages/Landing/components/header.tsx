@@ -10,9 +10,9 @@ import { useAppNavigate } from '../../../utils/navigation/navigation'
 import { palette } from '../../../utils/palette'
 
 type HeaderLandingProps = {
-  scrollToSection: (ref: React.RefObject<HTMLDivElement>) => void
-  pricingRef: React.RefObject<HTMLDivElement>
-  produitRef: React.RefObject<HTMLDivElement>
+  scrollToSection?: (ref: React.RefObject<HTMLDivElement>) => void
+  pricingRef?: React.RefObject<HTMLDivElement>
+  produitRef?: React.RefObject<HTMLDivElement>
 }
 
 const HeaderLanding: FC<HeaderLandingProps> = ({
@@ -100,13 +100,17 @@ const HeaderLanding: FC<HeaderLandingProps> = ({
             >
               <Link
                 sx={{ color: 'black', mx: 2, cursor: 'pointer' }}
-                onClick={() => scrollToSection(pricingRef)}
+                onClick={() =>
+                  scrollToSection && pricingRef && scrollToSection(pricingRef)
+                }
               >
                 Pricing
               </Link>
               <Link
                 sx={{ color: 'black', mx: 2, cursor: 'pointer' }}
-                onClick={() => scrollToSection(produitRef)}
+                onClick={() =>
+                  produitRef && scrollToSection && scrollToSection(produitRef)
+                }
               >
                 Produit
               </Link>
