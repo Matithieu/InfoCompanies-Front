@@ -1,42 +1,44 @@
 import SearchIcon from '@mui/icons-material/Search'
-import { Button, Grid } from '@mui/joy'
-import { FC, useEffect, useState } from 'react'
+import { Button, Typography } from '@mui/joy'
+import { Box, Grid } from '@mui/material'
+import { FC, Fragment, useEffect, useState } from 'react'
 
-import { region } from '../../../data/ListOfOptions/Region'
-import { AutoCompleteType } from '../../../data/types/common'
-import { useCompanyFilterStore } from '../../../store/filtersStore'
+import { listOfRegions } from '../../../data/ListOfOptions/region'
+import {
+  SearchParams,
+  useCompanyFilterStore,
+} from '../../../store/filtersStore'
 import { fetchAutoComplete } from '../../../utils/api'
 import SimpleAutoComplete from '../../common/AutoComplete/autoComplete'
 import FetchAutoComplete from '../../common/AutoComplete/fetchAutoComplete'
 
-interface SearchTerm {
-  cities: AutoCompleteType[]
-  industrySectors: AutoCompleteType[]
-  legalForms: AutoCompleteType[]
-  regions: string[]
+interface FiltersProps {
+  filtersToShow: Array<
+    'legalForm' | 'industrySector' | 'region' | 'city' | 'searchButton'
+  >
 }
 
-const Filters: FC = () => {
+const Filters: FC<FiltersProps> = ({ filtersToShow }) => {
   const { searchParams, setSearchParams } = useCompanyFilterStore()
 
-  const [searchTerm, setSearchTerm] = useState<SearchTerm>({
-    cities: [],
-    industrySectors: [],
-    legalForms: [],
-    regions: [],
+  const [searchTerm, setSearchTerm] = useState<SearchParams>({
+    city: [],
+    industrySector: [],
+    legalForm: [],
+    region: [],
   })
 
   useEffect(() => {
     setSearchTerm({
-      cities: searchParams.city,
-      industrySectors: searchParams.industrySector,
-      legalForms: searchParams.legalForm,
-      regions: searchParams.region,
+      city: searchParams.city,
+      industrySector: searchParams.industrySector,
+      legalForm: searchParams.legalForm,
+      region: searchParams.region,
     })
   }, [searchParams])
 
   const handleSelectChange =
-    (field: keyof SearchTerm) => (selectedValue: string[] | unknown[]) => {
+    (field: keyof SearchParams) => (selectedValue: string[] | unknown[]) => {
       setSearchTerm((prevSearchTerm) => ({
         ...prevSearchTerm,
         [field]: selectedValue,
@@ -45,84 +47,104 @@ const Filters: FC = () => {
 
   const handleSearch = () => {
     setSearchParams({
-      legalForm: searchTerm.legalForms,
-      industrySector: searchTerm.industrySectors,
-      region: searchTerm.regions,
-      city: searchTerm.cities,
+      legalForm: searchTerm.legalForm,
+      industrySector: searchTerm.industrySector,
+      region: searchTerm.region,
+      city: searchTerm.city,
     })
   }
 
+  const columnSize = Math.floor(12 / filtersToShow.length) as
+    | 1
+    | 2
+    | 3
+    | 4
+    | 6
+    | 12
+
+  const filterComponents = {
+    legalForm: (
+      <Grid item md={columnSize} sm={6} xs={12}>
+        <FetchAutoComplete
+          fetchFunction={(searchTerm) =>
+            fetchAutoComplete('legal-form', searchTerm)
+          }
+          getOptionLabel={(option) => option.name}
+          handleSelectChange={handleSelectChange('legalForm')}
+          inputLabel="Forme juridique"
+          isLabelHidden={searchTerm.legalForm.length > 0}
+          queryKeyBase="legal-form"
+          value={searchTerm.legalForm}
+        />
+      </Grid>
+    ),
+    industrySector: (
+      <Grid item md={columnSize} sm={6} xs={12}>
+        <FetchAutoComplete
+          fetchFunction={(searchTerm) =>
+            fetchAutoComplete('industry-sector', searchTerm)
+          }
+          getOptionLabel={(option) => option.name}
+          handleSelectChange={handleSelectChange('industrySector')}
+          inputLabel="Secteur d'activité"
+          isLabelHidden={searchTerm.industrySector.length > 0}
+          queryKeyBase="industry-sector"
+          value={searchTerm.industrySector}
+        />
+      </Grid>
+    ),
+    region: (
+      <Grid item md={columnSize} sm={6} xs={12}>
+        <SimpleAutoComplete
+          handleSelectChange={handleSelectChange('region')}
+          isLabelHidden={searchTerm.region.length > 0}
+          label="Région"
+          options={listOfRegions}
+          selectedValues={searchTerm.region}
+        />
+      </Grid>
+    ),
+    city: (
+      <Grid item md={columnSize} sm={6} xs={12}>
+        <FetchAutoComplete
+          fetchFunction={(searchTerm) => fetchAutoComplete('city', searchTerm)}
+          getOptionLabel={(option) => option.name}
+          handleSelectChange={handleSelectChange('city')}
+          inputLabel="Ville"
+          isLabelHidden={searchTerm.city.length > 0}
+          queryKeyBase="cities"
+          value={searchTerm.city}
+        />
+      </Grid>
+    ),
+    searchButton: (
+      <Grid item md={columnSize} sm={6} xs={12}>
+        <Button
+          fullWidth
+          endDecorator={<SearchIcon />}
+          style={{ marginTop: '10px' }}
+          variant="soft"
+          onClick={handleSearch}
+        >
+          <Typography> Rechercher</Typography>
+        </Button>
+      </Grid>
+    ),
+  }
+
   return (
-    <div>
+    <Box display="flex" justifyContent="center" maxWidth={1100}>
       <Grid
         container
         alignItems="center"
-        maxWidth={800}
-        padding="10px"
-        spacing={1}
-        sx={{
-          flexDirection: { xs: 'column', sm: 'row' },
-          flexWrap: 'wrap',
-        }}
-        width="100%"
+        justifyContent="flex-start"
+        spacing={2}
       >
-        <Grid md={3} sm={6} xs={12}>
-          <FetchAutoComplete<AutoCompleteType>
-            fetchFunction={(searchTerm) =>
-              fetchAutoComplete('legal-form', searchTerm)
-            }
-            getOptionLabel={(option) => option.name}
-            handleSelectChange={handleSelectChange('legalForms')}
-            inputLabel="Forme juridique"
-            queryKeyBase="legal-form"
-          />
-        </Grid>
-        <Grid md={3} sm={6} xs={12}>
-          <FetchAutoComplete<AutoCompleteType>
-            fetchFunction={(searchTerm) =>
-              fetchAutoComplete('industry-sector', searchTerm)
-            }
-            getOptionLabel={(option) => option.name}
-            handleSelectChange={handleSelectChange('industrySectors')}
-            inputLabel="Secteur d'activité"
-            queryKeyBase="industry-sector"
-          />
-        </Grid>
-        <Grid md={3} sm={6} xs={12}>
-          <SimpleAutoComplete
-            handleSelectChange={handleSelectChange('regions')}
-            label="Région"
-            options={region}
-            selectedValues={searchTerm.regions}
-          />
-        </Grid>
-        <Grid md={3} sm={6} xs={12}>
-          <FetchAutoComplete<AutoCompleteType>
-            fetchFunction={(searchTerm) =>
-              fetchAutoComplete('city', searchTerm)
-            }
-            getOptionLabel={(option) => option.name}
-            handleSelectChange={handleSelectChange('cities')}
-            inputLabel="Ville"
-            queryKeyBase="cities"
-          />
-        </Grid>
-        <Grid
-          md={4}
-          sm={6}
-          sx={{ display: 'flex', alignItems: 'center' }}
-          xs={12}
-        >
-          <Button
-            style={{ marginBottom: '10px' }}
-            variant="soft"
-            onClick={handleSearch}
-          >
-            Rechercher <SearchIcon style={{ marginLeft: '6px' }} />
-          </Button>
-        </Grid>
+        {filtersToShow.map((filter) => (
+          <Fragment key={filter}>{filterComponents[filter]}</Fragment>
+        ))}
       </Grid>
-    </div>
+    </Box>
   )
 }
 
