@@ -16,6 +16,7 @@ import { RANDOM_UNSEEN_ENDPOINT } from '../../data/types/common.ts'
 import { Company } from '../../data/types/company.ts'
 import { useCompanyFilterStore } from '../../store/filtersStore.tsx'
 import { fetchCompaniesWithUrlAndPage } from '../../utils/api/index.ts'
+import { constructURLWithFilter } from '../../utils/api/util.ts'
 
 const Dashboard: FC = () => {
   const { searchParams } = useCompanyFilterStore()
@@ -54,25 +55,7 @@ const Dashboard: FC = () => {
         setUrl(`${RANDOM_UNSEEN_ENDPOINT}?`)
         return
       } else {
-        let url = 'filter-by-parameters?'
-
-        if (searchParams.region.length > 0) {
-          url += `regions=${searchParams.region.join(',')}&`
-        }
-
-        if (searchParams.city.length > 0) {
-          url += `cities=${searchParams.city.map((city) => city.name).join(',')}&`
-        }
-
-        if (searchParams.industrySector.length > 0) {
-          url += `industrySectors=${searchParams.industrySector.map((sector) => sector.name).join(',')}&`
-        }
-
-        if (searchParams.legalForm.length > 0) {
-          url += `legalForms=${searchParams.legalForm.map((form) => form.name).join(',')}&`
-        }
-
-        setUrl(url)
+        setUrl(constructURLWithFilter(searchParams, 'filter-by-parameters?'))
       }
     }
 
@@ -97,75 +80,80 @@ const Dashboard: FC = () => {
         </Typography>
       </Box>
 
-      <Grid item lg={3} md={4} paddingLeft={8} sm={6} xs={12}>
-        <Filters />
-      </Grid>
-
-      <Grid
-        container
-        justifyContent="center"
-        paddingLeft={10}
-        paddingRight={10}
-      >
-        {/* Container on the first row */}
-        <Grid item lg={11} md={11} sm={10} xs={12}>
-          <Stack
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              flexDirection: 'column',
-              minHeight: 550,
-              maxHeight: 550,
-
-              borderRadius: 3,
-            }}
-          >
-            <TableCompany
-              data={data}
-              error={error}
-              handleChangePage={handleChangePage}
-              handleDetailsClick={(company) => setCompany(company)}
-              isPending={isPending}
-            />
-          </Stack>
+      <Box paddingLeft={10} paddingRight={10}>
+        <Grid item md={4} sm={6} sx={{ marginBottom: 2 }} xs={12}>
+          <Filters
+            filtersToShow={[
+              'city',
+              'region',
+              'industrySector',
+              'legalForm',
+              'searchButton',
+            ]}
+          />
         </Grid>
 
-        {/* Container on the second row */}
-        <Grid
-          container
-          aria-label="tabs"
-          justifyContent="center"
-          marginTop={5}
-          spacing={1}
-        >
-          {/* DetailsCompany of the company */}
-          <Grid item lg={10} md={12} sm={12} xl={4} xs={12}>
-            <Card sx={{ minHeight: 220 }}>
-              <DetailsCompany company={company} />
-            </Card>
-          </Grid>
-
-          {/* Leaders of the company */}
-          <Grid item lg={10} md={12} sm={12} xl={4} xs={12}>
-            <Card sx={{ minHeight: 220 }}>
-              <ListOfLeaders siren={company?.sirenNumber} />
-            </Card>
-          </Grid>
-
-          {/* Chart of the company */}
-          <Grid item lg={10} md={12} sm={12} xl={4} xs={12}>
-            <Card
+        <Grid container justifyContent="center">
+          {/* Container on the first row */}
+          <Grid item lg={12} md={12} sm={12} xs={12}>
+            <Stack
               sx={{
-                height: 220,
-                minWidth: 1,
+                display: 'flex',
+                alignItems: 'center',
+                flexDirection: 'column',
+                minHeight: 550,
+                maxHeight: 550,
+                borderRadius: 3,
               }}
             >
-              <Chart company={company} />
-            </Card>
+              <TableCompany
+                isCheckboxVisible
+                data={data}
+                error={error}
+                handleChangePage={handleChangePage}
+                handleDetailsClick={(company) => setCompany(company)}
+                isPending={isPending}
+              />
+            </Stack>
           </Grid>
-          {/* . */}
+
+          {/* Container on the second row */}
+          <Grid
+            container
+            aria-label="tabs"
+            justifyContent="center"
+            marginTop={5}
+            spacing={1}
+          >
+            {/* DetailsCompany of the company */}
+            <Grid item lg={10} md={12} sm={12} xl={4} xs={12}>
+              <Card sx={{ minHeight: 220 }}>
+                <DetailsCompany company={company} />
+              </Card>
+            </Grid>
+
+            {/* Leaders of the company */}
+            <Grid item lg={10} md={12} sm={12} xl={4} xs={12}>
+              <Card sx={{ minHeight: 220 }}>
+                <ListOfLeaders siren={company?.sirenNumber} />
+              </Card>
+            </Grid>
+
+            {/* Chart of the company */}
+            <Grid item lg={10} md={12} sm={12} xl={4} xs={12}>
+              <Card
+                sx={{
+                  height: 220,
+                  minWidth: 1,
+                }}
+              >
+                <Chart company={company} />
+              </Card>
+            </Grid>
+            {/* . */}
+          </Grid>
         </Grid>
-      </Grid>
+      </Box>
     </Grid>
   )
 }

@@ -4,14 +4,18 @@ import { Column } from '../../../../data/types/columns'
 
 type TableCompanyHeadersProps = {
   columns: Column[]
+  isCheckboxVisible?: boolean
 }
 
-const TableCompanyHeaders: FC<TableCompanyHeadersProps> = ({ columns }) => {
+const TableCompanyHeaders: FC<TableCompanyHeadersProps> = ({
+  columns,
+  isCheckboxVisible = true,
+}) => {
   return (
     <>
       <thead>
         <tr>
-          {columns.map((column) => (
+          {columns.slice(isCheckboxVisible ? 0 : 1).map((column) => (
             <th
               key={column.id}
               align={column.align}

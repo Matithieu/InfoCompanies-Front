@@ -22,18 +22,22 @@ import TableCompanyRow from './components/TableCompanyRow.tsx'
 
 type TableCompanyProps = {
   data: Page<Company> | undefined | null
-  handleDetailsClick: (company: Company) => void
-  handleChangePage: (newPage: number) => void
+  handleDetailsClick: (company: Company) => void | undefined
+  handleChangePage: (newPage: number) => void | undefined
   isPending: boolean
   error: Error | null
+  isPagination?: boolean
+  isCheckboxVisible?: boolean
 }
 
 const TableCompany: FC<TableCompanyProps> = ({
   data,
-  isPending,
   error,
-  handleDetailsClick,
+  isCheckboxVisible = true,
+  isPagination = true,
+  isPending,
   handleChangePage,
+  handleDetailsClick,
 }) => {
   const [tableData, setTableData] = useState(data)
 
@@ -125,7 +129,10 @@ const TableCompany: FC<TableCompanyProps> = ({
               overflow: 'auto',
             }}
           >
-            <TableCompanyHeaders columns={columnsTableCompany} />
+            <TableCompanyHeaders
+              columns={columnsTableCompany}
+              isCheckboxVisible={isCheckboxVisible}
+            />
             <tbody style={{ wordBreak: 'break-word' }}>
               {tableData.content.map((row, index) => (
                 <tr
@@ -138,23 +145,25 @@ const TableCompany: FC<TableCompanyProps> = ({
                     handleDetailsClick(row)
                   }}
                 >
-                  <td align="center">
-                    <IconButton
-                      id={`checkbox-${index}`}
-                      style={{
-                        border: 'none',
-                        backgroundColor: 'transparent',
-                        cursor: 'pointer',
-                        fontSize: '22px',
-                      }}
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        handleStatusChange(row)
-                      }}
-                    >
-                      <StatutIcon statut={row.checked} />
-                    </IconButton>
-                  </td>
+                  {isCheckboxVisible ? (
+                    <td align="center">
+                      <IconButton
+                        id={`checkbox-${index}`}
+                        style={{
+                          border: 'none',
+                          backgroundColor: 'transparent',
+                          cursor: 'pointer',
+                          fontSize: '22px',
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          handleStatusChange(row)
+                        }}
+                      >
+                        <StatutIcon statut={row.checked} />
+                      </IconButton>
+                    </td>
+                  ) : undefined}
                   {columnsTableCompany.slice(1).map((column) => (
                     <td key={column.id} align={column.align}>
                       <TableCompanyRow column={column} row={row} />
@@ -165,13 +174,15 @@ const TableCompany: FC<TableCompanyProps> = ({
             </tbody>
           </Table>
         </Sheet>
-        <Pagination
-          dataPagination={{
-            page: tableData.number,
-            totalPages: tableData.totalPages,
-          }}
-          handleChangePage={handleChangePage}
-        />
+        {isPagination ? (
+          <Pagination
+            dataPagination={{
+              page: tableData.number,
+              totalPages: tableData.totalPages,
+            }}
+            handleChangePage={handleChangePage}
+          />
+        ) : null}
       </>
     )
   }
