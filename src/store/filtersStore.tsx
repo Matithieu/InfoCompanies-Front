@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware'
 
 import { AutoCompleteType } from '../data/types/common'
 
-interface SearchParams {
+export interface SearchParams {
   city: AutoCompleteType[]
   industrySector: AutoCompleteType[]
   legalForm: AutoCompleteType[]
