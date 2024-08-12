@@ -1,4 +1,4 @@
-export const region = [
+export const listOfRegions = [
   'Auvergne-Rhône-Alpes',
   'Bourgogne-Franche-Comté',
   'Bretagne',
