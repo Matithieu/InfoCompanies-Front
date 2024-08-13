@@ -1,4 +1,4 @@
-import { Autocomplete, FormControl, FormLabel } from '@mui/joy'
+import { Autocomplete, FormControl } from '@mui/joy'
 
 type SimpleAutoCompleteProps = {
   label: string
@@ -16,8 +16,7 @@ const SimpleAutoComplete = ({
   handleSelectChange,
 }: SimpleAutoCompleteProps) => {
   return (
-    <FormControl sx={{ marginBottom: 2 }}>
-      <FormLabel>{label}</FormLabel>
+    <FormControl>
       <Autocomplete
         multiple
         getOptionLabel={(option) => option}

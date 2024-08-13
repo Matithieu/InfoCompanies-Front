@@ -1,4 +1,4 @@
-import { CircularProgress, FormControl, FormLabel } from '@mui/joy'
+import { CircularProgress, FormControl } from '@mui/joy'
 import Autocomplete, { AutocompleteProps } from '@mui/joy/Autocomplete'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
@@ -24,7 +24,6 @@ const FetchAutoComplete = ({
   getOptionLabel,
   inputLabel,
   isLabelHidden,
-  ...autocompleteProps
 }: FetchAutoCompleteProps<AutoCompleteType>) => {
   const [inputValue, setInputValue] = useState<string>('')
   const [debouncedInputValue, setDebouncedInputValue] = useState<string>('')
@@ -46,40 +45,27 @@ const FetchAutoComplete = ({
   }, [inputValue])
 
   useEffect(() => {
-    if (debouncedInputValue.length > 2) {
+    if (debouncedInputValue.length > 1) {
       refetch()
     }
   }, [debouncedInputValue, refetch])
 
   return (
-    <FormControl sx={{ marginBottom: 2 }}>
-      <FormLabel>{inputLabel}</FormLabel>
+    <FormControl>
       <Autocomplete
-        key={queryKeyBase}
         multiple
         getOptionLabel={getOptionLabel}
         inputValue={inputValue}
-        isOptionEqualToValue={(option, value) =>
-          option.id.valueOf === value.id.valueOf
-        }
+        isOptionEqualToValue={(option, value) => option.id === value.id}
         limitTags={1}
         loading={isLoading}
         noOptionsText={
           data !== undefined && data.length === 0
             ? 'Aucun résultat'
-            : 'Entrez au moins 3 caractères'
+            : 'Entrez au moins 2 caractères'
         }
         options={data || []}
         placeholder={isLabelHidden ? undefined : inputLabel}
-        onChange={(_, value) => {
-          if (value) {
-            handleSelectChange(value as AutoCompleteType[])
-          }
-        }}
-        onInputChange={(_, newInputValue) => {
-          setInputValue(newInputValue)
-        }}
-        {...autocompleteProps}
         slotProps={{
           input: {
             label: inputLabel,
@@ -87,6 +73,14 @@ const FetchAutoComplete = ({
               <>{isLoading ? <CircularProgress size="sm" /> : null}</>
             ),
           },
+        }}
+        onChange={(_, value) => {
+          if (value) {
+            handleSelectChange(value as AutoCompleteType[])
+          }
+        }}
+        onInputChange={(_, newInputValue) => {
+          setInputValue(newInputValue)
         }}
       />
     </FormControl>
