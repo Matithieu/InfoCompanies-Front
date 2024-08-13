@@ -83,13 +83,8 @@ const Dashboard: FC = () => {
       <Box paddingLeft={10} paddingRight={10}>
         <Grid item md={4} sm={6} sx={{ marginBottom: 2 }} xs={12}>
           <Filters
-            filtersToShow={[
-              'city',
-              'region',
-              'industrySector',
-              'legalForm',
-              'searchButton',
-            ]}
+            showAddFilterButton
+            filtersToShow={['city', 'region', 'industrySector', 'legalForm']}
           />
         </Grid>
 

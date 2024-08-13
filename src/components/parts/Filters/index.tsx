@@ -1,41 +1,74 @@
-import SearchIcon from '@mui/icons-material/Search'
-import { Button, Typography } from '@mui/joy'
-import { Box, Grid } from '@mui/material'
-import { FC, Fragment, useEffect, useState } from 'react'
+import AddIcon from '@mui/icons-material/Add'
+import { Dropdown, Menu, MenuButton, MenuItem } from '@mui/joy'
+import { Box } from '@mui/material'
+import { FC, useEffect, useState } from 'react'
 
-import { listOfRegions } from '../../../data/ListOfOptions/region'
 import {
   SearchParams,
   useCompanyFilterStore,
 } from '../../../store/filtersStore'
-import { fetchAutoComplete } from '../../../utils/api'
-import SimpleAutoComplete from '../../common/AutoComplete/autoComplete'
-import FetchAutoComplete from '../../common/AutoComplete/fetchAutoComplete'
+import getFilterComponents from './components'
 
 interface FiltersProps {
   filtersToShow: Array<
     'legalForm' | 'industrySector' | 'region' | 'city' | 'searchButton'
   >
+  showAddFilterButton: boolean
 }
 
-const Filters: FC<FiltersProps> = ({ filtersToShow }) => {
+const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
   const { searchParams, setSearchParams } = useCompanyFilterStore()
 
   const [searchTerm, setSearchTerm] = useState<SearchParams>({
-    city: [],
-    industrySector: [],
-    legalForm: [],
-    region: [],
+    city: searchParams.city || [],
+    industrySector: searchParams.industrySector || [],
+    legalForm: searchParams.legalForm || [],
+    region: searchParams.region || [],
   })
 
+  const [availableFilters, setAvailableFilters] = useState<
+    FiltersProps['filtersToShow']
+  >(
+    filtersToShow.filter(
+      (filter) =>
+        filter !== 'searchButton' &&
+        (!Object.keys(searchParams).includes(filter) ||
+          !searchParams[filter as keyof SearchParams]?.length),
+    ),
+  )
+  const [selectedFilters, setSelectedFilters] =
+    useState<FiltersProps['filtersToShow']>(filtersToShow)
+
+  const addFilter = (filter: FiltersProps['filtersToShow'][number]) => {
+    setSelectedFilters((prevSelected) => [...prevSelected, filter])
+    setAvailableFilters((prevAvailable) =>
+      prevAvailable.filter((f) => f !== filter),
+    )
+  }
+
   useEffect(() => {
-    setSearchTerm({
-      city: searchParams.city,
-      industrySector: searchParams.industrySector,
-      legalForm: searchParams.legalForm,
-      region: searchParams.region,
-    })
-  }, [searchParams])
+    if (showAddFilterButton) {
+      setSelectedFilters(() =>
+        filtersToShow.filter(
+          (filter) =>
+            filter === 'searchButton' ||
+            (searchTerm[filter as keyof SearchParams] &&
+              searchTerm[filter as keyof SearchParams].length > 0),
+        ),
+      )
+      setAvailableFilters(
+        filtersToShow.filter(
+          (filter) =>
+            filter !== 'searchButton' &&
+            (!searchTerm[filter as keyof SearchParams] ||
+              searchTerm[filter as keyof SearchParams].length === 0),
+        ),
+      )
+    } else {
+      // Ensure all filters are shown when showAddFilterButton is false
+      setSelectedFilters(filtersToShow)
+    }
+  }, [searchTerm, filtersToShow, showAddFilterButton])
 
   const handleSelectChange =
     (field: keyof SearchParams) => (selectedValue: string[] | unknown[]) => {
@@ -54,98 +87,68 @@ const Filters: FC<FiltersProps> = ({ filtersToShow }) => {
     })
   }
 
-  const columnSize = Math.floor(12 / filtersToShow.length) as
-    | 1
-    | 2
-    | 3
-    | 4
-    | 6
-    | 12
+  const filterComponents = getFilterComponents(
+    searchTerm,
+    handleSelectChange,
+    handleSearch,
+  )
 
-  const filterComponents = {
-    legalForm: (
-      <Grid item md={columnSize} sm={6} xs={12}>
-        <FetchAutoComplete
-          fetchFunction={(searchTerm) =>
-            fetchAutoComplete('legal-form', searchTerm)
-          }
-          getOptionLabel={(option) => option.name}
-          handleSelectChange={handleSelectChange('legalForm')}
-          inputLabel="Forme juridique"
-          isLabelHidden={searchTerm.legalForm.length > 0}
-          queryKeyBase="legal-form"
-          value={searchTerm.legalForm}
-        />
-      </Grid>
-    ),
-    industrySector: (
-      <Grid item md={columnSize} sm={6} xs={12}>
-        <FetchAutoComplete
-          fetchFunction={(searchTerm) =>
-            fetchAutoComplete('industry-sector', searchTerm)
-          }
-          getOptionLabel={(option) => option.name}
-          handleSelectChange={handleSelectChange('industrySector')}
-          inputLabel="Secteur d'activité"
-          isLabelHidden={searchTerm.industrySector.length > 0}
-          queryKeyBase="industry-sector"
-          value={searchTerm.industrySector}
-        />
-      </Grid>
-    ),
-    region: (
-      <Grid item md={columnSize} sm={6} xs={12}>
-        <SimpleAutoComplete
-          handleSelectChange={handleSelectChange('region')}
-          isLabelHidden={searchTerm.region.length > 0}
-          label="Région"
-          options={listOfRegions}
-          selectedValues={searchTerm.region}
-        />
-      </Grid>
-    ),
-    city: (
-      <Grid item md={columnSize} sm={6} xs={12}>
-        <FetchAutoComplete
-          fetchFunction={(searchTerm) => fetchAutoComplete('city', searchTerm)}
-          getOptionLabel={(option) => option.name}
-          handleSelectChange={handleSelectChange('city')}
-          inputLabel="Ville"
-          isLabelHidden={searchTerm.city.length > 0}
-          queryKeyBase="cities"
-          value={searchTerm.city}
-        />
-      </Grid>
-    ),
-    searchButton: (
-      <Grid item md={columnSize} sm={6} xs={12}>
-        <Button
-          fullWidth
-          endDecorator={<SearchIcon />}
-          style={{ marginTop: '10px' }}
-          variant="soft"
-          onClick={handleSearch}
-        >
-          <Typography> Rechercher</Typography>
-        </Button>
-      </Grid>
-    ),
-  }
-
-  return (
-    <Box display="flex" justifyContent="center" maxWidth={1100}>
-      <Grid
-        container
-        alignItems="center"
-        justifyContent="flex-start"
-        spacing={2}
+  if (showAddFilterButton === false) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          overflowX: 'auto',
+          alignItems: 'center',
+          gap: 1,
+        }}
       >
         {filtersToShow.map((filter) => (
-          <Fragment key={filter}>{filterComponents[filter]}</Fragment>
+          <div key={filter}>{filterComponents[filter]}</div>
         ))}
-      </Grid>
-    </Box>
-  )
+        <div>{filterComponents['searchButton']}</div>
+      </Box>
+    )
+  }
+
+  if (showAddFilterButton && availableFilters.length > 0) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          overflowX: 'auto',
+          alignItems: 'center',
+          gap: 1,
+        }}
+      >
+        {selectedFilters.map((filter) => (
+          <div key={filter}>{filterComponents[filter]}</div>
+        ))}
+
+        <Dropdown>
+          <MenuButton
+            sx={{ flexShrink: 0, width: '40px', maxWidth: '250px' }}
+            variant="soft"
+          >
+            <AddIcon style={{ fontSize: '1.2rem' }} />
+          </MenuButton>
+          <Menu>
+            {availableFilters.map((filter) => (
+              <MenuItem key={filter} onClick={() => addFilter(filter)}>
+                {filter}
+              </MenuItem>
+            ))}
+          </Menu>
+        </Dropdown>
+
+        {selectedFilters.length !== 0 && filterComponents['searchButton']}
+      </Box>
+    )
+  }
+
+  return null
 }
 
 export default Filters

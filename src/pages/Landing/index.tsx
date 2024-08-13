@@ -123,7 +123,8 @@ const LandingPage: FC = () => {
             sx={{ display: 'flex', justifyContent: 'center' }}
           >
             <Filters
-              filtersToShow={['city', 'industrySector', 'searchButton']}
+              filtersToShow={['city', 'industrySector']}
+              showAddFilterButton={false}
             />
           </Box>
 

@@ -124,6 +124,7 @@ const Test: FC = () => {
           >
             <Filters
               filtersToShow={['city', 'industrySector', 'searchButton']}
+              showAddFilterButton={false}
             />
           </Box>
 
