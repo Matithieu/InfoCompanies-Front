@@ -16,6 +16,8 @@ const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
     queryFn: () => {
       if (siren) {
         return fetchLeadersBySirens(siren)
+      } else {
+        return Promise.resolve(null)
       }
     },
   })
