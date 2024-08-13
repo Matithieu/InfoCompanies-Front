@@ -107,17 +107,6 @@ const Account: FC = () => {
             </Grid>
             <Grid md={6} xs={12}>
               <FormControl>
-                <FormLabel htmlFor="email">Email</FormLabel>
-                <Input
-                  disabled
-                  id="email"
-                  value={editedUser?.email ?? ''}
-                  onChange={(e) => handleChange(e, 'email')}
-                />
-              </FormControl>
-            </Grid>
-            <Grid md={6} xs={12}>
-              <FormControl>
                 <FormLabel htmlFor="phone">Phone</FormLabel>
                 <Input
                   disabled={!editMode}
