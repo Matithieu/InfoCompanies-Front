@@ -10,8 +10,13 @@ export function toastErrorConnect() {
   return toast.error(<LoginButton message="Please connect to continue." />)
 }
 
-export function toastErrorReconnect() {
-  return toast.error(<LoginButton message="Please reconnect to continue." />)
+export function toastErrorReconnect(text?: string) {
+  return toast.error(
+    <>
+      <LoginButton message="Please reconnect to continue." />
+      {text}
+    </>,
+  )
 }
 
 export function toastWarnSelectSubscription() {

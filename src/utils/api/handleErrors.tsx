@@ -1,7 +1,7 @@
-import { toast } from 'react-toastify'
-
-import { toastErrorQuotaExceeded } from '../../components/common/Toasts/toasts'
-import { ErrorFromApi } from '../../data/errors/errorFromApi'
+import {
+  toastErrorQuotaExceeded,
+  toastErrorReconnect,
+} from '../../components/common/Toasts/toasts'
 
 const handleErrors = async (response: Response, url: string) => {
   switch (response.status) {
@@ -9,14 +9,11 @@ const handleErrors = async (response: Response, url: string) => {
       break
 
     case 403: {
-      const errorData: ErrorFromApi = await response.json()
-      toast.error(errorData.error)
-      throw new Error(errorData.error)
+      return toastErrorReconnect()
     }
 
     case 429:
-      toastErrorQuotaExceeded()
-      throw new Error('Too many requests')
+      return toastErrorQuotaExceeded()
     case 200:
     case 201:
     case 204:
