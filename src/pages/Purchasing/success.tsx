@@ -1,19 +1,13 @@
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
-import {
-  Button,
-  Divider,
-  List,
-  ListItem,
-  ListItemContent,
-  Sheet,
-  Typography,
-} from '@mui/joy'
+import { Button, Divider, Sheet, Typography } from '@mui/joy'
 
-import { useAppNavigate } from '../../utils/navigation/navigation'
+import useAuthManager from '../../hooks/useAuthManager'
+import useAuthStore from '../../store/authStore'
 
 const OrderConfirmation = () => {
-  const queryParams = new URLSearchParams(window.location.search)
-  const { navigation } = useAppNavigate()
+  // const queryParams = new URLSearchParams(window.location.search)
+  const { setAuthUser } = useAuthStore()
+  const { signIn } = useAuthManager()
 
   return (
     <div
@@ -31,54 +25,25 @@ const OrderConfirmation = () => {
             style={{ fontSize: '60px' }}
           />
           <Typography gutterBottom level="h4">
-            Thank you for your purchase!
+            Merci pour votre achat !
           </Typography>
           <Typography gutterBottom level="body-md">
-            Your order has been successfully processed. Please check your email
-            for order confirmation.
+            Appuiez sur le bouton juste dessous pour commencer
           </Typography>
         </div>
 
         <Divider style={{ marginBottom: '20px' }} />
 
-        <Typography gutterBottom level="h4">
-          Order Details
-        </Typography>
-
-        <Typography color="neutral" level="h4">
-          {queryParams.toString().split('&').join('\n')}
-        </Typography>
-
-        <List>
-          <ListItem>
-            <ListItemContent>
-              <Typography gutterBottom level="h4">
-                Order ID: 123456
-              </Typography>
-            </ListItemContent>
-          </ListItem>
-          <ListItem>
-            <ListItemContent>
-              <Typography gutterBottom level="h4">
-                Total amount: $100
-              </Typography>
-            </ListItemContent>
-          </ListItem>
-          <ListItem>
-            <ListItemContent>
-              <Typography gutterBottom level="h4">
-                Payment method: Credit Card
-              </Typography>
-            </ListItemContent>
-          </ListItem>
-        </List>
         <Button
           fullWidth
           color="primary"
           style={{ marginTop: '20px' }}
           variant="soft"
           onClick={() => {
-            navigation.toHome()
+            setAuthUser(null)
+            // Going through signIn flow refresh the token inside the oauth2 proxy
+            // Allowing the roles inside the token to be updated
+            signIn()
           }}
         >
           Let&apos;s go !
