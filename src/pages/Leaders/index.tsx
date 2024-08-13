@@ -62,7 +62,6 @@ const LeaderPage = () => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     minHeight: 200,
-                    height: '100%',
                   }}
                 >
                   <DetailsLeader leader={leader} />

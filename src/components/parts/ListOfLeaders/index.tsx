@@ -1,9 +1,8 @@
-import { Divider, Table, Typography } from '@mui/joy'
+import { Typography } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
 import { FC, Fragment } from 'react'
 
 import { fetchLeadersBySirens } from '../../../utils/api/leaderAPI'
-import { isNotNU } from '../../../utils/assertion.util'
 import { PleaseSelectACompanyText } from '../../common/Texts'
 import DetailsLeader from '../DetailsLeader'
 
@@ -33,39 +32,25 @@ const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
     return 'Pas de dirigeant trouvé'
   }
 
-  if (isNotNU(leaders)) {
-    return (
-      <Fragment>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <Typography level="h4">Dirigeants</Typography>
-        </div>
-        <Table
-          aria-label="List Of Leaders"
-          style={{ display: 'flex', overflowY: 'auto', maxHeight: '320px' }}
-        >
-          <tbody>
-            <tr
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 25,
-                marginTop: 25,
-              }}
-            >
-              {leaders.map((leader, index) => {
-                return (
-                  <td key={index}>
-                    <DetailsLeader leader={leader} />
-                    <Divider />
-                  </td>
-                )
-              })}
-            </tr>
-          </tbody>
-        </Table>
-      </Fragment>
-    )
-  }
+  return (
+    <Fragment>
+      <div style={{ textAlign: 'center', marginBottom: 16 }}>
+        <Typography level="h4">Dirigeants</Typography>
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          maxHeight: '320px',
+          overflowY: 'auto',
+        }}
+      >
+        {leaders.map((leader, index) => (
+          <DetailsLeader key={index} leader={leader} />
+        ))}
+      </div>
+    </Fragment>
+  )
 }
 
 export default ListOfLeaders

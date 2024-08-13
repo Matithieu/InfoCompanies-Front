@@ -10,31 +10,23 @@ type DetailsLeaderRowProps = {
 
 const DetailsLeaderRow: FC<DetailsLeaderRowProps> = ({ leader }) => {
   return (
-    <tr
+    <div
       style={{
         display: 'flex',
-        flexDirection: 'row',
-        gap: 7,
-        fontSize: '16px',
         justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '10px 0',
+        borderBottom: '1px solid #e0e0e0',
       }}
     >
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          flexDirection: 'row',
-        }}
-      >
+      <div style={{ display: 'flex', alignItems: 'center' }}>
         <PersonIcon />
-        <Typography>
+        <Typography style={{ marginLeft: 8 }}>
           {leader.firstName} {leader.lastName}
         </Typography>
       </div>
-      <div>
-        <Typography textColor="#808080">{leader.role}</Typography>
-      </div>
-    </tr>
+      <Typography textColor="#808080">{leader.role}</Typography>
+    </div>
   )
 }
 
