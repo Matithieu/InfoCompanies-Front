@@ -20,7 +20,6 @@ const getFilterComponents = (
         fetchFunction={(searchTerm) =>
           fetchAutoComplete('legal-form', searchTerm)
         }
-        getOptionLabel={(option) => option.name}
         handleSelectChange={handleSelectChange('legalForm')}
         inputLabel="Forme juridique"
         isLabelHidden={searchTerm.legalForm.length > 0}
@@ -35,7 +34,6 @@ const getFilterComponents = (
         fetchFunction={(searchTerm) =>
           fetchAutoComplete('industry-sector', searchTerm)
         }
-        getOptionLabel={(option) => option.name}
         handleSelectChange={handleSelectChange('industrySector')}
         inputLabel="Secteur d'activité"
         isLabelHidden={searchTerm.industrySector.length > 0}
@@ -59,7 +57,6 @@ const getFilterComponents = (
     <Box sx={{ flexShrink: 0, maxWidth: '250px' }}>
       <FetchAutoComplete
         fetchFunction={(searchTerm) => fetchAutoComplete('city', searchTerm)}
-        getOptionLabel={(option) => option.name}
         handleSelectChange={handleSelectChange('city')}
         inputLabel="Ville"
         isLabelHidden={searchTerm.city.length > 0}

@@ -8,8 +8,9 @@ import {
   useCompanyFilterStore,
 } from '../../../store/filtersStore'
 import getFilterComponents from './components'
+import { updateFilterStates } from './filter.util'
 
-interface FiltersProps {
+export interface FiltersProps {
   filtersToShow: Array<
     'legalForm' | 'industrySector' | 'region' | 'city' | 'searchButton'
   >
@@ -47,27 +48,15 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
   }
 
   useEffect(() => {
-    if (showAddFilterButton) {
-      setSelectedFilters(() =>
-        filtersToShow.filter(
-          (filter) =>
-            filter === 'searchButton' ||
-            (searchTerm[filter as keyof SearchParams] &&
-              searchTerm[filter as keyof SearchParams].length > 0),
-        ),
-      )
-      setAvailableFilters(
-        filtersToShow.filter(
-          (filter) =>
-            filter !== 'searchButton' &&
-            (!searchTerm[filter as keyof SearchParams] ||
-              searchTerm[filter as keyof SearchParams].length === 0),
-        ),
-      )
-    } else {
-      // Ensure all filters are shown when showAddFilterButton is false
-      setSelectedFilters(filtersToShow)
-    }
+    updateFilterStates(
+      filtersToShow,
+      showAddFilterButton,
+      searchTerm,
+      selectedFilters,
+      availableFilters,
+      setSelectedFilters,
+      setAvailableFilters,
+    )
   }, [searchTerm, filtersToShow, showAddFilterButton])
 
   const handleSelectChange =
@@ -86,6 +75,18 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
       city: searchTerm.city,
     })
   }
+
+  useEffect(() => {
+    // Check if all filters are cleared, if so, reset the searchParams
+    if (selectedFilters.length === 0) {
+      setSearchParams({
+        city: [],
+        industrySector: [],
+        legalForm: [],
+        region: [],
+      })
+    }
+  }, [selectedFilters.length, setSearchParams])
 
   const filterComponents = getFilterComponents(
     searchTerm,

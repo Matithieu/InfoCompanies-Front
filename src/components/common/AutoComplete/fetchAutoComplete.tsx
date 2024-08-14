@@ -1,7 +1,7 @@
 import { CircularProgress, FormControl } from '@mui/joy'
-import Autocomplete, { AutocompleteProps } from '@mui/joy/Autocomplete'
+import Autocomplete from '@mui/joy/Autocomplete'
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { AutoCompleteType } from '../../../data/types/common'
 
@@ -9,26 +9,27 @@ type FetchAutoCompleteProps<T> = {
   handleSelectChange: (items: T[]) => void
   fetchFunction: (input: string) => Promise<T[]>
   queryKeyBase: string
-  getOptionLabel: (option: T) => string
   inputLabel: string
   isLabelHidden?: boolean
-} & Omit<
-  AutocompleteProps<T, true, false, false>,
-  'renderInput' | 'options' | 'loading' | 'onChange' | 'onInputChange'
->
+  value?: T[]
+}
 
 const FetchAutoComplete = ({
   handleSelectChange,
   fetchFunction,
   queryKeyBase,
-  getOptionLabel,
   inputLabel,
   isLabelHidden,
+  value = [],
 }: FetchAutoCompleteProps<AutoCompleteType>) => {
   const [inputValue, setInputValue] = useState<string>('')
   const [debouncedInputValue, setDebouncedInputValue] = useState<string>('')
 
-  const { data, refetch, isLoading } = useQuery({
+  const {
+    data: fetchedOptions = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: [queryKeyBase, debouncedInputValue],
     queryFn: () => fetchFunction(debouncedInputValue),
     enabled: false,
@@ -50,21 +51,31 @@ const FetchAutoComplete = ({
     }
   }, [debouncedInputValue, refetch])
 
+  // Merging selected values with fetched options
+  const mergedOptions = useMemo(() => {
+    const valueIds = value.map((item) => item.id)
+    const merged = [
+      ...value,
+      ...fetchedOptions.filter((option) => !valueIds.includes(option.id)),
+    ]
+    return merged
+  }, [value, fetchedOptions])
+
   return (
     <FormControl>
       <Autocomplete
         multiple
-        getOptionLabel={getOptionLabel}
+        getOptionLabel={(option) => option.name}
         inputValue={inputValue}
         isOptionEqualToValue={(option, value) => option.id === value.id}
         limitTags={1}
         loading={isLoading}
         noOptionsText={
-          data !== undefined && data.length === 0
+          fetchedOptions.length === 0
             ? 'Aucun résultat'
             : 'Entrez au moins 2 caractères'
         }
-        options={data || []}
+        options={mergedOptions}
         placeholder={isLabelHidden ? undefined : inputLabel}
         slotProps={{
           input: {
@@ -74,9 +85,10 @@ const FetchAutoComplete = ({
             ),
           },
         }}
-        onChange={(_, value) => {
-          if (value) {
-            handleSelectChange(value as AutoCompleteType[])
+        value={value}
+        onChange={(_, newValue) => {
+          if (newValue) {
+            handleSelectChange(newValue as AutoCompleteType[])
           }
         }}
         onInputChange={(_, newInputValue) => {
