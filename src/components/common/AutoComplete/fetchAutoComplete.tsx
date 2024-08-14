@@ -1,4 +1,5 @@
-import { CircularProgress, FormControl } from '@mui/joy'
+import Close from '@mui/icons-material/Close'
+import { Chip, CircularProgress, FormControl } from '@mui/joy'
 import Autocomplete from '@mui/joy/Autocomplete'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useMemo, useState } from 'react'
@@ -65,6 +66,7 @@ const FetchAutoComplete = ({
     <FormControl>
       <Autocomplete
         multiple
+        getOptionKey={(option) => option.id}
         getOptionLabel={(option) => option.name}
         inputValue={inputValue}
         isOptionEqualToValue={(option, value) => option.id === value.id}
@@ -77,6 +79,22 @@ const FetchAutoComplete = ({
         }
         options={mergedOptions}
         placeholder={isLabelHidden ? undefined : inputLabel}
+        // So each tag has a different key
+        renderTags={(tags, getTagProps) =>
+          tags.map((item, index) => {
+            const { key, ...otherTagProps } = getTagProps({ index })
+            return (
+              <Chip
+                key={key}
+                endDecorator={<Close fontSize="small" />}
+                sx={{ minWidth: 0 }}
+                {...otherTagProps}
+              >
+                {item.name}
+              </Chip>
+            )
+          })
+        }
         slotProps={{
           input: {
             label: inputLabel,
