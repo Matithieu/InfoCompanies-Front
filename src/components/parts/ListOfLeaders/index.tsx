@@ -13,11 +13,9 @@ type ListOfLeadersProps = {
 const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
   const { data: leaders, isLoading } = useQuery({
     queryKey: ['leader', siren],
-    queryFn: () => {
+    queryFn: async () => {
       if (siren) {
-        return fetchLeadersBySirens(siren)
-      } else {
-        return Promise.resolve(null)
+        return await fetchLeadersBySirens(siren)
       }
     },
   })
@@ -30,8 +28,18 @@ const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
     return <PleaseSelectACompanyText />
   }
 
-  if (leaders === null || leaders.length === 0) {
-    return 'Pas de dirigeant trouvé'
+  if (leaders.length === 0) {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Typography level="h4">Aucun dirigeant trouvé</Typography>
+      </div>
+    )
   }
 
   return (
