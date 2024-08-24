@@ -59,7 +59,7 @@ const ScrapCompanyButton: FC<ScrapCompanyButtonProps> = ({
 
   return (
     <Tooltip
-      sx={{ zIndex: 99999 }}
+      sx={{ zIndex: 99999, maxWidth: 350 }}
       title={
         isDisabled
           ? `Vous ne pouvez actualiser qu'une fois par jour. \nDernière actualisation: ${company.scrapingDate}`
