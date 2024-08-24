@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 
@@ -8,15 +8,14 @@ import {
   toastSuccessAlreadySubscribed,
   toastWarnSelectSubscription,
 } from '../components/common/Toasts/toasts'
-import Loading from '../pages/Loading'
 import useAuthStore from '../store/authStore'
 import { fetchUser } from './api'
 import { routesPath } from './navigation/routesPath'
 
 export const ProtectedRoutes = () => {
-  const { authUser, setAuthUser, requestLoading } = useAuthStore()
+  const { authUser, setAuthUser } = useAuthStore()
 
-  const { data, isFetching, isSuccess } = useQuery({
+  const { data, isSuccess } = useSuspenseQuery({
     queryKey: ['user query', authUser],
     queryFn: () => (authUser === null ? fetchUser() : Promise.resolve(null)),
     retry: 1,
@@ -30,10 +29,6 @@ export const ProtectedRoutes = () => {
       setAuthUser(data)
     }
   }, [data, setAuthUser])
-
-  if (requestLoading || isFetching) {
-    return <Loading />
-  }
 
   if (authUser === null && !isSuccess) {
     toastErrorReconnect()
@@ -49,10 +44,10 @@ export const ProtectedRoutes = () => {
 }
 
 export const ProtectedSimpleRoutes = () => {
-  const { authUser, setAuthUser, requestLoading } = useAuthStore()
+  const { authUser, setAuthUser } = useAuthStore()
   const urlLocation = window.location.pathname
 
-  const { data, isFetching, isSuccess } = useQuery({
+  const { data, isSuccess } = useSuspenseQuery({
     queryKey: ['user query', authUser],
     queryFn: () => (authUser === null ? fetchUser() : Promise.resolve(null)),
     retry: 1,
@@ -66,10 +61,6 @@ export const ProtectedSimpleRoutes = () => {
       setAuthUser(data)
     }
   }, [data, setAuthUser])
-
-  if (requestLoading || isFetching) {
-    return <Loading />
-  }
 
   if (authUser === null && !isSuccess) {
     toastErrorConnect()
