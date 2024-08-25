@@ -28,13 +28,15 @@ const Dashboard: FC = () => {
     totalPages: 0,
   })
 
-  const { isPending, data, error } = useQuery({
+  const { isLoading, data, error } = useQuery({
     queryKey: ['companies', url, dataPagination, searchParams],
     queryFn: () => fetchCompaniesWithUrlAndPage(url, dataPagination.page),
-    retry: 1,
+    staleTime: Infinity,
+    retry: 0,
     refetchOnWindowFocus: false,
-    refetchOnMount: true,
+    refetchOnMount: false,
     refetchOnReconnect: false,
+    refetchInterval: false,
   })
 
   const handleChangePage = (page: number) => {
@@ -116,7 +118,7 @@ const Dashboard: FC = () => {
                 error={error}
                 handleChangePage={handleChangePage}
                 handleDetailsClick={(company) => setCompany(company)}
-                isPending={isPending}
+                isPending={isLoading}
               />
             </Stack>
           </Grid>
