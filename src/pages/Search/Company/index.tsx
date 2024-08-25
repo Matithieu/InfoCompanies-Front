@@ -12,6 +12,7 @@ import {
   handleChangeStatut,
   updateCompaniesIcon,
 } from '../../../components/common/Icons/stautIcon.util.ts'
+import Seo from '../../../components/common/Seo/index.tsx'
 import Chart from '../../../components/parts/Chart/index.tsx'
 import DetailsCompany from '../../../components/parts/DetailsCompany/index.tsx'
 import ListOfLeaders from '../../../components/parts/ListOfLeaders/index.tsx'
@@ -83,6 +84,10 @@ const CompanyPage: FC = () => {
   } else if (company !== null && company) {
     return (
       <Box sx={{ display: 'flex' }}>
+        <Seo
+          description={`Details of ${company.companyName}`}
+          title={company.companyName}
+        />
         <Box
           component="main"
           sx={{

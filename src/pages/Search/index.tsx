@@ -16,6 +16,7 @@ import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { GlobalErrorButton } from '../../components/common/buttons/GlobalErrorButton.tsx'
+import Seo from '../../components/common/Seo/index.tsx'
 import { CompanyDetails, Page } from '../../data/types/companyDetails.ts'
 import { fetchCompanyBySearchTerm } from '../../utils/api/index.ts'
 import { useAppNavigate } from '../../utils/navigation/navigation.tsx'
@@ -111,6 +112,10 @@ function TableOfDetails() {
   } else if (data.empty === false) {
     return (
       <React.Fragment>
+        <Seo
+          description={`Recherche: ${searchTerm}`}
+          title={`Recherche: ${searchTerm}`}
+        />
         <Sheet
           aria-label="order-table-container"
           sx={{
