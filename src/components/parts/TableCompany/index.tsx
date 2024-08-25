@@ -45,6 +45,7 @@ const TableCompany: FC<TableCompanyProps> = ({
   const [tableData, setTableData] = useState<Page<Company> | null | undefined>(
     data,
   )
+  const [rowSelected, setRowSelected] = useState<number | null>(null)
   const queryClient = useQueryClient()
 
   useEffect(() => {
@@ -192,10 +193,15 @@ const TableCompany: FC<TableCompanyProps> = ({
                   onClick={(e) => {
                     e.stopPropagation()
                     handleDetailsClick(row)
+                    setRowSelected(row.id)
                   }}
                   role="row"
                   style={{
                     cursor: 'pointer',
+                    backgroundColor:
+                      rowSelected === row.id
+                        ? 'var(--joy-palette-background-level2)'
+                        : undefined,
                   }}
                 >
                   {isCheckboxVisible ? (
