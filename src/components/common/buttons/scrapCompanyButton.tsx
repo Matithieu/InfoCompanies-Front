@@ -1,10 +1,11 @@
-import { Button, Tooltip } from '@mui/joy'
+import { Button, CircularProgress, Tooltip } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
 import { FC, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Company } from '../../../data/types/company'
 import { fetchCompanyScrap } from '../../../utils/api'
+import { formatDate, remplaceBackSlashInDate } from '../../../utils/date.util'
 
 type ScrapCompanyButtonProps = {
   company: Company
@@ -38,11 +39,27 @@ const ScrapCompanyButton: FC<ScrapCompanyButtonProps> = ({
     }
   }, [company.scrapingDate])
 
-  const { data, error, refetch } = useQuery({
+  const { data, error, refetch, isFetching, isError } = useQuery({
     queryKey: ['companyScraped', company.id],
     queryFn: () => fetchCompanyScrap(company.id),
     enabled: false,
+    staleTime: Infinity,
   })
+
+  // Automatically trigger the query once on component mount
+  useEffect(() => {
+    if (
+      !data &&
+      !isError &&
+      !isFetching &&
+      (company.scrapingDate === null ||
+        formatDate(remplaceBackSlashInDate(company.scrapingDate)) !== // date is is in yyyy/mm/dd format and needs to be converted to dd/mm/yyyy
+          new Date().toLocaleDateString())
+    ) {
+      setIsDisabled(true)
+      refetch()
+    }
+  }, [refetch, data, isFetching, company.scrapingDate, isError])
 
   const handleClick = async () => {
     setIsDisabled(true)
@@ -70,6 +87,7 @@ const ScrapCompanyButton: FC<ScrapCompanyButtonProps> = ({
         <Button
           color="primary"
           disabled={isDisabled}
+          endDecorator={isFetching ? <CircularProgress /> : undefined}
           variant={isDisabled ? 'solid' : 'soft'}
           onClick={handleClick}
         >
