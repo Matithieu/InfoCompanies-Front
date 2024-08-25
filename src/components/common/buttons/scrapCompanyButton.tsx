@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 
 import { Company } from '../../../data/types/company'
 import { fetchCompanyScrap } from '../../../utils/api'
-import { formatDate, remplaceBackSlashInDate } from '../../../utils/date.util'
+import { canBeScrapped } from '../../parts/TableCompany/index.util'
 
 type ScrapCompanyButtonProps = {
   company: Company
@@ -48,18 +48,11 @@ const ScrapCompanyButton: FC<ScrapCompanyButtonProps> = ({
 
   // Automatically trigger the query once on component mount
   useEffect(() => {
-    if (
-      !data &&
-      !isError &&
-      !isFetching &&
-      (company.scrapingDate === null ||
-        formatDate(remplaceBackSlashInDate(company.scrapingDate)) !== // date is is in yyyy/mm/dd format and needs to be converted to dd/mm/yyyy
-          new Date().toLocaleDateString())
-    ) {
+    if (canBeScrapped(company, data, isError, isFetching)) {
       setIsDisabled(true)
       refetch()
     }
-  }, [refetch, data, isFetching, company.scrapingDate, isError])
+  }, [refetch, data, isFetching, company, isError])
 
   const handleClick = async () => {
     setIsDisabled(true)

@@ -132,7 +132,7 @@ export async function fetchCompanyScrap(companyId: number) {
     return parseJsonToCompany(await response.json())
   }
 
-  return null
+  throw new Error('Failed to fetch company scrap')
 }
 
 export async function fetchCompanySeen() {

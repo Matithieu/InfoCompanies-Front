@@ -44,3 +44,21 @@
   background: linear-gradient(45deg, #e0e0e0, #f7f7f7);
   border-radius: 5px;
 }
+
+.table-row {
+  cursor: pointer;
+}
+
+.table-row.even {
+  background-color: var(--joy-palette-background-level1);
+}
+
+.table-row.odd {
+  background-color: transparent;
+}
+
+.table-row:hover {
+  background-color: var(
+    --joy-palette-background-hover
+  ); /* Your desired hover color */
+}

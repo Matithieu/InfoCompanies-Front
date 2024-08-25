@@ -1,24 +1,25 @@
 import './style.css'
 
 import { IconButton, Sheet, Table } from '@mui/joy'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { FC, useEffect, useState } from 'react'
 
-import { columnsTableCompany } from '../../../data/types/columns.ts'
-import { Company } from '../../../data/types/company.ts'
-import { Page } from '../../../data/types/companyDetails.ts'
-import { updateSeenCompany } from '../../../utils/api/index.ts'
-import { isNotNU } from '../../../utils/assertion.util.ts'
-import { GlobalErrorButton } from '../../common/buttons/GlobalErrorButton.tsx'
-import Pagination from '../../common/buttons/Pagination.tsx'
-import StatutIcon from '../../common/Icons/StatutIcon.tsx'
+import { columnsTableCompany } from '../../../data/types/columns'
+import { Company } from '../../../data/types/company'
+import { Page } from '../../../data/types/companyDetails'
+import { fetchCompanyScrap, updateSeenCompany } from '../../../utils/api/index'
+import { isNotNU } from '../../../utils/assertion.util'
+import { GlobalErrorButton } from '../../common/buttons/GlobalErrorButton'
+import Pagination from '../../common/buttons/Pagination'
+import StatutIcon from '../../common/Icons/StatutIcon'
 import {
   handleChangeStatut,
   updateCompaniesIcon,
-} from '../../common/Icons/stautIcon.util.ts'
-import { TableSkeleton } from '../../common/Loaders/Skeleton/index.tsx'
-import TableCompanyHeaders from './components/TableCompanyHeaders.tsx'
-import TableCompanyRow from './components/TableCompanyRow.tsx'
+} from '../../common/Icons/stautIcon.util'
+import { TableSkeleton } from '../../common/Loaders/Skeleton'
+import TableCompanyHeaders from './components/TableCompanyHeaders'
+import TableCompanyRow from './components/TableCompanyRow'
+import { canBeScrapped, chunkArray } from './index.util'
 
 type TableCompanyProps = {
   data: Page<Company> | undefined | null
@@ -28,6 +29,7 @@ type TableCompanyProps = {
   error: Error | null
   isPagination?: boolean
   isCheckboxVisible?: boolean
+  isScrapping?: boolean
 }
 
 const TableCompany: FC<TableCompanyProps> = ({
@@ -36,18 +38,67 @@ const TableCompany: FC<TableCompanyProps> = ({
   isCheckboxVisible = true,
   isPagination = true,
   isPending,
+  isScrapping = false,
   handleChangePage,
   handleDetailsClick,
 }) => {
-  const [tableData, setTableData] = useState(data)
+  const [tableData, setTableData] = useState<Page<Company> | null | undefined>(
+    data,
+  )
+  const queryClient = useQueryClient()
 
   useEffect(() => {
     setTableData(data)
   }, [data])
 
+  // Send requests in batches when the table is rendered
+  useEffect(() => {
+    const fetchBatchCompanies = async () => {
+      if (!data?.content || !isScrapping) return
+
+      const companies = data.content
+      const companyBatches = chunkArray(companies, 2)
+
+      for (const batch of companyBatches) {
+        const batchPromises = batch.map(async (company) => {
+          if (canBeScrapped(company, null, false, false)) {
+            try {
+              const scrapResult = await queryClient.fetchQuery({
+                queryKey: ['company', company.id],
+                queryFn: () => fetchCompanyScrap(company.id),
+                retry: 0,
+              })
+              const updatedCompany = { ...company, ...scrapResult }
+
+              // Update the UI immediately for this company
+              setTableData((prevData) => ({
+                ...prevData!,
+                content: prevData!.content.map((c) =>
+                  c.id === company.id ? updatedCompany : c,
+                ),
+              }))
+
+              return updatedCompany
+            } catch (error) {
+              console.error(`Error fetching company ${company.id}:`, error)
+              return company
+            }
+          }
+
+          return company
+        })
+
+        // Wait for all companies in the batch to be processed before moving to the next batch
+        await Promise.all(batchPromises)
+      }
+    }
+
+    fetchBatchCompanies()
+  }, [data, queryClient, isScrapping])
+
   const mutation = useMutation({
     mutationFn: (companyId: number) => updateSeenCompany([companyId]),
-    onError: (error) => {
+    onError: (error: Error) => {
       console.error(`Error updating recommendations: ${error.message}`)
     },
     onSuccess: () => {
@@ -117,16 +168,14 @@ const TableCompany: FC<TableCompanyProps> = ({
           <Table
             hoverRow
             stickyHeader
-            aria-labelledby="tableTitle"
             sx={{
               '--TableCell-headBackground':
                 'var(--joy-palette-background-level1)',
               '--Table-headerUnderlineThickness': '1px',
               '--TableRow-hoverBackground':
-                'var(--joy-palette-background-level1)',
+                'var(--joy-palette-background-level2)',
               '--TableCell-paddingY': '4px',
               '--TableCell-paddingX': '8px',
-              overflow: 'auto',
             }}
           >
             <TableCompanyHeaders
@@ -137,12 +186,16 @@ const TableCompany: FC<TableCompanyProps> = ({
               {tableData.content.map((row, index) => (
                 <tr
                   key={row.id}
-                  role="row"
-                  style={{ cursor: 'pointer' }}
+                  className={`table-row ${index % 2 === 0 ? 'even' : 'odd'}`}
                   tabIndex={-1}
+                  // eslint-disable-next-line react/jsx-sort-props
                   onClick={(e) => {
                     e.stopPropagation()
                     handleDetailsClick(row)
+                  }}
+                  role="row"
+                  style={{
+                    cursor: 'pointer',
                   }}
                 >
                   {isCheckboxVisible ? (
@@ -165,7 +218,17 @@ const TableCompany: FC<TableCompanyProps> = ({
                     </td>
                   ) : undefined}
                   {columnsTableCompany.slice(1).map((column) => (
-                    <td key={column.id} align={column.align}>
+                    <td
+                      key={column.id}
+                      align={column.align}
+                      style={{
+                        maxWidth: '20px',
+                        maxHeight: '1.5em',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
                       <TableCompanyRow column={column} row={row} />
                     </td>
                   ))}
