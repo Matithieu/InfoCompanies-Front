@@ -99,19 +99,19 @@ const CompanyPage: FC = () => {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                marginTop: 10,
                 justifyContent: 'center',
+                marginTop: 10,
+                marginBottom: 10,
               }}
             >
               <Typography
                 level="h1"
                 sx={{
-                  marginLeft: 0,
-                  marginBottom: 5,
                   alignSelf: 'flex-start',
                 }}
               >
                 <IconButton
+                  size="lg"
                   style={{
                     border: 'none',
                     backgroundColor: 'transparent',
@@ -121,7 +121,10 @@ const CompanyPage: FC = () => {
                     handleStatusChange(company)
                   }}
                 >
-                  <StatutIcon statut={company.checked} />
+                  <StatutIcon
+                    statut={company.checked}
+                    style={{ fontSize: '1.5rem' }}
+                  />
                 </IconButton>
                 {company.companyName}
               </Typography>
@@ -136,51 +139,36 @@ const CompanyPage: FC = () => {
               />
             </div>
 
-            <Grid>
-              <Grid container justifyContent="center" marginTop={5} spacing={3}>
-                <Grid md={4} xs={12}>
-                  <Card
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      minHeight: 220,
-                      maxWidth: 400,
-                    }}
-                  >
-                    <DetailsCompany company={company} />
-                  </Card>
-                </Grid>
-                <Grid md={4} xs={12}>
-                  <Card
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      minHeight: 220,
-                    }}
-                  >
-                    <ListOfLeaders siren={company.sirenNumber} />
-                  </Card>
-                </Grid>
+            <div style={{ marginTop: '100px' }} />
+
+            <Grid
+              container
+              direction="row"
+              display="flex"
+              justifyContent="center"
+              spacing={2}
+            >
+              <Grid lg={8} md={8} sm={8} xl={4} xs={8}>
+                <Card sx={{ minHeight: 220 }}>
+                  <DetailsCompany company={company} />
+                </Card>
               </Grid>
-              <Grid container justifyContent="center" marginTop={5} spacing={3}>
-                <Grid md={4} xs={8}>
-                  <Card
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      height: 220,
-                      minWidth: 400,
-                    }}
-                  >
-                    <Chart company={company} />
-                  </Card>
-                </Grid>
+
+              <Grid lg={8} md={8} sm={8} xl={4} xs={8}>
+                <Card sx={{ minHeight: 220 }}>
+                  <ListOfLeaders siren={company?.sirenNumber} />
+                </Card>
+              </Grid>
+
+              <Grid lg={8} md={8} sm={8} xl={5} xs={8}>
+                <Card
+                  sx={{
+                    height: 220,
+                    minWidth: 1,
+                  }}
+                >
+                  <Chart company={company} />
+                </Card>
               </Grid>
             </Grid>
           </div>

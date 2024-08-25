@@ -20,28 +20,28 @@ const TableCompanySocial: FC<TableCompanySocialProps> = ({ socialMedia }) => {
     <>
       {socialMedia.facebook && (
         <LinkIcon
-          icon={<FacebookIcon />}
+          icon={<FacebookIcon fontSize="medium" />}
           style={{ color: '#3b5998' }}
           url={socialMedia.facebook}
         />
       )}
       {socialMedia.twitter && (
         <LinkIcon
-          icon={<TwitterIcon />}
+          icon={<TwitterIcon fontSize="medium" />}
           style={{ color: '#1DA1F2' }}
           url={socialMedia.twitter}
         />
       )}
       {socialMedia.linkedin && (
         <LinkIcon
-          icon={<LinkedInIcon />}
+          icon={<LinkedInIcon fontSize="medium" />}
           style={{ color: '#0e76a8' }}
           url={socialMedia.linkedin}
         />
       )}
       {socialMedia.youtube && (
         <LinkIcon
-          icon={<YouTubeIcon />}
+          icon={<YouTubeIcon fontSize="medium" />}
           style={{ color: 'red' }}
           url={socialMedia.youtube}
         />

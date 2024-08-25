@@ -27,11 +27,7 @@ const TableCompanyRow: FC<TableCompanyRowProps> = ({ column, row }) => {
     case 'website':
       return (
         <span
-          style={{
-            maxWidth: '10px',
-            maxHeight: '10px',
-            overflow: 'hidden',
-          }}
+          style={{}}
           onClick={(e) => {
             if (
               e.target === e.currentTarget &&
