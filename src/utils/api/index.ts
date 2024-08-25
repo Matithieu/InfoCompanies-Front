@@ -33,6 +33,11 @@ export async function fetchCompaniesWithUrlAndPage(url: string, page: number) {
     'GET',
   )
 
+  if (response.status === 425) {
+    console.error('Wait 1 one day before fetching companies again')
+    return
+  }
+
   if (response) {
     const data: Page<Company> = await response.json()
     const parsedCompanies = data.content.map((company) =>
@@ -46,7 +51,7 @@ export async function fetchCompaniesWithUrlAndPage(url: string, page: number) {
     return data
   }
 
-  return null
+  throw new Error('Failed to fetch companies with url and page')
 }
 
 export async function fetchCompanyBySearchTerm(
