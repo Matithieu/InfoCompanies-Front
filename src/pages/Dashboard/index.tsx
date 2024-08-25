@@ -52,9 +52,17 @@ const Dashboard: FC = () => {
         searchParams.legalForm.length === 0 &&
         searchParams.region.length === 0
       ) {
+        setDataPagination((prevDataPagination) => ({
+          ...prevDataPagination,
+          page: 0,
+        }))
         setUrl(`${RANDOM_UNSEEN_ENDPOINT}?`)
         return
       } else {
+        setDataPagination((prevDataPagination) => ({
+          ...prevDataPagination,
+          page: 0,
+        }))
         setUrl(constructURLWithFilter(searchParams, 'filter-by-parameters?'))
       }
     }
@@ -103,6 +111,7 @@ const Dashboard: FC = () => {
             >
               <TableCompany
                 isCheckboxVisible
+                isScrapping
                 data={data}
                 error={error}
                 handleChangePage={handleChangePage}
