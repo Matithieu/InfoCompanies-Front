@@ -58,7 +58,22 @@
 }
 
 .table-row:hover {
-  background-color: var(
-    --joy-palette-background-hover
-  ); /* Your desired hover color */
+  background-color: var(--joy-palette-background-hover);
+}
+
+/* Transition effect for table row */
+/* Add this to your CSS */
+.selected-row {
+  transition: background-color 0.3s ease;
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.3s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }
