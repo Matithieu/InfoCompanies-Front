@@ -27,7 +27,7 @@ const FavoritesBody: FC<FavoritesBodyProps> = ({
   setCompany,
 }) => {
   return (
-    <Grid container spacing={3} sx={{ px: { xs: 2, md: 6 } }}>
+    <Grid container spacing={3}>
       <Grid item md={8} xs={12}>
         <Stack
           sx={{

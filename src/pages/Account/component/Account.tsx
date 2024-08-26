@@ -16,19 +16,20 @@ import { toast } from 'react-toastify'
 import { User } from '../../../data/types/user'
 import useAuthStore from '../../../store/authStore'
 import { fetchUser, updateUser } from '../../../utils/api'
+import { isNotNU } from '../../../utils/assertion.util'
 
 const Account: FC = () => {
-  const { authUser, requestLoading, setAuthUser, setRequestLoading } =
-    useAuthStore()
+  const { authUser, setAuthUser } = useAuthStore()
   const [editMode, setEditMode] = useState(false)
-  const [editedUser, setEditedUser] = useState<User | null>(null)
+  const [editedUser, setEditedUser] = useState<User | null>(authUser)
 
-  const { isPending, isError, data, error, refetch } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: ['user'],
     queryFn: () => fetchUser(),
     retry: 1,
-    refetchOnWindowFocus: true,
-    refetchOnMount: true,
+    enabled: false,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
   })
 
   const mutation = useMutation({
@@ -57,10 +58,8 @@ const Account: FC = () => {
 
   const handleSave = () => {
     if (authUser !== null) {
-      setRequestLoading(true)
       setEditMode(false)
       mutation.mutate()
-      setRequestLoading(false)
     }
   }
 
@@ -71,11 +70,7 @@ const Account: FC = () => {
     setEditedUser({ ...editedUser, [key]: e.target.value } as User)
   }
 
-  if (isPending) {
-    return <CircularProgress />
-  } else if (isError) {
-    return <div>{error?.message}</div>
-  } else if (authUser !== null) {
+  if (isNotNU(editedUser)) {
     return (
       <Card>
         <Typography gutterBottom level="h3">
@@ -91,7 +86,7 @@ const Account: FC = () => {
                 <Input
                   disabled={!editMode}
                   id="firstName"
-                  value={editedUser?.firstName ?? ''}
+                  value={editedUser.firstName}
                   onChange={(e) => handleChange(e, 'firstName')}
                 />
               </FormControl>
@@ -100,7 +95,7 @@ const Account: FC = () => {
                 <Input
                   disabled={!editMode}
                   id="lastName"
-                  value={editedUser?.lastName ?? ''}
+                  value={editedUser.lastName}
                   onChange={(e) => handleChange(e, 'lastName')}
                 />
               </FormControl>
@@ -111,7 +106,7 @@ const Account: FC = () => {
                 <Input
                   disabled={!editMode}
                   id="phone"
-                  value={editedUser?.phone ?? ''}
+                  value={editedUser.phone ?? undefined}
                   onChange={(e) => handleChange(e, 'phone')}
                 />
               </FormControl>
@@ -124,7 +119,7 @@ const Account: FC = () => {
               justifyContent: 'flex-end',
             }}
           >
-            {requestLoading ? (
+            {mutation.isPending ? (
               <CircularProgress />
             ) : (
               <>

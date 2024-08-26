@@ -12,26 +12,59 @@ const LayoutAvatarItem: FC = () => {
   const { navigation } = useAppNavigate()
 
   return (
-    <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        gap: 1,
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+      }}
+    >
       <IconButton
+        style={{
+          cursor: 'pointer',
+          display: 'flex',
+          gap: 10,
+          paddingRight: 30,
+          width: '100%',
+        }}
         onClick={(e) => {
           e.stopPropagation()
-          navigation.toSettings()
+          navigation.toAccount()
         }}
       >
         <Avatar size="md" variant="outlined">
           {authUser?.firstName
             ?.charAt(0)
             .toLocaleUpperCase()
-            .toLocaleUpperCase() ?? 'E'}
+            .toLocaleUpperCase() ?? 'X'}
         </Avatar>
+        <Box sx={{ minWidth: 0, flex: 1 }}>
+          <Typography
+            level="title-md"
+            sx={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              maxWidth: '100%',
+            }}
+          >
+            {authUser?.firstName ?? 'Error'}
+          </Typography>
+          <Typography
+            level="body-sm"
+            sx={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              maxWidth: '100%',
+            }}
+          >
+            {authUser?.lastName ?? 'Error'}
+          </Typography>
+        </Box>
       </IconButton>
-      <Box sx={{ minWidth: 0, flex: 1 }}>
-        <Typography level="title-md">
-          {authUser?.firstName ?? 'Error'}
-        </Typography>
-        <Typography level="body-sm">{authUser?.lastName ?? 'Error'}</Typography>
-      </Box>
       <IconButton
         color="neutral"
         size="lg"
