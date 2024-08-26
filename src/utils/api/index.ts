@@ -124,7 +124,7 @@ export async function fetchCompanyByIds(ids: number[], page: number) {
     return data
   }
 
-  return null
+  throw new Error('Failed to fetch companies by ids')
 }
 
 export async function fetchCompanyScrap(companyId: number) {

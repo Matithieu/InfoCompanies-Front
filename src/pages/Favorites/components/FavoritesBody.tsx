@@ -10,7 +10,7 @@ import { Company } from '../../../data/types/company'
 import { Page } from '../../../data/types/companyDetails'
 
 type FavoritesBodyProps = {
-  data: Page<Company> | null | undefined
+  data: Page<Company> | undefined
   error: Error | null
   handleChangePage: (page: number) => void
   setCompany: (company: Company) => void
