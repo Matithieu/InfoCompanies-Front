@@ -12,8 +12,8 @@ export const canBeScrapped = (
     !isError &&
     !isFetching &&
     (company.scrapingDate === null ||
-      formatDate(remplaceBackSlashInDate(company.scrapingDate)) !== // date is is in yyyy/mm/dd format and needs to be converted to dd/mm/yyyy
-        new Date().toLocaleDateString())
+      new Date(formatDate(remplaceBackSlashInDate(company.scrapingDate))) < // date is is in yyyy/mm/dd format and needs to be converted to dd/mm/yyyy
+        new Date())
 
   return doScrap
 }

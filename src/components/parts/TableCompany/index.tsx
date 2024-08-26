@@ -1,8 +1,8 @@
 import './style.css'
 
-import { Sheet, Table } from '@mui/joy'
+import { Sheet, Skeleton, Table, Typography } from '@mui/joy'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { FC, useEffect, useState } from 'react'
+import { FC, Fragment, useEffect, useState } from 'react'
 
 import { columnsTableCompany } from '../../../data/types/columns'
 import { Company } from '../../../data/types/company'
@@ -44,14 +44,15 @@ const TableCompany: FC<TableCompanyProps> = ({
   const queryClient = useQueryClient()
 
   useEffect(() => {
-    setTableData(data)
+    if (data) {
+      setTableData(data)
+    }
   }, [data])
 
-  // Send requests in batches when the table is rendered
   useEffect(() => {
-    const fetchBatchCompanies = async () => {
-      if (!data?.content || !isScrapping) return
+    if (!data?.content || !isScrapping) return
 
+    const fetchBatchCompanies = async () => {
       const companies = data.content
       const companyBatches = chunkArray(companies, 2)
 
@@ -67,7 +68,6 @@ const TableCompany: FC<TableCompanyProps> = ({
               })
               const updatedCompany = { ...company, ...scrapResult }
 
-              // Update the UI immediately for this company
               if (updatedCompany) {
                 setTableData((prevData) => {
                   if (prevData) {
@@ -78,6 +78,8 @@ const TableCompany: FC<TableCompanyProps> = ({
                       ),
                     }
                   }
+
+                  return prevData
                 })
               }
 
@@ -91,7 +93,6 @@ const TableCompany: FC<TableCompanyProps> = ({
           return company
         })
 
-        // Wait for all companies in the batch to be processed before moving to the next batch
         await Promise.all(batchPromises)
       }
     }
@@ -143,72 +144,87 @@ const TableCompany: FC<TableCompanyProps> = ({
 
   if (data && data.empty) {
     return (
-      <a
+      <div
         style={{
           display: 'flex',
           justifyContent: 'center',
-          fontSize: '19px',
+          //fontSize: '19px',
+          //border: '10px solid var(--joy-palette-border)',
         }}
       >
-        Aucune entreprise trouvée
-      </a>
+        <Table>
+          <Typography level="h4" style={{ marginTop: 20 }}>
+            Aucune entreprise trouvée
+          </Typography>
+        </Table>
+      </div>
     )
-  } else {
-    return (
-      <>
-        <Sheet
-          aria-label="order-table-container"
+  }
+
+  return (
+    <>
+      <Sheet
+        aria-label="order-table-container"
+        sx={{
+          width: '100%',
+          borderRadius: 'sm',
+          minHeight: 0,
+          overflow: 'auto',
+        }}
+        variant="outlined"
+      >
+        <Table
+          hoverRow
+          stickyHeader
           sx={{
-            width: '100%',
-            borderRadius: 'sm',
-            minHeight: 0,
-            overflow: 'auto',
+            '--TableCell-headBackground':
+              'var(--joy-palette-background-level1)',
+            '--Table-headerUnderlineThickness': '1px',
+            '--TableRow-hoverBackground':
+              'var(--joy-palette-background-level2)',
+            '--TableCell-paddingY': '4px',
+            '--TableCell-paddingX': '8px',
           }}
-          variant="outlined"
         >
-          <Table
-            hoverRow
-            stickyHeader
-            sx={{
-              '--TableCell-headBackground':
-                'var(--joy-palette-background-level1)',
-              '--Table-headerUnderlineThickness': '1px',
-              '--TableRow-hoverBackground':
-                'var(--joy-palette-background-level2)',
-              '--TableCell-paddingY': '4px',
-              '--TableCell-paddingX': '8px',
-            }}
-          >
-            <TableCompanyHeaders
-              columns={columnsTableCompany}
-              isCheckboxVisible={isCheckboxVisible}
-            />
-            <tbody style={{ wordBreak: 'break-word' }}>
+          <TableCompanyHeaders
+            columns={columnsTableCompany}
+            isCheckboxVisible={isCheckboxVisible}
+          />
+          <tbody style={{ wordBreak: 'break-word' }}>
+            {!isPending && tableData?.content?.length ? (
               <TableCompanyRow
                 companies={tableData?.content}
                 handleDetailsClick={handleDetailsClick}
                 handleStatusChange={handleStatusChange}
                 isCheckboxVisible={isCheckboxVisible}
-                isPending={isPending}
                 rowSelected={rowSelected}
                 setRowSelected={setRowSelected}
               />
-            </tbody>
-          </Table>
-        </Sheet>
-        {isPagination ? (
-          // to Fix
-          <Pagination
-            dataPagination={{
-              page: tableData?.number ?? 0,
-              totalPages: tableData?.totalPages ?? 0,
-            }}
-            handleChangePage={handleChangePage}
-          />
-        ) : null}
-      </>
-    )
-  }
+            ) : (
+              <Fragment>
+                {Array.from({ length: 11 }, (_, i) => (
+                  <tr key={i} className="fade-in">
+                    <td colSpan={columnsTableCompany.length}>
+                      <Skeleton animation="wave" variant="text" />
+                    </td>
+                  </tr>
+                ))}
+              </Fragment>
+            )}
+          </tbody>
+        </Table>
+      </Sheet>
+      {isPagination && tableData && tableData.totalPages > 0 ? (
+        <Pagination
+          dataPagination={{
+            page: tableData?.number ?? 0,
+            totalPages: tableData?.totalPages ?? 0,
+          }}
+          handleChangePage={handleChangePage}
+        />
+      ) : undefined}
+    </>
+  )
 }
 
 export default TableCompany
