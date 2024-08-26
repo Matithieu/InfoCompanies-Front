@@ -1,12 +1,4 @@
-import {
-  Container,
-  Grid,
-  Option,
-  Select,
-  Sheet,
-  Switch,
-  Typography,
-} from '@mui/joy'
+import { Grid, Option, Select, Switch, Typography } from '@mui/joy'
 import * as React from 'react'
 
 export default function Settings() {
@@ -27,63 +19,36 @@ export default function Settings() {
   }
 
   return (
-    <Container maxWidth="lg">
-      <Typography
-        component="div"
-        level="h4"
-        sx={{
-          marginTop: 5,
-          marginLeft: 10,
-          marginBottom: 5,
-          alignSelf: 'flex-start',
-        }}
-      >
-        Settings
-      </Typography>
+    <Grid container spacing={3} sx={{ px: { xs: 2, md: 6 } }}>
+      <Grid xs={12}>
+        <Typography component="h1" level="h1" sx={{ mt: 2, mb: 2 }}>
+          Settings
+        </Typography>
+        <Typography level="body-md">Work in progres !!</Typography>
+      </Grid>
 
-      <Grid
-        container
-        spacing={3}
-        sx={{
-          paddingBottom: '10vh',
-          paddingLeft: '10vh',
-          paddingRight: '10vh',
-          justifyContent: 'center',
-        }}
-      >
+      <Grid container display="flex" flexDirection="column" width="100%">
         <Grid md={6} xs={12}>
-          <Sheet
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              padding: 2,
-            }}
+          <Typography level="h4">Language</Typography>
+          <Select
+            placeholder="Language"
+            sx={{ width: '100%' }}
+            value={language ?? ''}
+            onChange={handleChange}
           >
-            <Typography gutterBottom level="h4">
-              Language
-            </Typography>
-            <Select
-              placeholder="Language"
-              value={language ?? ''}
-              onChange={handleChange}
-            >
-              <Option value="english">English</Option>
-              <Option value="french">Français</Option>
-              <Option value="espagnol">Español</Option>
-            </Select>
-          </Sheet>
-
-          {/* Switch for notifications moved outside the Sheet */}
-          <Typography gutterBottom level="h4">
-            Notifications
-          </Typography>
+            <Option value="english">English</Option>
+            <Option value="french">Français</Option>
+            <Option value="espagnol">Español</Option>
+          </Select>
+        </Grid>
+        <Grid md={6} xs={12}>
+          <Typography level="h4">Notifications</Typography>
           <Switch
             checked={notificationsEnabled}
             onChange={handleNotificationsChange}
           />
         </Grid>
       </Grid>
-    </Container>
+    </Grid>
   )
 }
