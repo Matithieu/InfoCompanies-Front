@@ -1,9 +1,9 @@
-import { Typography } from '@mui/joy'
-import { Grid } from '@mui/material'
+import { Grid, Typography } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
 import { FC, useState } from 'react'
 
 import { TableSkeleton } from '../../components/common/Loaders/Skeleton/index.tsx'
+import HeaderTitle from '../../components/common/Texts/HeaderTitle.tsx'
 import { PaginationTableCompany } from '../../components/parts/TableCompany/type.ts'
 import { columnsTableCompany } from '../../data/types/columns.ts'
 import { Company } from '../../data/types/company.ts'
@@ -46,12 +46,9 @@ const Favorites: FC = () => {
   }
 
   return (
-    <Grid container spacing={3} sx={{ px: { xs: 2, md: 6 } }}>
-      <Grid item xs={12}>
-        <Typography component="h1" level="h1" sx={{ mt: 2, mb: 2 }}>
-          Favoris
-        </Typography>
-      </Grid>
+    <Grid flexDirection="column" sx={{ px: { xs: 2, md: 6 } }}>
+      <HeaderTitle text="Favoris" />
+
       {data?.content.length === 0 ? (
         <Typography
           sx={{

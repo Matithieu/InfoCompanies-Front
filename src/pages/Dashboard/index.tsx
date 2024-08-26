@@ -1,11 +1,12 @@
 import './style.css'
 
-import { Box, Card, Stack, Typography } from '@mui/joy'
+import { Box, Card, Stack } from '@mui/joy'
 import { Grid } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import { FC, useEffect, useState } from 'react'
 
 import Seo from '../../components/common/Seo/index.tsx'
+import HeaderTitle from '../../components/common/Texts/HeaderTitle.tsx'
 import Chart from '../../components/parts/Chart/index.tsx'
 import DetailsCompany from '../../components/parts/DetailsCompany/index.tsx'
 import Filters from '../../components/parts/Filters/index.tsx'
@@ -73,24 +74,16 @@ const Dashboard: FC = () => {
   }, [searchParams])
 
   return (
-    <Grid flexDirection="column">
+    <Grid flexDirection="column" sx={{ px: { xs: 2, md: 6 } }}>
       <Seo
         description="Dashboard"
         name="Dashboard"
         title="Dashboard"
         type="Dashboard"
       />
-      <Box
-        sx={{
-          px: { xs: 2, md: 6 },
-        }}
-      >
-        <Typography level="h1" style={{ marginTop: 20 }}>
-          Dashboard
-        </Typography>
-      </Box>
+      <HeaderTitle text="Dashboard" />
 
-      <Box paddingLeft={10} paddingRight={10}>
+      <Box mt={1}>
         <Grid item md={4} sm={6} sx={{ marginBottom: 2 }} xs={12}>
           <Filters
             showAddFilterButton
@@ -113,12 +106,13 @@ const Dashboard: FC = () => {
             >
               <TableCompany
                 isCheckboxVisible
-                isScrapping
                 data={data}
                 error={error}
                 handleChangePage={handleChangePage}
                 handleDetailsClick={(company) => setCompany(company)}
                 isPending={isLoading}
+                // temporary, need to pay some proxy to get the data
+                isScrapping={false}
               />
             </Stack>
           </Grid>
@@ -128,7 +122,7 @@ const Dashboard: FC = () => {
             container
             aria-label="tabs"
             justifyContent="center"
-            marginTop={5}
+            marginTop={2}
             spacing={1}
           >
             {/* DetailsCompany of the company */}

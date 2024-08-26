@@ -1,18 +1,19 @@
 import {
   Box,
+  Grid,
   Stack,
   Tab,
   tabClasses,
   TabList,
   TabPanel,
   Tabs,
-  Typography,
 } from '@mui/joy'
 import { FC } from 'react'
 
+import HeaderTitle from '../../components/common/Texts/HeaderTitle'
 import useAuthStore from '../../store/authStore'
 import ViewInvoices from '../Purchasing/invoice'
-import Account from './component'
+import Account from './component/Account'
 
 const AccountPage: FC = () => {
   const { authUser, requestLoading } = useAuthStore()
@@ -21,7 +22,7 @@ const AccountPage: FC = () => {
     return <div>Chargement...</div>
   } else {
     return (
-      <Box sx={{ flex: 1, width: '100%' }}>
+      <Grid>
         <Box
           sx={{
             position: 'sticky',
@@ -31,9 +32,7 @@ const AccountPage: FC = () => {
           }}
         >
           <Box sx={{ px: { xs: 2, md: 6 } }}>
-            <Typography component="h1" level="h1" style={{ marginTop: 20 }}>
-              Bienvenue, {authUser?.firstName}
-            </Typography>
+            <HeaderTitle text={`Bienvenue, ${authUser?.firstName}`} />
           </Box>
 
           <Tabs defaultValue={0} sx={{ backgroundColor: 'transparent' }}>
@@ -84,7 +83,7 @@ const AccountPage: FC = () => {
             </Stack>
           </Tabs>
         </Box>
-      </Box>
+      </Grid>
     )
   }
 }
