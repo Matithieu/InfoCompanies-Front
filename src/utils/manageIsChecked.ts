@@ -1,7 +1,7 @@
 import { CheckStatus } from '../data/types/company'
 import { companiesSeenStorage } from './localStorage/companiesSeenStorage'
 
-export const manageIsChecked = (
+const manageIsChecked = (
   companyId: number,
   currentStatus: CheckStatus,
 ): void => {
@@ -24,3 +24,5 @@ export const manageIsChecked = (
   companiesToDo.updateCompaniesTodo(Array.from(checkedToDo))
   companiesDone.updateCompaniesDone(Array.from(checkedDone))
 }
+
+export default manageIsChecked

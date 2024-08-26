@@ -2,7 +2,7 @@ import { UseMutationResult } from '@tanstack/react-query'
 
 import { CheckStatus, Company } from '../../../data/types/company'
 import { companiesSeenStorage } from '../../../utils/localStorage/companiesSeenStorage'
-import { manageIsChecked } from '../../../utils/manageIsChecked'
+import manageIsChecked from '../../../utils/manageIsChecked'
 
 export const updateCompaniesIcon = (companies: Company[]) => {
   const { companiesToDo, companiesDone } = companiesSeenStorage()
