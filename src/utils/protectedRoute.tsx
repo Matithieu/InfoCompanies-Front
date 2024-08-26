@@ -19,9 +19,7 @@ export const ProtectedRoutes = () => {
   const { data, isFetching, isSuccess } = useQuery({
     queryKey: ['user query', authUser],
     queryFn: () => (authUser === null ? fetchUser() : Promise.resolve(null)),
-    retry: 1,
-    retryDelay: 2000,
-    refetchInterval: authUser === null ? 2000 : false,
+    retry: 0,
     refetchOnWindowFocus: true,
   })
 
@@ -55,9 +53,7 @@ export const ProtectedSimpleRoutes = () => {
   const { data, isFetching, isSuccess } = useQuery({
     queryKey: ['user query', authUser],
     queryFn: () => (authUser === null ? fetchUser() : Promise.resolve(null)),
-    retry: 1,
-    retryDelay: 2000,
-    refetchInterval: authUser === null ? 2000 : false,
+    retry: 0,
     refetchOnWindowFocus: true,
   })
 
