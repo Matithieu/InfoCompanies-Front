@@ -2,10 +2,11 @@ import MenuRoundedIcon from '@mui/icons-material/MenuRounded'
 import GlobalStyles from '@mui/joy/GlobalStyles'
 import IconButton from '@mui/joy/IconButton'
 import Sheet from '@mui/joy/Sheet'
+import { FC } from 'react'
 
-import { toggleSidebar } from './utils'
+import { toggleSidebar } from '../layout.util'
 
-export default function Header() {
+const HeaderLayout: FC = () => {
   return (
     <Sheet
       sx={{
@@ -45,3 +46,5 @@ export default function Header() {
     </Sheet>
   )
 }
+
+export default HeaderLayout

@@ -14,7 +14,7 @@ import {
 import * as React from 'react'
 
 import useAuthManager from '../../../hooks/useAuthManager'
-import { linkStyles } from '../../../pages/Layout/ListItems/types'
+import { linkStyles } from '../../../pages/Layout/types'
 import useAuthStore from '../../../store/authStore'
 import { useAppNavigate } from '../../../utils/navigation/navigation'
 

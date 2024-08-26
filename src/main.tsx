@@ -1,11 +1,12 @@
+// eslint-disable-next-line simple-import-sort/imports
 import 'react-toastify/dist/ReactToastify.css'
 import './index.css'
 
 import { CssBaseline, CssVarsProvider } from '@mui/joy'
 import {
+  THEME_ID as MATERIAL_THEME_ID,
   Experimental_CssVarsProvider as MaterialCssVarsProvider,
   experimental_extendTheme as materialExtendTheme,
-  THEME_ID as MATERIAL_THEME_ID,
 } from '@mui/material/styles'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import React from 'react'
@@ -14,7 +15,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 
 import App from './App.jsx'
-import { fontFamily } from './pages/Layout/utils.js'
+import { fontFamily } from './pages/Layout/layout.util.ts'
 
 const queryClient = new QueryClient({
   defaultOptions: {
