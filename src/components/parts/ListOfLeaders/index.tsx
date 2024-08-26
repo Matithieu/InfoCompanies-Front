@@ -12,7 +12,7 @@ type ListOfLeadersProps = {
 
 const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
   const { data: leaders, isLoading } = useQuery({
-    queryKey: ['leader', siren ?? ''],
+    queryKey: ['leader', siren ?? 'undefined'],
     queryFn: async () => {
       if (siren) {
         return await fetchLeadersBySirens(siren)
