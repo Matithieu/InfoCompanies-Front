@@ -99,7 +99,7 @@ const ComparatorInput: FC<ComparatorInputProps> = ({
         >
           {amount !== undefined && comparator !== undefined
             ? `${comparator} ${amount}`
-            : 'Employés'}
+            : 'Salariés'}
         </Typography>
       </MenuButton>
       <Menu

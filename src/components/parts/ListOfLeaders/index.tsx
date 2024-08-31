@@ -1,4 +1,4 @@
-import { Typography } from '@mui/joy'
+import { ListDivider, Typography } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
 import { FC, Fragment } from 'react'
 
@@ -67,7 +67,11 @@ const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
         }}
       >
         {leaders.map((leader, index) => (
-          <DetailsLeader key={index} leader={leader} />
+          <div key={index} style={{ marginBottom: 15 }}>
+            <DetailsLeader key={index} leader={leader} />
+            <div style={{ marginBottom: 10 }} />
+            {index < leaders.length - 1 && <ListDivider />}
+          </div>
         ))}
       </div>
     </Fragment>

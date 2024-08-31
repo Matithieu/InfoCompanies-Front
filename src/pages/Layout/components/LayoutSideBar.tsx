@@ -33,7 +33,7 @@ const LayoutSidebar: FC = () => {
           md: 'none',
         },
         transition: 'transform 0.4s, width 0.4s',
-        zIndex: 10000,
+        zIndex: 9998,
         height: '100dvh',
         width: 'var(--Sidebar-width)',
         top: 0,
@@ -59,7 +59,7 @@ const LayoutSidebar: FC = () => {
       <Box
         sx={{
           position: 'fixed',
-          zIndex: 9999,
+          zIndex: 9998,
           top: 0,
           left: 0,
           width: '100vw',

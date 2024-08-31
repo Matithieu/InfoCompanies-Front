@@ -52,6 +52,7 @@ const DetailsCompany: FC<DetailsCompanyProps> = ({ company }) => {
             content={company.address}
             icon={<BusinessIcon />}
             noContent="No address found"
+            oppositeContent={company.city}
             tooltipContent="Address"
           />
 
