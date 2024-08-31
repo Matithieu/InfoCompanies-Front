@@ -23,11 +23,9 @@ const LayoutAvatarItem: FC = () => {
     >
       <IconButton
         style={{
-          cursor: 'pointer',
           display: 'flex',
           gap: 10,
-          paddingRight: 30,
-          width: '100%',
+          justifyContent: 'flex-start',
         }}
         onClick={(e) => {
           e.stopPropagation()
