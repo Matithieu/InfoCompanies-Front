@@ -148,7 +148,7 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
     )
   }
 
-  if (showAddFilterButton && availableFilters.length > 0) {
+  if (showAddFilterButton) {
     return (
       <Box
         sx={{
@@ -163,24 +163,26 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
           <div key={filter}>{filterComponents[filter]}</div>
         ))}
 
-        <Dropdown>
-          <MenuButton
-            sx={{ flexShrink: 0, width: '40px', maxWidth: '250px' }}
-            variant="soft"
-          >
-            <AddIcon style={{ fontSize: '1.2rem' }} />
-          </MenuButton>
-          <Menu sx={{ zIndex: 99999 }}>
-            {availableFilters.map((filter, index) => (
-              <div key={filter}>
-                <MenuItem onClick={() => addFilter(filter)}>
-                  {filterDescriptions[filter]}
-                </MenuItem>
-                {index === availableFilters.length - 1 ? '' : <ListDivider />}
-              </div>
-            ))}
-          </Menu>
-        </Dropdown>
+        {availableFilters.length > 0 && (
+          <Dropdown>
+            <MenuButton
+              sx={{ flexShrink: 0, width: '40px', maxWidth: '250px' }}
+              variant="soft"
+            >
+              <AddIcon style={{ fontSize: '1.2rem' }} />
+            </MenuButton>
+            <Menu sx={{ zIndex: 99999 }}>
+              {availableFilters.map((filter, index) => (
+                <div key={filter}>
+                  <MenuItem onClick={() => addFilter(filter)}>
+                    {filterDescriptions[filter]}
+                  </MenuItem>
+                  {index === availableFilters.length - 1 ? '' : <ListDivider />}
+                </div>
+              ))}
+            </Menu>
+          </Dropdown>
+        )}
 
         {selectedFilters.length !== 0 && filterComponents['searchButton']}
       </Box>
