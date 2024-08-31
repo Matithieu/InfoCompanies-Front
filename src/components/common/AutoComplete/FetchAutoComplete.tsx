@@ -87,7 +87,7 @@ const FetchAutoComplete = ({
               <Chip
                 key={key}
                 endDecorator={<Close fontSize="small" />}
-                sx={{ minWidth: 0 }}
+                sx={{ minWidth: 0, maxWidth: '63%' }} // Max size to avoid break line
                 {...otherTagProps}
               >
                 {item.name}

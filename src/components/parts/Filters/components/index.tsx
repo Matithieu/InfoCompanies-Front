@@ -5,8 +5,8 @@ import { listOfRegions } from '../../../../data/ListOfOptions/region'
 import { EmployeeFilter } from '../../../../data/types/common'
 import { SearchParams } from '../../../../store/filtersStore'
 import { fetchAutoComplete } from '../../../../utils/api'
-import SimpleAutoComplete from '../../../common/AutoComplete/autoComplete'
-import FetchAutoComplete from '../../../common/AutoComplete/fetchAutoComplete'
+import SimpleAutoComplete from '../../../common/AutoComplete/AutoComplete'
+import FetchAutoComplete from '../../../common/AutoComplete/FetchAutoComplete'
 import ComparatorInput from '../../../common/Input/ComparatorInput'
 
 const getFilterComponents = (
