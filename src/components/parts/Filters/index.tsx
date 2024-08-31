@@ -1,5 +1,5 @@
 import AddIcon from '@mui/icons-material/Add'
-import { Dropdown, Menu, MenuButton, MenuItem } from '@mui/joy'
+import { Dropdown, ListDivider, Menu, MenuButton, MenuItem } from '@mui/joy'
 import { Box } from '@mui/material'
 import { FC, useEffect, useState } from 'react'
 
@@ -9,6 +9,7 @@ import {
   useCompanyFilterStore,
 } from '../../../store/filtersStore'
 import getFilterComponents from './components'
+import { filterDescriptions } from './filter.type'
 import { updateFilterStates } from './filter.util'
 
 export interface FiltersProps {
@@ -169,11 +170,14 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
           >
             <AddIcon style={{ fontSize: '1.2rem' }} />
           </MenuButton>
-          <Menu>
-            {availableFilters.map((filter) => (
-              <MenuItem key={filter} onClick={() => addFilter(filter)}>
-                {filter}
-              </MenuItem>
+          <Menu sx={{ zIndex: 99999 }}>
+            {availableFilters.map((filter, index) => (
+              <div key={filter}>
+                <MenuItem onClick={() => addFilter(filter)}>
+                  {filterDescriptions[filter]}
+                </MenuItem>
+                {index === availableFilters.length - 1 ? '' : <ListDivider />}
+              </div>
             ))}
           </Menu>
         </Dropdown>
