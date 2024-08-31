@@ -2,18 +2,19 @@ import SearchIcon from '@mui/icons-material/Search'
 import { Box, Button, Typography } from '@mui/joy'
 
 import { listOfRegions } from '../../../../data/ListOfOptions/region'
-import { EmployeeFilter } from '../../../../data/types/common'
 import { SearchParams } from '../../../../store/filtersStore'
 import { fetchAutoComplete } from '../../../../utils/api'
 import SimpleAutoComplete from '../../../common/AutoComplete/AutoComplete'
 import FetchAutoComplete from '../../../common/AutoComplete/FetchAutoComplete'
 import ComparatorInput from '../../../common/Input/ComparatorInput'
+import { SelectedFilterType } from '../filter.type'
+import SocialsFilter from './SocialsFilter'
 
 const getFilterComponents = (
   searchTerm: SearchParams,
   handleSelectChange: (
     field: keyof SearchParams,
-  ) => (selectedValue: string[] | unknown[] | EmployeeFilter) => void,
+  ) => (selectedValue: SelectedFilterType) => void,
   handleSearch: () => void,
 ) => ({
   legalForm: (
@@ -72,6 +73,14 @@ const getFilterComponents = (
       <ComparatorInput
         value={searchTerm.employee}
         onValueChange={handleSelectChange('employee')}
+      />
+    </Box>
+  ),
+  socials: (
+    <Box sx={{ flexShrink: 0, maxWidth: '200px', minWidth: '200px' }}>
+      <SocialsFilter
+        values={searchTerm.socials}
+        onChange={handleSelectChange('socials')}
       />
     </Box>
   ),

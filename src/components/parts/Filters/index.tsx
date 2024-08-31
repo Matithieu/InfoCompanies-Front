@@ -3,13 +3,12 @@ import { Dropdown, ListDivider, Menu, MenuButton, MenuItem } from '@mui/joy'
 import { Box } from '@mui/material'
 import { FC, useEffect, useState } from 'react'
 
-import { EmployeeFilter } from '../../../data/types/common'
 import {
   SearchParams,
   useCompanyFilterStore,
 } from '../../../store/filtersStore'
 import getFilterComponents from './components'
-import { filterDescriptions } from './filter.type'
+import { filterDescriptions, SelectedFilterType } from './filter.type'
 import { updateFilterStates } from './filter.util'
 
 export interface FiltersProps {
@@ -19,6 +18,7 @@ export interface FiltersProps {
     | 'region'
     | 'city'
     | 'employee'
+    | 'socials'
     | 'searchButton'
   >
   showAddFilterButton: boolean
@@ -36,6 +36,7 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
       amount: undefined,
       comparator: undefined,
     },
+    socials: searchParams.socials || [],
   })
 
   const [availableFilters, setAvailableFilters] = useState<
@@ -89,8 +90,7 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
   }, [searchTerm, filtersToShow, showAddFilterButton])
 
   const handleSelectChange =
-    (field: keyof SearchParams) =>
-    (selectedValue: string[] | unknown[] | EmployeeFilter) => {
+    (field: keyof SearchParams) => (selectedValue: SelectedFilterType) => {
       setSearchTerm((prevSearchTerm) => ({
         ...prevSearchTerm,
         [field]: selectedValue,
@@ -104,6 +104,7 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
       region: searchTerm.region,
       city: searchTerm.city,
       employee: searchTerm.employee,
+      socials: searchTerm.socials,
     })
   }
 
@@ -119,6 +120,7 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
           amount: undefined,
           comparator: undefined,
         },
+        socials: [],
       })
     }
   }, [selectedFilters.length, setSearchParams])

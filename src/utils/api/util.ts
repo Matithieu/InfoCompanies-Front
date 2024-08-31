@@ -51,5 +51,9 @@ export const constructURLWithFilter = (
     url += `numberOfEmployee=${searchParams.employee.amount}&comparator=${searchParams.employee.comparator}&`
   }
 
+  if (searchParams.socials.length > 0) {
+    url += `socials=${searchParams.socials.join(',')}&`
+  }
+
   return url
 }

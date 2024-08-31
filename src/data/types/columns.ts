@@ -11,7 +11,7 @@ export const columnsTableCompany: Column[] = [
   { id: 'email', label: 'Email', minWidth: 140 },
   { id: 'website', label: 'Site Web', minWidth: 170 },
 
-  { id: 'socialMedia', label: 'Réseaux Sociaux', minWidth: 170 },
+  { id: 'socialMedia', label: 'Réseaux Sociaux', minWidth: 200 },
 
   { id: 'numberOfEmployee', label: 'Salariés', minWidth: 100 },
   { id: 'city', label: 'Ville', minWidth: 170 },
