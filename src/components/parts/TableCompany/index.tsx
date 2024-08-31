@@ -146,17 +146,14 @@ const TableCompany: FC<TableCompanyProps> = ({
     return (
       <div
         style={{
-          display: 'flex',
-          justifyContent: 'center',
+          marginRight: 'auto',
           //fontSize: '19px',
           //border: '10px solid var(--joy-palette-border)',
         }}
       >
-        <Table>
-          <Typography level="h4" style={{ marginTop: 20 }}>
-            Aucune entreprise trouvée
-          </Typography>
-        </Table>
+        <Typography level="h4" style={{ marginTop: 20 }}>
+          Aucune entreprise trouvée
+        </Typography>
       </div>
     )
   }
