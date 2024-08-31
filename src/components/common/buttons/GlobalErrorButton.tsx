@@ -48,7 +48,7 @@ export function GlobalErrorButton({ error }: ErrorButtonProps) {
         gap: '16px',
       }}
     >
-      <Typography>{error.message}</Typography>
+      <Typography>Error: {error.message}</Typography>
       <Button color="primary" variant="soft" onClick={handleButtonClick}>
         {getButtonLabel()}
       </Button>
