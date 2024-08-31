@@ -4,9 +4,15 @@ import { FC, Fragment } from 'react'
 const ComparaisonValues: FC = () => {
   return (
     <Fragment>
-      <IconButton value="<">{'<'}</IconButton>
-      <IconButton value="=">=</IconButton>
-      <IconButton value=">">{'>'}</IconButton>
+      <IconButton title="Inférieur à" value="<">
+        {'<'}
+      </IconButton>
+      <IconButton title="Égal à" value="=">
+        =
+      </IconButton>
+      <IconButton title="Supérieur à" value=">">
+        {'>'}
+      </IconButton>
     </Fragment>
   )
 }
