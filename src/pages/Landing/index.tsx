@@ -32,7 +32,13 @@ const LandingPage: FC = () => {
   useEffect(() => {
     setUrl(
       constructURLWithFilter(
-        { city, industrySector, legalForm: [], region: [] },
+        {
+          city,
+          industrySector,
+          legalForm: [],
+          region: [],
+          employee: { amount: undefined, comparator: undefined },
+        },
         `${LANDING_FILTER_ENDPOINT}?`,
       ),
     )
@@ -48,6 +54,7 @@ const LandingPage: FC = () => {
             city: [],
             industrySector: [],
             legalForm: [],
+            employee: { amount: undefined, comparator: undefined },
           },
           `${LANDING_FILTER_ENDPOINT}?`,
         ),
