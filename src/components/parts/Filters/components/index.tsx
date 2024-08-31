@@ -2,16 +2,18 @@ import SearchIcon from '@mui/icons-material/Search'
 import { Box, Button, Typography } from '@mui/joy'
 
 import { listOfRegions } from '../../../../data/ListOfOptions/region'
+import { EmployeeFilter } from '../../../../data/types/common'
 import { SearchParams } from '../../../../store/filtersStore'
 import { fetchAutoComplete } from '../../../../utils/api'
 import SimpleAutoComplete from '../../../common/AutoComplete/autoComplete'
 import FetchAutoComplete from '../../../common/AutoComplete/fetchAutoComplete'
+import ComparatorInput from '../../../common/Input/ComparatorInput'
 
 const getFilterComponents = (
   searchTerm: SearchParams,
   handleSelectChange: (
     field: keyof SearchParams,
-  ) => (selectedValue: string[] | unknown[]) => void,
+  ) => (selectedValue: string[] | unknown[] | EmployeeFilter) => void,
   handleSearch: () => void,
 ) => ({
   legalForm: (
@@ -62,6 +64,14 @@ const getFilterComponents = (
         isLabelHidden={searchTerm.city.length > 0}
         queryKeyBase="cities"
         value={searchTerm.city}
+      />
+    </Box>
+  ),
+  employee: (
+    <Box sx={{ flexShrink: 0, maxWidth: '250px' }}>
+      <ComparatorInput
+        value={searchTerm.employee}
+        onValueChange={handleSelectChange('employee')}
       />
     </Box>
   ),

@@ -1,5 +1,6 @@
 import { Leader } from '../../data/types/leader'
 import { SearchParams } from '../../store/filtersStore'
+import { isNotNU } from '../assertion.util'
 
 /**
  * Clean leaders by removing duplicates based on their first and last names
@@ -40,6 +41,14 @@ export const constructURLWithFilter = (
 
   if (searchParams.legalForm.length > 0) {
     url += `legalForms=${searchParams.legalForm.map((form) => form.name).join(',')}&`
+  }
+
+  if (
+    searchParams.employee &&
+    isNotNU(searchParams.employee.amount) &&
+    isNotNU(searchParams.employee.comparator)
+  ) {
+    url += `numberOfEmployee=${searchParams.employee.amount}&comparator=${searchParams.employee.comparator}&`
   }
 
   return url

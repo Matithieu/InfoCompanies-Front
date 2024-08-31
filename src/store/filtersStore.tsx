@@ -1,13 +1,14 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-import { AutoCompleteType } from '../data/types/common'
+import { AutoCompleteType, EmployeeFilter } from '../data/types/common'
 
 export interface SearchParams {
   city: AutoCompleteType[]
   industrySector: AutoCompleteType[]
   legalForm: AutoCompleteType[]
   region: string[]
+  employee: EmployeeFilter
 }
 
 interface CompanyFilterState {
@@ -23,6 +24,10 @@ export const useCompanyFilterStore = create<CompanyFilterState>()(
         industrySector: [],
         legalForm: [],
         region: [],
+        employee: {
+          amount: undefined,
+          comparator: undefined,
+        },
       },
       setSearchParams: (params) => {
         set((state) => {

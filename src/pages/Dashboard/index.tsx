@@ -53,7 +53,8 @@ const Dashboard: FC = () => {
         searchParams.city.length === 0 &&
         searchParams.industrySector.length === 0 &&
         searchParams.legalForm.length === 0 &&
-        searchParams.region.length === 0
+        searchParams.region.length === 0 &&
+        searchParams.employee.amount === undefined
       ) {
         setDataPagination((prevDataPagination) => ({
           ...prevDataPagination,
@@ -87,7 +88,13 @@ const Dashboard: FC = () => {
         <Grid item md={4} sm={6} sx={{ marginBottom: 2 }} xs={12}>
           <Filters
             showAddFilterButton
-            filtersToShow={['city', 'region', 'industrySector', 'legalForm']}
+            filtersToShow={[
+              'city',
+              'region',
+              'industrySector',
+              'legalForm',
+              'employee',
+            ]}
           />
         </Grid>
 

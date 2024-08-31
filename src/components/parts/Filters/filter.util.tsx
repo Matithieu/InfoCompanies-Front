@@ -16,18 +16,48 @@ export const updateFilterStates = (
   >,
 ) => {
   if (showAddFilterButton) {
-    const newSelectedFilters = filtersToShow.filter(
-      (filter) =>
-        filter === 'searchButton' ||
-        (searchTerm[filter as keyof SearchParams] &&
-          searchTerm[filter as keyof SearchParams].length > 0),
-    )
-    const newAvailableFilters = filtersToShow.filter(
-      (filter) =>
-        filter !== 'searchButton' &&
-        (!searchTerm[filter as keyof SearchParams] ||
-          searchTerm[filter as keyof SearchParams].length === 0),
-    )
+    const newSelectedFilters = filtersToShow.filter((filter) => {
+      // Check if the filter key exists in searchTerm and is an array or has a valid condition
+      const value = searchTerm[filter as keyof SearchParams]
+
+      if (filter === 'searchButton') {
+        return true
+      }
+
+      if (Array.isArray(value)) {
+        return value.length > 0
+      } else if (
+        typeof value === 'object' &&
+        value !== null &&
+        'amount' in value
+      ) {
+        // Handle the EmployeeFilter case
+        return value.amount !== undefined
+      }
+
+      return false
+    })
+
+    const newAvailableFilters = filtersToShow.filter((filter) => {
+      const value = searchTerm[filter as keyof SearchParams]
+
+      if (filter === 'searchButton') {
+        return false
+      }
+
+      if (Array.isArray(value)) {
+        return value.length === 0
+      } else if (
+        typeof value === 'object' &&
+        value !== null &&
+        'amount' in value
+      ) {
+        // Handle the EmployeeFilter case
+        return value.amount === undefined
+      }
+
+      return true
+    })
 
     if (
       JSON.stringify(newSelectedFilters) !== JSON.stringify(selectedFilters)
