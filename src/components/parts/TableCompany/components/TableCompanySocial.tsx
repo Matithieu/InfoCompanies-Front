@@ -1,4 +1,5 @@
 import FacebookIcon from '@mui/icons-material/Facebook'
+import InstagramIcon from '@mui/icons-material/Instagram'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import TwitterIcon from '@mui/icons-material/Twitter'
 import YouTubeIcon from '@mui/icons-material/YouTube'
@@ -25,18 +26,25 @@ const TableCompanySocial: FC<TableCompanySocialProps> = ({ socialMedia }) => {
           url={socialMedia.facebook}
         />
       )}
-      {socialMedia.twitter && (
-        <LinkIcon
-          icon={<TwitterIcon fontSize="medium" />}
-          style={{ color: '#1DA1F2' }}
-          url={socialMedia.twitter}
-        />
-      )}
       {socialMedia.linkedin && (
         <LinkIcon
           icon={<LinkedInIcon fontSize="medium" />}
           style={{ color: '#0e76a8' }}
           url={socialMedia.linkedin}
+        />
+      )}
+      {socialMedia.instagram && (
+        <LinkIcon
+          icon={<InstagramIcon fontSize="medium" />}
+          style={{ color: '#E4405F' }}
+          url={socialMedia.instagram}
+        />
+      )}
+      {socialMedia.twitter && (
+        <LinkIcon
+          icon={<TwitterIcon fontSize="medium" />}
+          style={{ color: '#1DA1F2' }}
+          url={socialMedia.twitter}
         />
       )}
       {socialMedia.youtube && (
