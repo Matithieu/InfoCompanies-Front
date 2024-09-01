@@ -1,13 +1,11 @@
 import { Grid, Typography } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
-import { TableSkeleton } from '../../components/common/Loaders/Skeleton/index.tsx'
 import HeaderTitle from '../../components/common/Texts/HeaderTitle.tsx'
 import { PaginationTableCompany } from '../../components/parts/TableCompany/type.ts'
-import { columnsTableCompany } from '../../data/types/columns.ts'
 import { Company } from '../../data/types/company.ts'
-import { fetchCompanyByIds } from '../../utils/api/index.ts'
+import { fetchCompanyByIds, fetchCompanySeen } from '../../utils/api/index.ts'
 import { companiesSeenStorage } from '../../utils/localStorage/companiesSeenStorage.ts'
 import FavoritesBody from './components/FavoritesBody.tsx'
 
@@ -20,6 +18,25 @@ const Favorites: FC = () => {
     totalPages: 0,
   })
 
+  const { data: toDoData } = useQuery({
+    queryKey: ['companies', companiesToDo.getCompaniesTodo()],
+    queryFn: () => fetchCompanySeen(),
+    retry: 1,
+    refetchOnWindowFocus: false,
+    refetchOnMount: true,
+    refetchOnReconnect: false,
+  })
+
+  useEffect(() => {
+    if (toDoData) {
+      const toDoSet = Array.from(
+        new Set([...companiesToDo.getCompaniesTodo(), ...toDoData.companyIds]),
+      )
+
+      companiesToDo.updateCompaniesTodo(toDoSet)
+    }
+  }, [toDoData, companiesToDo])
+
   const { isPending, data, error } = useQuery({
     queryKey: [
       'companies',
@@ -28,6 +45,7 @@ const Favorites: FC = () => {
     ],
     queryFn: () =>
       fetchCompanyByIds(companiesToDo.getCompaniesTodo(), dataPagination.page),
+    enabled: toDoData && toDoData.companyIds.length > 0,
     retry: 1,
     refetchOnWindowFocus: false,
     refetchOnMount: true,
@@ -39,10 +57,6 @@ const Favorites: FC = () => {
       ...prevDataPagination,
       page,
     }))
-  }
-
-  if (isPending) {
-    return <TableSkeleton columns={columnsTableCompany} />
   }
 
   return (

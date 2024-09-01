@@ -1,6 +1,7 @@
 import { updateCompaniesIcon } from '../../components/common/Icons/stautIcon.util'
 import { AutoCompleteType } from '../../data/types/common'
 import { Company } from '../../data/types/company'
+import { CompanySeen } from '../../data/types/company-seen'
 import { Page } from '../../data/types/companyDetails'
 import { User } from '../../data/types/user'
 import { asserts, isNotNU, NNU } from '../assertion.util'
@@ -147,10 +148,10 @@ export async function fetchCompanySeen() {
   )
 
   if (response) {
-    return await response.json()
+    return (await response.json()) as CompanySeen
   }
 
-  return null
+  throw new Error('Failed to fetch company seen')
 }
 
 export async function updateUser(user: User) {
