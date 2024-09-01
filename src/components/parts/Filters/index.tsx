@@ -19,6 +19,7 @@ export interface FiltersProps {
     | 'city'
     | 'employee'
     | 'socials'
+    | 'contact'
     | 'searchButton'
   >
   showAddFilterButton: boolean
@@ -37,6 +38,7 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
       comparator: undefined,
     },
     socials: searchParams.socials || [],
+    contact: searchParams.contact || [],
   })
 
   const [availableFilters, setAvailableFilters] = useState<
@@ -105,6 +107,7 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
       city: searchTerm.city,
       employee: searchTerm.employee,
       socials: searchTerm.socials,
+      contact: searchTerm.contact,
     })
   }
 
@@ -121,6 +124,7 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
           comparator: undefined,
         },
         socials: [],
+        contact: [],
       })
     }
   }, [selectedFilters.length, setSearchParams])

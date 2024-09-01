@@ -55,5 +55,9 @@ export const constructURLWithFilter = (
     url += `socials=${searchParams.socials.join(',')}&`
   }
 
+  if (searchParams.contact.length > 0) {
+    url += `contacts=${searchParams.contact.join(',')}&`
+  }
+
   return url
 }

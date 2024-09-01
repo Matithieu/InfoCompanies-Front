@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
+import { Contact } from '../components/parts/Filters/components/ContactFilter'
 import { AutoCompleteType, EmployeeFilter } from '../data/types/common'
 import { SocialMedia } from '../data/types/company'
 
@@ -11,6 +12,7 @@ export interface SearchParams {
   region: string[]
   employee: EmployeeFilter
   socials: Array<keyof SocialMedia>
+  contact: Array<keyof Contact>
 }
 
 interface CompanyFilterState {
@@ -31,6 +33,7 @@ export const useCompanyFilterStore = create<CompanyFilterState>()(
           comparator: undefined,
         },
         socials: [],
+        contact: [],
       },
       setSearchParams: (params) => {
         set((state) => {

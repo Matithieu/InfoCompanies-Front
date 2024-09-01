@@ -55,7 +55,8 @@ const Dashboard: FC = () => {
         searchParams.legalForm.length === 0 &&
         searchParams.region.length === 0 &&
         searchParams.employee.amount === undefined &&
-        searchParams.socials.length === 0
+        searchParams.socials.length === 0 &&
+        searchParams.contact.length === 0
       ) {
         setDataPagination((prevDataPagination) => ({
           ...prevDataPagination,
@@ -96,6 +97,7 @@ const Dashboard: FC = () => {
               'legalForm',
               'employee',
               'socials',
+              'contact',
             ]}
           />
         </Grid>

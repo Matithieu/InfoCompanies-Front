@@ -1,5 +1,6 @@
 import { EmployeeFilter } from '../../../data/types/common'
 import { SocialMedia } from '../../../data/types/company'
+import { Contact } from './components/ContactFilter'
 
 import { FiltersProps } from '.'
 
@@ -12,7 +13,8 @@ export const filterDescriptions: {
   legalForm: 'Forme juridique',
   employee: 'Nombre de salariés',
   socials: 'Réseaux sociaux',
-  searchButton: 'Search', // Although you might not need this one in the dropdown
+  contact: 'Contact',
+  searchButton: 'Search', // Not needed because not in the dropdown
 }
 
 export type SelectedFilterType =
@@ -20,3 +22,12 @@ export type SelectedFilterType =
   | unknown[]
   | EmployeeFilter
   | Array<keyof SocialMedia>
+  | Array<keyof Contact>
+
+export const contactFilterDescription: {
+  [key in keyof Contact]: string
+} = {
+  email: 'Email',
+  phone: 'Téléphone',
+  website: 'Site web',
+}

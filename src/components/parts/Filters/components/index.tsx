@@ -8,6 +8,7 @@ import SimpleAutoComplete from '../../../common/AutoComplete/AutoComplete'
 import FetchAutoComplete from '../../../common/AutoComplete/FetchAutoComplete'
 import ComparatorInput from '../../../common/Input/ComparatorInput'
 import { SelectedFilterType } from '../filter.type'
+import ContactFilter from './ContactFilter'
 import SocialsFilter from './SocialsFilter'
 
 const getFilterComponents = (
@@ -81,6 +82,14 @@ const getFilterComponents = (
       <SocialsFilter
         values={searchTerm.socials}
         onChange={handleSelectChange('socials')}
+      />
+    </Box>
+  ),
+  contact: (
+    <Box sx={{ flexShrink: 0, maxWidth: '200px', minWidth: '200px' }}>
+      <ContactFilter
+        values={searchTerm.contact}
+        onChange={handleSelectChange('contact')}
       />
     </Box>
   ),
