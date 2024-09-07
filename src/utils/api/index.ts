@@ -154,6 +154,29 @@ export async function fetchCompanySeen() {
   throw new Error('Failed to fetch company seen')
 }
 
+export async function fetchFavorites(page: number) {
+  const response = await fetchWithConfig(
+    `/v1/company/get-seen-by-user?page=${page}
+    `,
+    'GET',
+  )
+
+  if (response) {
+    const data: Page<Company> = await response.json()
+    const parsedCompanies = data.content.map((company) =>
+      parseJsonToCompany(company),
+    )
+    asserts(parsedCompanies.every(isNotNU), 'Some companies are undefined')
+
+    const updatedCompanies = updateCompaniesIcon(parsedCompanies)
+    data.content = updatedCompanies
+
+    return data
+  }
+
+  throw new Error('Failed to fetch company seen')
+}
+
 export async function updateUser(user: User) {
   const response = await fetchWithConfig('/v1/update-user', 'PUT', {
     body: user,

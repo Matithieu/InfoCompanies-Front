@@ -5,11 +5,12 @@ import { FC, useEffect, useState } from 'react'
 import HeaderTitle from '../../components/common/Texts/HeaderTitle.tsx'
 import { PaginationTableCompany } from '../../components/parts/TableCompany/type.ts'
 import { Company } from '../../data/types/company.ts'
-import { fetchCompanyByIds, fetchCompanySeen } from '../../utils/api/index.ts'
+import { fetchCompanySeen, fetchFavorites } from '../../utils/api/index.ts'
 import { companiesSeenStorage } from '../../utils/localStorage/companiesSeenStorage.ts'
 import FavoritesBody from './components/FavoritesBody.tsx'
 
 const Favorites: FC = () => {
+  // ToDo: Refactor this to use a custom hook or state management
   const { companiesToDo } = companiesSeenStorage()
   const [company, setCompany] = useState<Company>()
   const [dataPagination, setDataPagination] = useState<PaginationTableCompany>({
@@ -23,29 +24,19 @@ const Favorites: FC = () => {
     queryFn: () => fetchCompanySeen(),
     retry: 1,
     refetchOnWindowFocus: false,
-    refetchOnMount: true,
+    refetchOnMount: false,
     refetchOnReconnect: false,
   })
 
   useEffect(() => {
     if (toDoData) {
-      const toDoSet = Array.from(
-        new Set([...companiesToDo.getCompaniesTodo(), ...toDoData.companyIds]),
-      )
-
-      companiesToDo.updateCompaniesTodo(toDoSet)
+      companiesToDo.updateCompaniesTodo(toDoData.companyIds)
     }
   }, [toDoData, companiesToDo])
 
-  const { isPending, data, error } = useQuery({
-    queryKey: [
-      'companies',
-      dataPagination.page,
-      companiesToDo.getCompaniesTodo(),
-    ],
-    queryFn: () =>
-      fetchCompanyByIds(companiesToDo.getCompaniesTodo(), dataPagination.page),
-    enabled: toDoData && toDoData.companyIds.length > 0,
+  const { data, error, isPending } = useQuery({
+    queryKey: ['companies', dataPagination.page],
+    queryFn: () => fetchFavorites(dataPagination.page),
     retry: 1,
     refetchOnWindowFocus: false,
     refetchOnMount: true,
