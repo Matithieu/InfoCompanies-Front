@@ -13,6 +13,7 @@ export interface SearchParams {
   employee: EmployeeFilter
   socials: Array<keyof SocialMedia>
   contact: Array<keyof Contact>
+  isCompanySeen: boolean
 }
 
 interface CompanyFilterState {
@@ -34,6 +35,7 @@ export const useCompanyFilterStore = create<CompanyFilterState>()(
         },
         socials: [],
         contact: [],
+        isCompanySeen: false,
       },
       setSearchParams: (params) => {
         set((state) => {

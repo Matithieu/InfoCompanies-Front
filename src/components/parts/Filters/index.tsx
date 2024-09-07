@@ -20,6 +20,7 @@ export interface FiltersProps {
     | 'employee'
     | 'socials'
     | 'contact'
+    | 'isCompanySeen'
     | 'searchButton'
   >
   showAddFilterButton: boolean
@@ -39,6 +40,7 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
     },
     socials: searchParams.socials || [],
     contact: searchParams.contact || [],
+    isCompanySeen: searchParams.isCompanySeen || false,
   })
 
   const [availableFilters, setAvailableFilters] = useState<
@@ -61,6 +63,11 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
         'amount' in filterValue
       ) {
         return filterValue.amount === null
+      }
+
+      // Handle the boolean case
+      if (typeof filterValue === 'boolean') {
+        return !filterValue
       }
 
       // If it's not an array or object with `amount`, assume it's not selected
@@ -108,6 +115,7 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
       employee: searchTerm.employee,
       socials: searchTerm.socials,
       contact: searchTerm.contact,
+      isCompanySeen: searchTerm.isCompanySeen,
     })
   }
 
@@ -125,6 +133,7 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
         },
         socials: [],
         contact: [],
+        isCompanySeen: false,
       })
     }
   }, [selectedFilters.length, setSearchParams])

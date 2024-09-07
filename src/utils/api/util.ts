@@ -59,5 +59,9 @@ export const constructURLWithFilter = (
     url += `contacts=${searchParams.contact.join(',')}&`
   }
 
+  if (searchParams.isCompanySeen) {
+    url += `isCompanySeen=${searchParams.isCompanySeen}&`
+  }
+
   return url
 }

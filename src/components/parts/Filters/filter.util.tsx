@@ -35,6 +35,11 @@ export const updateFilterStates = (
         return value.amount !== undefined
       }
 
+      // Handle the boolean case
+      if (typeof value === 'boolean' && value) {
+        return true
+      }
+
       return false
     })
 
@@ -54,6 +59,11 @@ export const updateFilterStates = (
       ) {
         // Handle the EmployeeFilter case
         return value.amount === undefined
+      }
+
+      // Handle the boolean case
+      if (typeof value === 'boolean' && value) {
+        return false
       }
 
       return true

@@ -1,5 +1,5 @@
 import SearchIcon from '@mui/icons-material/Search'
-import { Box, Button, Typography } from '@mui/joy'
+import { Box, Button, Switch, Typography } from '@mui/joy'
 
 import { listOfRegions } from '../../../../data/ListOfOptions/region'
 import { SearchParams } from '../../../../store/filtersStore'
@@ -91,6 +91,24 @@ const getFilterComponents = (
         values={searchTerm.contact}
         onChange={handleSelectChange('contact')}
       />
+    </Box>
+  ),
+  isCompanySeen: (
+    <Box sx={{ flexShrink: 0 }}>
+      <Typography
+        component="label"
+        endDecorator={
+          <Switch
+            checked={searchTerm.isCompanySeen}
+            sx={{ ml: 1 }}
+            onChange={() => {
+              handleSelectChange('isCompanySeen')(!searchTerm.isCompanySeen)
+            }}
+          />
+        }
+      >
+        Entreprises vues
+      </Typography>
     </Box>
   ),
   searchButton: (

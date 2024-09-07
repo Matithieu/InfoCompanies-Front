@@ -14,6 +14,7 @@ export const filterDescriptions: {
   employee: 'Nombre de salariés',
   socials: 'Réseaux sociaux',
   contact: 'Contact',
+  isCompanySeen: 'Entreprises vues',
   searchButton: 'Search', // Not needed because not in the dropdown
 }
 
@@ -23,6 +24,7 @@ export type SelectedFilterType =
   | EmployeeFilter
   | Array<keyof SocialMedia>
   | Array<keyof Contact>
+  | boolean
 
 export const contactFilterDescription: {
   [key in keyof Contact]: string
