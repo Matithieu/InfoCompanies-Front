@@ -26,8 +26,8 @@ module.exports = {
   ],
   ignorePatterns: ['.eslintrc.cjs'],
   parserOptions: {
+    project: ['./tsconfig.json', './tsconfig.node.json'],
     tsconfigRootDir: __dirname,
-    project: './tsconfig.json',
     ecmaFeatures: {
       jsx: true,
     },
