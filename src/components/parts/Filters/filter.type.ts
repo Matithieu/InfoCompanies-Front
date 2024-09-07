@@ -14,7 +14,7 @@ export const filterDescriptions: {
   employee: 'Nombre de salariés',
   socials: 'Réseaux sociaux',
   contact: 'Contact',
-  isCompanySeen: 'Entreprises vues',
+  isCompanySeen: 'Entreprises non vues',
   searchButton: 'Search', // Not needed because not in the dropdown
 }
 

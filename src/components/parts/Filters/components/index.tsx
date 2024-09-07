@@ -107,7 +107,7 @@ const getFilterComponents = (
           />
         }
       >
-        Entreprises vues
+        Entreprises non vues
       </Typography>
     </Box>
   ),
