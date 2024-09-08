@@ -1,9 +1,9 @@
 import { Grid, Option, Select, Typography } from '@mui/joy'
-import { SyntheticEvent, useState } from 'react'
+import { FC, SyntheticEvent, useState } from 'react'
 
 import HeaderTitle from '../../components/common/Texts/HeaderTitle'
 
-export default function Settings() {
+const SettingsPage: FC = () => {
   const [language, setLanguage] = useState('English')
 
   const handleChange = (
@@ -36,3 +36,5 @@ export default function Settings() {
     </Grid>
   )
 }
+
+export default SettingsPage

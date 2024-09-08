@@ -3,17 +3,23 @@ import { Suspense, useEffect } from 'react'
 import { HelmetProvider } from 'react-helmet-async'
 import { Route, Routes } from 'react-router-dom'
 
+import AccountPage from './pages/Account/index.tsx'
 import Error401 from './pages/Error/401.tsx'
 import Error404 from './pages/Error/404.tsx'
 import Test from './pages/Error/test.tsx'
+import Favorites from './pages/Favorites/index.tsx'
 import LandingPage from './pages/Landing/index.tsx'
 import Layout from './pages/Layout/index.tsx'
+import LeaderPage from './pages/Leaders/index.tsx'
 import LegalInformation from './pages/Legal/legal.tsx'
 import PrivacyPolicy from './pages/Legal/privacy.tsx'
 import TermsAndConditions from './pages/Legal/terms.tsx'
 import Loading from './pages/Loading/index.tsx'
 import Failure from './pages/Purchasing/failure.tsx'
 import OrderConfirmation from './pages/Purchasing/success.tsx'
+import CompanyPage from './pages/Search/Company/index.tsx'
+import Search from './pages/Search/index.tsx'
+import SettingsPage from './pages/Settings/index.tsx'
 import Payment from './pages/Stripe/index.tsx'
 import Subscription from './pages/Subscription/index.tsx'
 import {
@@ -21,14 +27,8 @@ import {
   ProtectedSimpleRoutes,
 } from './utils/protectedRoute.tsx'
 
-// Lazy loading components for security
+// Avoid triggering fetches when triying to access the dashboard while being logged out
 const Dashboard = lazy(() => import('./pages/Dashboard/index.tsx'))
-const Favorites = lazy(() => import('./pages/Favorites/index.tsx'))
-const Settings = lazy(() => import('./pages/Settings/index.tsx'))
-const Account = lazy(() => import('./pages/Account/index.tsx'))
-const Search = lazy(() => import('./pages/Search/index.tsx'))
-const Company = lazy(() => import('./pages/Search/Company/index.tsx'))
-const Leader = lazy(() => import('./pages/Leaders/index.tsx'))
 
 function App() {
   useEffect(() => {
@@ -64,11 +64,11 @@ function App() {
               <Route element={<Layout />}>
                 <Route element={<Dashboard />} path="dashboard" />
                 <Route element={<Favorites />} path="favorites" />
-                <Route element={<Settings />} path="settings" />
-                <Route element={<Account />} path="account" />
+                <Route element={<SettingsPage />} path="settings" />
+                <Route element={<AccountPage />} path="account" />
                 <Route element={<Search />} path="search/:searchTerm" />
-                <Route element={<Company />} path="company/:companyId" />
-                <Route element={<Leader />} path="leaders/:siren" />
+                <Route element={<CompanyPage />} path="company/:companyId" />
+                <Route element={<LeaderPage />} path="leaders/:siren" />
               </Route>
             </Route>
           </Route>

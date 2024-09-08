@@ -80,7 +80,7 @@ const Account: FC = () => {
 
         <form>
           <Grid container spacing={3}>
-            <Grid md={6} xs={12}>
+            <Grid md={12} xs={12}>
               <FormControl>
                 <FormLabel htmlFor="firstName">First Name</FormLabel>
                 <Input
