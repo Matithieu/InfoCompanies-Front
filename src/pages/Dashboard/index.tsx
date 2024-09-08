@@ -139,21 +139,21 @@ const Dashboard: FC = () => {
             spacing={1}
           >
             {/* DetailsCompany of the company */}
-            <Grid item lg={10} md={12} sm={12} xl={4} xs={12}>
+            <Grid item lg={4} md={12} sm={12} xl={4} xs={12}>
               <Card sx={{ minHeight: 220 }}>
                 <DetailsCompany company={company} />
               </Card>
             </Grid>
 
             {/* Leaders of the company */}
-            <Grid item lg={10} md={12} sm={12} xl={4} xs={12}>
+            <Grid item lg={4} md={12} sm={12} xl={4} xs={12}>
               <Card sx={{ minHeight: 220 }}>
                 <ListOfLeaders siren={company?.sirenNumber} />
               </Card>
             </Grid>
 
             {/* Chart of the company */}
-            <Grid item lg={10} md={12} sm={12} xl={4} xs={12}>
+            <Grid item lg={4} md={12} sm={12} xl={4} xs={12}>
               <Card
                 sx={{
                   height: 220,
