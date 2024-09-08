@@ -1,27 +1,48 @@
+import LogoDevIcon from '@mui/icons-material/LogoDev'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 import Box from '@mui/joy/Box'
 import GlobalStyles from '@mui/joy/GlobalStyles'
 import Input from '@mui/joy/Input'
 import Sheet from '@mui/joy/Sheet'
 import Typography from '@mui/joy/Typography'
-import { FC, useState } from 'react'
+import { FC, FormEvent, useRef, useState } from 'react'
 
 import { useAppNavigate } from '../../../utils/navigation/navigation'
-import ColorSchemeToggle from '../colorScheme'
 import { closeSidebar } from '../layout.util'
 import LayoutListItems from './LayoutListItems'
 
 const LayoutSidebar: FC = () => {
   const { navigation } = useAppNavigate()
-
   const [searchTerm, setSearchTerm] = useState('')
+  const [open, setOpen] = useState(false)
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     if (searchTerm.trim() !== '') {
       navigation.toSearch(searchTerm)
     }
+  }
+
+  const handleMouseEnter = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current)
+    }
+
+    hoverTimeoutRef.current = setTimeout(() => {
+      setOpen(true)
+    }, 200)
+  }
+
+  const handleMouseLeave = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current)
+    }
+
+    hoverTimeoutRef.current = setTimeout(() => {
+      setOpen(false)
+    }, 100)
   }
 
   return (
@@ -35,7 +56,7 @@ const LayoutSidebar: FC = () => {
         transition: 'transform 0.4s, width 0.4s',
         zIndex: 9998,
         height: '100dvh',
-        width: 'var(--Sidebar-width)',
+        width: open ? 'var(--Sidebar-width)' : '75px',
         top: 0,
         p: 2,
         flexShrink: 0,
@@ -44,12 +65,15 @@ const LayoutSidebar: FC = () => {
         gap: 2,
         borderRight: '1px solid',
         borderColor: 'divider',
+        overflowX: 'hidden',
       }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <GlobalStyles
         styles={(theme) => ({
           ':root': {
-            '--Sidebar-width': '220px',
+            '--Sidebar-width': '220px', // Full width when hovered
             [theme.breakpoints.up('lg')]: {
               '--Sidebar-width': '240px',
             },
@@ -74,23 +98,42 @@ const LayoutSidebar: FC = () => {
         }}
         onClick={() => closeSidebar()}
       />
-      <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-        <Typography level="title-lg">Info&apos;Companies</Typography>
-        <ColorSchemeToggle sx={{ ml: 'auto' }} />
+
+      <Box
+        sx={{
+          display: 'flex',
+          minHeight: '1px', // Ensures consistent height
+          flexDirection: 'row',
+          marginBottom: 3.5,
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 2,
+        }}
+      >
+        <LogoDevIcon fontSize="large" />
+
+        {open && (
+          <>
+            <Typography level="title-lg">Info&apos;Companies</Typography>
+            {/* <ColorSchemeToggle /> */}
+          </>
+        )}
       </Box>
 
-      <form onSubmit={handleSearch}>
-        <Input
-          id="search-company"
-          placeholder="Search"
-          size="md"
-          startDecorator={<SearchRoundedIcon />}
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </form>
+      <Box>
+        <form onSubmit={handleSearch}>
+          <Input
+            id="search-company"
+            placeholder="Search"
+            size="md"
+            startDecorator={<SearchRoundedIcon />}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </form>
+      </Box>
 
-      <LayoutListItems />
+      <LayoutListItems open={open} />
     </Sheet>
   )
 }

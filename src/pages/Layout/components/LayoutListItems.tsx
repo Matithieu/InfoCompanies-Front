@@ -1,7 +1,6 @@
 import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded'
 import PendingIcon from '@mui/icons-material/Pending'
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded'
-import SupportRoundedIcon from '@mui/icons-material/SupportRounded'
 import {
   Box,
   Divider,
@@ -17,7 +16,11 @@ import { FC, Fragment } from 'react'
 import { useAppNavigate } from '../../../utils/navigation/navigation'
 import LayoutAvatarItem from './LayoutAvatarItem'
 
-const LayoutListItems: FC = () => {
+interface LayoutListItemsProps {
+  open: boolean
+}
+
+const LayoutListItems: FC<LayoutListItemsProps> = ({ open }) => {
   const { navigation } = useAppNavigate()
 
   return (
@@ -48,10 +51,16 @@ const LayoutListItems: FC = () => {
                 navigation.toDashboard()
               }}
             >
-              <DashboardRoundedIcon />
-              <ListItemContent>
-                <Typography level="body-md">Dashboard</Typography>
-              </ListItemContent>
+              <DashboardRoundedIcon
+                sx={{
+                  fontSize: { xs: '1.5rem', md: '1.5rem' },
+                }}
+              />
+              {open && (
+                <ListItemContent>
+                  <Typography level="body-md">Dashboard</Typography>
+                </ListItemContent>
+              )}
             </ListItemButton>
           </ListItem>
 
@@ -61,10 +70,16 @@ const LayoutListItems: FC = () => {
                 navigation.toFavorites()
               }}
             >
-              <PendingIcon />
-              <ListItemContent>
-                <Typography level="body-md">To Do</Typography>
-              </ListItemContent>
+              <PendingIcon
+                sx={{
+                  fontSize: { xs: '1.5rem', md: 'inherit' },
+                }}
+              />
+              {open && (
+                <ListItemContent>
+                  <Typography level="body-md">To&nbsp;Do</Typography>
+                </ListItemContent>
+              )}
             </ListItemButton>
           </ListItem>
         </List>
@@ -79,29 +94,28 @@ const LayoutListItems: FC = () => {
             mb: 2,
           }}
         >
-          <ListItem sx={{ display: 'none' }}>
-            <ListItemButton>
-              <SupportRoundedIcon />
-              <Typography level="body-md">Support</Typography>
-            </ListItemButton>
-          </ListItem>
-
           <ListItem>
             <ListItemButton
               onClick={() => {
                 navigation.toSettings()
               }}
             >
-              <SettingsRoundedIcon />
-              <ListItemContent>
-                <Typography level="body-md">Settings</Typography>
-              </ListItemContent>
+              <SettingsRoundedIcon
+                sx={{
+                  fontSize: { xs: '1.5rem', md: 'inherit' },
+                }}
+              />
+              {open && (
+                <ListItemContent>
+                  <Typography level="body-md">Settings</Typography>
+                </ListItemContent>
+              )}
             </ListItemButton>
           </ListItem>
         </List>
       </Box>
       <Divider />
-      <LayoutAvatarItem />
+      <LayoutAvatarItem open={open} />
     </Fragment>
   )
 }

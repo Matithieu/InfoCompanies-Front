@@ -6,7 +6,11 @@ import useAuthManager from '../../../hooks/useAuthManager'
 import useAuthStore from '../../../store/authStore'
 import { useAppNavigate } from '../../../utils/navigation/navigation'
 
-const LayoutAvatarItem: FC = () => {
+interface LayoutAvatarItemProps {
+  open: boolean
+}
+
+const LayoutAvatarItem: FC<LayoutAvatarItemProps> = ({ open }) => {
   const { authUser } = useAuthStore()
   const authManager = useAuthManager()
   const { navigation } = useAppNavigate()
@@ -15,17 +19,18 @@ const LayoutAvatarItem: FC = () => {
     <Box
       sx={{
         display: 'flex',
-        gap: 1,
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        minHeight: 60,
+        maxHeight: 60,
       }}
     >
       <IconButton
         style={{
           display: 'flex',
-          gap: 10,
-          justifyContent: 'flex-start',
+          gap: open ? 10 : 0,
+          justifyContent: open ? 'space-between' : 'center',
         }}
         onClick={(e) => {
           e.stopPropagation()
@@ -33,39 +38,43 @@ const LayoutAvatarItem: FC = () => {
         }}
       >
         <Avatar size="md" variant="outlined">
-          {authUser?.firstName
-            ?.charAt(0)
-            .toLocaleUpperCase()
-            .toLocaleUpperCase() ?? 'X'}
+          {authUser?.firstName?.charAt(0).toLocaleUpperCase() ?? 'X'}
         </Avatar>
-        <Box sx={{ minWidth: 0, flex: 1 }}>
-          <Typography
-            level="title-md"
-            sx={{
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              maxWidth: '100%',
-            }}
-          >
-            {authUser?.firstName ?? 'Error'}
-          </Typography>
-          <Typography
-            level="body-sm"
-            sx={{
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              maxWidth: '100%',
-            }}
-          >
-            {authUser?.lastName ?? 'Error'}
-          </Typography>
-        </Box>
+
+        {open && (
+          <Box sx={{ minWidth: 0, flex: 1 }}>
+            <Typography
+              level="title-md"
+              sx={{
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                maxWidth: '100%',
+              }}
+            >
+              {authUser?.firstName ?? 'Error'}
+            </Typography>
+            <Typography
+              level="body-sm"
+              sx={{
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                maxWidth: '100%',
+              }}
+            >
+              {authUser?.lastName ?? 'Error'}
+            </Typography>
+          </Box>
+        )}
       </IconButton>
+
       <IconButton
         color="neutral"
         size="lg"
+        sx={{
+          display: open ? 'flex' : 'none',
+        }}
         variant="plain"
         onClick={(e) => {
           e.preventDefault()
