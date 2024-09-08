@@ -1,21 +1,11 @@
 import ApartmentOutlinedIcon from '@mui/icons-material/ApartmentOutlined'
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
-import {
-  Box,
-  Grid,
-  IconButton,
-  iconButtonClasses,
-  Sheet,
-  Table,
-  Tooltip,
-  Typography,
-} from '@mui/joy'
+import { Box, Grid, Sheet, Table, Typography } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
-import React, { useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { GlobalErrorButton } from '../../components/common/buttons/GlobalErrorButton.tsx'
+import Pagination from '../../components/common/buttons/Pagination.tsx'
 import Seo from '../../components/common/Seo/index.tsx'
 import { CompanyDetails, Page } from '../../data/types/companyDetails.ts'
 import { fetchCompanyBySearchTerm } from '../../utils/api/index.ts'
@@ -111,7 +101,7 @@ function TableOfDetails() {
     )
   } else if (data.empty === false) {
     return (
-      <React.Fragment>
+      <Fragment>
         <Seo
           description={`Recherche: ${searchTerm}`}
           title={`Recherche: ${searchTerm}`}
@@ -172,60 +162,11 @@ function TableOfDetails() {
             </tbody>
           </Table>
         </Sheet>
-        <Box>
-          <Box
-            sx={{
-              pt: 2,
-              gap: 1,
-              [`& .${iconButtonClasses.root}`]: { borderRadius: '50%' },
-              display: {
-                xs: 'none',
-                md: 'flex',
-              },
-            }}
-          >
-            <Box
-              sx={{
-                flexDirection: 'row',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                gap: 1.5,
-              }}
-            >
-              <Tooltip title="Page précédente">
-                <IconButton
-                  color="neutral"
-                  disabled={dataPagniation.page === 0}
-                  size="sm"
-                  sx={{ bgcolor: 'background.surface' }}
-                  variant="outlined"
-                  onClick={() => handleChangePage(dataPagniation.page - 1)}
-                >
-                  <KeyboardArrowLeftIcon />
-                </IconButton>
-              </Tooltip>
-              <Typography level="body-md">
-                {dataPagniation.page + 1} / {dataPagniation.totalPages}
-              </Typography>
-              <Tooltip title="Page suivante">
-                <IconButton
-                  color="neutral"
-                  disabled={
-                    dataPagniation.page === dataPagniation.totalPages - 1
-                  }
-                  size="sm"
-                  sx={{ bgcolor: 'background.surface' }}
-                  variant="outlined"
-                  onClick={() => handleChangePage(dataPagniation.page + 1)}
-                >
-                  <KeyboardArrowRightIcon />
-                </IconButton>
-              </Tooltip>
-            </Box>
-          </Box>
-        </Box>
-      </React.Fragment>
+        <Pagination
+          dataPagination={dataPagniation}
+          handleChangePage={handleChangePage}
+        />
+      </Fragment>
     )
   }
 }
