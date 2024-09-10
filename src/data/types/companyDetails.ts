@@ -1,11 +1,3 @@
-export interface CompanyDetails {
-  id: number
-  companyName: string
-  industrySector: string
-  city: string
-  region: string
-}
-
 export interface Page<T> {
   content: T[]
   pageable: {

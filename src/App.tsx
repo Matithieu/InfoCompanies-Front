@@ -18,7 +18,7 @@ import Loading from './pages/Loading/index.tsx'
 import Failure from './pages/Purchasing/failure.tsx'
 import OrderConfirmation from './pages/Purchasing/success.tsx'
 import CompanyPage from './pages/Search/Company/index.tsx'
-import Search from './pages/Search/index.tsx'
+import SearchPage from './pages/Search/index.tsx'
 import SettingsPage from './pages/Settings/index.tsx'
 import Payment from './pages/Stripe/index.tsx'
 import Subscription from './pages/Subscription/index.tsx'
@@ -66,7 +66,7 @@ function App() {
                 <Route element={<Favorites />} path="favorites" />
                 <Route element={<SettingsPage />} path="settings" />
                 <Route element={<AccountPage />} path="account" />
-                <Route element={<Search />} path="search/:searchTerm" />
+                <Route element={<SearchPage />} path="search/:searchTerm" />
                 <Route element={<CompanyPage />} path="company/:companyId" />
                 <Route element={<LeaderPage />} path="leaders/:siren" />
               </Route>

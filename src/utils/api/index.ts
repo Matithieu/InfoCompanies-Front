@@ -66,13 +66,15 @@ export async function fetchCompanyBySearchTerm(
 
   if (response) {
     const data: Page<Company> = await response.json()
-    const updatedCompanies = updateCompaniesIcon(data.content)
-    data.content = updatedCompanies
-
+    const parsedCompanies = data.content.map((company) =>
+      parseJsonToCompany(company),
+    )
+    asserts(parsedCompanies.every(isNotNU), 'Some companies are undefined')
+    data.content = parsedCompanies
     return data
   }
 
-  return null
+  throw new Error('Failed to fetch companies by search term')
 }
 
 export async function fetchAutoComplete(
