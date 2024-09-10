@@ -19,7 +19,7 @@ export default defineConfig({
       key: '../config/certs/server.key',
       cert: '../config/certs/server.crt',
     },
-    port: 3000,
+    port: 5173,
     proxy: {
       '/api': {
         target: process.env.VITE_PROXY_BASE_URL,
