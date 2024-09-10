@@ -7,6 +7,7 @@ import Footer from '../../components/pages/footer'
 import Filters from '../../components/parts/Filters/index.tsx'
 import Subscriptions from '../../components/parts/Subscription/index.tsx'
 import TableCompany from '../../components/parts/TableCompany/index.tsx'
+import { columnsTableCompany } from '../../data/types/columns.ts'
 import { LANDING_FILTER_ENDPOINT } from '../../data/types/common.ts'
 import { useCompanyFilterStore } from '../../store/filtersStore.tsx'
 import { fetchCompaniesWithUrlAndPage } from '../../utils/api/index.ts'
@@ -153,6 +154,7 @@ const LandingPage: FC = () => {
             }}
           >
             <TableCompany
+              columns={columnsTableCompany}
               data={data}
               error={error}
               handleChangePage={() => {}}

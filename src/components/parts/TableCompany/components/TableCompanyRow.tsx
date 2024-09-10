@@ -1,13 +1,14 @@
 import { IconButton } from '@mui/joy'
 import { FC, Fragment } from 'react'
 
-import { columnsTableCompany } from '../../../../data/types/columns'
+import { Column } from '../../../../data/types/columns'
 import { Company } from '../../../../data/types/company'
 import StatutIcon from '../../../common/Icons/StatutIcon'
 import TableCompanyRowCell from './TableCompanyRowCell'
 
 type TableCompanyRowProps = {
   companies: Company[]
+  columns: Column[]
   rowSelected: number | null
   isCheckboxVisible: boolean
   handleDetailsClick: (company: Company) => void
@@ -17,6 +18,7 @@ type TableCompanyRowProps = {
 
 const TableCompanyRow: FC<TableCompanyRowProps> = ({
   companies,
+  columns,
   rowSelected,
   isCheckboxVisible,
   handleDetailsClick,
@@ -65,7 +67,7 @@ const TableCompanyRow: FC<TableCompanyRowProps> = ({
               </IconButton>
             </td>
           )}
-          {columnsTableCompany.slice(1).map((column) => (
+          {columns.slice(1).map((column) => (
             <td
               key={column.id}
               align={column.align}

@@ -13,6 +13,7 @@ import Filters from '../../components/parts/Filters/index.tsx'
 import ListOfLeaders from '../../components/parts/ListOfLeaders/index.tsx'
 import TableCompany from '../../components/parts/TableCompany/index.tsx'
 import { PaginationTableCompany } from '../../components/parts/TableCompany/type.ts'
+import { columnsTableCompany } from '../../data/types/columns.ts'
 import { RANDOM_UNSEEN_ENDPOINT } from '../../data/types/common.ts'
 import { Company } from '../../data/types/company.ts'
 import { useCompanyFilterStore } from '../../store/filtersStore.tsx'
@@ -119,6 +120,7 @@ const Dashboard: FC = () => {
             >
               <TableCompany
                 isCheckboxVisible
+                columns={columnsTableCompany}
                 data={data}
                 error={error}
                 handleChangePage={handleChangePage}

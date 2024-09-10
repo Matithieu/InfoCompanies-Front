@@ -4,7 +4,7 @@ import { Sheet, Skeleton, Table, Typography } from '@mui/joy'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { FC, Fragment, useEffect, useState } from 'react'
 
-import { columnsTableCompany } from '../../../data/types/columns'
+import { Column } from '../../../data/types/columns'
 import { Company } from '../../../data/types/company'
 import { Page } from '../../../data/types/companyDetails'
 import { fetchCompanyScrap, updateSeenCompany } from '../../../utils/api/index'
@@ -20,6 +20,7 @@ import { canBeScrapped, chunkArray } from './index.util'
 
 type TableCompanyProps = {
   data: Page<Company> | undefined
+  columns: Column[]
   handleDetailsClick: (company: Company) => void | undefined
   handleChangePage: (newPage: number) => void | undefined
   isPending: boolean
@@ -31,6 +32,7 @@ type TableCompanyProps = {
 
 const TableCompany: FC<TableCompanyProps> = ({
   data,
+  columns,
   error,
   isCheckboxVisible = true,
   isPagination = true,
@@ -184,12 +186,13 @@ const TableCompany: FC<TableCompanyProps> = ({
           }}
         >
           <TableCompanyHeaders
-            columns={columnsTableCompany}
+            columns={columns}
             isCheckboxVisible={isCheckboxVisible}
           />
           <tbody style={{ wordBreak: 'break-word' }}>
             {!isPending && tableData?.content?.length ? (
               <TableCompanyRow
+                columns={columns}
                 companies={tableData?.content}
                 handleDetailsClick={handleDetailsClick}
                 handleStatusChange={handleStatusChange}
@@ -201,7 +204,7 @@ const TableCompany: FC<TableCompanyProps> = ({
               <Fragment>
                 {Array.from({ length: 11 }, (_, i) => (
                   <tr key={i} className="fade-in">
-                    <td colSpan={columnsTableCompany.length}>
+                    <td colSpan={columns.length}>
                       <Skeleton animation="wave" variant="text" />
                     </td>
                   </tr>

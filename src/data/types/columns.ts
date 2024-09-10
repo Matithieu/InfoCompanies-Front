@@ -21,3 +21,11 @@ export const columnsTableCompany: Column[] = [
   { id: 'address', label: 'Adresse', minWidth: 170 },
   { id: 'region', label: 'Région', minWidth: 170 },
 ]
+
+export const columnsTableCompanySearch: Column[] = [
+  { id: 'checked', label: '', minWidth: 100, align: 'center' },
+  { id: 'companyName', label: 'Denomination', minWidth: 170 },
+  { id: 'industrySector', label: "Secteur d'Activité", minWidth: 170 },
+  { id: 'city', label: 'Ville', minWidth: 170 },
+  { id: 'region', label: 'Region', minWidth: 170 },
+]
