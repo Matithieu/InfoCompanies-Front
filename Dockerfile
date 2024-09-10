@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM node:latest as build-stage
+FROM node:latest AS build-stage
 
 # Install pnpm
 RUN npm install -g pnpm
