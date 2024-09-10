@@ -5,7 +5,7 @@ import GlobalStyles from '@mui/joy/GlobalStyles'
 import Input from '@mui/joy/Input'
 import Sheet from '@mui/joy/Sheet'
 import Typography from '@mui/joy/Typography'
-import { FC, FormEvent, useRef, useState } from 'react'
+import { FC, FormEvent, useEffect, useRef, useState } from 'react'
 
 import { useAppNavigate } from '../../../utils/navigation/navigation'
 import { closeSidebar } from '../layout.util'
@@ -15,6 +15,7 @@ const LayoutSidebar: FC = () => {
   const { navigation } = useAppNavigate()
   const [searchTerm, setSearchTerm] = useState('')
   const [open, setOpen] = useState(false)
+  const [manualOpen, setManualOpen] = useState(false) // Track manual open state
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
@@ -26,6 +27,8 @@ const LayoutSidebar: FC = () => {
   }
 
   const handleMouseEnter = () => {
+    if (manualOpen) return // Prevent hover actions if sidebar was manually opened
+
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current)
     }
@@ -36,6 +39,8 @@ const LayoutSidebar: FC = () => {
   }
 
   const handleMouseLeave = () => {
+    if (manualOpen) return // Prevent hover actions if sidebar was manually opened
+
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current)
     }
@@ -45,6 +50,26 @@ const LayoutSidebar: FC = () => {
     }, 100)
   }
 
+  // Listen for custom events from utility functions
+  useEffect(() => {
+    const handleOpen = () => {
+      setManualOpen(true)
+      setOpen(true)
+    }
+
+    const handleClose = () => {
+      setManualOpen(false)
+      setOpen(false)
+    }
+
+    window.addEventListener('sidebar:open', handleOpen)
+    window.addEventListener('sidebar:close', handleClose)
+
+    return () => {
+      window.removeEventListener('sidebar:open', handleOpen)
+      window.removeEventListener('sidebar:close', handleClose)
+    }
+  }, [])
   return (
     <Sheet
       sx={{
