@@ -1,7 +1,7 @@
 export interface Column {
   id: string
   label: string
-  minWidth?: number
+  minWidth?: number | string
   align?: 'right' | 'center' | 'left'
 }
 export const columnsTableCompany: Column[] = [
@@ -23,9 +23,9 @@ export const columnsTableCompany: Column[] = [
 ]
 
 export const columnsTableCompanySearch: Column[] = [
-  { id: 'checked', label: '', minWidth: 100, align: 'center' },
-  { id: 'companyName', label: 'Denomination', minWidth: 170 },
-  { id: 'industrySector', label: "Secteur d'Activité", minWidth: 170 },
-  { id: 'city', label: 'Ville', minWidth: 170 },
-  { id: 'region', label: 'Region', minWidth: 170 },
+  { id: 'checked', label: '', minWidth: 100 },
+  { id: 'companyName', label: 'Denomination', minWidth: '100%' },
+  { id: 'industrySector', label: "Secteur d'Activité", minWidth: '100%' },
+  { id: 'city', label: 'Ville', minWidth: '100%' },
+  { id: 'region', label: 'Region', minWidth: '100%' },
 ]

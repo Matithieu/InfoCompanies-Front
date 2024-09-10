@@ -202,7 +202,7 @@ const TableCompany: FC<TableCompanyProps> = ({
               />
             ) : (
               <Fragment>
-                {Array.from({ length: 11 }, (_, i) => (
+                {Array.from({ length: 10 }, (_, i) => (
                   <tr key={i} className="fade-in">
                     <td colSpan={columns.length}>
                       <Skeleton animation="wave" variant="text" />

@@ -1,4 +1,3 @@
-import { IconButton } from '@mui/joy'
 import { FC, Fragment } from 'react'
 
 import { Column } from '../../../../data/types/columns'
@@ -50,21 +49,20 @@ const TableCompanyRow: FC<TableCompanyRowProps> = ({
         >
           {isCheckboxVisible && (
             <td align="center">
-              <IconButton
+              <button
                 id={`checkbox-${index}`}
                 style={{
                   border: 'none',
                   backgroundColor: 'transparent',
                   cursor: 'pointer',
-                  fontSize: '22px',
                 }}
                 onClick={(e) => {
                   e.stopPropagation()
                   handleStatusChange(row)
                 }}
               >
-                <StatutIcon statut={row.checked} />
-              </IconButton>
+                <StatutIcon statut={row.checked} style={{ fontSize: '20px' }} />
+              </button>
             </td>
           )}
           {columns.slice(1).map((column) => (
