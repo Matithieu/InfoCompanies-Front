@@ -13,6 +13,7 @@ const LayoutSidebar: FC = () => {
   const [open, setOpen] = useState(false)
   const [manualOpen, setManualOpen] = useState(false) // Track manual open state
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const sidebarRef = useRef<HTMLDivElement | null>(null) // Ref for sidebar element
 
   const handleMouseEnter = () => {
     if (manualOpen) return // Prevent hover actions if sidebar was manually opened
@@ -38,6 +39,30 @@ const LayoutSidebar: FC = () => {
     }, 100)
   }
 
+  // Handle clicks outside the sidebar to close it if manualOpen is true
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        manualOpen &&
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target as Node)
+      ) {
+        closeSidebar()
+        setManualOpen(false)
+      }
+    }
+
+    if (manualOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [manualOpen])
+
   // Listen for custom events from utility functions
   useEffect(() => {
     const handleOpen = () => {
@@ -58,8 +83,10 @@ const LayoutSidebar: FC = () => {
       window.removeEventListener('sidebar:close', handleClose)
     }
   }, [])
+
   return (
     <Sheet
+      ref={sidebarRef} // Attach ref to the sidebar
       sx={{
         position: { xs: 'fixed', md: 'sticky' },
         transform: {
@@ -128,7 +155,6 @@ const LayoutSidebar: FC = () => {
         {open && (
           <>
             <Typography level="title-lg">Info&apos;Companies</Typography>
-            {/* <ColorSchemeToggle /> */}
           </>
         )}
       </Box>
