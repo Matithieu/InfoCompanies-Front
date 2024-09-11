@@ -1,29 +1,67 @@
-import SearchIcon from '@mui/icons-material/Search'
-import { Input } from '@mui/joy'
-import { useState } from 'react'
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
+import { FormHelperText, Input } from '@mui/joy'
+import { FC, FormEvent, useState } from 'react'
 
 import { useAppNavigate } from '../../../utils/navigation/navigation'
 
-export default function SearchAppBar() {
+type SearchAppBarProps = {
+  isSidebarOpen: boolean
+}
+
+const SearchAppBar: FC<SearchAppBarProps> = ({ isSidebarOpen }) => {
   const { navigation } = useAppNavigate()
   const [searchTerm, setSearchTerm] = useState('')
+  const [isSearchBarError, setIsSearchBarError] = useState(false)
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (searchTerm.trim() !== '') {
-      navigation.toSearch(searchTerm)
+    if (searchTerm.trim() !== '' && !searchTerm.includes('/')) {
+      const sanitizedSearchTerm = searchTerm.replace(/[^\w\sÀ-ÿ]/g, '') // Remove all non-alphanumeric characters except spaces and accented characters
+
+      if (sanitizedSearchTerm !== searchTerm) {
+        setIsSearchBarError(true)
+      } else {
+        setIsSearchBarError(false)
+        navigation.toSearch(sanitizedSearchTerm)
+      }
+    }
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value)
+
+    // Check if there are any special characters in the search term
+    if (/[^\w\sÀ-ÿ]/g.test(e.target.value)) {
+      setIsSearchBarError(true)
+    } else {
+      setIsSearchBarError(false)
     }
   }
 
   return (
     <form onSubmit={handleSearch}>
       <Input
-        endDecorator={<SearchIcon />}
-        placeholder="Rechercher une entreprise"
+        error={isSearchBarError} // Apply error state to input
+        id="search-company"
+        placeholder="Search"
+        size="md"
+        startDecorator={<SearchRoundedIcon />}
+        sx={{
+          borderColor: isSearchBarError ? 'red' : undefined, // Conditionally apply red border
+        }}
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={handleInputChange}
       />
+      <div style={{ position: 'absolute' }}>
+        {isSearchBarError && isSidebarOpen ? (
+          <FormHelperText sx={{ color: 'red' }}>
+            Pas de caractères spéciaux
+          </FormHelperText>
+        ) : null}
+      </div>
     </form>
   )
 }
+
+export default SearchAppBar

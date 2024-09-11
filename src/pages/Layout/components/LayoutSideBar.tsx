@@ -1,30 +1,18 @@
 import LogoDevIcon from '@mui/icons-material/LogoDev'
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 import Box from '@mui/joy/Box'
 import GlobalStyles from '@mui/joy/GlobalStyles'
-import Input from '@mui/joy/Input'
 import Sheet from '@mui/joy/Sheet'
 import Typography from '@mui/joy/Typography'
-import { FC, FormEvent, useEffect, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 
-import { useAppNavigate } from '../../../utils/navigation/navigation'
+import SearchAppBar from '../../../components/common/SearchBar'
 import { closeSidebar } from '../layout.util'
 import LayoutListItems from './LayoutListItems'
 
 const LayoutSidebar: FC = () => {
-  const { navigation } = useAppNavigate()
-  const [searchTerm, setSearchTerm] = useState('')
   const [open, setOpen] = useState(false)
   const [manualOpen, setManualOpen] = useState(false) // Track manual open state
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
-
-  const handleSearch = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    if (searchTerm.trim() !== '') {
-      navigation.toSearch(searchTerm)
-    }
-  }
 
   const handleMouseEnter = () => {
     if (manualOpen) return // Prevent hover actions if sidebar was manually opened
@@ -146,16 +134,7 @@ const LayoutSidebar: FC = () => {
       </Box>
 
       <Box>
-        <form onSubmit={handleSearch}>
-          <Input
-            id="search-company"
-            placeholder="Search"
-            size="md"
-            startDecorator={<SearchRoundedIcon />}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </form>
+        <SearchAppBar isSidebarOpen={open} />
       </Box>
 
       <LayoutListItems open={open} />
