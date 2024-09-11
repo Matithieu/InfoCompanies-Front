@@ -6,7 +6,7 @@ export interface Column {
 }
 export const columnsTableCompany: Column[] = [
   { id: 'checked', label: '', minWidth: 100, align: 'center' },
-  { id: 'companyName', label: 'Denomination', minWidth: 170 },
+  { id: 'companyName', label: 'Dénomination', minWidth: 170 },
   { id: 'phoneNumber', label: 'Téléphone', minWidth: 170 },
   { id: 'email', label: 'Email', minWidth: 140 },
   { id: 'website', label: 'Site Web', minWidth: 170 },

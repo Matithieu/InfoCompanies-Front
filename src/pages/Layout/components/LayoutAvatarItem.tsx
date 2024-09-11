@@ -42,7 +42,13 @@ const LayoutAvatarItem: FC<LayoutAvatarItemProps> = ({ open }) => {
         </Avatar>
 
         {open && (
-          <Box sx={{ minWidth: 0, flex: 1 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+            }}
+          >
             <Typography
               level="title-md"
               sx={{

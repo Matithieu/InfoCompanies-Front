@@ -16,7 +16,7 @@ const SettingsPage: FC = () => {
   return (
     <Grid sx={{ px: { xs: 2, md: 6 } }}>
       <HeaderTitle text="Settings" />
-      <Typography level="body-md">Work in progres !!</Typography>
+      <Typography level="body-md">Work in progress !!</Typography>
 
       <Grid container display="flex" flexDirection="row" gap={20} width="100%">
         <Grid md={6} xs={12}>
