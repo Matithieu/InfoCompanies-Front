@@ -150,7 +150,14 @@ const HeaderLanding: FC<HeaderLandingProps> = ({
                   </Link>
                 </Box>
               ) : (
-                <Box>
+                <Box
+                  sx={{
+                    ml: 2,
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}
+                >
                   <Link
                     sx={{ color: 'black', mx: 2 }}
                     onClick={() => authManager.signIn()}
@@ -159,7 +166,18 @@ const HeaderLanding: FC<HeaderLandingProps> = ({
                   </Link>
                   <Button
                     endDecorator={<ArrowForwardIosIcon />}
-                    sx={{ ml: 2 }}
+                    sx={{
+                      ml: 2,
+                      display: {
+                        xs: 'none',
+                        sm: 'flex',
+                        md: 'flex',
+                        lg: 'flex',
+                        xl: 'flex',
+                      },
+                      flexDirection: 'row',
+                      whiteSpace: 'nowrap',
+                    }}
                     onClick={() => authManager.signIn()}
                   >
                     Essai gratuit

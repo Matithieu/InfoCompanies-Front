@@ -12,7 +12,7 @@ import { LANDING_FILTER_ENDPOINT } from '../../data/types/common.ts'
 import { useCompanyFilterStore } from '../../store/filtersStore.tsx'
 import { fetchCompaniesWithUrlAndPage } from '../../utils/api/index.ts'
 import { constructURLWithFilter } from '../../utils/api/util.ts'
-import HeaderLanding from '../Landing/components/header.tsx'
+import HeaderLanding from '../Landing/components/LandingHeader.tsx'
 
 import video1 from '/videos/step-1.gif'
 import video2 from '/videos/step-2.gif'
