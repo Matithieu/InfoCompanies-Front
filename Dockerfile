@@ -20,7 +20,7 @@ COPY InfoCompanies-Front .
 RUN pnpm run build
 
 # Stage 2: Serve the application from Nginx
-FROM nginx:alpine
+FROM nginx:1.26.2-alpine
 
 ARG CONFIG_PATH
 
