@@ -1,5 +1,7 @@
+import { CheckStatus } from './company'
+
 export type CompanySeen = {
-  companyIds: number[]
-  id: number
   userId: number
+  companyId: number
+  status: CheckStatus
 }

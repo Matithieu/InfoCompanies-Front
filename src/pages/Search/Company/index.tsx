@@ -1,26 +1,20 @@
 import 'react-toastify/dist/ReactToastify.css'
 
 import { Box, Card, Grid, IconButton, Typography } from '@mui/joy'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { FC, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { GlobalErrorButton } from '../../../components/common/buttons/GlobalErrorButton.tsx'
 import ScrapCompanyButton from '../../../components/common/buttons/scrapCompanyButton.tsx'
 import StatutIcon from '../../../components/common/Icons/StatutIcon.tsx'
-import {
-  handleChangeStatut,
-  updateCompaniesIcon,
-} from '../../../components/common/Icons/stautIcon.util.ts'
+import { handleChangeStatut } from '../../../components/common/Icons/stautIcon.util.ts'
 import Seo from '../../../components/common/Seo/index.tsx'
 import Chart from '../../../components/parts/Chart/index.tsx'
 import DetailsCompany from '../../../components/parts/DetailsCompany/index.tsx'
 import ListOfLeaders from '../../../components/parts/ListOfLeaders/index.tsx'
 import { Company } from '../../../data/types/company.ts'
-import {
-  fetchCompanyById,
-  updateSeenCompany,
-} from '../../../utils/api/index.ts'
+import { fetchCompanyById } from '../../../utils/api/index.ts'
 import { asserts } from '../../../utils/assertion.util.ts'
 
 const CompanyPage: FC = () => {
@@ -33,30 +27,9 @@ const CompanyPage: FC = () => {
     queryFn: () => fetchCompanyById(companyId),
   })
 
-  const mutation = useMutation({
-    mutationFn: (companyId: number) => updateSeenCompany([companyId]),
-    onError: (error) => {
-      console.error(`Error updating recommendations: ${error.message}`)
-    },
-    onSuccess: () => {
-      setCompany((prevData) => {
-        if (prevData) {
-          return {
-            ...prevData,
-            ...updateCompaniesIcon([prevData]),
-          }
-        }
-
-        return prevData
-      })
-    },
-  })
-
   const handleStatusChange = (company: Company) => {
-    const updatedCompany = handleChangeStatut({
-      company,
-      mutation,
-    })
+    const updatedCompany = handleChangeStatut({ company })
+
     setCompany((prevData) => {
       if (prevData) {
         return {
@@ -122,6 +95,7 @@ const CompanyPage: FC = () => {
                   }}
                 >
                   <StatutIcon
+                    companyId={company.id}
                     statut={company.checked}
                     style={{ fontSize: '1.5rem' }}
                   />

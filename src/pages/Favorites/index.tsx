@@ -1,38 +1,20 @@
 import { Grid, Typography } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
-import { FC, useEffect, useState } from 'react'
+import { FC, useState } from 'react'
 
 import HeaderTitle from '../../components/common/Texts/HeaderTitle.tsx'
 import { PaginationTableCompany } from '../../components/parts/TableCompany/type.ts'
 import { Company } from '../../data/types/company.ts'
-import { fetchCompanySeen, fetchFavorites } from '../../utils/api/index.ts'
-import { companiesSeenStorage } from '../../utils/localStorage/companiesSeenStorage.ts'
+import { fetchFavorites } from '../../utils/api/index.ts'
 import FavoritesBody from './components/FavoritesBody.tsx'
 
 const Favorites: FC = () => {
-  // ToDo: Refactor this to use a custom hook or state management
-  const { companiesToDo } = companiesSeenStorage()
   const [company, setCompany] = useState<Company>()
   const [dataPagination, setDataPagination] = useState<PaginationTableCompany>({
     page: 0,
     rowsPerPage: 10,
     totalPages: 0,
   })
-
-  const { data: toDoData } = useQuery({
-    queryKey: ['companies', companiesToDo.getCompaniesTodo()],
-    queryFn: () => fetchCompanySeen(),
-    retry: 1,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-  })
-
-  useEffect(() => {
-    if (toDoData) {
-      companiesToDo.updateCompaniesTodo(toDoData.companyIds)
-    }
-  }, [toDoData, companiesToDo])
 
   const { data, error, isPending } = useQuery({
     queryKey: ['companies', dataPagination.page],

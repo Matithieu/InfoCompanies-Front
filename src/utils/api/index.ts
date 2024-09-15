@@ -1,10 +1,9 @@
-import { updateCompaniesIcon } from '../../components/common/Icons/stautIcon.util'
 import { AutoCompleteType } from '../../data/types/common'
-import { Company } from '../../data/types/company'
+import { CheckStatus, Company } from '../../data/types/company'
 import { CompanySeen } from '../../data/types/company-seen'
 import { Page } from '../../data/types/companyDetails'
 import { User } from '../../data/types/user'
-import { asserts, isNotNU, NNU } from '../assertion.util'
+import { asserts, isNotNU } from '../assertion.util'
 import { parseJsonToCompany, parseJsonToUser } from '../parseJsonToObject'
 import { fetchWithConfig } from './config'
 
@@ -35,8 +34,7 @@ export async function fetchCompaniesWithUrlAndPage(url: string, page: number) {
   )
 
   if (response.status === 425) {
-    console.error('Wait 1 one day before fetching companies again')
-    return
+    throw new Error('Wait 1 one day before fetching companies again')
   }
 
   if (response) {
@@ -46,9 +44,7 @@ export async function fetchCompaniesWithUrlAndPage(url: string, page: number) {
     )
     asserts(parsedCompanies.every(isNotNU), 'Some companies are undefined')
 
-    const updatedCompanies = updateCompaniesIcon(parsedCompanies)
-    data.content = updatedCompanies
-
+    data.content = parsedCompanies
     return data
   }
 
@@ -70,6 +66,7 @@ export async function fetchCompanyBySearchTerm(
       parseJsonToCompany(company),
     )
     asserts(parsedCompanies.every(isNotNU), 'Some companies are undefined')
+
     data.content = parsedCompanies
     return data
   }
@@ -98,14 +95,12 @@ export async function fetchCompanyById(id: string) {
 
   if (response) {
     const data = parseJsonToCompany(await response.json())
-    const [updatedCompanies] = updateCompaniesIcon([
-      NNU(data, 'Error while fething company by id'),
-    ])
+    asserts(isNotNU(data), 'Company is undefined')
 
-    return updatedCompanies
+    return data
   }
 
-  return null
+  throw new Error('Failed to fetch company by id')
 }
 
 export async function fetchCompanyByIds(ids: number[], page: number) {
@@ -121,9 +116,7 @@ export async function fetchCompanyByIds(ids: number[], page: number) {
     )
     asserts(parsedCompanies.every(isNotNU), 'Some companies are undefined')
 
-    const updatedCompanies = updateCompaniesIcon(parsedCompanies)
-    data.content = updatedCompanies
-
+    data.content = parsedCompanies
     return data
   }
 
@@ -144,13 +137,10 @@ export async function fetchCompanyScrap(companyId: number) {
 }
 
 export async function fetchCompanySeen() {
-  const response = await fetchWithConfig(
-    `/v1/company-seen/companies-seen`,
-    'GET',
-  )
+  const response = await fetchWithConfig(`/v1/companies-status/`, 'GET')
 
   if (response) {
-    return (await response.json()) as CompanySeen
+    return (await response.json()) as CompanySeen[]
   }
 
   throw new Error('Failed to fetch company seen')
@@ -170,9 +160,7 @@ export async function fetchFavorites(page: number) {
     )
     asserts(parsedCompanies.every(isNotNU), 'Some companies are undefined')
 
-    const updatedCompanies = updateCompaniesIcon(parsedCompanies)
-    data.content = updatedCompanies
-
+    data.content = parsedCompanies
     return data
   }
 
@@ -191,18 +179,25 @@ export async function updateUser(user: User) {
   return null
 }
 
-export async function updateSeenCompany(companyIds: number[]) {
+export async function updateSeenCompany(
+  companyId: number,
+  status: CheckStatus,
+) {
   const response = await fetchWithConfig(
-    '/v1/company-seen/update-company-ids',
+    `/v1/companies-status/${companyId}`,
     'POST',
-    { body: companyIds },
+    {
+      body: {
+        status: status,
+      },
+    },
   )
 
   if (response.ok) {
     return
   }
 
-  return null
+  throw new Error('Failed to update seen company')
 }
 
 export async function stripeSubscription(priceId: string) {

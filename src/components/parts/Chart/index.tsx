@@ -100,7 +100,11 @@ const Chart: FC<ChartProps> = ({ company }) => {
               cursor={{ strokeDasharray: '3 3' }}
               formatter={(value) => {
                 if (value === 0) {
-                  return ['Pas de données']
+                  return [
+                    <Typography key="no-data" color="warning">
+                      Pas de données
+                    </Typography>,
+                  ]
                 } else {
                   const formattedValue = new Intl.NumberFormat('fr-FR', {
                     style: 'currency',

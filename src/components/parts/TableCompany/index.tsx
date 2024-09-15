@@ -1,19 +1,18 @@
 import './style.css'
 
 import { Sheet, Skeleton, Table, Typography } from '@mui/joy'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import { FC, Fragment, useEffect, useState } from 'react'
 
 import { Column } from '../../../data/types/columns'
 import { Company } from '../../../data/types/company'
 import { Page } from '../../../data/types/companyDetails'
-import { fetchCompanyScrap, updateSeenCompany } from '../../../utils/api/index'
+import useCompaniesSeenStore from '../../../store/companySeenStore'
+import { fetchCompanyScrap } from '../../../utils/api/index'
+import { isNotNU } from '../../../utils/assertion.util'
 import { GlobalErrorButton } from '../../common/buttons/GlobalErrorButton'
 import Pagination from '../../common/buttons/Pagination'
-import {
-  handleChangeStatut,
-  updateCompaniesIcon,
-} from '../../common/Icons/stautIcon.util'
+import { handleChangeStatut } from '../../common/Icons/stautIcon.util'
 import TableCompanyHeaders from './components/TableCompanyHeaders'
 import TableCompanyRow from './components/TableCompanyRow'
 import { canBeScrapped, chunkArray } from './index.util'
@@ -41,15 +40,26 @@ const TableCompany: FC<TableCompanyProps> = ({
   handleChangePage,
   handleDetailsClick,
 }) => {
+  const { companiesSeen } = useCompaniesSeenStore()
   const [tableData, setTableData] = useState<Page<Company> | undefined>(data)
   const [rowSelected, setRowSelected] = useState<number | null>(null)
   const queryClient = useQueryClient()
 
   useEffect(() => {
     if (data) {
+      if (isNotNU(companiesSeen) && isNotNU(data?.content)) {
+        for (const seenCompany of companiesSeen) {
+          for (const companyContent of data.content) {
+            if (seenCompany.companyId === companyContent.id) {
+              companyContent.checked = seenCompany.status
+            }
+          }
+        }
+      }
+
       setTableData(data)
     }
-  }, [data])
+  }, [data, companiesSeen])
 
   useEffect(() => {
     if (!data?.content || !isScrapping) return
@@ -102,30 +112,9 @@ const TableCompany: FC<TableCompanyProps> = ({
     fetchBatchCompanies()
   }, [data, queryClient, isScrapping])
 
-  const mutation = useMutation({
-    mutationFn: (companyId: number) => updateSeenCompany([companyId]),
-    onError: (error: Error) => {
-      console.error(`Error updating recommendations: ${error.message}`)
-    },
-    onSuccess: () => {
-      setTableData((prevData) => {
-        if (prevData) {
-          return {
-            ...prevData,
-            content: updateCompaniesIcon(prevData.content),
-          }
-        }
-
-        return prevData
-      })
-    },
-  })
-
   const handleStatusChange = (company: Company) => {
-    const updatedCompany = handleChangeStatut({
-      company,
-      mutation,
-    })
+    const updatedCompany = handleChangeStatut({ company })
+
     setTableData((prevData) => {
       if (prevData) {
         return {
