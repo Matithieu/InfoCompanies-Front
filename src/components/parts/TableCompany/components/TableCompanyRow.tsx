@@ -1,8 +1,10 @@
+import { Tooltip } from '@mui/joy'
 import { FC, Fragment } from 'react'
 
 import { Column } from '../../../../data/types/columns'
 import { Company } from '../../../../data/types/company'
 import StatutIcon from '../../../common/Icons/StatutIcon'
+import { getStatutEnumPretty } from '../../../common/Icons/stautIcon.util'
 import TableCompanyRowCell from './TableCompanyRowCell'
 
 type TableCompanyRowProps = {
@@ -26,43 +28,53 @@ const TableCompanyRow: FC<TableCompanyRowProps> = ({
 }) => {
   return (
     <Fragment>
-      {companies.map((row, index) => (
+      {companies.map((companyRow, index) => (
         <tr
-          key={row.id}
+          key={companyRow.id}
           className={`fade-in table-row ${index % 2 === 0 ? 'even' : 'odd'} ${
-            rowSelected === row.id ? 'selected-row' : ''
+            rowSelected === companyRow.id ? 'selected-row' : ''
           }`}
           role="row"
           style={{
             cursor: 'pointer',
             backgroundColor:
-              rowSelected === row.id
+              rowSelected === companyRow.id
                 ? 'var(--joy-palette-background-level2)'
                 : undefined,
           }}
           tabIndex={-1}
           onClick={(e) => {
             e.stopPropagation()
-            handleDetailsClick(row)
-            setRowSelected(row.id)
+            handleDetailsClick(companyRow)
+            setRowSelected(companyRow.id)
           }}
         >
           {isCheckboxVisible && (
             <td align="center">
-              <button
-                id={`checkbox-${index}`}
-                style={{
-                  border: 'none',
-                  backgroundColor: 'transparent',
-                  cursor: 'pointer',
-                }}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  handleStatusChange(row)
-                }}
+              <Tooltip
+                arrow
+                placement="left"
+                title={getStatutEnumPretty(companyRow.checked)}
               >
-                <StatutIcon statut={row.checked} style={{ fontSize: '20px' }} />
-              </button>
+                <button
+                  id={`checkbox-${index}`}
+                  style={{
+                    border: 'none',
+                    backgroundColor: 'transparent',
+                    cursor: 'pointer',
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleStatusChange(companyRow)
+                  }}
+                >
+                  <StatutIcon
+                    companyId={companyRow.id}
+                    statut={companyRow.checked}
+                    style={{ fontSize: '20px' }}
+                  />
+                </button>
+              </Tooltip>
             </td>
           )}
           {columns.slice(1).map((column) => (
@@ -77,7 +89,7 @@ const TableCompanyRow: FC<TableCompanyRowProps> = ({
                 whiteSpace: 'nowrap',
               }}
             >
-              <TableCompanyRowCell column={column} row={row} />
+              <TableCompanyRowCell column={column} row={companyRow} />
             </td>
           ))}
         </tr>
