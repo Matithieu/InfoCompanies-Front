@@ -39,7 +39,7 @@ const FetchAutoComplete = ({
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedInputValue(inputValue)
-    }, 350)
+    }, 450)
 
     return () => {
       clearTimeout(handler)
@@ -47,9 +47,7 @@ const FetchAutoComplete = ({
   }, [inputValue])
 
   useEffect(() => {
-    if (debouncedInputValue.length > 1) {
-      refetch()
-    }
+    refetch()
   }, [debouncedInputValue, refetch])
 
   // Merging selected values with fetched options
