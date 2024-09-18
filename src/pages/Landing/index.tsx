@@ -124,7 +124,7 @@ const LandingPage: FC = () => {
                   textAlign: 'center',
                 }}
               >
-                Téléphone, email, réseaux sociaux, chiffres d’affaire,
+                Téléphone, e-mail, réseaux sociaux, chiffre d’affaires,
                 dirigeants, effectif en un clic
               </Typography>
             </Stack>
