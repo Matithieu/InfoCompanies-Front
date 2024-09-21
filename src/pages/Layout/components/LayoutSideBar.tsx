@@ -94,7 +94,7 @@ const LayoutSidebar: FC = () => {
           md: 'none',
         },
         transition: 'transform 0.4s, width 0.4s',
-        zIndex: 9998,
+        zIndex: 1000,
         height: '100dvh',
         width: open ? 'var(--Sidebar-width)' : '75px',
         top: 0,
@@ -123,7 +123,7 @@ const LayoutSidebar: FC = () => {
       <Box
         sx={{
           position: 'fixed',
-          zIndex: 9998,
+          zIndex: 1000,
           top: 0,
           left: 0,
           width: '100vw',
@@ -144,7 +144,7 @@ const LayoutSidebar: FC = () => {
           display: 'flex',
           minHeight: '1px', // Ensures consistent height
           flexDirection: 'row',
-          marginBottom: 3.5,
+          marginBottom: 4.5,
           alignItems: 'center',
           justifyContent: 'center',
           gap: 2,

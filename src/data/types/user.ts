@@ -14,4 +14,5 @@ export type User = {
   country: string
   tier: string
   isVerified: boolean
+  hasCompletedOnboarding: boolean
 }

@@ -57,7 +57,7 @@ const TableCompanyRow: FC<TableCompanyRowProps> = ({
                 title={getStatutEnumPretty(companyRow.checked)}
               >
                 <button
-                  id={`checkbox-${index}`}
+                  id={index === 1 ? 'joyride-step-4' : ''}
                   style={{
                     border: 'none',
                     backgroundColor: 'transparent',

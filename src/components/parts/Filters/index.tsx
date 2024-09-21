@@ -180,13 +180,16 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
 
         {availableFilters.length > 0 && (
           <Dropdown>
-            <MenuButton
-              sx={{ flexShrink: 0, width: '40px', maxWidth: '250px' }}
-              variant="soft"
-            >
-              <AddIcon style={{ fontSize: '1.2rem' }} />
-            </MenuButton>
-            <Menu sx={{ zIndex: 99999 }}>
+            <div id="joyride-step-2">
+              <MenuButton
+                sx={{ flexShrink: 0, width: '40px', maxWidth: '250px' }}
+                variant="soft"
+              >
+                <AddIcon style={{ fontSize: '1.2rem' }} />
+              </MenuButton>
+            </div>
+
+            <Menu sx={{ zIndex: 3000 }}>
               {availableFilters.map((filter, index) => (
                 <div key={filter}>
                   <MenuItem onClick={() => addFilter(filter)}>

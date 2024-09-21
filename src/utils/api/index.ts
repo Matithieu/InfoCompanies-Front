@@ -17,6 +17,16 @@ export const fetchUser = async () => {
   return null
 }
 
+export const updateUserOnboarding = async () => {
+  const response = await fetchWithConfig('/v1/completeOnboarding', 'POST')
+
+  if (response.ok) {
+    return
+  }
+
+  throw new Error('Failed to update user onboarding')
+}
+
 export const fetchTest = async () => {
   const response = await fetchWithConfig('/v1/company/test', 'GET')
 
