@@ -68,7 +68,7 @@ const ComparatorInput: FC<ComparatorInputProps> = ({
           <Tooltip arrow title="Clear">
             <div
               aria-label="Delete filter"
-              style={{ zIndex: 9999, cursor: 'pointer' }}
+              style={{ zIndex: 3000, cursor: 'pointer' }}
               onClick={handleDelete}
             >
               <ClearIcon />

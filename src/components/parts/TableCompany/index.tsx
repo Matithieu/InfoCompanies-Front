@@ -153,6 +153,7 @@ const TableCompany: FC<TableCompanyProps> = ({
     <>
       <Sheet
         aria-label="order-table-container"
+        id="joyride-step-1"
         sx={{
           width: '100%',
           borderRadius: 'sm',
@@ -178,7 +179,7 @@ const TableCompany: FC<TableCompanyProps> = ({
             columns={columns}
             isCheckboxVisible={isCheckboxVisible}
           />
-          <tbody style={{ wordBreak: 'break-word' }}>
+          <tbody id="#joyride-step-1" style={{ wordBreak: 'break-word' }}>
             {!isPending && tableData?.content?.length ? (
               <TableCompanyRow
                 columns={columns}

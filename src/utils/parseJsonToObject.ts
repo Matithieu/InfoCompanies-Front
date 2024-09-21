@@ -104,6 +104,7 @@ export function parseJsonToUser(userObjs: JSONObject) {
       country: userObjs.country,
       tier: userObjs.tier,
       isVerified: userObjs.verified,
+      hasCompletedOnboarding: userObjs.hasCompletedOnboarding,
     } as User
   } catch (e) {
     new Error('Error converting user JSON to user object: ' + e)

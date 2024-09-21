@@ -2,6 +2,7 @@ import { Grid, Option, Select, Typography } from '@mui/joy'
 import { FC, SyntheticEvent, useState } from 'react'
 
 import HeaderTitle from '../../components/common/Texts/HeaderTitle'
+import ColorSchemeToggle from '../Layout/colorScheme'
 
 const SettingsPage: FC = () => {
   const [language, setLanguage] = useState('English')
@@ -16,7 +17,7 @@ const SettingsPage: FC = () => {
   return (
     <Grid sx={{ px: { xs: 2, md: 6 } }}>
       <HeaderTitle text="Settings" />
-      <Typography level="body-md">Work in progress !!</Typography>
+      <Typography level="body-md">Work in progres !!</Typography>
 
       <Grid container display="flex" flexDirection="row" gap={20} width="100%">
         <Grid md={6} xs={12}>
@@ -33,6 +34,8 @@ const SettingsPage: FC = () => {
           </Select>
         </Grid>
       </Grid>
+
+      <ColorSchemeToggle />
     </Grid>
   )
 }
