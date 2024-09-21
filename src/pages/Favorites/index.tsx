@@ -19,7 +19,6 @@ const Favorites: FC = () => {
   const { data, error, isPending } = useQuery({
     queryKey: ['companies', dataPagination.page],
     queryFn: () => fetchFavorites(dataPagination.page),
-    retry: 1,
     refetchOnWindowFocus: false,
     refetchOnMount: true,
     refetchOnReconnect: false,

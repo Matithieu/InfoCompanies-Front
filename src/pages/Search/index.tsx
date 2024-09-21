@@ -31,7 +31,6 @@ const SearchPage: FC = () => {
     queryKey: ['companies', searchTerm, dataPagination.page],
     queryFn: () =>
       fetchCompanyBySearchTerm(searchTerm ?? '', dataPagination.page),
-    retry: 1,
     refetchOnWindowFocus: false,
   })
 

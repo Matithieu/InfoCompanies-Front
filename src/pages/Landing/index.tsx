@@ -72,7 +72,6 @@ const LandingPage: FC = () => {
   const { isPending, data, error } = useQuery({
     queryKey: ['companies', url],
     queryFn: () => fetchCompaniesWithUrlAndPage(url, 0),
-    retry: 1,
     refetchOnWindowFocus: false,
     refetchOnMount: true,
     refetchOnReconnect: false,

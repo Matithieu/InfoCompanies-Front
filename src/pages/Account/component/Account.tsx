@@ -26,7 +26,6 @@ const Account: FC = () => {
   const { data, refetch } = useQuery({
     queryKey: ['user'],
     queryFn: () => fetchUser(),
-    retry: 1,
     enabled: false,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
@@ -35,7 +34,6 @@ const Account: FC = () => {
   const mutation = useMutation({
     mutationFn: () => updateUser(editedUser as User),
     mutationKey: ['updateUser' + editedUser?.email],
-    retry: 0,
     onError: (error) => {
       toast.error(`Error updating user: ${error.message}`)
     },

@@ -22,14 +22,12 @@ export const ProtectedRoutes = () => {
   const { data, isFetching, isSuccess } = useQuery({
     queryKey: ['user query', authUser],
     queryFn: () => (authUser === null ? fetchUser() : Promise.resolve(null)),
-    retry: 0,
     refetchOnWindowFocus: true,
   })
 
   const { data: companiesSeenData } = useQuery({
     queryKey: ['companies'],
     queryFn: () => fetchCompanySeen(),
-    retry: 1,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     refetchOnReconnect: false,
@@ -67,14 +65,12 @@ export const ProtectedSimpleRoutes = () => {
   const { data, isFetching, isSuccess } = useQuery({
     queryKey: ['user query', authUser],
     queryFn: () => (authUser === null ? fetchUser() : Promise.resolve(null)),
-    retry: 0,
     refetchOnWindowFocus: true,
   })
 
   const { data: companiesSeenData } = useQuery({
     queryKey: ['companies'],
     queryFn: () => fetchCompanySeen(),
-    retry: 1,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     refetchOnReconnect: false,

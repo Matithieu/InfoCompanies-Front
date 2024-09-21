@@ -46,7 +46,6 @@ const Dashboard: FC = () => {
     queryKey: ['companies', url, dataPagination, searchParams],
     queryFn: () => fetchCompaniesWithUrlAndPage(url, dataPagination.page),
     staleTime: Infinity,
-    retry: 0,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     refetchOnReconnect: false,
@@ -55,7 +54,6 @@ const Dashboard: FC = () => {
 
   const onboardingMutation = useMutation({
     mutationFn: () => updateUserOnboarding(),
-    retry: 0,
   })
 
   const handleChangePage = (page: number) => {

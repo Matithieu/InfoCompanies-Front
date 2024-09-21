@@ -67,7 +67,6 @@ function Payment() {
         return fetchSubscription(itemData, authUser)
       }
     },
-    retry: 1,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     refetchOnReconnect: false,
