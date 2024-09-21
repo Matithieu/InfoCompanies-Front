@@ -2,7 +2,7 @@ import { Grid, Option, Select, Typography } from '@mui/joy'
 import { FC, SyntheticEvent, useState } from 'react'
 
 import HeaderTitle from '../../components/common/Texts/HeaderTitle'
-import ColorSchemeToggle from '../Layout/colorScheme'
+import ColorSchemeToggle from '../Layout/components/colorScheme'
 
 const SettingsPage: FC = () => {
   const [language, setLanguage] = useState('English')
