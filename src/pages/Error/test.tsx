@@ -123,7 +123,7 @@ const Test: FC = () => {
                   textAlign: 'center',
                 }}
               >
-                Téléphone, email, réseaux sociaux, chiffres d’affaire,
+                Téléphone, e-mail, réseaux sociaux, chiffres d’affaire,
                 dirigeants, effectif en un clic
               </Typography>
             </Stack>

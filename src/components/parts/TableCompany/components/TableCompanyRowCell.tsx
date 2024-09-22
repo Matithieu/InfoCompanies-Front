@@ -1,5 +1,6 @@
 import { Tooltip } from '@mui/joy'
 import { FC } from 'react'
+import { toast } from 'react-toastify'
 
 import { Column } from '../../../../data/types/columns'
 import { Company } from '../../../../data/types/company'
@@ -13,7 +14,7 @@ type TableCompanyRowCellProps = {
 const TableCompanyRowCell: FC<TableCompanyRowCellProps> = ({ column, row }) => {
   const handleEmailClick = (email: string) => {
     navigator.clipboard.writeText(email)
-    alert('Email copied to clipboard!')
+    toast.done('E-mail copied to clipboard!')
   }
 
   switch (column.id) {

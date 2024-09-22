@@ -14,31 +14,31 @@ const returnIdIfEmpty = (data: string | undefined, id: string) => {
 
 export const products: ItemData[] = [
   {
-    description: 'Free subscription. Limited retrieval of data.',
-    image: 'https://source.unsplash.com/NUoPWImmjCU',
-    name: 'Free subscription',
+    name: 'Abonnement gratuit',
+    description: '15 requêtes par jour.',
     price: 0,
     id: returnIdIfEmpty(STRIPE_PRICE_ID_FREE, 'price_1PdHWLKjCboMtBPjo3G7vEiC'),
+    image: 'https://source.unsplash.com/NUoPWImmjCU',
   },
   {
-    description: 'Basic subscription at 30€/month. Limited retrieval of data.',
-    image: 'https://source.unsplash.com/NUoPWImmjCU',
-    name: 'Basic subscription',
+    name: 'Abonnement basique',
+    description: '100 requêtes par jour.',
     price: 25,
     id: returnIdIfEmpty(
       STRIPE_PRICE_ID_BASIC,
       'price_1PSHL4KjCboMtBPjAF9ZID55',
     ),
+    image: 'https://source.unsplash.com/NUoPWImmjCU',
+    isFavorite: true,
   },
   {
-    description:
-      'Premium subscription at 35€/month. Filters added but limited retrieval of data.',
-    image: 'https://source.unsplash.com/NUoPWImmjCU',
-    name: 'Premium subscription',
+    name: 'Abonnement premium',
+    description: '200 requêtes par jour.',
     price: 35,
     id: returnIdIfEmpty(
       STRIPE_PRICE_ID_PREMIUM,
       'price_1PSHL1KjCboMtBPjlaDDyTTo',
     ),
+    image: 'https://source.unsplash.com/NUoPWImmjCU',
   },
 ]

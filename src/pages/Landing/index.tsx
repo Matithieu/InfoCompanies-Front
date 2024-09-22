@@ -114,7 +114,7 @@ const LandingPage: FC = () => {
                   textAlign: 'center',
                 }}
               >
-                Découvrez des entreprises et prenez contact avec elles
+                Découvrez et contactez instantanément les entreprises
               </Typography>
               <Typography
                 color="neutral"
@@ -167,12 +167,12 @@ const LandingPage: FC = () => {
 
         <Box ref={produitRef} sx={{ mt: 5, textAlign: 'center' }}>
           <Typography fontSize="1.2rem">
-            Vous cherchez à contacter facilement
+            Vous cherchez à joindre facilement des entreprises ?<br />
             <span
               className="gradient-text fancy medium"
               style={{ fontSize: '1.2rem', marginLeft: '5px' }}
             >
-              des entreprises ?
+              Vous êtes au bon endroit !
             </span>
           </Typography>
         </Box>
@@ -192,8 +192,8 @@ const LandingPage: FC = () => {
               Prospectez efficacement
             </Typography>
             <Typography gutterBottom>
-              Filtrez par ville, effectif, secteur d&apos;activité et plus
-              encore
+              Affinez vos recherches avec des filtres puissants : ville,
+              effectif, secteur d&apos;activité et bien plus encore.
             </Typography>
             <TryWithoutCBButton />
           </Box>
@@ -288,10 +288,9 @@ const LandingPage: FC = () => {
               Contactez les entreprises sans effort
             </Typography>
             <Typography gutterBottom>
-              Réseaux sociaux, téléphone, email, chiffre d&apos;affaire,
+              Réseaux sociaux, téléphone, e-mail, chiffre d&apos;affaire,
               dirigeant à portée de clic
             </Typography>
-            <TryWithoutCBButton />
           </Box>
         </Box>
 
@@ -335,12 +334,13 @@ const LandingPage: FC = () => {
 
         <Box sx={{ mt: 5, textAlign: 'center' }}>
           <Typography fontSize="1.2rem">
-            Trouvez des entreprises au
+            La prospection n&apos;a jamais été aussi simple.
+            <br />
             <span
               className="gradient-text fancy medium"
               style={{ fontSize: '1.2rem', marginLeft: '5px' }}
             >
-              meilleur prix
+              Commencez dès aujourd&apos;hui !
             </span>
           </Typography>
         </Box>

@@ -44,7 +44,7 @@ const SearchAppBar: FC<SearchAppBarProps> = ({ isSidebarOpen }) => {
       <Input
         error={isSearchBarError} // Apply error state to input
         id="search-company"
-        placeholder="Search"
+        placeholder="Recherche"
         size="md"
         startDecorator={<SearchRoundedIcon />}
         sx={{

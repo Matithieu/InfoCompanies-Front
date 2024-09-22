@@ -8,7 +8,7 @@ const TryWithoutCBButton: FC = () => {
   const { signIn } = useAuthManager()
   return (
     <Button endDecorator={<ArrowForwardIcon />} onClick={() => signIn()}>
-      Essayer (sans CB)
+      Essayez (sans CB)
     </Button>
   )
 }

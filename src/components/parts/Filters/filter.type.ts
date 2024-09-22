@@ -15,7 +15,7 @@ export const filterDescriptions: {
   socials: 'Réseaux sociaux',
   contact: 'Contact',
   isCompanySeen: 'Entreprises non vues',
-  searchButton: 'Search', // Not needed because not in the dropdown
+  searchButton: 'Rechercher', // Not needed because not in the dropdown
 }
 
 export type SelectedFilterType =
@@ -29,7 +29,7 @@ export type SelectedFilterType =
 export const contactFilterDescription: {
   [key in keyof Contact]: string
 } = {
-  email: 'Email',
+  email: 'E-mail',
   phone: 'Téléphone',
   website: 'Site web',
 }

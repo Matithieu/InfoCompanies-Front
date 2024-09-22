@@ -107,7 +107,7 @@ const LayoutListItems: FC<LayoutListItemsProps> = ({ open }) => {
               />
               {open && (
                 <ListItemContent>
-                  <Typography level="body-md">Settings</Typography>
+                  <Typography level="body-md">Paramètres</Typography>
                 </ListItemContent>
               )}
             </ListItemButton>

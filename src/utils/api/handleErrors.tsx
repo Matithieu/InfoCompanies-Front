@@ -1,6 +1,7 @@
 import {
   toastErrorQuotaExceeded,
   toastErrorReconnect,
+  toastSuccessAlreadySubscribed,
 } from '../../components/common/Toasts/toasts'
 
 const handleErrors = async (response: Response, url: string) => {
@@ -11,6 +12,9 @@ const handleErrors = async (response: Response, url: string) => {
     case 403: {
       return toastErrorReconnect()
     }
+
+    case 409:
+      return toastSuccessAlreadySubscribed()
 
     case 429:
       return toastErrorQuotaExceeded()

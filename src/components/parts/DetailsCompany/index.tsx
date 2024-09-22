@@ -22,45 +22,45 @@ const DetailsCompany: FC<DetailsCompanyProps> = ({ company }) => {
   return (
     <Fragment>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <Typography level="h4">Details</Typography>
+        <Typography level="h4">Détails</Typography>
       </div>
-      <Table aria-label="Details Company">
+      <Table aria-label="Détails de l'Entreprise">
         <tbody>
           <DetailsCompanyRow
             content={company.phoneNumber}
             icon={<PhoneIcon />}
-            noContent="No phone found"
-            tooltipContent="Phone Number"
+            noContent="Aucun numéro de téléphone trouvé"
+            tooltipContent="Numéro de téléphone"
           />
 
           <DetailsCompanyRow
             content={company.email}
             icon={<EmailIcon />}
-            noContent="No email found"
-            tooltipContent="Email"
+            noContent="Aucun e-mail trouvé"
+            tooltipContent="E-mail"
           />
 
           <DetailsCompanyRow
             isLink
             content={company.website}
             icon={<WebAssetIcon />}
-            noContent="No website found"
-            tooltipContent="Website"
+            noContent="Aucun site web trouvé"
+            tooltipContent="Site Web"
           />
 
           <DetailsCompanyRow
             content={company.address}
             icon={<BusinessIcon />}
-            noContent="No address found"
+            noContent="Aucune adresse trouvée"
             oppositeContent={company.city}
-            tooltipContent="Address"
+            tooltipContent="Adresse"
           />
 
           <DetailsCompanyRow
             content={company.dateRegistration}
             icon={<CalendarTodayOutlinedIcon />}
-            noContent="No creation date found"
-            tooltipContent="Creation Date"
+            noContent="Aucune date de création trouvée"
+            tooltipContent="Date de création"
           />
         </tbody>
       </Table>

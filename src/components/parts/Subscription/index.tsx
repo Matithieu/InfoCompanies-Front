@@ -27,6 +27,7 @@ const Subscriptions: FC = () => {
         <SubscriptionCard
           key={index}
           disabled={buttonClicked}
+          isFavorite={option.isFavorite}
           item={option}
           onCardClick={handleCardClick}
         />

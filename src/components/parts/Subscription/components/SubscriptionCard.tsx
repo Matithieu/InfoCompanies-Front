@@ -8,12 +8,14 @@ import { stripeSubscription } from '../../../../utils/api'
 type SubscriptionCardProps = {
   item: ItemData
   disabled: boolean
+  isFavorite?: boolean
   onCardClick: () => void
 }
 
 const SubscriptionCard: FC<SubscriptionCardProps> = ({
   item,
   disabled,
+  isFavorite,
   onCardClick,
 }) => {
   const { data, refetch, isSuccess } = useQuery({
@@ -38,6 +40,9 @@ const SubscriptionCard: FC<SubscriptionCardProps> = ({
       sx={{
         wordBreak: 'break-word',
         width: '350px',
+        ...(isFavorite && {
+          transform: 'scale(1.10)',
+        }),
       }}
     >
       <CardContent>
@@ -53,10 +58,10 @@ const SubscriptionCard: FC<SubscriptionCardProps> = ({
         <Button
           color="primary"
           disabled={disabled}
-          variant="soft"
+          variant="solid"
           onClick={handleClick}
         >
-          Subscribe
+          S&#39;abonner
         </Button>
       </CardActions>
     </Card>

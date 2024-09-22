@@ -4,4 +4,5 @@ export interface ItemData {
   image: string
   description: string
   id: string
+  isFavorite?: boolean
 }
