@@ -15,7 +15,7 @@ import DetailsCompany from '../../../components/parts/DetailsCompany/index.tsx'
 import ListOfLeaders from '../../../components/parts/ListOfLeaders/index.tsx'
 import { Company } from '../../../data/types/company.ts'
 import { fetchCompanyById } from '../../../utils/api/index.ts'
-import { asserts } from '../../../utils/assertion.util.ts'
+import { asserts, isNotNU } from '../../../utils/assertion.util.ts'
 
 const CompanyPage: FC = () => {
   const { companyId } = useParams()
@@ -54,7 +54,7 @@ const CompanyPage: FC = () => {
 
   if (isPending) {
     return <div>Chargement des données...</div>
-  } else if (company !== null && company) {
+  } else if (isNotNU(company)) {
     return (
       <Box sx={{ display: 'flex' }}>
         <Seo
