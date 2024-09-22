@@ -25,7 +25,7 @@ export default function Page404() {
           sx={{ mt: 3, mb: 2 }}
           variant="soft"
           onClick={() => {
-            navigation.toDashboard()
+            navigation.toHome()
           }}
         >
           Retour à l&apos;accueil

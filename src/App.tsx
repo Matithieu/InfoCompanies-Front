@@ -4,7 +4,6 @@ import { HelmetProvider } from 'react-helmet-async'
 import { Route, Routes } from 'react-router-dom'
 
 import AccountPage from './pages/Account/index.tsx'
-import Error401 from './pages/Error/401.tsx'
 import Error404 from './pages/Error/404.tsx'
 import Test from './pages/Error/test.tsx'
 import Favorites from './pages/Favorites/index.tsx'
@@ -27,7 +26,6 @@ import {
   ProtectedSimpleRoutes,
 } from './utils/protectedRoute.tsx'
 
-// Avoid triggering fetches when triying to access the dashboard while being logged out
 const Dashboard = lazy(() => import('./pages/Dashboard/index.tsx'))
 
 function App() {
@@ -48,11 +46,6 @@ function App() {
             <Route element={<LegalInformation />} path="legal" />
             <Route element={<Test />} path="test" />
 
-            <Route element="error">
-              <Route element={<Error404 />} path="*/" />
-              <Route element={<Error401 />} path="not-found" />
-            </Route>
-
             <Route element={<ProtectedSimpleRoutes />}>
               <Route element={<Subscription />} path="subscription" />
               <Route element={<Payment />} path="stripe" />
@@ -72,6 +65,8 @@ function App() {
               </Route>
             </Route>
           </Route>
+
+          <Route element={<Error404 />} path="*" />
         </Routes>
       </Suspense>
     </HelmetProvider>
