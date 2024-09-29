@@ -1,4 +1,4 @@
-import handleErrors from './handleErrors'
+import handleToastErrors from './errors/handleToastErrors'
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
 
@@ -28,7 +28,7 @@ export const fetchWithConfig = async (
     body: options?.body ? JSON.stringify(options.body) : undefined,
   })
 
-  handleErrors(response, url)
+  handleToastErrors(response, url)
 
   return response
 }

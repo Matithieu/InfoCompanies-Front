@@ -16,7 +16,7 @@ export function GlobalErrorButton({ error }: ErrorButtonProps) {
     const actionMap: Record<string, () => void> = {
       'Subscription Error': () => navigation.toAccount(),
       Forbidden: () => navigation.toSubscription(),
-      'Too many requests': () => navigation.toAccount(),
+      'Too Many Requests': () => navigation.toAccount(),
       'Network Error': () => authUser.signOut(),
       Unauthorized: () => authUser.signIn(),
     }
@@ -30,7 +30,7 @@ export function GlobalErrorButton({ error }: ErrorButtonProps) {
     const labelMap: Record<string, string> = {
       'Subscription Error': 'Change Plan',
       Forbidden: 'Change Plan',
-      'Too many requests': 'Select Subscription',
+      'Too Many Requests': 'Select Subscription',
       'Network Error': 'Retry Connection',
       Unauthorized: 'Login',
     }

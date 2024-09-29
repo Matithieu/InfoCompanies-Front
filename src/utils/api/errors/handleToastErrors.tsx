@@ -2,9 +2,9 @@ import {
   toastErrorQuotaExceeded,
   toastErrorReconnect,
   toastSuccessAlreadySubscribed,
-} from '../../components/common/Toasts/toasts'
+} from '../../../components/common/Toasts/toasts'
 
-const handleErrors = async (response: Response, url: string) => {
+const handleToastErrors = async (response: Response, url: string) => {
   switch (response.status) {
     case 401:
       break
@@ -27,4 +27,4 @@ const handleErrors = async (response: Response, url: string) => {
   }
 }
 
-export default handleErrors
+export default handleToastErrors

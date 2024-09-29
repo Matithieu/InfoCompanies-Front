@@ -6,15 +6,16 @@ import { User } from '../../data/types/user'
 import { asserts, isNotNU } from '../assertion.util'
 import { parseJsonToCompany, parseJsonToUser } from '../parseJsonToObject'
 import { fetchWithConfig } from './config'
+import handleStatusError from './errors/handleStatusError'
 
 export const fetchUser = async () => {
   const response = await fetchWithConfig('/v1/user', 'GET')
 
-  if (response) {
+  if (response.ok) {
     return parseJsonToUser(await response.json())
   }
 
-  return null
+  throw new Error(await handleStatusError(response, 'Error fetching user'))
 }
 
 export const updateUserOnboarding = async () => {
@@ -24,13 +25,15 @@ export const updateUserOnboarding = async () => {
     return
   }
 
-  throw new Error('Failed to update user onboarding')
+  throw new Error(
+    await handleStatusError(response, 'Error updating user onboarding'),
+  )
 }
 
 export const fetchTest = async () => {
   const response = await fetchWithConfig('/v1/company/test', 'GET')
 
-  if (response) {
+  if (response.ok) {
     return response.toString()
   }
 
@@ -43,11 +46,7 @@ export async function fetchCompaniesWithUrlAndPage(url: string, page: number) {
     'GET',
   )
 
-  if (response.status === 425) {
-    throw new Error('Wait 1 one day before fetching companies again')
-  }
-
-  if (response) {
+  if (response.ok) {
     const data: Page<Company> = await response.json()
     const parsedCompanies = data.content.map((company) =>
       parseJsonToCompany(company),
@@ -58,7 +57,9 @@ export async function fetchCompaniesWithUrlAndPage(url: string, page: number) {
     return data
   }
 
-  throw new Error('Failed to fetch companies with url and page')
+  throw new Error(
+    await handleStatusError(response, `/v1/company/${url}page=${page}`),
+  )
 }
 
 export async function fetchCompanyBySearchTerm(
@@ -70,7 +71,7 @@ export async function fetchCompanyBySearchTerm(
     'GET',
   )
 
-  if (response) {
+  if (response.ok) {
     const data: Page<Company> = await response.json()
     const parsedCompanies = data.content.map((company) =>
       parseJsonToCompany(company),
@@ -81,7 +82,9 @@ export async function fetchCompanyBySearchTerm(
     return data
   }
 
-  throw new Error('Failed to fetch companies by search term')
+  throw new Error(
+    await handleStatusError(response, 'Error fetching company by search term'),
+  )
 }
 
 export async function fetchAutoComplete(
@@ -97,20 +100,27 @@ export async function fetchAutoComplete(
     return (await response.json()) as AutoCompleteType[]
   }
 
-  throw new Error(`Failed to fetch autocomplete ${autoComplete}`)
+  throw new Error(
+    await handleStatusError(
+      response,
+      `Error fetching autocomplete for ${autoComplete}`,
+    ),
+  )
 }
 
 export async function fetchCompanyById(id: string) {
   const response = await fetchWithConfig(`/v1/company/get-by-id/${id}`, 'GET')
 
-  if (response) {
+  if (response.ok) {
     const data = parseJsonToCompany(await response.json())
     asserts(isNotNU(data), 'Company is undefined')
 
     return data
   }
 
-  throw new Error('Failed to fetch company by id')
+  throw new Error(
+    await handleStatusError(response, `Error fetching company by id ${id}`),
+  )
 }
 
 export async function fetchCompanyByIds(ids: number[], page: number) {
@@ -119,7 +129,7 @@ export async function fetchCompanyByIds(ids: number[], page: number) {
     'GET',
   )
 
-  if (response) {
+  if (response.ok) {
     const data: Page<Company> = await response.json()
     const parsedCompanies = data.content.map((company) =>
       parseJsonToCompany(company),
@@ -130,7 +140,9 @@ export async function fetchCompanyByIds(ids: number[], page: number) {
     return data
   }
 
-  throw new Error('Failed to fetch companies by ids')
+  throw new Error(
+    await handleStatusError(response, `Error fetching company by ids`),
+  )
 }
 
 export async function fetchCompanyScrap(companyId: number) {
@@ -139,21 +151,25 @@ export async function fetchCompanyScrap(companyId: number) {
     'GET',
   )
 
-  if (response) {
+  if (response.ok) {
     return parseJsonToCompany(await response.json())
   }
 
-  throw new Error('Failed to fetch company scrap')
+  throw new Error(
+    await handleStatusError(response, `Error fetching company scrap`),
+  )
 }
 
 export async function fetchCompanySeen() {
   const response = await fetchWithConfig(`/v1/companies-status/`, 'GET')
 
-  if (response) {
+  if (response.ok) {
     return (await response.json()) as CompanySeen[]
   }
 
-  throw new Error('Failed to fetch company seen')
+  throw new Error(
+    await handleStatusError(response, `Error fetching company seen`),
+  )
 }
 
 export async function fetchFavorites(page: number) {
@@ -163,7 +179,7 @@ export async function fetchFavorites(page: number) {
     'GET',
   )
 
-  if (response) {
+  if (response.ok) {
     const data: Page<Company> = await response.json()
     const parsedCompanies = data.content.map((company) =>
       parseJsonToCompany(company),
@@ -174,7 +190,7 @@ export async function fetchFavorites(page: number) {
     return data
   }
 
-  throw new Error('Failed to fetch company seen')
+  throw new Error(await handleStatusError(response, `Error fetching favorites`))
 }
 
 export async function updateUser(user: User) {
@@ -186,7 +202,7 @@ export async function updateUser(user: User) {
     return
   }
 
-  return null
+  throw new Error(await handleStatusError(response, `Error updating user`))
 }
 
 export async function updateSeenCompany(
@@ -207,7 +223,9 @@ export async function updateSeenCompany(
     return
   }
 
-  throw new Error('Failed to update seen company')
+  throw new Error(
+    await handleStatusError(response, `Error updating seen company`),
+  )
 }
 
 export async function stripeSubscription(priceId: string) {
@@ -226,5 +244,7 @@ export async function stripeSubscription(priceId: string) {
     return response.text()
   }
 
+  // ToDo handle error
+  // handleStatusError(response, '/v1/stripe/subscriptions/trial')
   return null
 }

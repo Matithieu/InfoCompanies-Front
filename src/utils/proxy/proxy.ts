@@ -1,5 +1,5 @@
 import { HttpMethod } from '../api/config'
-import handleErrors from '../api/handleErrors'
+import handleToastErrors from '../api/errors/handleToastErrors'
 
 interface fetchToProxyProps {
   url: string
@@ -30,7 +30,7 @@ export const fetchToProxy = async ({
     body: options?.body ? JSON.stringify(options.body) : undefined,
   })
 
-  handleErrors(response, url)
+  handleToastErrors(response, url)
 
   return response
 }
