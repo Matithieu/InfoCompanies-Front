@@ -1,5 +1,14 @@
-import { CheckStatus, Company, FinancialYear } from '../data/types/company'
+import {
+  CheckStatus,
+  Company,
+  FinancialYear,
+  Reviews,
+  Schedule,
+} from '../data/types/company'
 import { User } from '../data/types/user'
+
+// https://github.com/typestack/class-transformer
+// use this library to transform json to class ??
 
 type JSONValue =
   | string
@@ -39,8 +48,8 @@ export function parseJsonToCompany(companyObj: JSONObject) {
       industrySector: companyObj.industrySector,
       phoneNumber: companyObj.phoneNumber,
       website: companyObj.website,
-      reviews: companyObj.reviews,
-      schedule: companyObj.schedule,
+      reviews: parseJsonToReviews(companyObj),
+      schedule: parseJsonToSchedule(companyObj),
       email: companyObj.email,
       scrapingDate: companyObj.scrapingDate,
       socialMedia: {
@@ -56,7 +65,7 @@ export function parseJsonToCompany(companyObj: JSONObject) {
       dateCreation: companyObj.dateCreation,
     } as Company
   } catch (e) {
-    console.error('Error converting company JSON to company object: ' + e)
+    throw new Error('Error converting company JSON to company object: ' + e)
   }
 }
 
@@ -77,14 +86,49 @@ export const parseJsonToFinancialYear = (
       result3: companyObj[`turnover_${year}_3`],
     } as FinancialYear
   } catch (error) {
-    console.error(
+    throw new Error(
       'Error converting financial year JSON to financial year object: ' + error,
     )
   }
 }
 
-// https://github.com/typestack/class-transformer
-// use this library to transform json to class ??
+export const parseJsonToSchedule = (companyObj: JSONObject) => {
+  try {
+    if (companyObj.schedule === null || companyObj.schedule === undefined)
+      return null
+    const scheduleJson = JSON.parse(companyObj.schedule as string)
+
+    return {
+      lundi: scheduleJson['lundi'],
+      mardi: scheduleJson['mardi'],
+      mercredi: scheduleJson['mercredi'],
+      jeudi: scheduleJson['jeudi'],
+      vendredi: scheduleJson['vendredi'],
+      samedi: scheduleJson['samedi'],
+      dimanche: scheduleJson['dimanche'],
+    } as Schedule
+  } catch (error) {
+    console.error('Error converting schedule JSON to schedule object: ' + error)
+    throw new Error(
+      'Error converting schedule JSON to schedule object: ' + error,
+    )
+  }
+}
+
+export function parseJsonToReviews(companyObj: JSONObject) {
+  try {
+    if (companyObj.reviews === null || companyObj.reviews === undefined)
+      return null
+    const reviewsJson = JSON.parse(companyObj.reviews as string)
+
+    return {
+      stars: reviewsJson.stars,
+      numberOfReviews: reviewsJson.number_of_reviews,
+    } as Reviews
+  } catch (e) {
+    throw new Error('Error converting reviews JSON to reviews object: ' + e)
+  }
+}
 
 export function parseJsonToUser(userObjs: JSONObject) {
   try {
@@ -107,6 +151,6 @@ export function parseJsonToUser(userObjs: JSONObject) {
       hasCompletedOnboarding: userObjs.hasCompletedOnboarding,
     } as User
   } catch (e) {
-    new Error('Error converting user JSON to user object: ' + e)
+    throw new Error('Error converting user JSON to user object: ' + e)
   }
 }

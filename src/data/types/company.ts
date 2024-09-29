@@ -24,6 +24,22 @@ export enum CheckStatus {
   TO_DO = 'TO_DO',
 }
 
+// Todo: Translate
+export type Schedule = {
+  lundi: string
+  mardi: string
+  mercredi: string
+  jeudi: string
+  vendredi: string
+  samedi: string
+  dimanche: string
+}
+
+export type Reviews = {
+  stars: number
+  numberOfReviews: number
+}
+
 export type Company = {
   id: number
   companyName: string
@@ -42,8 +58,8 @@ export type Company = {
   industrySector: string
   phoneNumber: string
   website: string
-  reviews: string
-  schedule: string
+  reviews: Reviews
+  schedule: Schedule
   email: string
   scrapingDate: string
   socialMedia: SocialMedia
