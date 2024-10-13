@@ -35,15 +35,36 @@ export const fetchUser = async () => {
  * Company
  *
  */
-export async function fetchCompaniesWithUrlAndPage(url: string, page: number) {
+export async function fetchCompaniesWithUrlAndPage(
+  url: string,
+  page: number,
+  userCompanyStatusParsing = true,
+) {
   const response = await fetchWithConfig(
     `/v1/company/${url}page=${page}`,
     'GET',
   )
 
   if (response.ok) {
-    const data: Page<CompanyWithStatus> = await response.json()
-    return parseAndConvertPageCompaniesWithStatus(data)
+    if (userCompanyStatusParsing) {
+      const data: Page<CompanyWithStatus> = await response.json()
+      return parseAndConvertPageCompaniesWithStatus(data)
+    }
+
+    const data: Page<Company> = await response.json()
+    const userCompanyStatus: UserCompanyStatus = {
+      companyId: 0,
+      id: 0,
+      status: CheckStatus.NOT_DONE,
+      userId: '',
+    }
+
+    const parsedCompanies = data.content.map((company) =>
+      parseJsonToCompany(company, userCompanyStatus),
+    )
+
+    data.content = parsedCompanies
+    return data
   }
 
   throw new Error(

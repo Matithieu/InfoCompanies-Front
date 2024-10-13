@@ -22,7 +22,7 @@ const LandingPage: FC = () => {
   const {
     searchParams: { city, industrySector },
   } = useCompanyFilterStore()
-  const [url, setUrl] = useState<string>(`${LANDING_FILTER_ENDPOINT}?`)
+  const [url, setUrl] = useState<string | undefined>(undefined)
   const pricingRef = useRef<HTMLDivElement>(null)
   const produitRef = useRef<HTMLDivElement>(null)
 
@@ -31,8 +31,26 @@ const LandingPage: FC = () => {
   }
 
   useEffect(() => {
-    setUrl(
-      constructURLWithFilter(
+    let newUrl = ''
+
+    if (city.length === 0 && industrySector.length === 0) {
+      // Default filter when no city or industry sector is selected
+      newUrl = constructURLWithFilter(
+        {
+          region: ['Bretagne'],
+          city: [],
+          industrySector: [],
+          legalForm: [],
+          employee: { amount: undefined, comparator: undefined },
+          socials: [],
+          contact: [],
+          isCompanySeen: false,
+        },
+        `${LANDING_FILTER_ENDPOINT}?`,
+      )
+    } else {
+      // Construct URL based on selected city and industry sector
+      newUrl = constructURLWithFilter(
         {
           city,
           industrySector,
@@ -44,37 +62,22 @@ const LandingPage: FC = () => {
           isCompanySeen: false,
         },
         `${LANDING_FILTER_ENDPOINT}?`,
-      ),
-    )
-  }, [city, industrySector])
-
-  // Set the filter with something inside
-  useEffect(() => {
-    if (city.length === 0 && industrySector.length === 0) {
-      setUrl(
-        constructURLWithFilter(
-          {
-            region: ['Bretagne'],
-            city: [],
-            industrySector: [],
-            legalForm: [],
-            employee: { amount: undefined, comparator: undefined },
-            socials: [],
-            contact: [],
-            isCompanySeen: false,
-          },
-          `${LANDING_FILTER_ENDPOINT}?`,
-        ),
       )
     }
-  }, [])
+
+    // Update the URL state only if it has changed
+    if (url !== newUrl) {
+      setUrl(newUrl)
+    }
+  }, [city, industrySector])
 
   const { isPending, data, error } = useQuery({
     queryKey: ['companies', url],
-    queryFn: () => fetchCompaniesWithUrlAndPage(url, 0),
+    queryFn: () => fetchCompaniesWithUrlAndPage(url!, 0, false),
     refetchOnWindowFocus: false,
-    refetchOnMount: true,
+    refetchOnMount: false,
     refetchOnReconnect: false,
+    enabled: !!url,
   })
 
   return (
