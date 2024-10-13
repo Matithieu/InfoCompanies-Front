@@ -32,13 +32,17 @@ const TableCompanyRowCell: FC<TableCompanyRowCellProps> = ({ column, row }) => {
     case 'email':
       if (column.id === 'email') {
         if (row.email === null || row.email === '') {
-          return 'N/A'
+          return <span style={{ color: '#808080' }}>N/A</span>
         }
 
         return (
           <Tooltip title="Click to copy">
             <span
-              style={{ cursor: 'pointer', textDecoration: 'underline' }}
+              style={{
+                cursor: 'pointer',
+                textDecoration: 'underline',
+                color: row.email ? 'inherit' : '#808080',
+              }}
               title="Click to copy"
               onClick={(e) => {
                 e.stopPropagation()
@@ -51,11 +55,18 @@ const TableCompanyRowCell: FC<TableCompanyRowCellProps> = ({ column, row }) => {
         )
       }
 
-      return row[column.id] ?? 'N/A'
+      return (
+        <span style={{ color: row[column.id] ? 'inherit' : '#808080' }}>
+          {row[column.id] ?? 'N/A'}
+        </span>
+      )
     case 'website':
       return (
         <span
-          style={{ cursor: row.website ? 'pointer' : 'default' }}
+          style={{
+            cursor: row.website ? 'pointer' : 'default',
+            color: row.website ? 'inherit' : '#808080',
+          }}
           onClick={(e) => {
             if (
               e.target === e.currentTarget &&

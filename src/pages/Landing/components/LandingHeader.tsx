@@ -72,16 +72,13 @@ const HeaderLanding: FC<HeaderLandingProps> = ({
             >
               <Typography
                 noWrap
-                startDecorator={
-                  <AdbIcon
-                    sx={{ cursor: 'pointer' }}
-                    onClick={() => navigation.toHome()}
-                  />
-                }
+                startDecorator={<AdbIcon sx={{ cursor: 'pointer' }} />}
                 sx={{
                   display: 'flex',
                   fontWeight: 700,
+                  cursor: 'pointer',
                 }}
+                onClick={() => navigation.toHome()}
               >
                 LOGO
               </Typography>

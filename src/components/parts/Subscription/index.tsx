@@ -19,6 +19,7 @@ const Subscriptions: FC = () => {
         display: 'flex',
         flexDirection: { xs: 'column', sm: 'column', md: 'column', lg: 'row' },
         justifyContent: 'center',
+        alignItems: 'center',
         padding: '20px',
         gap: '30px',
       }}

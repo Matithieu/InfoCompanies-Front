@@ -24,7 +24,7 @@ const LayoutSidebar: FC = () => {
 
     hoverTimeoutRef.current = setTimeout(() => {
       setOpen(true)
-    }, 200)
+    }, 600)
   }
 
   const handleMouseLeave = () => {
