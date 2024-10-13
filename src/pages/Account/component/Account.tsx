@@ -13,9 +13,9 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { ChangeEvent, FC, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { User } from '../../../data/types/user'
+import { User } from '../../../data/types/index.types'
 import useAuthStore from '../../../store/authStore'
-import { fetchUser, updateUser } from '../../../utils/api'
+import { fetchUser, updateUser } from '../../../utils/api/queries'
 import { isNotNU } from '../../../utils/assertion.util'
 
 const Account: FC = () => {

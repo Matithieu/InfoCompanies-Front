@@ -2,7 +2,7 @@ import PersonIcon from '@mui/icons-material/Person'
 import { Typography } from '@mui/joy'
 import { FC } from 'react'
 
-import { Leader } from '../../../data/types/leader'
+import { Leader } from '../../../data/types/index.types'
 
 type DetailsLeaderProps = {
   leader: Leader

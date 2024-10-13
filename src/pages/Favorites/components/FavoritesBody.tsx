@@ -8,7 +8,7 @@ import ListOfLeaders from '../../../components/parts/ListOfLeaders'
 import TableCompany from '../../../components/parts/TableCompany'
 import { columnsTableCompany } from '../../../data/types/columns'
 import { Company } from '../../../data/types/company'
-import { Page } from '../../../data/types/companyDetails'
+import { Page } from '../../../data/types/index.types'
 
 type FavoritesBodyProps = {
   data: Page<Company> | undefined

@@ -1,3 +1,9 @@
+export type CompanySeen = {
+  userId: number
+  companyId: number
+  status: CheckStatus
+}
+
 export type FinancialYear = {
   closingDate1: string
   turnover1: number
@@ -40,6 +46,13 @@ export type Reviews = {
   numberOfReviews: number
 }
 
+export type UserCompanyStatus = {
+  id: number
+  userId: string
+  status: CheckStatus
+  companyId: number
+}
+
 export type Company = {
   id: number
   companyName: string
@@ -53,7 +66,6 @@ export type Company = {
   region: string
   dateRegistration: string
   deregistrationDate: string
-  checked: CheckStatus
   financialYears: Record<number, FinancialYear>
   industrySector: string
   phoneNumber: string
@@ -67,6 +79,12 @@ export type Company = {
   numberOfEmployee: number
   lastProcessingDate: string
   dateCreation: string
+  userCompanyStatus: UserCompanyStatus
+}
+
+export type CompanyWithStatus = {
+  company: Company
+  userCompanyStatus: UserCompanyStatus
 }
 
 export function getTurnOverByYear(company: Company, year: number): number {

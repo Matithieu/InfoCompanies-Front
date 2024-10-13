@@ -4,7 +4,7 @@ import Autocomplete from '@mui/joy/Autocomplete'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useMemo, useState } from 'react'
 
-import { AutoCompleteType } from '../../../data/types/common'
+import { AutoCompleteType } from '../../../data/types/index.types'
 
 type FetchAutoCompleteProps<T> = {
   handleSelectChange: (items: T[]) => void

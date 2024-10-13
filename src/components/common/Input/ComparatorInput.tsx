@@ -10,7 +10,7 @@ import {
 } from '@mui/joy'
 import { ChangeEvent, FC, SyntheticEvent, useState } from 'react'
 
-import { ComparatorType, EmployeeFilter } from '../../../data/types/common'
+import { ComparatorType, EmployeeFilter } from '../../../data/types/index.types'
 import ComparaisonValues from './components/ComparaisonValues'
 
 interface ComparatorInputProps {

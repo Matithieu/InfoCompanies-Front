@@ -1,6 +1,11 @@
-import { Leader } from '../../data/types/leader'
+import { Company, CompanyWithStatus } from '../../data/types/company'
+import { Leader, Page } from '../../data/types/index.types'
 import { SearchParams } from '../../store/filtersStore'
 import { isNotNU } from '../assertion.util'
+import {
+  parseJsonToCompany,
+  parseJsonToUserCompanyStatus,
+} from '../parseJsonToObject'
 
 /**
  * Clean leaders by removing duplicates based on their first and last names
@@ -64,4 +69,28 @@ export const constructURLWithFilter = (
   }
 
   return url
+}
+
+export const parseAndConertCompanyWithStatus = (
+  companyWithStatus: CompanyWithStatus,
+) => {
+  const userCompanyStatusData = parseJsonToUserCompanyStatus(
+    companyWithStatus.userCompanyStatus,
+  )
+  return parseJsonToCompany(companyWithStatus.company, userCompanyStatusData)
+}
+
+export const parseAndConvertPageCompaniesWithStatus = (
+  data: Page<CompanyWithStatus>,
+) => {
+  const parsedCompanies = data.content.map(({ company, userCompanyStatus }) => {
+    return parseAndConertCompanyWithStatus({ company, userCompanyStatus })
+  })
+
+  const pageCompany: Page<Company> = {
+    ...data,
+    content: parsedCompanies,
+  }
+
+  return pageCompany
 }

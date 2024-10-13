@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { ItemData } from '../../data/Stripe/itemData.ts'
-import { User } from '../../data/types/user.ts'
+import { User } from '../../data/types/index.types.ts'
 import useAuthStore from '../../store/authStore.tsx'
 import Loading from '../Loading/index.tsx'
 

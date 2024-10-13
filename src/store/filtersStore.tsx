@@ -2,8 +2,8 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 import { Contact } from '../components/parts/Filters/components/ContactFilter'
-import { AutoCompleteType, EmployeeFilter } from '../data/types/common'
 import { SocialMedia } from '../data/types/company'
+import { AutoCompleteType, EmployeeFilter } from '../data/types/index.types'
 
 export interface SearchParams {
   city: AutoCompleteType[]

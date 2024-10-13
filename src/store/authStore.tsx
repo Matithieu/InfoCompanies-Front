@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import { User } from '../data/types/user'
+import { User } from '../data/types/index.types'
 
 type Store = {
   authUser: User | null

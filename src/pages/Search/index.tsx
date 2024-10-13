@@ -8,7 +8,7 @@ import HeaderTitle from '../../components/common/Texts/HeaderTitle.tsx'
 import TableCompany from '../../components/parts/TableCompany/index.tsx'
 import { PaginationTableCompany } from '../../components/parts/TableCompany/type.ts'
 import { columnsTableCompanySearch } from '../../data/types/columns.ts'
-import { fetchCompanyBySearchTerm } from '../../utils/api/index.ts'
+import { fetchCompanyBySearchTerm } from '../../utils/api/queries.ts'
 import { useAppNavigate } from '../../utils/navigation/navigation.tsx'
 
 const SearchPage: FC = () => {

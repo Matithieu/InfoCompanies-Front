@@ -3,7 +3,7 @@ import { Box, Button, Switch, Typography } from '@mui/joy'
 
 import { listOfRegions } from '../../../../data/ListOfOptions/region'
 import { SearchParams } from '../../../../store/filtersStore'
-import { fetchAutoComplete } from '../../../../utils/api'
+import { fetchAutoComplete } from '../../../../utils/api/queries'
 import SimpleAutoComplete from '../../../common/AutoComplete/AutoComplete'
 import FetchAutoComplete from '../../../common/AutoComplete/FetchAutoComplete'
 import ComparatorInput from '../../../common/Input/ComparatorInput'

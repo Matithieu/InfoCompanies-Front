@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 
 import DetailsLeader from '../../components/parts/DetailsLeader/index.tsx'
-import { fetchLeaderById } from '../../utils/api/leaderAPI.ts'
+import { fetchLeaderById } from '../../utils/api/queries.ts'
 import { asserts, isNotNU } from '../../utils/assertion.util.ts'
 
 const LeaderPage = () => {

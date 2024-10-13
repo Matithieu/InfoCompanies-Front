@@ -2,7 +2,7 @@ import { ListDivider, Typography } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
 import { FC, Fragment } from 'react'
 
-import { fetchLeadersBySirens } from '../../../utils/api/leaderAPI'
+import { fetchLeadersBySirens } from '../../../utils/api/queries'
 import { PleaseSelectACompanyText } from '../../common/Texts'
 import DetailsLeader from '../DetailsLeader'
 

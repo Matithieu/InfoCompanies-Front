@@ -4,7 +4,7 @@ import { FC, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Company } from '../../../data/types/company'
-import { fetchCompanyScrap } from '../../../utils/api'
+import { fetchCompanyScrap } from '../../../utils/api/queries'
 import { canBeScrapped } from '../../parts/TableCompany/index.util'
 
 type ScrapCompanyButtonProps = {

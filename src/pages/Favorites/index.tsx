@@ -5,7 +5,7 @@ import { FC, useState } from 'react'
 import HeaderTitle from '../../components/common/Texts/HeaderTitle.tsx'
 import { PaginationTableCompany } from '../../components/parts/TableCompany/type.ts'
 import { Company } from '../../data/types/company.ts'
-import { fetchFavorites } from '../../utils/api/index.ts'
+import { fetchFavorites } from '../../utils/api/queries.ts'
 import FavoritesBody from './components/FavoritesBody.tsx'
 
 const Favorites: FC = () => {

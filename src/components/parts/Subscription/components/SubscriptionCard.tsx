@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { FC, useEffect } from 'react'
 
 import { ItemData } from '../../../../data/Stripe/itemData'
-import { stripeSubscription } from '../../../../utils/api'
+import { stripeSubscription } from '../../../../utils/api/queries'
 
 type SubscriptionCardProps = {
   item: ItemData

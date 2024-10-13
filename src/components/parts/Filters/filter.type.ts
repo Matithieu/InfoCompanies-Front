@@ -1,5 +1,5 @@
-import { EmployeeFilter } from '../../../data/types/common'
 import { SocialMedia } from '../../../data/types/company'
+import { EmployeeFilter } from '../../../data/types/index.types'
 import { Contact } from './components/ContactFilter'
 
 import { FiltersProps } from '.'
