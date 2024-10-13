@@ -23,7 +23,6 @@ import { useCompanyFilterStore } from '../../store/filtersStore.tsx'
 import { updateUserOnboarding } from '../../utils/api/mutations.ts'
 import { fetchCompaniesWithUrlAndPage } from '../../utils/api/queries.ts'
 import { constructURLWithFilter } from '../../utils/api/utils.ts'
-import { NNU } from '../../utils/assertion.util.ts'
 import { returnInverseOfBoolean } from '../../utils/utils.ts'
 
 const Dashboard: FC = () => {
@@ -43,7 +42,7 @@ const Dashboard: FC = () => {
 
   const { isLoading, data, error } = useQuery({
     queryKey: ['companies', url, dataPagination.page],
-    queryFn: () => fetchCompaniesWithUrlAndPage(NNU(url), dataPagination.page),
+    queryFn: () => fetchCompaniesWithUrlAndPage(url!, dataPagination.page),
     staleTime: Infinity,
     enabled: !!url,
   })
