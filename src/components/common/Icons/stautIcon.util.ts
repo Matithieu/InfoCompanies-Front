@@ -7,7 +7,7 @@ interface handleChangeStatutProps {
 export const handleChangeStatut = ({ company }: handleChangeStatutProps) => {
   let newStatus: CheckStatus
 
-  switch (company.checked) {
+  switch (company.userCompanyStatus.status) {
     case CheckStatus.NOT_DONE:
       newStatus = CheckStatus.TO_DO
       break
@@ -19,7 +19,7 @@ export const handleChangeStatut = ({ company }: handleChangeStatutProps) => {
       break
   }
 
-  company.checked = newStatus
+  company.userCompanyStatus.status = newStatus
 
   return company
 }

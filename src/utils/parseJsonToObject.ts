@@ -4,8 +4,9 @@ import {
   FinancialYear,
   Reviews,
   Schedule,
+  UserCompanyStatus,
 } from '../data/types/company'
-import { User } from '../data/types/user'
+import { User } from '../data/types/index.types'
 
 // https://github.com/typestack/class-transformer
 // use this library to transform json to class ??
@@ -21,51 +22,81 @@ export interface JSONObject {
   [x: string]: JSONValue
 }
 
-export function parseJsonToCompany(companyObj: JSONObject) {
+export interface JSONArray extends Array<JSONValue> {}
+
+export function parseJsonToCompany(
+  company: JSONObject,
+  userCompanyStatus: UserCompanyStatus,
+) {
   try {
     return {
-      id: companyObj.id,
-      companyName: companyObj.companyName,
-      sirenNumber: companyObj.sirenNumber,
-      nicNumber: companyObj.nicNumber,
-      legalForm: companyObj.legalForm,
-      apeCode: companyObj.apeCode,
-      address: companyObj.address,
-      postalCode: companyObj.postalCode,
-      city: companyObj.city,
-      region: companyObj.region,
-      dateRegistration: companyObj.registrationDate,
-      deregistrationDate: companyObj.deregistrationDate,
-      checked: CheckStatus.NOT_DONE,
+      id: company.id,
+      companyName: company.companyName,
+      sirenNumber: company.sirenNumber,
+      nicNumber: company.nicNumber,
+      legalForm: company.legalForm,
+      apeCode: company.apeCode,
+      address: company.address,
+      postalCode: company.postalCode,
+      city: company.city,
+      region: company.region,
+      dateRegistration: company.registrationDate,
+      deregistrationDate: company.deregistrationDate,
       financialYears: {
-        2018: parseJsonToFinancialYear(companyObj, 2018),
-        2019: parseJsonToFinancialYear(companyObj, 2019),
-        2020: parseJsonToFinancialYear(companyObj, 2020),
-        2021: parseJsonToFinancialYear(companyObj, 2021),
-        2022: parseJsonToFinancialYear(companyObj, 2022),
-        2023: parseJsonToFinancialYear(companyObj, 2023),
+        2018: parseJsonToFinancialYear(company, 2018),
+        2019: parseJsonToFinancialYear(company, 2019),
+        2020: parseJsonToFinancialYear(company, 2020),
+        2021: parseJsonToFinancialYear(company, 2021),
+        2022: parseJsonToFinancialYear(company, 2022),
+        2023: parseJsonToFinancialYear(company, 2023),
       },
-      industrySector: companyObj.industrySector,
-      phoneNumber: companyObj.phoneNumber,
-      website: companyObj.website,
-      reviews: parseJsonToReviews(companyObj),
-      schedule: parseJsonToSchedule(companyObj),
-      email: companyObj.email,
-      scrapingDate: companyObj.scrapingDate,
+      industrySector: company.industrySector,
+      phoneNumber: company.phoneNumber,
+      website: company.website,
+      reviews: parseJsonToReviews(company),
+      schedule: parseJsonToSchedule(company),
+      email: company.email,
+      scrapingDate: company.scrapingDate,
       socialMedia: {
-        facebook: companyObj.facebook,
-        twitter: companyObj.twitter,
-        linkedin: companyObj.linkedin,
-        instagram: companyObj.instagram,
-        youtube: companyObj.youtube,
+        facebook: company.facebook,
+        twitter: company.twitter,
+        linkedin: company.linkedin,
+        instagram: company.instagram,
+        youtube: company.youtube,
       },
-      companyCategory: companyObj.companyCategory,
-      numberOfEmployee: companyObj.numberOfEmployee,
-      lastProcessingDate: companyObj.lastProcessingDate,
-      dateCreation: companyObj.dateCreation,
+      companyCategory: company.companyCategory,
+      numberOfEmployee: company.numberOfEmployee,
+      lastProcessingDate: company.lastProcessingDate,
+      dateCreation: company.dateCreation,
+      userCompanyStatus: userCompanyStatus,
     } as Company
   } catch (e) {
     throw new Error('Error converting company JSON to company object: ' + e)
+  }
+}
+
+export const parseJsonToUserCompanyStatus = (userCompanyStatus: JSONObject) => {
+  // Data returned is an array because of the OneToMany relationship
+  if (userCompanyStatus === null || userCompanyStatus === undefined)
+    return {
+      id: 0,
+      userId: '',
+      companyId: 0,
+      status: CheckStatus.NOT_DONE,
+    } as UserCompanyStatus
+
+  try {
+    return {
+      id: userCompanyStatus.id,
+      userId: userCompanyStatus.userId,
+      companyId: userCompanyStatus.companyId,
+      status: userCompanyStatus.status,
+    } as UserCompanyStatus
+  } catch (e) {
+    throw new Error(
+      'Error converting user company status JSON to user company status object: ' +
+        e,
+    )
   }
 }
 

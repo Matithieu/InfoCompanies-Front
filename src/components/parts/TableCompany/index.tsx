@@ -6,10 +6,8 @@ import { FC, Fragment, useEffect, useState } from 'react'
 
 import { Column } from '../../../data/types/columns'
 import { Company } from '../../../data/types/company'
-import { Page } from '../../../data/types/companyDetails'
-import useCompaniesSeenStore from '../../../store/companySeenStore'
-import { fetchCompanyScrap } from '../../../utils/api/index'
-import { isNotNU } from '../../../utils/assertion.util'
+import { Page } from '../../../data/types/index.types'
+import { fetchCompanyScrap } from '../../../utils/api/queries'
 import { GlobalErrorButton } from '../../common/buttons/GlobalErrorButton'
 import Pagination from '../../common/buttons/Pagination'
 import { handleChangeStatut } from '../../common/Icons/stautIcon.util'
@@ -40,26 +38,15 @@ const TableCompany: FC<TableCompanyProps> = ({
   handleChangePage,
   handleDetailsClick,
 }) => {
-  const { companiesSeen } = useCompaniesSeenStore()
   const [tableData, setTableData] = useState<Page<Company> | undefined>(data)
   const [rowSelected, setRowSelected] = useState<number | null>(null)
   const queryClient = useQueryClient()
 
   useEffect(() => {
     if (data) {
-      if (isNotNU(companiesSeen) && isNotNU(data?.content)) {
-        for (const seenCompany of companiesSeen) {
-          for (const companyContent of data.content) {
-            if (seenCompany.companyId === companyContent.id) {
-              companyContent.checked = seenCompany.status
-            }
-          }
-        }
-      }
-
       setTableData(data)
     }
-  }, [data, companiesSeen])
+  }, [data])
 
   useEffect(() => {
     if (!data?.content || !isScrapping) return
@@ -130,6 +117,7 @@ const TableCompany: FC<TableCompanyProps> = ({
   }
 
   if (error) {
+    console.error('Error fetching companies:', error)
     return <GlobalErrorButton error={error} />
   }
 

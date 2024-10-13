@@ -14,7 +14,7 @@ import Chart from '../../../components/parts/Chart/index.tsx'
 import DetailsCompany from '../../../components/parts/DetailsCompany/index.tsx'
 import ListOfLeaders from '../../../components/parts/ListOfLeaders/index.tsx'
 import { Company } from '../../../data/types/company.ts'
-import { fetchCompanyById } from '../../../utils/api/index.ts'
+import { fetchCompanyById } from '../../../utils/api/queries.ts'
 import { asserts, isNotNU } from '../../../utils/assertion.util.ts'
 
 const CompanyPage: FC = () => {
@@ -96,7 +96,7 @@ const CompanyPage: FC = () => {
                 >
                   <StatutIcon
                     companyId={company.id}
-                    statut={company.checked}
+                    statut={company.userCompanyStatus.status}
                     style={{ fontSize: '1.5rem' }}
                   />
                 </IconButton>

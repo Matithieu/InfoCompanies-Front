@@ -54,7 +54,7 @@ const TableCompanyRow: FC<TableCompanyRowProps> = ({
               <Tooltip
                 arrow
                 placement="left"
-                title={getStatutEnumPretty(companyRow.checked)}
+                title={getStatutEnumPretty(companyRow.userCompanyStatus.status)}
               >
                 <button
                   id={index === 1 ? 'joyride-step-4' : ''}
@@ -70,7 +70,7 @@ const TableCompanyRow: FC<TableCompanyRowProps> = ({
                 >
                   <StatutIcon
                     companyId={companyRow.id}
-                    statut={companyRow.checked}
+                    statut={companyRow.userCompanyStatus.status}
                     style={{ fontSize: '20px' }}
                   />
                 </button>

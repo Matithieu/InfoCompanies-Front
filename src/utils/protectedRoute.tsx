@@ -10,35 +10,24 @@ import {
 } from '../components/common/Toasts/toasts'
 import Loading from '../pages/Loading'
 import useAuthStore from '../store/authStore'
-import useCompaniesSeenStore from '../store/companySeenStore'
-import { fetchCompanySeen, fetchUser } from './api'
+import { fetchUser } from './api/queries'
 import { isNotNU } from './assertion.util'
 import { routesPath } from './navigation/routesPath'
 
 export const ProtectedRoutes = () => {
   const { authUser, setAuthUser, requestLoading } = useAuthStore()
-  const { setCompaniesSeen } = useCompaniesSeenStore()
 
   const { data, isFetching, isSuccess } = useQuery({
     queryKey: ['user query', authUser],
     queryFn: () => (authUser === null ? fetchUser() : Promise.resolve(null)),
-    refetchOnWindowFocus: true,
-  })
-
-  const { data: companiesSeenData } = useQuery({
-    queryKey: ['companies'],
-    queryFn: () => fetchCompanySeen(),
     refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
   })
 
   useEffect(() => {
-    if (isNotNU(data) && companiesSeenData) {
+    if (isNotNU(data)) {
       setAuthUser(data)
-      setCompaniesSeen(companiesSeenData)
     }
-  }, [data, setAuthUser, companiesSeenData, setCompaniesSeen])
+  }, [data, setAuthUser])
 
   if (requestLoading || isFetching) {
     return <Loading />
@@ -59,29 +48,19 @@ export const ProtectedRoutes = () => {
 
 export const ProtectedSimpleRoutes = () => {
   const { authUser, setAuthUser, requestLoading } = useAuthStore()
-  const { setCompaniesSeen } = useCompaniesSeenStore()
   const urlLocation = window.location.pathname
 
   const { data, isFetching, isSuccess } = useQuery({
     queryKey: ['user query', authUser],
     queryFn: () => (authUser === null ? fetchUser() : Promise.resolve(null)),
-    refetchOnWindowFocus: true,
-  })
-
-  const { data: companiesSeenData } = useQuery({
-    queryKey: ['companies'],
-    queryFn: () => fetchCompanySeen(),
     refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
   })
 
   useEffect(() => {
-    if (isNotNU(data) && companiesSeenData) {
+    if (isNotNU(data)) {
       setAuthUser(data)
-      setCompaniesSeen(companiesSeenData)
     }
-  }, [data, setAuthUser, companiesSeenData, setCompaniesSeen])
+  }, [data, setAuthUser])
 
   if (requestLoading || isFetching) {
     return <Loading />

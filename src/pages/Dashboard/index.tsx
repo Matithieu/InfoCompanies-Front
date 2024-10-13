@@ -15,16 +15,15 @@ import ListOfLeaders from '../../components/parts/ListOfLeaders/index.tsx'
 import TableCompany from '../../components/parts/TableCompany/index.tsx'
 import { PaginationTableCompany } from '../../components/parts/TableCompany/type.ts'
 import { columnsTableCompany } from '../../data/types/columns.ts'
-import { RANDOM_UNSEEN_ENDPOINT } from '../../data/types/common.ts'
 import { Company } from '../../data/types/company.ts'
+import { RANDOM_UNSEEN_ENDPOINT } from '../../data/types/index.types.ts'
 import joyrideSteps from '../../onboarding/steps.tsx'
 import useAuthStore from '../../store/authStore.tsx'
 import { useCompanyFilterStore } from '../../store/filtersStore.tsx'
-import {
-  fetchCompaniesWithUrlAndPage,
-  updateUserOnboarding,
-} from '../../utils/api/index.ts'
-import { constructURLWithFilter } from '../../utils/api/util.ts'
+import { updateUserOnboarding } from '../../utils/api/mutations.ts'
+import { fetchCompaniesWithUrlAndPage } from '../../utils/api/queries.ts'
+import { constructURLWithFilter } from '../../utils/api/utils.ts'
+import { NNU } from '../../utils/assertion.util.ts'
 import { returnInverseOfBoolean } from '../../utils/utils.ts'
 
 const Dashboard: FC = () => {
@@ -35,7 +34,7 @@ const Dashboard: FC = () => {
 
   const { searchParams } = useCompanyFilterStore()
   const [company, setCompany] = useState<Company>()
-  const [url, setUrl] = useState(`${RANDOM_UNSEEN_ENDPOINT}?`)
+  const [url, setUrl] = useState<string | undefined>(undefined)
   const [dataPagination, setDataPagination] = useState<PaginationTableCompany>({
     page: 0,
     rowsPerPage: 10,
@@ -43,13 +42,10 @@ const Dashboard: FC = () => {
   })
 
   const { isLoading, data, error } = useQuery({
-    queryKey: ['companies', url, dataPagination, searchParams],
-    queryFn: () => fetchCompaniesWithUrlAndPage(url, dataPagination.page),
+    queryKey: ['companies', url, dataPagination.page],
+    queryFn: () => fetchCompaniesWithUrlAndPage(NNU(url), dataPagination.page),
     staleTime: Infinity,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-    refetchInterval: false,
+    enabled: !!url,
   })
 
   const onboardingMutation = useMutation({
@@ -65,6 +61,8 @@ const Dashboard: FC = () => {
 
   useEffect(() => {
     const changeURL = () => {
+      let newUrl = ''
+
       if (
         searchParams.city.length === 0 &&
         searchParams.industrySector.length === 0 &&
@@ -79,14 +77,17 @@ const Dashboard: FC = () => {
           ...prevDataPagination,
           page: 0,
         }))
-        setUrl(`${RANDOM_UNSEEN_ENDPOINT}?`)
-        return
+        newUrl = `${RANDOM_UNSEEN_ENDPOINT}?`
       } else {
         setDataPagination((prevDataPagination) => ({
           ...prevDataPagination,
           page: 0,
         }))
-        setUrl(constructURLWithFilter(searchParams, 'filter-by-parameters?'))
+        newUrl = constructURLWithFilter(searchParams, 'filter-by-parameters?')
+      }
+
+      if (url !== newUrl) {
+        setUrl(newUrl)
       }
     }
 

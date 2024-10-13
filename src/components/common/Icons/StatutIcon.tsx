@@ -5,8 +5,7 @@ import { useMutation } from '@tanstack/react-query'
 import { FC } from 'react'
 
 import { CheckStatus } from '../../../data/types/company'
-import useCompaniesSeenStore from '../../../store/companySeenStore'
-import { updateSeenCompany } from '../../../utils/api'
+import { updateSeenCompany } from '../../../utils/api/mutations'
 
 type StatutIconProps = {
   companyId: number
@@ -15,8 +14,6 @@ type StatutIconProps = {
 }
 
 const StatutIcon: FC<StatutIconProps> = ({ companyId, statut, style }) => {
-  const { companiesSeen, setCompaniesSeen } = useCompaniesSeenStore()
-
   const mutation = useMutation({
     mutationFn: (status: CheckStatus) => updateSeenCompany(companyId, status),
     onError: (error) => {
@@ -26,26 +23,6 @@ const StatutIcon: FC<StatutIconProps> = ({ companyId, statut, style }) => {
 
   const handleStatusUpdate = (newStatus: CheckStatus) => {
     mutation.mutate(newStatus)
-
-    const companyExists = companiesSeen?.some(
-      (company) => company.companyId === companyId,
-    )
-
-    if (companyExists && companiesSeen) {
-      setCompaniesSeen(
-        companiesSeen.map((company) =>
-          company.companyId === companyId
-            ? { ...company, status: newStatus }
-            : company,
-        ),
-      )
-    } else if (companiesSeen) {
-      // If the company does not exist, add it to the list
-      setCompaniesSeen([
-        ...companiesSeen,
-        { companyId, status: newStatus, userId: 1 },
-      ])
-    }
   }
 
   const getIcon = () => {

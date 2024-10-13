@@ -1,5 +1,5 @@
 import { Company } from '../../../data/types/company'
-import { formatDate, remplaceBackSlashInDate } from '../../../utils/date.util'
+import { remplaceBackSlashInDate } from '../../../utils/date.util'
 
 export const canBeScrapped = (
   company: Company,
@@ -7,13 +7,24 @@ export const canBeScrapped = (
   isError: boolean,
   isFetching: boolean,
 ): boolean => {
+  const scrapingDateExists =
+    company.scrapingDate !== null && company.scrapingDate !== undefined
+
+  const lastScrapingDate = scrapingDateExists
+    ? new Date(remplaceBackSlashInDate(company.scrapingDate))
+    : null
+  const now = new Date()
+
+  // If the last scraping date is less than 24 hours ago, we don't scrap
+  const isLessThanOneDay =
+    lastScrapingDate !== null &&
+    now.getTime() - lastScrapingDate.getTime() < 24 * 60 * 60 * 1000 // 24 hours
+
   const doScrap =
     !data &&
     !isError &&
     !isFetching &&
-    (company.scrapingDate === null ||
-      new Date(formatDate(remplaceBackSlashInDate(company.scrapingDate))) < // date is is in yyyy/mm/dd format and needs to be converted to dd/mm/yyyy
-        new Date())
+    (!scrapingDateExists || !isLessThanOneDay)
 
   return doScrap
 }
