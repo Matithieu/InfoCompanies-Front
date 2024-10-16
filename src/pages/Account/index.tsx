@@ -10,16 +10,19 @@ import {
 } from '@mui/joy'
 import { FC } from 'react'
 
+import { LoadingText } from '../../components/common/Loading/TextLoading'
 import HeaderTitle from '../../components/common/Texts/HeaderTitle'
+import { formatMessage, formatMessagePlural } from '../../services/intl/intl'
 import useAuthStore from '../../store/authStore'
 import ViewInvoices from '../Purchasing/invoice'
+import messages from './Account.messages'
 import Account from './component/Account'
 
 const AccountPage: FC = () => {
   const { authUser, requestLoading } = useAuthStore()
 
   if (requestLoading) {
-    return <div>Chargement...</div>
+    return <LoadingText />
   } else {
     return (
       <Grid>
@@ -58,10 +61,10 @@ const AccountPage: FC = () => {
               tabFlex={1}
             >
               <Tab indicatorInset sx={{ borderRadius: '6px 6px 0 0' }}>
-                Profile
+                {formatMessage(messages.accountProfile)}
               </Tab>
               <Tab indicatorInset sx={{ borderRadius: '6px 6px 0 0' }}>
-                Factures
+                {formatMessagePlural(messages.invoices)}
               </Tab>
             </TabList>
             <Stack

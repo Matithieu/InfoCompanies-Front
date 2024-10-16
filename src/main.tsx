@@ -16,6 +16,7 @@ import { ToastContainer } from 'react-toastify'
 
 import App from './App.jsx'
 import { fontFamily } from './pages/Layout/layout.util.ts'
+import LocaleProvider from './containers/LocaleProvider/index.tsx'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -39,18 +40,20 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <MaterialCssVarsProvider theme={{ [MATERIAL_THEME_ID]: materialTheme }}>
           <CssVarsProvider theme={fontFamily}>
             <CssBaseline />
-            <App />
-            <ToastContainer
-              closeOnClick
-              draggable
-              pauseOnFocusLoss
-              pauseOnHover
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              position="top-right"
-              rtl={false}
-            />
+            <LocaleProvider>
+              <App />
+              <ToastContainer
+                closeOnClick
+                draggable
+                pauseOnFocusLoss
+                pauseOnHover
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                position="top-right"
+                rtl={false}
+              />
+            </LocaleProvider>
           </CssVarsProvider>
         </MaterialCssVarsProvider>
       </Router>

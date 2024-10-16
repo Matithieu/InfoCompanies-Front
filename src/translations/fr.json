@@ -1,0 +1,7 @@
+{
+  "intl.defaultMessages": "Messages par défaut",
+  "intl.invoices": "{itemCount, plural, one {Facture} other {Factures}}",
+  "intl.loading": "Chargement...",
+  "pages.account.welcomingMessage": "Bienvenue, {name} !",
+  "tabs.account": "Profil"
+}
