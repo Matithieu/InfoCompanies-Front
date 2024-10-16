@@ -1,10 +1,14 @@
 import { defineMessages } from 'react-intl'
 
-const intlScope = 'intl'
+const scope = 'intl'
 
 export default defineMessages({
   loading: {
     defaultMessage: 'Chargement...',
-    id: `${intlScope}.loading`,
+    id: `${scope}.loading`,
+  },
+  workInProgress: {
+    defaultMessage: 'Work in progres !!',
+    id: `${scope}.workInProgress`,
   },
 })

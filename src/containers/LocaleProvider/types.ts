@@ -16,3 +16,10 @@ export const appLocaleToTranslationMessages: Record<
   [appLocales.enUS]: enTranslationMessages,
   [appLocales.frFR]: frTranslationMessages,
 }
+
+export const appLocaleNames: {
+  [key in AppLocale]: string
+} = {
+  [appLocales.enUS]: 'English',
+  [appLocales.frFR]: 'Français',
+}

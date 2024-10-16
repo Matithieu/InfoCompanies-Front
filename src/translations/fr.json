@@ -1,7 +1,10 @@
 {
   "intl.defaultMessages": "Messages par défaut",
   "intl.invoices": "{itemCount, plural, one {Facture} other {Factures}}",
+  "intl.language": "Langue",
   "intl.loading": "Chargement...",
+  "intl.workInProgress": "Traveaux en cours...",
   "pages.account.welcomingMessage": "Bienvenue, {name} !",
-  "tabs.account": "Profil"
+  "tabs.account": "Profil",
+  "tabs.settings": "Paramètres"
 }
