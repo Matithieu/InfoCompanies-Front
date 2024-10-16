@@ -1,0 +1,7 @@
+{
+  "intl.defaultMessages": "Default messages",
+  "intl.invoices": "{itemCount, plural, one {Invoice} other {Invoices}}",
+  "intl.loading": "Loading...",
+  "pages.account.welcomingMessage": "Bienvenue, {name} !",
+  "tabs.account": "Account"
+}

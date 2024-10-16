@@ -35,6 +35,8 @@ function App() {
     }
   }, [])
 
+  // Todo: Move all the containers from main.tsx to here
+  // Routes in a container
   return (
     <HelmetProvider>
       <Suspense fallback={<Loading />}>
