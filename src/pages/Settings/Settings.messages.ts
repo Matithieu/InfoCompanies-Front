@@ -9,4 +9,8 @@ export default defineMessages({
     defaultMessage: 'Langue',
     id: 'intl.language',
   },
+  appearance: {
+    defaultMessage: 'Apparence',
+    id: 'tabs.settings.appearance',
+  },
 })

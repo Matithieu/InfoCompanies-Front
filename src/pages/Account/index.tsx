@@ -1,16 +1,8 @@
-import {
-  Box,
-  Grid,
-  Stack,
-  Tab,
-  tabClasses,
-  TabList,
-  TabPanel,
-  Tabs,
-} from '@mui/joy'
+import { Box, Grid } from '@mui/joy'
 import { FC } from 'react'
 
 import { LoadingText } from '../../components/common/Loading/TextLoading'
+import Tabs from '../../components/common/Tabs'
 import HeaderTitle from '../../components/common/Texts/HeaderTitle'
 import { formatMessage, formatMessagePlural } from '../../services/intl/intl'
 import useAuthStore from '../../store/authStore'
@@ -35,56 +27,21 @@ const AccountPage: FC = () => {
           }}
         >
           <Box sx={{ px: { xs: 2, md: 6 } }}>
-            <HeaderTitle text={`Bienvenue, ${authUser?.firstName}`} />
+            <HeaderTitle
+              text={`${formatMessage(messages.welcome, { name: authUser?.firstName })}`}
+            />
           </Box>
 
-          <Tabs defaultValue={0} sx={{ backgroundColor: 'transparent' }}>
-            <TabList
-              size="sm"
-              sx={{
-                pl: { xs: 0, md: 4 },
-                justifyContent: 'left',
-                [`&& .${tabClasses.root}`]: {
-                  fontWeight: '600',
-                  flex: 'initial',
-                  color: 'text.tertiary',
-                  [`&.${tabClasses.selected}`]: {
-                    bgcolor: 'transparent',
-                    color: 'text.primary',
-                    '&::after': {
-                      height: '2px',
-                      bgcolor: 'primary.500',
-                    },
-                  },
-                },
-              }}
-              tabFlex={1}
-            >
-              <Tab indicatorInset sx={{ borderRadius: '6px 6px 0 0' }}>
-                {formatMessage(messages.accountProfile)}
-              </Tab>
-              <Tab indicatorInset sx={{ borderRadius: '6px 6px 0 0' }}>
-                {formatMessagePlural(messages.invoices)}
-              </Tab>
-            </TabList>
-            <Stack
-              spacing={4}
-              sx={{
-                display: 'flex',
-                maxWidth: '800px',
-                mx: 'auto',
-                px: { xs: 2, md: 6 },
-                py: { xs: 2, md: 3 },
-              }}
-            >
-              <TabPanel value={0}>
-                <Account />
-              </TabPanel>
-              <TabPanel value={1}>
-                <ViewInvoices />
-              </TabPanel>
-            </Stack>
-          </Tabs>
+          <Tabs
+            tabsContent={[
+              <Account key={formatMessage(messages.accountProfile)} />,
+              <ViewInvoices key={formatMessagePlural(messages.invoices)} />,
+            ]}
+            tabsName={[
+              formatMessage(messages.accountProfile),
+              formatMessagePlural(messages.invoices),
+            ]}
+          />
         </Box>
       </Grid>
     )

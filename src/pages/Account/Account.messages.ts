@@ -3,9 +3,9 @@ import { defineMessages } from 'react-intl'
 const scope = 'pages.account'
 
 export default defineMessages({
-  welcomingMessage: {
+  welcome: {
     defaultMessage: 'Bievenue, {name}!',
-    id: `${scope}.welcomingMessage`,
+    id: `${scope}.welcome`,
   },
   accountProfile: {
     defaultMessage: 'Profil',
@@ -14,5 +14,9 @@ export default defineMessages({
   invoices: {
     defaultMessage: '{itemCount, plural, one {Facture} other {Factures}}',
     id: 'intl.invoices',
+  },
+  accountDetails: {
+    defaultMessage: 'Détails du compte',
+    id: `${scope}.accountDetails`,
   },
 })

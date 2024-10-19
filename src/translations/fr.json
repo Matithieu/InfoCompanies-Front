@@ -1,10 +1,18 @@
 {
   "intl.defaultMessages": "Messages par défaut",
   "intl.invoices": "{itemCount, plural, one {Facture} other {Factures}}",
+  "intl.firstName": "Prénom",
+  "intl.lastName": "Nom de famille",
+  "intl.edit": "Modifier",
+  "intl.email": "Email",
+  "intl.phone": "Téléphone",
   "intl.language": "Langue",
   "intl.loading": "Chargement...",
+  "intl.save": "Enregistrer",
   "intl.workInProgress": "Traveaux en cours...",
-  "pages.account.welcomingMessage": "Bienvenue, {name} !",
+  "pages.account.welcome": "Bienvenue, {name} !",
+  "pages.account.accountDetails": "Détails du compte",
   "tabs.account": "Profil",
-  "tabs.settings": "Paramètres"
+  "tabs.settings": "Paramètres",
+  "tabs.settings.appearance": "Apparence"
 }

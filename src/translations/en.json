@@ -1,10 +1,18 @@
 {
   "intl.defaultMessages": "Default messages",
   "intl.invoices": "{itemCount, plural, one {Invoice} other {Invoices}}",
+  "intl.firstName": "First name",
+  "intl.lastName": "Last name",
+  "intl.edit": "Edit",
+  "intl.email": "Email",
+  "intl.phone": "Phone",
   "intl.language": "Language",
   "intl.loading": "Loading...",
+  "intl.save": "Save",
   "intl.workInProgress": "Work in progress...",
-  "pages.account.welcomingMessage": "Bienvenue, {name} !",
+  "pages.account.welcome": "Welcome, {name} !",
+  "pages.account.accountDetails": "Account details",
   "tabs.account": "Account",
-  "tabs.settings": "Settings"
+  "tabs.settings": "Settings",
+  "tabs.settings.appearance": "Appearance"
 }

@@ -14,9 +14,12 @@ import { ChangeEvent, FC, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { User } from '../../../data/types/index.types'
+import commonMessages from '../../../services/intl/common.messages'
+import { formatMessage } from '../../../services/intl/intl'
 import useAuthStore from '../../../store/authStore'
 import { fetchUser, updateUser } from '../../../utils/api/queries'
 import { isNotNU } from '../../../utils/assertion.util'
+import AccountMessages from '../Account.messages'
 
 const Account: FC = () => {
   const { authUser, setAuthUser } = useAuthStore()
@@ -70,9 +73,17 @@ const Account: FC = () => {
 
   if (isNotNU(editedUser)) {
     return (
-      <Card>
+      <Card
+        sx={{
+          display: 'flex',
+          maxWidth: '800px',
+          mx: 'auto',
+          px: { xs: 2, md: 6 },
+          py: { xs: 2, md: 3 },
+        }}
+      >
         <Typography gutterBottom level="h3">
-          Détails du compte
+          {formatMessage(AccountMessages.accountDetails)}
         </Typography>
         <Divider />
 
@@ -80,7 +91,9 @@ const Account: FC = () => {
           <Grid container spacing={3}>
             <Grid md={12} xs={12}>
               <FormControl>
-                <FormLabel htmlFor="firstName">First Name</FormLabel>
+                <FormLabel htmlFor="firstName">
+                  {formatMessage(commonMessages.firstName)}
+                </FormLabel>
                 <Input
                   disabled={!editMode}
                   id="firstName"
@@ -89,7 +102,10 @@ const Account: FC = () => {
                 />
               </FormControl>
               <FormControl>
-                <FormLabel htmlFor="lastName">Last Name</FormLabel>
+                <FormLabel htmlFor="lastName">
+                  {' '}
+                  {formatMessage(commonMessages.lastName)}
+                </FormLabel>
                 <Input
                   disabled={!editMode}
                   id="lastName"
@@ -100,7 +116,10 @@ const Account: FC = () => {
             </Grid>
             <Grid md={6} xs={12}>
               <FormControl>
-                <FormLabel htmlFor="phone">Phone</FormLabel>
+                <FormLabel htmlFor="phone">
+                  {' '}
+                  {formatMessage(commonMessages.phone)}
+                </FormLabel>
                 <Input
                   disabled={!editMode}
                   id="phone"
@@ -127,7 +146,7 @@ const Account: FC = () => {
                     variant="outlined"
                     onClick={handleSave}
                   >
-                    Sauvegarder
+                    {formatMessage(commonMessages.save)}
                   </Button>
                 ) : (
                   <Button
@@ -135,7 +154,7 @@ const Account: FC = () => {
                     variant="outlined"
                     onClick={handleEdit}
                   >
-                    Editer
+                    {formatMessage(commonMessages.edit)}
                   </Button>
                 )}
               </>
