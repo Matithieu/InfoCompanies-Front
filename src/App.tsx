@@ -14,10 +14,10 @@ import { HelmetProvider } from 'react-helmet-async'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 
+import LoadingCircular from './components/common/Loading/LoadingCircular.tsx'
 import LocaleProvider from './containers/LocaleProvider/index.tsx'
 import AppRouter from './containers/Routes/index.tsx'
 import { fontFamily } from './pages/Layout/layout.util.ts'
-import Loading from './pages/Loading/index.tsx'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -52,7 +52,7 @@ function App() {
               <CssBaseline />
               <LocaleProvider>
                 <HelmetProvider>
-                  <Suspense fallback={<Loading />}>
+                  <Suspense fallback={<LoadingCircular />}>
                     <AppRouter />
                   </Suspense>
                 </HelmetProvider>

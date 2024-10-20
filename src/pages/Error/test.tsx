@@ -2,7 +2,7 @@ import { Box, Stack, Typography } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
 import { FC, useEffect, useRef, useState } from 'react'
 
-import TryWithoutCBButton from '../../components/common/buttons/TryWithoutCVButton.tsx'
+import TryWithoutCBButton from '../../components/common/Buttons/TryWithoutCVButton.tsx'
 import Footer from '../../components/pages/footer'
 import Filters from '../../components/parts/Filters/index.tsx'
 import Subscriptions from '../../components/parts/Subscription/index.tsx'

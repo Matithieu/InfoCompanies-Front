@@ -2,10 +2,10 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
+import LoadingCircular from '../../components/common/Loading/LoadingCircular.tsx'
 import { ItemData } from '../../data/Stripe/itemData.ts'
 import { User } from '../../data/types/index.types.ts'
 import useAuthStore from '../../store/authStore.tsx'
-import Loading from '../Loading/index.tsx'
 
 const fetchSubscription = async (itemData: ItemData, user: User) => {
   const response = await fetch(
@@ -72,13 +72,13 @@ function Payment() {
     refetchOnReconnect: false,
   })
 
-  if (loading || isPending) return <Loading />
+  if (loading || isPending) return <LoadingCircular />
 
   if (isSuccess && data) window.location.replace(data)
 
   if (isError) return <div>{error.message}</div>
 
-  return <Loading />
+  return <LoadingCircular />
 }
 
 export default Payment

@@ -19,10 +19,7 @@ import SearchPage from '../../pages/Search/index.tsx'
 import SettingsPage from '../../pages/Settings/index.tsx'
 import Payment from '../../pages/Stripe/index.tsx'
 import SubscriptionPage from '../../pages/Subscription/index.tsx'
-import {
-  ProtectedRoutes,
-  ProtectedSimpleRoutes,
-} from '../../utils/protectedRoute.tsx'
+import { ProtectedRoutes, ProtectedSimpleRoutes } from './ProtectedRoutes.tsx'
 
 const Dashboard = lazy(() => import('../../pages/Dashboard/index.tsx'))
 

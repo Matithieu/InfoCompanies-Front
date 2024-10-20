@@ -4,7 +4,7 @@ import {
   LoginButton,
   QuotaExceededButton,
   SelectSubscriptionButton,
-} from '../buttons/AuthButtons'
+} from '../Buttons/AuthButtons'
 
 export function toastErrorConnect() {
   return toast.error(

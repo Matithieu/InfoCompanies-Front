@@ -2,17 +2,17 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 
+import LoadingCircular from '../../components/common/Loading/LoadingCircular'
 import {
   toastErrorConnect,
   toastErrorReconnect,
   toastSuccessAlreadySubscribed,
   toastWarnSelectSubscription,
-} from '../components/common/Toasts/toasts'
-import Loading from '../pages/Loading'
-import useAuthStore from '../store/authStore'
-import { fetchUser } from './api/queries'
-import { isNotNU } from './assertion.util'
-import { routesPath } from './navigation/routesPath'
+} from '../../components/common/Toasts/toasts'
+import useAuthStore from '../../store/authStore'
+import { fetchUser } from '../../utils/api/queries'
+import { isNotNU } from '../../utils/assertion.util'
+import { routesPath } from '../../utils/navigation/routesPath'
 
 export const ProtectedRoutes = () => {
   const { authUser, setAuthUser, requestLoading } = useAuthStore()
@@ -30,7 +30,7 @@ export const ProtectedRoutes = () => {
   }, [data, setAuthUser])
 
   if (requestLoading || isFetching) {
-    return <Loading />
+    return <LoadingCircular />
   }
 
   if (authUser === null && !isSuccess) {
@@ -63,7 +63,7 @@ export const ProtectedSimpleRoutes = () => {
   }, [data, setAuthUser])
 
   if (requestLoading || isFetching) {
-    return <Loading />
+    return <LoadingCircular />
   }
 
   if (authUser === null && !isSuccess) {

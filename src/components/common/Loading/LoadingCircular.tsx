@@ -1,7 +1,8 @@
-import { Box, Typography } from '@mui/joy'
+import { Box } from '@mui/joy'
 import CircularProgress from '@mui/joy/CircularProgress'
+import { FC } from 'react'
 
-function Loading() {
+const LoadingCircular: FC = () => {
   return (
     <Box
       sx={{
@@ -16,13 +17,8 @@ function Loading() {
       }}
     >
       <CircularProgress />
-      <Typography level="h4" sx={{ mt: 2 }}>
-        Loading...
-      </Typography>
     </Box>
   )
 }
 
-export default Loading
-
-// If authUser is null, the fetch the user data from the server
+export default LoadingCircular
