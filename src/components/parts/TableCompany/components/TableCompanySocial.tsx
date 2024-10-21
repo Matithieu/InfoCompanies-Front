@@ -18,7 +18,7 @@ const TableCompanySocial: FC<TableCompanySocialProps> = ({ socialMedia }) => {
   }
 
   return (
-    <div id="joyride-step-3">
+    <div id="joyride-step-3" style={{ display: 'flex', alignItems: 'center' }}>
       {socialMedia.facebook && (
         <LinkIcon
           icon={<FacebookIcon fontSize="medium" />}
