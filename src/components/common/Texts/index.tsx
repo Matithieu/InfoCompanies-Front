@@ -1,6 +1,9 @@
 import { Typography } from '@mui/material'
 import { FC } from 'react'
 
+import { formatMessage } from '../../../services/intl/intl'
+import textsMessages from './texts.messages'
+
 export const PleaseSelectACompanyText: FC = () => {
   return (
     <div
@@ -11,7 +14,9 @@ export const PleaseSelectACompanyText: FC = () => {
         justifyContent: 'center',
       }}
     >
-      <Typography variant="h6">Veuillez sélectionner une entreprise</Typography>
+      <Typography variant="h6">
+        {formatMessage(textsMessages.pleaseSelectACompany)}
+      </Typography>
     </div>
   )
 }

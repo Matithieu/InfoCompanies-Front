@@ -3,6 +3,8 @@ import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 
 import DetailsLeader from '../../components/parts/DetailsLeader/index.tsx'
+import commonMessages from '../../services/intl/common.messages.ts'
+import { formatMessage } from '../../services/intl/intl.tsx'
 import { fetchLeaderById } from '../../utils/api/queries.ts'
 import { asserts, isNotNU } from '../../utils/assertion.util.ts'
 
@@ -16,11 +18,11 @@ const LeaderPage = () => {
   })
 
   if (isLoading) {
-    return <a>Chargement ...</a>
+    return formatMessage(commonMessages.loading)
   }
 
   if (!isNotNU(leader)) {
-    return <a>Aucunes données trouvées</a>
+    return formatMessage(commonMessages.noAvailableData)
   }
 
   if (isNotNU(leader)) {

@@ -1,6 +1,8 @@
 import { Box, Button, Container, Typography } from '@mui/joy'
 
+import { formatMessage } from '../../services/intl/intl'
 import { useAppNavigate } from '../../utils/navigation/navigation'
+import errorMessages from './error.messages'
 
 export default function Page404() {
   const { navigation } = useAppNavigate()
@@ -18,7 +20,7 @@ export default function Page404() {
           404
         </Typography>
         <Typography color="neutral" level="h4">
-          Oups! La page que vous cherchez n&apos;existe pas.
+          {formatMessage(errorMessages.description)}
         </Typography>
         <Button
           color="primary"
@@ -28,7 +30,7 @@ export default function Page404() {
             navigation.toHome()
           }}
         >
-          Retour à l&apos;accueil
+          {formatMessage(errorMessages.buttonText)}
         </Button>
       </Box>
     </Container>

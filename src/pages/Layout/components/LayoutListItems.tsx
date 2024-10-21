@@ -13,7 +13,9 @@ import {
 } from '@mui/joy'
 import { FC, Fragment } from 'react'
 
+import { formatMessage } from '../../../services/intl/intl'
 import { useAppNavigate } from '../../../utils/navigation/navigation'
+import layoutMessages from '../layout.messages'
 import LayoutAvatarItem from './LayoutAvatarItem'
 
 interface LayoutListItemsProps {
@@ -58,7 +60,9 @@ const LayoutListItems: FC<LayoutListItemsProps> = ({ open }) => {
               />
               {open && (
                 <ListItemContent>
-                  <Typography level="body-md">Dashboard</Typography>
+                  <Typography level="body-md">
+                    {formatMessage(layoutMessages.dashboard)}
+                  </Typography>
                 </ListItemContent>
               )}
             </ListItemButton>
@@ -77,7 +81,9 @@ const LayoutListItems: FC<LayoutListItemsProps> = ({ open }) => {
               />
               {open && (
                 <ListItemContent>
-                  <Typography level="body-md">To&nbsp;Do</Typography>
+                  <Typography level="body-md">
+                    {formatMessage(layoutMessages.toDo)}
+                  </Typography>
                 </ListItemContent>
               )}
             </ListItemButton>
@@ -107,7 +113,9 @@ const LayoutListItems: FC<LayoutListItemsProps> = ({ open }) => {
               />
               {open && (
                 <ListItemContent>
-                  <Typography level="body-md">Paramètres</Typography>
+                  <Typography level="body-md">
+                    {formatMessage(layoutMessages.settings)}
+                  </Typography>
                 </ListItemContent>
               )}
             </ListItemButton>

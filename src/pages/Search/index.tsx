@@ -3,13 +3,14 @@ import { useQuery } from '@tanstack/react-query'
 import { FC, useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
-import Seo from '../../components/common/Seo/index.tsx'
 import HeaderTitle from '../../components/common/Texts/HeaderTitle.tsx'
 import TableCompany from '../../components/parts/TableCompany/index.tsx'
 import { PaginationTableCompany } from '../../components/parts/TableCompany/type.ts'
 import { columnsTableCompanySearch } from '../../data/types/columns.ts'
+import { formatMessage } from '../../services/intl/intl.tsx'
 import { fetchCompanyBySearchTerm } from '../../utils/api/queries.ts'
 import { useAppNavigate } from '../../utils/navigation/navigation.tsx'
+import searchMessages from './search.messages.ts'
 
 const SearchPage: FC = () => {
   const { navigation } = useAppNavigate()
@@ -54,13 +55,11 @@ const SearchPage: FC = () => {
 
   return (
     <Grid flexDirection="column" sx={{ px: { xs: 2, md: 6 } }}>
-      <Seo
-        description="Search for companies"
-        name="Search"
-        title={searchTerm ?? ''}
-        type="website"
+      <HeaderTitle
+        text={formatMessage(searchMessages.companyFor, {
+          searchValue: searchTerm,
+        })}
       />
-      <HeaderTitle text={`Entreprises pour "${searchTerm}"`} />
       <Grid md={4} sm={6} sx={{ marginBottom: 7.2 }} xs={12} />
       <Grid container justifyContent="center">
         <Grid md={12} xs={12}>

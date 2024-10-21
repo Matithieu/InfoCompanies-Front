@@ -14,6 +14,8 @@ import Chart from '../../../components/parts/Chart/index.tsx'
 import DetailsCompany from '../../../components/parts/DetailsCompany/index.tsx'
 import ListOfLeaders from '../../../components/parts/ListOfLeaders/index.tsx'
 import { Company } from '../../../data/types/company.ts'
+import commonMessages from '../../../services/intl/common.messages.ts'
+import { formatMessage } from '../../../services/intl/intl.tsx'
 import { fetchCompanyById } from '../../../utils/api/queries.ts'
 import { asserts, isNotNU } from '../../../utils/assertion.util.ts'
 
@@ -53,7 +55,7 @@ const CompanyPage: FC = () => {
   }
 
   if (isPending) {
-    return <div>Chargement des données...</div>
+    return <p>{formatMessage(commonMessages.loading)}</p>
   } else if (isNotNU(company)) {
     return (
       <Box sx={{ display: 'flex' }}>
@@ -67,7 +69,7 @@ const CompanyPage: FC = () => {
             flexGrow: 1,
           }}
         >
-          <div key={company.id} style={{}}>
+          <div key={company.id}>
             <div
               style={{
                 display: 'flex',

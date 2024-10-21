@@ -5,8 +5,10 @@ import { FC, useState } from 'react'
 import HeaderTitle from '../../components/common/Texts/HeaderTitle.tsx'
 import { PaginationTableCompany } from '../../components/parts/TableCompany/type.ts'
 import { Company } from '../../data/types/company.ts'
+import { formatMessage } from '../../services/intl/intl.tsx'
 import { fetchFavorites } from '../../utils/api/queries.ts'
 import FavoritesBody from './components/FavoritesBody.tsx'
+import favoritesMessages from './favorites.messages.ts'
 
 const Favorites: FC = () => {
   const [company, setCompany] = useState<Company>()
@@ -44,7 +46,7 @@ const Favorites: FC = () => {
             mt: 2,
           }}
         >
-          Aucune entreprise en To Do !
+          {formatMessage(favoritesMessages.noCompanyInToDo)}
         </Typography>
       ) : (
         <FavoritesBody

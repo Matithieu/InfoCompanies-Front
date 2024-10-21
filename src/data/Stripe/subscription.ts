@@ -1,4 +1,6 @@
+import { formatMessage } from '../../services/intl/intl'
 import { ItemData } from './itemData'
+import subscriptionMessages from './subscription.messages'
 
 const STRIPE_PRICE_ID_FREE = import.meta.env.VITE_STRIPE_PRICE_ID_FREE
 const STRIPE_PRICE_ID_BASIC = import.meta.env.VITE_STRIPE_PRICE_ID_BASIC
@@ -14,15 +16,19 @@ const returnIdIfEmpty = (data: string | undefined, id: string) => {
 
 export const products: ItemData[] = [
   {
-    name: 'Abonnement gratuit',
-    description: '15 requêtes par jour.',
+    name: formatMessage(subscriptionMessages.freePlanName),
+    description: formatMessage(subscriptionMessages.requestPerDay, {
+      requestCount: 15,
+    }),
     price: 0,
     id: returnIdIfEmpty(STRIPE_PRICE_ID_FREE, 'price_1PdHWLKjCboMtBPjo3G7vEiC'),
     image: 'https://source.unsplash.com/NUoPWImmjCU',
   },
   {
-    name: 'Abonnement basique',
-    description: '100 requêtes par jour.',
+    name: formatMessage(subscriptionMessages.basicPlanName),
+    description: formatMessage(subscriptionMessages.requestPerDay, {
+      requestCount: 100,
+    }),
     price: 25,
     id: returnIdIfEmpty(
       STRIPE_PRICE_ID_BASIC,
@@ -32,8 +38,10 @@ export const products: ItemData[] = [
     isFavorite: true,
   },
   {
-    name: 'Abonnement premium',
-    description: '200 requêtes par jour.',
+    name: formatMessage(subscriptionMessages.premiumPlanName),
+    description: formatMessage(subscriptionMessages.requestPerDay, {
+      requestCount: 200,
+    }),
     price: 35,
     id: returnIdIfEmpty(
       STRIPE_PRICE_ID_PREMIUM,

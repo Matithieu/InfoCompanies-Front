@@ -1,5 +1,7 @@
 import { SocialMedia } from '../../../data/types/company'
 import { EmployeeFilter } from '../../../data/types/index.types'
+import commonMessages from '../../../services/intl/common.messages'
+import { formatMessage } from '../../../services/intl/intl'
 import { Contact } from './components/ContactFilter'
 
 import { FiltersProps } from '.'
@@ -7,15 +9,15 @@ import { FiltersProps } from '.'
 export const filterDescriptions: {
   [key in FiltersProps['filtersToShow'][number]]: string
 } = {
-  city: 'Ville',
-  region: 'Région',
-  industrySector: "Secteur d'activité",
-  legalForm: 'Forme juridique',
-  employee: 'Nombre de salariés',
-  socials: 'Réseaux sociaux',
-  contact: 'Contact',
-  isCompanySeen: 'Entreprises non vues',
-  searchButton: 'Rechercher', // Not needed because not in the dropdown
+  city: formatMessage(commonMessages.city),
+  region: formatMessage(commonMessages.region),
+  industrySector: formatMessage(commonMessages.industrySector),
+  legalForm: formatMessage(commonMessages.legalForm),
+  employee: formatMessage(commonMessages.employeeNumber),
+  socials: formatMessage(commonMessages.socials),
+  contact: formatMessage(commonMessages.contact),
+  isCompanySeen: formatMessage(commonMessages.isCompanySeen),
+  searchButton: formatMessage(commonMessages.search), // Not needed because not in the dropdown
 }
 
 export type SelectedFilterType =
@@ -29,7 +31,7 @@ export type SelectedFilterType =
 export const contactFilterDescription: {
   [key in keyof Contact]: string
 } = {
-  email: 'E-mail',
-  phone: 'Téléphone',
-  website: 'Site web',
+  email: formatMessage(commonMessages.email),
+  phone: formatMessage(commonMessages.phone),
+  website: formatMessage(commonMessages.website),
 }

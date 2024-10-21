@@ -16,7 +16,10 @@ import {
   getTotalOfTurnOver,
   TurnOver,
 } from '../../../data/types/company'
+import commonMessages from '../../../services/intl/common.messages'
+import { formatMessage } from '../../../services/intl/intl'
 import { PleaseSelectACompanyText } from '../../common/Texts'
+import chartMessages from './chart.messages'
 
 type ChartProps = {
   company: Company | undefined
@@ -57,14 +60,16 @@ const Chart: FC<ChartProps> = ({ company }) => {
   if (company === undefined) {
     return (
       <a style={{ display: 'flex', justifyContent: 'center' }}>
-        Pas de données
+        {formatMessage(commonMessages.noAvailableData)}
       </a>
     )
   } else if (turnOver) {
     return (
       <Fragment>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <Typography level="h4">Chiffre d&apos;affaire</Typography>
+          <Typography level="h4">
+            {formatMessage(commonMessages.turnOver)}
+          </Typography>
         </div>
         <ResponsiveContainer>
           <LineChart
@@ -87,7 +92,7 @@ const Chart: FC<ChartProps> = ({ company }) => {
                   fill: theme.palette.text.primary,
                 }}
               >
-                En Euro (€)
+                {formatMessage(chartMessages.yAxisLabel)}
               </Label>
             </YAxis>
             <Tooltip
@@ -102,7 +107,7 @@ const Chart: FC<ChartProps> = ({ company }) => {
                 if (value === 0) {
                   return [
                     <Typography key="no-data" color="warning">
-                      Pas de données
+                      {formatMessage(commonMessages.noAvailableData)}
                     </Typography>,
                   ]
                 } else {

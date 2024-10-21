@@ -2,6 +2,8 @@ import { ListDivider, Typography } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
 import { FC, Fragment } from 'react'
 
+import commonMessages from '../../../services/intl/common.messages'
+import { formatMessage } from '../../../services/intl/intl'
 import { fetchLeadersBySirens } from '../../../utils/api/queries'
 import { PleaseSelectACompanyText } from '../../common/Texts'
 import DetailsLeader from '../DetailsLeader'
@@ -30,7 +32,7 @@ const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
           alignItems: 'center',
         }}
       >
-        Chargement ...
+        {formatMessage(commonMessages.loading)}
       </a>
     )
   }
@@ -48,7 +50,10 @@ const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
           alignItems: 'center',
         }}
       >
-        <Typography level="h4">Aucun dirigeant trouvé</Typography>
+        <Typography level="h4">
+          {' '}
+          {formatMessage(commonMessages.noLeadersFound)}
+        </Typography>
       </div>
     )
   }
@@ -56,7 +61,11 @@ const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
   return (
     <Fragment>
       <div style={{ textAlign: 'center', marginBottom: 16 }}>
-        <Typography level="h4">Dirigeants</Typography>
+        <Typography level="h4">
+          {formatMessage(commonMessages.leaders, {
+            itemCount: leaders.length,
+          })}
+        </Typography>
       </div>
       <div
         style={{

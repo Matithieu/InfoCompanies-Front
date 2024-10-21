@@ -7,6 +7,8 @@ import { FC, Fragment, useEffect, useState } from 'react'
 import { Column } from '../../../data/types/columns'
 import { Company } from '../../../data/types/company'
 import { Page } from '../../../data/types/index.types'
+import commonMessages from '../../../services/intl/common.messages'
+import { formatMessage } from '../../../services/intl/intl'
 import { fetchCompanyScrap } from '../../../utils/api/queries'
 import { GlobalErrorButton } from '../../common/Buttons/GlobalErrorButton'
 import Pagination from '../../common/Buttons/Pagination'
@@ -131,7 +133,7 @@ const TableCompany: FC<TableCompanyProps> = ({
         }}
       >
         <Typography level="h4" style={{ marginTop: 20 }}>
-          Aucune entreprise trouvée
+          {formatMessage(commonMessages.noCompaniesFound)}
         </Typography>
       </div>
     )

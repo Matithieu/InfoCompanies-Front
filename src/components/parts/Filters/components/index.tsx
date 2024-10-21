@@ -2,6 +2,8 @@ import SearchIcon from '@mui/icons-material/Search'
 import { Box, Button, Switch, Typography } from '@mui/joy'
 
 import { listOfRegions } from '../../../../data/ListOfOptions/region'
+import commonMessages from '../../../../services/intl/common.messages'
+import { formatMessage } from '../../../../services/intl/intl'
 import { SearchParams } from '../../../../store/filtersStore'
 import { fetchAutoComplete } from '../../../../utils/api/queries'
 import SimpleAutoComplete from '../../../common/AutoComplete/AutoComplete'
@@ -25,7 +27,7 @@ const getFilterComponents = (
           fetchAutoComplete('legal-form', searchTerm)
         }
         handleSelectChange={handleSelectChange('legalForm')}
-        inputLabel="Forme juridique"
+        inputLabel={formatMessage(commonMessages.legalForm)}
         isLabelHidden={searchTerm.legalForm.length > 0}
         queryKeyBase="legal-form"
         value={searchTerm.legalForm}
@@ -39,7 +41,7 @@ const getFilterComponents = (
           fetchAutoComplete('industry-sector', searchTerm)
         }
         handleSelectChange={handleSelectChange('industrySector')}
-        inputLabel="Secteur d'activité"
+        inputLabel={formatMessage(commonMessages.industrySector)}
         isLabelHidden={searchTerm.industrySector.length > 0}
         queryKeyBase="industry-sector"
         value={searchTerm.industrySector}
@@ -51,7 +53,7 @@ const getFilterComponents = (
       <SimpleAutoComplete
         handleSelectChange={handleSelectChange('region')}
         isLabelHidden={searchTerm.region.length > 0}
-        label="Région"
+        label={formatMessage(commonMessages.region)}
         options={listOfRegions}
         selectedValues={searchTerm.region}
       />
@@ -62,7 +64,7 @@ const getFilterComponents = (
       <FetchAutoComplete
         fetchFunction={(searchTerm) => fetchAutoComplete('city', searchTerm)}
         handleSelectChange={handleSelectChange('city')}
-        inputLabel="Ville"
+        inputLabel={formatMessage(commonMessages.city)}
         isLabelHidden={searchTerm.city.length > 0}
         queryKeyBase="cities"
         value={searchTerm.city}
@@ -107,7 +109,7 @@ const getFilterComponents = (
           />
         }
       >
-        Entreprises non vues
+        {formatMessage(commonMessages.isCompanySeen)}
       </Typography>
     </Box>
   ),
@@ -119,7 +121,7 @@ const getFilterComponents = (
         variant="soft"
         onClick={handleSearch}
       >
-        <Typography> Rechercher</Typography>
+        <Typography>{formatMessage(commonMessages.search)}</Typography>
       </Button>
     </Box>
   ),

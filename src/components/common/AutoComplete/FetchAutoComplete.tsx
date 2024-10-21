@@ -5,6 +5,8 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect, useMemo, useState } from 'react'
 
 import { AutoCompleteType } from '../../../data/types/index.types'
+import commonMessages from '../../../services/intl/common.messages'
+import { formatMessage } from '../../../services/intl/intl'
 
 type FetchAutoCompleteProps<T> = {
   handleSelectChange: (items: T[]) => void
@@ -72,8 +74,8 @@ const FetchAutoComplete = ({
         loading={isLoading}
         noOptionsText={
           fetchedOptions.length === 0
-            ? 'Aucun résultat'
-            : 'Entrez au moins 2 caractères'
+            ? formatMessage(commonMessages.noResults)
+            : formatMessage(commonMessages.enterAtLeastCharacters, { count: 2 })
         }
         options={mergedOptions}
         placeholder={isLabelHidden ? undefined : inputLabel}

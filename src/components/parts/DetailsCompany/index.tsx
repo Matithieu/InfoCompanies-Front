@@ -7,6 +7,8 @@ import { Table, Typography } from '@mui/joy'
 import { FC, Fragment } from 'react'
 
 import { Company } from '../../../data/types/company'
+import commonMessages from '../../../services/intl/common.messages'
+import { formatMessage } from '../../../services/intl/intl'
 import { PleaseSelectACompanyText } from '../../common/Texts'
 import DetailsCompanyRow from './components/DetailsCompanyRow'
 
@@ -22,45 +24,47 @@ const DetailsCompany: FC<DetailsCompanyProps> = ({ company }) => {
   return (
     <Fragment>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <Typography level="h4">Détails</Typography>
+        <Typography level="h4">
+          {formatMessage(commonMessages.details)}
+        </Typography>
       </div>
-      <Table aria-label="Détails de l'Entreprise">
+      <Table>
         <tbody>
           <DetailsCompanyRow
             content={company.phoneNumber}
             icon={<PhoneIcon />}
-            noContent="Aucun numéro de téléphone trouvé"
-            tooltipContent="Numéro de téléphone"
+            noContent={formatMessage(commonMessages.noPhone)}
+            tooltipContent={formatMessage(commonMessages.phoneTooltip)}
           />
 
           <DetailsCompanyRow
             content={company.email}
             icon={<EmailIcon />}
-            noContent="Aucun e-mail trouvé"
-            tooltipContent="E-mail"
+            noContent={formatMessage(commonMessages.noEmail)}
+            tooltipContent={formatMessage(commonMessages.emailTooltip)}
           />
 
           <DetailsCompanyRow
             isLink
             content={company.website}
             icon={<WebAssetIcon />}
-            noContent="Aucun site web trouvé"
-            tooltipContent="Site Web"
+            noContent={formatMessage(commonMessages.noWebsite)}
+            tooltipContent={formatMessage(commonMessages.websiteTooltip)}
           />
 
           <DetailsCompanyRow
             content={company.address}
             icon={<BusinessIcon />}
-            noContent="Aucune adresse trouvée"
+            noContent={formatMessage(commonMessages.noAddress)}
             oppositeContent={company.city}
-            tooltipContent="Adresse"
+            tooltipContent={formatMessage(commonMessages.addressTooltip)}
           />
 
           <DetailsCompanyRow
             content={company.dateRegistration}
             icon={<CalendarTodayOutlinedIcon />}
-            noContent="Aucune date de création trouvée"
-            tooltipContent="Date de création"
+            noContent={formatMessage(commonMessages.noCreationDate)}
+            tooltipContent={formatMessage(commonMessages.creationDateTooltip)}
           />
         </tbody>
       </Table>

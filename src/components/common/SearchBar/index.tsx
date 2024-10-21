@@ -2,6 +2,8 @@ import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 import { FormHelperText, Input } from '@mui/joy'
 import { FC, FormEvent, useState } from 'react'
 
+import commonMessages from '../../../services/intl/common.messages'
+import { formatMessage } from '../../../services/intl/intl'
 import { useAppNavigate } from '../../../utils/navigation/navigation'
 
 type SearchAppBarProps = {
@@ -43,8 +45,7 @@ const SearchAppBar: FC<SearchAppBarProps> = ({ isSidebarOpen }) => {
     <form onSubmit={handleSearch}>
       <Input
         error={isSearchBarError} // Apply error state to input
-        id="search-company"
-        placeholder="Recherche"
+        placeholder={formatMessage(commonMessages.search)}
         size="md"
         startDecorator={<SearchRoundedIcon />}
         sx={{
@@ -56,7 +57,7 @@ const SearchAppBar: FC<SearchAppBarProps> = ({ isSidebarOpen }) => {
       <div style={{ position: 'absolute' }}>
         {isSearchBarError && isSidebarOpen ? (
           <FormHelperText sx={{ color: 'red' }}>
-            Pas de caractères spéciaux
+            {formatMessage(commonMessages.noSpecialCharacters)}
           </FormHelperText>
         ) : null}
       </div>

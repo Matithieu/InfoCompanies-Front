@@ -17,7 +17,9 @@ import { PaginationTableCompany } from '../../components/parts/TableCompany/type
 import { columnsTableCompany } from '../../data/types/columns.ts'
 import { Company } from '../../data/types/company.ts'
 import { RANDOM_UNSEEN_ENDPOINT } from '../../data/types/index.types.ts'
+import joyrideMessages from '../../onboarding/joyride.messages.ts'
 import joyrideSteps from '../../onboarding/steps.tsx'
+import { formatMessage } from '../../services/intl/intl.tsx'
 import useAuthStore from '../../store/authStore.tsx'
 import { useCompanyFilterStore } from '../../store/filtersStore.tsx'
 import { updateUserOnboarding } from '../../utils/api/mutations.ts'
@@ -112,11 +114,11 @@ const Dashboard: FC = () => {
         showSkipButton
         callback={handleJoyrideCallback}
         locale={{
-          back: 'Retour',
-          close: 'Fermer',
-          last: 'Go !',
-          next: 'Suivant',
-          skip: 'Skip',
+          back: formatMessage(joyrideMessages.back),
+          close: formatMessage(joyrideMessages.close),
+          last: formatMessage(joyrideMessages.last),
+          next: formatMessage(joyrideMessages.next),
+          skip: formatMessage(joyrideMessages.skip),
         }}
         run={isTourRunning}
         steps={joyrideSteps}

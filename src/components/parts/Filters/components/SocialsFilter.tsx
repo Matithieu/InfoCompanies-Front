@@ -9,6 +9,8 @@ import {
 import React from 'react'
 
 import { SocialMedia } from '../../../../data/types/company'
+import commonMessages from '../../../../services/intl/common.messages'
+import { formatMessage } from '../../../../services/intl/intl'
 
 interface SocialsFilterProps {
   values: Array<keyof SocialMedia>
@@ -38,14 +40,14 @@ const SocialsFilter: React.FC<SocialsFilterProps> = ({ onChange, values }) => {
   return (
     <Select
       multiple
-      placeholder="Réseaux sociaux"
+      placeholder={formatMessage(commonMessages.socials)}
       sx={{ minWidth: 200 }}
       {...(values && {
         // display the button and remove select indicator
         // when user has selected a value
         endDecorator: (
           <div>
-            <Tooltip arrow title="Clear">
+            <Tooltip arrow title={formatMessage(commonMessages.clear)}>
               <IconButton
                 color="neutral"
                 size="sm"

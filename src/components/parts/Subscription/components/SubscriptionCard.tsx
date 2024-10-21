@@ -3,6 +3,8 @@ import { useQuery } from '@tanstack/react-query'
 import { FC, useEffect } from 'react'
 
 import { ItemData } from '../../../../data/Stripe/itemData'
+import commonMessages from '../../../../services/intl/common.messages'
+import { formatMessage } from '../../../../services/intl/intl'
 import { stripeSubscription } from '../../../../utils/api/queries'
 
 type SubscriptionCardProps = {
@@ -61,7 +63,7 @@ const SubscriptionCard: FC<SubscriptionCardProps> = ({
           variant="solid"
           onClick={handleClick}
         >
-          S&#39;abonner
+          {formatMessage(commonMessages.subscribe)}
         </Button>
       </CardActions>
     </Card>
