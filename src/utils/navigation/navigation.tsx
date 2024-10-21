@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom'
 
-import { ItemData } from '../../data/Stripe/itemData'
 import { RoutesPath } from './routesPath'
 
 // Assuming the component using this hook is wrapped in a <Router> component
@@ -23,8 +22,6 @@ export const useAppNavigate = () => {
   const toLeader = (leaderPath: string) =>
     navigate(`/ui/leaders/${leaderPath}`, { state: { leaderPath } })
   const toSubscription = () => navigate('/ui/subscription')
-  const toPayment = (item: ItemData, endpoint: string) =>
-    navigate('/ui/stripe', { state: { item, endpoint } })
   const toFailure = () => navigate('/ui/failure')
   const toOrderConfirmation = () => navigate('/ui/completion')
   const toTest = () => navigate('/ui/test')
@@ -45,7 +42,6 @@ export const useAppNavigate = () => {
       toCompany,
       toLeader,
       toSubscription,
-      toPayment,
       toFailure,
       toOrderConfirmation,
       toTest,

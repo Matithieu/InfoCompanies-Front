@@ -17,7 +17,6 @@ import OrderConfirmation from '../../pages/Purchasing/success.tsx'
 import CompanyPage from '../../pages/Search/Company/index.tsx'
 import SearchPage from '../../pages/Search/index.tsx'
 import SettingsPage from '../../pages/Settings/index.tsx'
-import Payment from '../../pages/Stripe/index.tsx'
 import SubscriptionPage from '../../pages/Subscription/index.tsx'
 import { ProtectedRoutes, ProtectedSimpleRoutes } from './ProtectedRoutes.tsx'
 
@@ -35,7 +34,6 @@ const AppRouter: FC = () => {
 
         <Route element={<ProtectedSimpleRoutes />}>
           <Route element={<SubscriptionPage />} path="subscription" />
-          <Route element={<Payment />} path="stripe" />
           <Route element={<Failure />} path="failure" />
           <Route element={<OrderConfirmation />} path="completion" />
         </Route>
