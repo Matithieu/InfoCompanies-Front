@@ -39,6 +39,7 @@ const FavoritesBody: FC<FavoritesBodyProps> = ({
             minHeight: 400,
             maxHeight: 550,
             borderRadius: 3,
+            marginTop: '8px',
           }}
         >
           <TableCompany
