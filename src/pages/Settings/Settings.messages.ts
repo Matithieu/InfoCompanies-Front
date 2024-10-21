@@ -2,15 +2,15 @@ import { defineMessages } from 'react-intl'
 
 export default defineMessages({
   settings: {
-    defaultMessage: 'Paramètres',
+    defaultMessage: 'Settings',
     id: 'tabs.settings',
   },
   language: {
-    defaultMessage: 'Langue',
+    defaultMessage: 'Language',
     id: 'intl.language',
   },
   appearance: {
-    defaultMessage: 'Apparence',
+    defaultMessage: 'Appearance',
     id: 'tabs.settings.appearance',
   },
 })

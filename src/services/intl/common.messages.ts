@@ -4,27 +4,27 @@ const scope = 'intl'
 
 export default defineMessages({
   loading: {
-    defaultMessage: 'Chargement...',
+    defaultMessage: 'Loading...',
     id: `${scope}.loading`,
   },
   firstName: {
-    defaultMessage: 'Prénom',
+    defaultMessage: 'First Name',
     id: `${scope}.firstName`,
   },
   lastName: {
-    defaultMessage: 'Nom',
+    defaultMessage: 'Last Name',
     id: `${scope}.lastName`,
   },
   leaders: {
-    defaultMessage: '{itemCount, plural, one {Dirigeant} other {Dirigeants}}',
+    defaultMessage: '{itemCount, plural, one {Leader} other {Leaders}}',
     id: `${scope}.leaders`,
   },
   phone: {
-    defaultMessage: 'Téléphone',
+    defaultMessage: 'Phone',
     id: `${scope}.phone`,
   },
   edit: {
-    defaultMessage: 'Editer',
+    defaultMessage: 'Edit',
     id: `${scope}.edit`,
   },
   email: {
@@ -32,31 +32,31 @@ export default defineMessages({
     id: `${scope}.email`,
   },
   enterAtLeastCharacters: {
-    defaultMessage: 'Entrez au moins {count} caractères',
+    defaultMessage: 'Enter at least {count} characters',
     id: `${scope}.enterAtLeastCharacters`,
   },
   save: {
-    defaultMessage: 'Sauvegarder',
+    defaultMessage: 'Save',
     id: `${scope}.save`,
   },
   subscribe: {
-    defaultMessage: 'Souscrire',
+    defaultMessage: 'Subscribe',
     id: `${scope}.subscribe`,
   },
   noCompaniesFound: {
-    defaultMessage: 'Aucune entreprise trouvée',
+    defaultMessage: 'No companies found',
     id: `${scope}.noCompaniesFound`,
   },
   noLeadersFound: {
-    defaultMessage: 'Aucun dirigeant trouvé',
+    defaultMessage: 'No leaders found',
     id: `${scope}.noLeadersFound`,
   },
   noSpecialCharacters: {
-    defaultMessage: 'Pas de caractères spéciaux',
+    defaultMessage: 'No special characters',
     id: `${scope}.noSpecialCharacters`,
   },
   noResults: {
-    defaultMessage: 'Aucun résultat',
+    defaultMessage: 'No results',
     id: `${scope}.noResults`,
   },
   city: {

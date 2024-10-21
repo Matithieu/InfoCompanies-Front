@@ -4,19 +4,19 @@ const scope = 'pages.account'
 
 export default defineMessages({
   welcome: {
-    defaultMessage: 'Bievenue, {name}!',
+    defaultMessage: 'Welcome, {name}!',
     id: `${scope}.welcome`,
   },
   accountProfile: {
-    defaultMessage: 'Profil',
+    defaultMessage: 'Profile',
     id: 'tabs.account',
   },
   invoices: {
-    defaultMessage: '{itemCount, plural, one {Facture} other {Factures}}',
+    defaultMessage: '{itemCount, plural, one {Invoice} other {Invoices}}',
     id: 'intl.invoices',
   },
   accountDetails: {
-    defaultMessage: 'Détails du compte',
+    defaultMessage: 'Details',
     id: `${scope}.accountDetails`,
   },
 })

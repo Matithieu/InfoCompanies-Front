@@ -4,7 +4,7 @@ const scope = 'page.favorites'
 
 export default defineMessages({
   noCompanyInToDo: {
+    defaultMessage: 'No company in To Do!',
     id: `${scope}.noCompanyInToDo`,
-    defaultMessage: 'Aucune entreprise en To Do !',
   },
 })
