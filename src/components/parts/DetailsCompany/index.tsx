@@ -22,12 +22,13 @@ const DetailsCompany: FC<DetailsCompanyProps> = ({ company }) => {
   }
 
   return (
-    <Fragment>
+    <>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Typography level="h4">
           {formatMessage(commonMessages.details)}
         </Typography>
       </div>
+
       <Table>
         <tbody>
           <DetailsCompanyRow
@@ -68,7 +69,7 @@ const DetailsCompany: FC<DetailsCompanyProps> = ({ company }) => {
           />
         </tbody>
       </Table>
-    </Fragment>
+    </>
   )
 }
 
