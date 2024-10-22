@@ -1,9 +1,13 @@
-import { Tooltip } from '@mui/joy'
 import { FC } from 'react'
 import { toast } from 'react-toastify'
 
 import { Column } from '../../../../data/types/columns'
 import { Company } from '../../../../data/types/company'
+import { formatMessage } from '../../../../services/intl/intl'
+import { asserts } from '../../../../utils/assertion.util'
+import tableCompanyMessages from '../tableCompany.messages'
+import CellContent from './content/CellContent'
+import CellContentTooltip from './content/CellContentTooltip'
 import TableCompanySocial from './TableCompanySocial'
 
 type TableCompanyRowCellProps = {
@@ -12,77 +16,69 @@ type TableCompanyRowCellProps = {
 }
 
 const TableCompanyRowCell: FC<TableCompanyRowCellProps> = ({ column, row }) => {
-  const handleEmailClick = (email: string) => {
-    navigator.clipboard.writeText(email)
-    toast.done('E-mail copied to clipboard!')
+  const handleCopyToClipboard = (content: string) => {
+    navigator.clipboard.writeText(content)
+    toast.success(formatMessage(tableCompanyMessages.copyToClipboard))
+  }
+
+  const handleOpenInNewTab = (content: string) => {
+    const url = `https://www.google.com/search?q=${encodeURIComponent(content)}`
+    window.open(url, '_blank')
   }
 
   switch (column.id) {
     case 'socialMedia':
       return <TableCompanySocial socialMedia={row.socialMedia} />
-    case 'dateRegistration':
-    case 'industrySector':
-    case 'legalForm':
-    case 'address':
-    case 'numberOfEmployee':
-    case 'city':
-    case 'region':
-    case 'companyName':
-    case 'phoneNumber':
     case 'email':
-      if (column.id === 'email') {
-        if (row.email === null || row.email === '') {
-          return <span style={{ color: '#808080' }}>N/A</span>
-        }
-
-        return (
-          <Tooltip title="Click to copy">
-            <span
-              style={{
-                cursor: 'pointer',
-                textDecoration: 'underline',
-                color: row.email ? 'inherit' : '#808080',
-              }}
-              title="Click to copy"
-              onClick={(e) => {
-                e.stopPropagation()
-                handleEmailClick(row.email)
-              }}
-            >
-              {row.email ?? 'N/A'}
-            </span>
-          </Tooltip>
-        )
-      }
-
       return (
-        <span style={{ color: row[column.id] ? 'inherit' : '#808080' }}>
-          {row[column.id] ?? 'N/A'}
-        </span>
+        <CellContentTooltip
+          copyToClipboard
+          content={row.email}
+          handleFunction={handleCopyToClipboard}
+        />
       )
     case 'website':
       return (
-        <span
-          style={{
-            cursor: row.website ? 'pointer' : 'default',
-            color: row.website ? 'inherit' : '#808080',
-          }}
-          onClick={(e) => {
-            if (
-              e.target === e.currentTarget &&
-              row.website !== null &&
-              row.website !== ''
-            ) {
-              e.stopPropagation()
-              window.open(row.website, '_blank')
-            }
-          }}
-        >
-          {row.website ?? 'N/A'}
-        </span>
+        <CellContentTooltip
+          content={row.website}
+          handleFunction={() => open(row.website)}
+        />
       )
+    case 'phoneNumber':
+      return (
+        <CellContentTooltip
+          copyToClipboard
+          content={row.phoneNumber}
+          handleFunction={() => handleCopyToClipboard(row.phoneNumber)}
+        />
+      )
+    case 'companyName':
+      return (
+        <CellContentTooltip
+          content={row.companyName}
+          handleFunction={() => {
+            const url = `${row.companyName} ${row.city}`
+            handleOpenInNewTab(url)
+          }}
+        />
+      )
+    case 'dateRegistration':
+      return <CellContent content={row.dateRegistration} />
+    case 'industrySector':
+      return <CellContent content={row.industrySector} />
+    case 'legalForm':
+      return <CellContent content={row.legalForm} />
+    case 'address':
+      return <CellContent content={row.address} />
+    case 'numberOfEmployee':
+      return <CellContent content={row.numberOfEmployee?.toString()} />
+    case 'city':
+      return <CellContent content={row.city} />
+    case 'region':
+      return <CellContent content={row.region} />
+
     default:
-      return null
+      asserts(false, 'Column not found: ' + column.id)
   }
 }
 

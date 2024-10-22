@@ -4,7 +4,7 @@ import EmailIcon from '@mui/icons-material/Email'
 import PhoneIcon from '@mui/icons-material/Phone'
 import WebAssetIcon from '@mui/icons-material/WebAsset'
 import { Table, Typography } from '@mui/joy'
-import { FC, Fragment } from 'react'
+import { FC } from 'react'
 
 import { Company } from '../../../data/types/company'
 import commonMessages from '../../../services/intl/common.messages'
