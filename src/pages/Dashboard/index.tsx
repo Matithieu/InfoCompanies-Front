@@ -162,8 +162,8 @@ const Dashboard: FC = () => {
                   display: 'flex',
                   alignItems: 'center',
                   flexDirection: 'column',
-                  minHeight: 550,
-                  maxHeight: 550,
+                  minHeight: 530,
+                  maxHeight: 530,
                   borderRadius: 3,
                 }}
               >
@@ -186,7 +186,6 @@ const Dashboard: FC = () => {
               container
               aria-label="tabs"
               justifyContent="center"
-              marginTop={2}
               spacing={1}
             >
               {/* DetailsCompany of the company */}
