@@ -1,7 +1,7 @@
 import SearchIcon from '@mui/icons-material/Search'
 import { Box, Button, Switch, Typography } from '@mui/joy'
 
-import { listOfRegions } from '../../../../data/ListOfOptions/region'
+import { listOfRegions } from '../../../../data/Options/region.type'
 import commonMessages from '../../../../services/intl/common.messages'
 import { formatMessage } from '../../../../services/intl/intl'
 import { SearchParams } from '../../../../store/filtersStore'

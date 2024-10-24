@@ -1,3 +1,6 @@
+/**
+ * List of all regions in France
+ */
 export const listOfRegions = [
   'Auvergne-Rhône-Alpes',
   'Bourgogne-Franche-Comté',
