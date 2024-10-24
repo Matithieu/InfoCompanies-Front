@@ -1,13 +1,15 @@
 import { Box } from '@mui/material'
 import { FC, useState } from 'react'
 
-import { products } from '../../../data/Stripe/subscription'
+import { subscriptionProducts } from '../../../data/Stripe/subscription'
 import SubscriptionCard from './components/SubscriptionCard'
 
-const Subscriptions: FC = () => {
+const SubscriptionList: FC = () => {
   const [buttonClicked, setButtonClicked] = useState(false)
 
-  const subscriptions = products.sort((a, b) => a.price - b.price)
+  const sortedSubscriptions = subscriptionProducts.sort(
+    (a, b) => a.price - b.price,
+  )
 
   const handleCardClick = () => {
     setButtonClicked(true)
@@ -24,7 +26,7 @@ const Subscriptions: FC = () => {
         gap: '30px',
       }}
     >
-      {subscriptions.map((option, index) => (
+      {sortedSubscriptions.map((option, index) => (
         <SubscriptionCard
           key={index}
           isDisabled={buttonClicked}
@@ -37,4 +39,4 @@ const Subscriptions: FC = () => {
   )
 }
 
-export default Subscriptions
+export default SubscriptionList

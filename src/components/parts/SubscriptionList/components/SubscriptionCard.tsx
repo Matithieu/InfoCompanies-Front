@@ -2,13 +2,13 @@ import { Button, Card, CardActions, CardContent, Typography } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
 import { FC, useEffect } from 'react'
 
-import { ItemData } from '../../../../data/Stripe/itemData'
+import { SubscriptionItem } from '../../../../data/Stripe/subscription'
 import commonMessages from '../../../../services/intl/common.messages'
 import { formatMessage } from '../../../../services/intl/intl'
 import { startStripeSubscription } from '../../../../utils/api/queries'
 
 type SubscriptionCardProps = {
-  subscriptionItem: ItemData
+  subscriptionItem: SubscriptionItem
   isDisabled: boolean
   isFavorite?: boolean
   onCardClick: () => void

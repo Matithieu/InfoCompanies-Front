@@ -5,7 +5,7 @@ import { FC, useEffect, useRef, useState } from 'react'
 import TryWithoutCBButton from '../../components/common/Buttons/TryWithoutCVButton.tsx'
 import Footer from '../../components/pages/footer'
 import Filters from '../../components/parts/Filters/index.tsx'
-import Subscriptions from '../../components/parts/SubscriptionsList/SubscriptionList.tsx'
+import SubscriptionList from '../../components/parts/SubscriptionList/SubscriptionList.tsx'
 import TableCompany from '../../components/parts/TableCompany/TableCompany.tsx'
 import { columnsTableCompany } from '../../data/types/columns.ts'
 import { LANDING_FILTER_ENDPOINT } from '../../data/types/index.types.ts'
@@ -353,7 +353,7 @@ const Test: FC = () => {
             alignItems: 'center',
           }}
         >
-          <Subscriptions />
+          <SubscriptionList />
         </div>
 
         <Box sx={{ mt: 10 }}>

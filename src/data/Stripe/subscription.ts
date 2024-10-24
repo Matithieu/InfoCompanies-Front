@@ -1,5 +1,4 @@
 import { formatMessage } from '../../services/intl/intl'
-import { ItemData } from './itemData'
 import subscriptionMessages from './subscription.messages'
 
 const STRIPE_PRICE_ID_FREE = import.meta.env.VITE_STRIPE_PRICE_ID_FREE
@@ -14,7 +13,16 @@ const returnIdIfEmpty = (data: string | undefined, id: string) => {
   return data
 }
 
-export const products: ItemData[] = [
+export interface SubscriptionItem {
+  name: string
+  price: number
+  image: string
+  description: string
+  id: string
+  isFavorite?: boolean
+}
+
+export const subscriptionProducts: SubscriptionItem[] = [
   {
     name: formatMessage(subscriptionMessages.freePlanName),
     description: formatMessage(subscriptionMessages.requestPerDay, {

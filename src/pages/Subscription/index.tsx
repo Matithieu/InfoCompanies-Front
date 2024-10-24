@@ -1,5 +1,5 @@
 import Footer from '../../components/pages/footer'
-import Subscriptions from '../../components/parts/SubscriptionsList/SubscriptionList'
+import SubscriptionList from '../../components/parts/SubscriptionList/SubscriptionList'
 import HeaderLanding from '../Landing/components/LandingHeader'
 
 const SubscriptionPage: React.FC = () => {
@@ -7,7 +7,7 @@ const SubscriptionPage: React.FC = () => {
     <div>
       <HeaderLanding />
       <div className="landing-container">
-        <Subscriptions />
+        <SubscriptionList />
       </div>
       <div
         style={{
