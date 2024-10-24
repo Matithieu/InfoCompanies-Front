@@ -1,6 +1,8 @@
+import { FC } from 'react'
+
 import { useAppNavigate } from '../../utils/navigation/navigation'
 
-function Failure() {
+const OrderFailurePage: FC = () => {
   const queryParams = new URLSearchParams(window.location.search)
   const { navigation } = useAppNavigate()
 
@@ -13,4 +15,4 @@ function Failure() {
   )
 }
 
-export default Failure
+export default OrderFailurePage

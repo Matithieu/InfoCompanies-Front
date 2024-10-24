@@ -4,8 +4,8 @@ import { FC } from 'react'
 import Tabs from '../../components/common/Tabs'
 import HeaderTitle from '../../components/common/Texts/HeaderTitle'
 import { formatMessage } from '../../services/intl/intl'
-import AppearancePage from './Appearance'
-import settingsMessages from './Settings.messages'
+import settingsMessages from './settings.messages'
+import AppearanceTab from './tabs/Appearance'
 
 const SettingsPage: FC = () => {
   return (
@@ -16,7 +16,7 @@ const SettingsPage: FC = () => {
 
       <Tabs
         tabsContent={[
-          <AppearancePage key={formatMessage(settingsMessages.appearance)} />,
+          <AppearanceTab key={formatMessage(settingsMessages.appearance)} />,
         ]}
         tabsName={[formatMessage(settingsMessages.appearance)]}
       />

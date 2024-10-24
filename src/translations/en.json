@@ -74,6 +74,8 @@
   "page.layout.settings": "Settings",
   "page.layout.toDo": "To Do",
   "page.search.companyFor": "Companies for: {searchValue}",
+  "page.purchasing.thankYouForYourOrder": "Thank you for your order !",
+  "page.purchasing.pressTheButtonBelowToStart": "Press the button below to start !",
   "pages.account.accountDetails": "Account details",
   "pages.account.welcome": "Welcome, {name} !",
   "subscriptions.basicPlanName": "Basic Plan",

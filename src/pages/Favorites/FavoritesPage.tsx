@@ -10,7 +10,7 @@ import { fetchFavorites } from '../../utils/api/queries.ts'
 import FavoritesBody from './components/FavoritesBody.tsx'
 import favoritesMessages from './favorites.messages.ts'
 
-const Favorites: FC = () => {
+const FavoritesPage: FC = () => {
   const [company, setCompany] = useState<Company>()
   const [dataPagination, setDataPagination] = useState<PaginationTableCompany>({
     page: 0,
@@ -62,4 +62,4 @@ const Favorites: FC = () => {
   )
 }
 
-export default Favorites
+export default FavoritesPage

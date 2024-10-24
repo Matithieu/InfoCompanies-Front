@@ -7,7 +7,7 @@ import HeaderTitle from '../../components/common/Texts/HeaderTitle'
 import { formatMessage, formatMessagePlural } from '../../services/intl/intl'
 import useAuthStore from '../../store/authStore'
 import ViewInvoices from '../Purchasing/invoice'
-import messages from './Account.messages'
+import accountMessages from './Account.messages'
 import Account from './component/Account'
 
 const AccountPage: FC = () => {
@@ -28,18 +28,20 @@ const AccountPage: FC = () => {
         >
           <Box sx={{ px: { xs: 2, md: 6 } }}>
             <HeaderTitle
-              text={`${formatMessage(messages.welcome, { name: authUser?.firstName })}`}
+              text={`${formatMessage(accountMessages.welcome, { name: authUser?.firstName })}`}
             />
           </Box>
 
           <Tabs
             tabsContent={[
-              <Account key={formatMessage(messages.accountProfile)} />,
-              <ViewInvoices key={formatMessagePlural(messages.invoices)} />,
+              <Account key={formatMessage(accountMessages.accountProfile)} />,
+              <ViewInvoices
+                key={formatMessagePlural(accountMessages.invoices)}
+              />,
             ]}
             tabsName={[
-              formatMessage(messages.accountProfile),
-              formatMessagePlural(messages.invoices),
+              formatMessage(accountMessages.accountProfile),
+              formatMessagePlural(accountMessages.invoices),
             ]}
           />
         </Box>

@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { FC, useEffect, useRef, useState } from 'react'
 
 import TryWithoutCBButton from '../../components/common/Buttons/TryWithoutCVButton.tsx'
-import Footer from '../../components/pages/footer'
+import Footer from '../../components/pages/footer.tsx'
 import Filters from '../../components/parts/Filters/index.tsx'
 import SubscriptionList from '../../components/parts/SubscriptionList/SubscriptionList.tsx'
 import TableCompany from '../../components/parts/TableCompany/TableCompany.tsx'

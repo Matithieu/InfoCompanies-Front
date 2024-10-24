@@ -27,7 +27,7 @@ import { fetchCompaniesWithUrlAndPage } from '../../utils/api/queries.ts'
 import { constructURLWithFilter } from '../../utils/api/utils.ts'
 import { returnInverseOfBoolean } from '../../utils/utils.ts'
 
-const Dashboard: FC = () => {
+const DashboardPage: FC = () => {
   const { authUser, setAuthUser } = useAuthStore()
   const [isTourRunning, setIsTourRunning] = useState<boolean>(
     returnInverseOfBoolean(!!authUser?.hasCompletedOnboarding),
@@ -222,4 +222,4 @@ const Dashboard: FC = () => {
   )
 }
 
-export default Dashboard
+export default DashboardPage

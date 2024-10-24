@@ -1,5 +1,6 @@
 import { Box, Grid, Sheet, Typography } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
+import { FC } from 'react'
 import { useParams } from 'react-router-dom'
 
 import DetailsLeaderRow from '../../components/parts/LeadersList/components/DetailsLeaderRow.tsx'
@@ -8,7 +9,7 @@ import { formatMessage } from '../../services/intl/intl.tsx'
 import { fetchLeaderById } from '../../utils/api/queries.ts'
 import { asserts, isNotNU } from '../../utils/assertion.util.ts'
 
-const LeaderPage = () => {
+const LeaderPage: FC = () => {
   const id = useParams().id
   asserts(id !== undefined, 'id is undefined')
 

@@ -1,12 +1,12 @@
 import { Box, Card, Divider, Typography } from '@mui/joy'
 import { FC } from 'react'
 
-import ChangeLanguageSelect from '../../components/common/Select/ChangeLanguageSelect'
-import { formatMessage } from '../../services/intl/intl'
-import ColorSchemeToggle from '../Layout/components/colorScheme'
-import SettingsMessages from './Settings.messages'
+import ChangeLanguageSelect from '../../../components/common/Select/ChangeLanguageSelect'
+import { formatMessage } from '../../../services/intl/intl'
+import ColorSchemeToggle from '../../Layout/components/colorScheme'
+import settingsMessages from '../settings.messages'
 
-const AppearancePage: FC = () => {
+const AppearanceTab: FC = () => {
   return (
     <Box>
       <Card
@@ -19,7 +19,7 @@ const AppearancePage: FC = () => {
         variant="outlined"
       >
         <Typography gutterBottom component="h2" level="h4">
-          {formatMessage(SettingsMessages.language)}
+          {formatMessage(settingsMessages.language)}
         </Typography>
 
         <ChangeLanguageSelect />
@@ -37,7 +37,7 @@ const AppearancePage: FC = () => {
         variant="outlined"
       >
         <Typography gutterBottom component="h2" level="h4">
-          {formatMessage(SettingsMessages.appearance)}
+          {formatMessage(settingsMessages.appearance)}
         </Typography>
         <Box>
           <ColorSchemeToggle />
@@ -47,4 +47,4 @@ const AppearancePage: FC = () => {
   )
 }
 
-export default AppearancePage
+export default AppearanceTab

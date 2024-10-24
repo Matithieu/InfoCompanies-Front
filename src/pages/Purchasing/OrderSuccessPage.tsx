@@ -1,10 +1,13 @@
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import { Button, Divider, Sheet, Typography } from '@mui/joy'
+import { FC } from 'react'
 
 import useAuthManager from '../../hooks/useAuthManager'
+import { formatMessage } from '../../services/intl/intl'
 import useAuthStore from '../../store/authStore'
+import purchasingMessages from './purchasing.messages'
 
-const OrderConfirmation = () => {
+const OrderSuccessPage: FC = () => {
   // const queryParams = new URLSearchParams(window.location.search)
   const { setAuthUser } = useAuthStore()
   const { signIn } = useAuthManager()
@@ -25,10 +28,10 @@ const OrderConfirmation = () => {
             style={{ fontSize: '60px' }}
           />
           <Typography gutterBottom level="h4">
-            Merci pour votre achat !
+            {formatMessage(purchasingMessages.thankYouForYourOrder)}
           </Typography>
           <Typography gutterBottom level="body-md">
-            Appuiez sur le bouton juste dessous pour commencer
+            {formatMessage(purchasingMessages.thankYouForYourOrder)}
           </Typography>
         </div>
 
@@ -53,4 +56,4 @@ const OrderConfirmation = () => {
   )
 }
 
-export default OrderConfirmation
+export default OrderSuccessPage
