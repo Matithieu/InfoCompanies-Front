@@ -5,24 +5,24 @@ import { FC, useEffect } from 'react'
 import { ItemData } from '../../../../data/Stripe/itemData'
 import commonMessages from '../../../../services/intl/common.messages'
 import { formatMessage } from '../../../../services/intl/intl'
-import { stripeSubscription } from '../../../../utils/api/queries'
+import { startStripeSubscription } from '../../../../utils/api/queries'
 
 type SubscriptionCardProps = {
-  item: ItemData
-  disabled: boolean
+  subscriptionItem: ItemData
+  isDisabled: boolean
   isFavorite?: boolean
   onCardClick: () => void
 }
 
 const SubscriptionCard: FC<SubscriptionCardProps> = ({
-  item,
-  disabled,
+  subscriptionItem: item,
+  isDisabled: disabled,
   isFavorite,
   onCardClick,
 }) => {
   const { data, refetch, isSuccess } = useQuery({
     queryKey: ['sub' + item.id],
-    queryFn: () => stripeSubscription(item.id),
+    queryFn: () => startStripeSubscription(item.id),
     enabled: false,
   })
 

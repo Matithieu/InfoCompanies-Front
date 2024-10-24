@@ -1,5 +1,5 @@
 import Footer from '../../components/pages/footer'
-import Subscriptions from '../../components/parts/Subscription'
+import Subscriptions from '../../components/parts/SubscriptionsList/SubscriptionList'
 import HeaderLanding from '../Landing/components/LandingHeader'
 
 const SubscriptionPage: React.FC = () => {

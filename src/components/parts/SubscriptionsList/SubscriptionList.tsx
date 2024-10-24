@@ -27,9 +27,9 @@ const Subscriptions: FC = () => {
       {subscriptions.map((option, index) => (
         <SubscriptionCard
           key={index}
-          disabled={buttonClicked}
+          isDisabled={buttonClicked}
           isFavorite={option.isFavorite}
-          item={option}
+          subscriptionItem={option}
           onCardClick={handleCardClick}
         />
       ))}

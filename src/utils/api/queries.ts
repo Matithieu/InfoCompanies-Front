@@ -227,7 +227,7 @@ export async function fetchAutoComplete(
  * Stripe
  *
  */
-export async function stripeSubscription(priceId: string) {
+export async function startStripeSubscription(priceId: string) {
   const response = await fetchWithConfig(
     '/v1/stripe/subscriptions/trial',
     'POST',
