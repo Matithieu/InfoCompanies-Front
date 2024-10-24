@@ -9,7 +9,7 @@ import { FC } from 'react'
 import { Company } from '../../../data/types/company'
 import commonMessages from '../../../services/intl/common.messages'
 import { formatMessage } from '../../../services/intl/intl'
-import { PleaseSelectACompanyText } from '../../common/Texts'
+import { PleaseSelectACompanyText } from '../../common/Texts/PleaseSelectACompanyText'
 import DetailsCompanyRow from './components/DetailsCompanyRow'
 
 type DetailsCompanyProps = {

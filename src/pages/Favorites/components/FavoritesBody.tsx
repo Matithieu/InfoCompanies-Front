@@ -4,7 +4,7 @@ import { FC } from 'react'
 
 import Chart from '../../../components/parts/Chart'
 import DetailsCompany from '../../../components/parts/DetailsCompany'
-import ListOfLeaders from '../../../components/parts/LeadersList/ListOfLeaders'
+import ListOfLeaders from '../../../components/parts/LeaderList/LeaderList'
 import TableCompany from '../../../components/parts/TableCompany/TableCompany'
 import { columnsTableCompany } from '../../../data/types/columns'
 import { Company } from '../../../data/types/company'

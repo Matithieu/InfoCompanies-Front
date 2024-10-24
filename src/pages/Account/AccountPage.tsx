@@ -7,7 +7,7 @@ import HeaderTitle from '../../components/common/Texts/HeaderTitle'
 import { formatMessage, formatMessagePlural } from '../../services/intl/intl'
 import useAuthStore from '../../store/authStore'
 import ViewInvoices from '../Purchasing/invoice'
-import accountMessages from './Account.messages'
+import accountMessages from './account.messages'
 import Account from './component/Account'
 
 const AccountPage: FC = () => {

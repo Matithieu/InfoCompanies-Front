@@ -19,7 +19,7 @@ import { formatMessage } from '../../../services/intl/intl'
 import useAuthStore from '../../../store/authStore'
 import { fetchUser, updateUser } from '../../../utils/api/queries'
 import { isNotNU } from '../../../utils/assertion.util'
-import AccountMessages from '../Account.messages'
+import AccountMessages from '../account.messages'
 
 const Account: FC = () => {
   const { authUser, setAuthUser } = useAuthStore()

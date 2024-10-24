@@ -6,7 +6,7 @@ import commonMessages from '../../../services/intl/common.messages'
 import { formatMessage } from '../../../services/intl/intl'
 import { fetchLeadersBySirens } from '../../../utils/api/queries'
 import { LoadingText } from '../../common/Loading/TextLoading'
-import { PleaseSelectACompanyText } from '../../common/Texts'
+import { PleaseSelectACompanyText } from '../../common/Texts/PleaseSelectACompanyText'
 import DetailsLeaderRow from './components/DetailsLeaderRow'
 
 type ListOfLeadersProps = {

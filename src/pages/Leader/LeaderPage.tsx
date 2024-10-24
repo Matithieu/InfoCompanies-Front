@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { FC } from 'react'
 import { useParams } from 'react-router-dom'
 
-import DetailsLeaderRow from '../../components/parts/LeadersList/components/DetailsLeaderRow.tsx'
+import DetailsLeaderRow from '../../components/parts/LeaderList/components/DetailsLeaderRow.tsx'
 import commonMessages from '../../services/intl/common.messages.ts'
 import { formatMessage } from '../../services/intl/intl.tsx'
 import { fetchLeaderById } from '../../utils/api/queries.ts'
