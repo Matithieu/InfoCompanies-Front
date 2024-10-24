@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { FC, useState } from 'react'
 
 import HeaderTitle from '../../components/common/Texts/HeaderTitle.tsx'
-import { PaginationTableCompany } from '../../components/parts/TableCompany/type.ts'
+import { PaginationTableCompany } from '../../components/parts/TableCompany/tableCompany.type.ts'
 import { Company } from '../../data/types/company.ts'
 import { formatMessage } from '../../services/intl/intl.tsx'
 import { fetchFavorites } from '../../utils/api/queries.ts'

@@ -12,7 +12,7 @@ import { handleChangeStatut } from '../../../components/common/Icons/stautIcon.u
 import Seo from '../../../components/common/Seo/index.tsx'
 import Chart from '../../../components/parts/Chart/index.tsx'
 import DetailsCompany from '../../../components/parts/DetailsCompany/index.tsx'
-import ListOfLeaders from '../../../components/parts/ListOfLeaders/index.tsx'
+import ListOfLeaders from '../../../components/parts/LeadersList/ListOfLeaders.tsx'
 import { Company } from '../../../data/types/company.ts'
 import commonMessages from '../../../services/intl/common.messages.ts'
 import { formatMessage } from '../../../services/intl/intl.tsx'

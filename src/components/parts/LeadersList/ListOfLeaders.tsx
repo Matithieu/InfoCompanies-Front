@@ -5,8 +5,9 @@ import { FC, Fragment } from 'react'
 import commonMessages from '../../../services/intl/common.messages'
 import { formatMessage } from '../../../services/intl/intl'
 import { fetchLeadersBySirens } from '../../../utils/api/queries'
+import { LoadingText } from '../../common/Loading/TextLoading'
 import { PleaseSelectACompanyText } from '../../common/Texts'
-import DetailsLeader from '../DetailsLeader'
+import DetailsLeaderRow from './components/DetailsLeaderRow'
 
 type ListOfLeadersProps = {
   siren: string | undefined
@@ -24,17 +25,7 @@ const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
   })
 
   if (isLoading) {
-    return (
-      <a
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        {formatMessage(commonMessages.loading)}
-      </a>
-    )
+    return <LoadingText />
   }
 
   if (leaders === undefined) {
@@ -77,7 +68,7 @@ const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
       >
         {leaders.map((leader, index) => (
           <div key={index} style={{ marginBottom: 15 }}>
-            <DetailsLeader key={index} leader={leader} />
+            <DetailsLeaderRow key={index} leader={leader} />
             <div style={{ marginBottom: 10 }} />
             {index < leaders.length - 1 && <ListDivider />}
           </div>

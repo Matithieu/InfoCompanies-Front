@@ -2,13 +2,13 @@ import PersonIcon from '@mui/icons-material/Person'
 import { Typography } from '@mui/joy'
 import { FC } from 'react'
 
-import { Leader } from '../../../data/types/index.types'
+import { Leader } from '../../../../data/types/index.types'
 
-type DetailsLeaderProps = {
+type DetailsLeaderRowProps = {
   leader: Leader
 }
 
-const DetailsLeader: FC<DetailsLeaderProps> = ({ leader }) => {
+const DetailsLeaderRow: FC<DetailsLeaderRowProps> = ({ leader }) => {
   return (
     <div
       style={{
@@ -28,4 +28,4 @@ const DetailsLeader: FC<DetailsLeaderProps> = ({ leader }) => {
   )
 }
 
-export default DetailsLeader
+export default DetailsLeaderRow

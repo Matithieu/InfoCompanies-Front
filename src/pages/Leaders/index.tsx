@@ -2,7 +2,7 @@ import { Box, Grid, Sheet, Typography } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 
-import DetailsLeader from '../../components/parts/DetailsLeader/index.tsx'
+import DetailsLeaderRow from '../../components/parts/LeadersList/components/DetailsLeaderRow.tsx'
 import commonMessages from '../../services/intl/common.messages.ts'
 import { formatMessage } from '../../services/intl/intl.tsx'
 import { fetchLeaderById } from '../../utils/api/queries.ts'
@@ -66,7 +66,7 @@ const LeaderPage = () => {
                     minHeight: 200,
                   }}
                 >
-                  <DetailsLeader leader={leader} />
+                  <DetailsLeaderRow leader={leader} />
                 </Sheet>
               </Grid>
             </Grid>

@@ -15,7 +15,7 @@ import Pagination from '../../common/Buttons/Pagination'
 import { handleChangeStatut } from '../../common/Icons/stautIcon.util'
 import TableCompanyHeaders from './components/TableCompanyHeaders'
 import TableCompanyRow from './components/TableCompanyRow'
-import { canBeScrapped, chunkArray } from './index.util'
+import { canBeScrapped, chunkArray } from './tableCompany.util'
 
 type TableCompanyProps = {
   data: Page<Company> | undefined
