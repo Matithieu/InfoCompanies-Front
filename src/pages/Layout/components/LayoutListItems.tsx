@@ -76,14 +76,12 @@ const LayoutListItems: FC<LayoutListItemsProps> = ({ open }) => {
             >
               <PendingIcon
                 sx={{
-                  fontSize: { xs: '1.5rem', md: 'inherit' },
+                  fontSize: { xs: '1.5rem', md: '1.5rem' },
                 }}
               />
-              {open && (
+              {open && ( // If there a written space, it moves
                 <ListItemContent>
-                  <Typography level="body-md">
-                    {formatMessage(layoutMessages.toDo)}
-                  </Typography>
+                  <Typography level="body-md">To&nbsp;Do</Typography>
                 </ListItemContent>
               )}
             </ListItemButton>
