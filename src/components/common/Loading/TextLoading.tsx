@@ -5,7 +5,13 @@ import { formatMessage } from '../../../services/intl/intl'
 
 export const LoadingText: FC = () => {
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
       <p>{formatMessage(commonMessages.loading)}</p>
     </div>
   )

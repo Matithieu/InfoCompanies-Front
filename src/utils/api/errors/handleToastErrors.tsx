@@ -9,9 +9,8 @@ const handleToastErrors = async (response: Response, url: string) => {
     case 401:
       break
 
-    case 403: {
+    case 403:
       return toastErrorReconnect()
-    }
 
     case 409:
       return toastSuccessAlreadySubscribed()
