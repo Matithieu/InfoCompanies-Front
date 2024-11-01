@@ -77,7 +77,7 @@ export default defineMessages({
   },
   employeeNumber: {
     defaultMessage: 'Number of employees',
-    id: `${scope}.employee`,
+    id: `${scope}.employeeNumber`,
   },
   socials: {
     defaultMessage: 'Socials',
