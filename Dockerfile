@@ -3,11 +3,10 @@ FROM node:latest AS build-stage
 
 # Install pnpm
 RUN npm install -g pnpm
-RUN pnpm config set registry http://registry.npmjs.org
 
 WORKDIR /app
 
-# Copy package.json and pnpm-lock.yaml
+# Copy package.json
 COPY InfoCompanies-Front/package.json ./
 
 # Install dependencies
@@ -24,4 +23,4 @@ FROM nginx:1.26.2-alpine
 
 ARG CONFIG_PATH
 
-COPY --from=build-stage /app/dist /usr/share/nginx/html/ui/
+COPY --from=build-stage /app/dist /usr/share/nginx/html/
