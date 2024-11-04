@@ -9,6 +9,7 @@ import {
   toastSuccessAlreadySubscribed,
   toastWarnSelectSubscription,
 } from '../../components/common/Toasts/toasts'
+import useAuthManager from '../../hooks/useAuthManager'
 import useAuthStore from '../../store/authStore'
 import { fetchUser } from '../../utils/api/queries'
 import { isNotNU } from '../../utils/assertion.util'
@@ -48,6 +49,7 @@ export const ProtectedRoutes = () => {
 
 export const ProtectedSimpleRoutes = () => {
   const { authUser, setAuthUser, requestLoading } = useAuthStore()
+  const authManager = useAuthManager()
   const urlLocation = window.location.pathname
 
   const { data, isFetching, isSuccess } = useQuery({
@@ -82,7 +84,8 @@ export const ProtectedSimpleRoutes = () => {
 
   if (authUser?.isVerified && urlLocation === '/ui/subscription') {
     toastSuccessAlreadySubscribed()
-    return <Navigate to={routesPath.dashboard} />
+    // Renew the cookie to have the correct roles
+    authManager.signIn()
   }
 
   return <Outlet />
