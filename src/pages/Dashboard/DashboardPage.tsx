@@ -3,10 +3,8 @@ import './style.css'
 import { Box, Card, Stack } from '@mui/joy'
 import { Grid } from '@mui/material'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { FC, useEffect, useState } from 'react'
-import Joyride, { CallBackProps, STATUS } from 'react-joyride'
+import { FC, useState } from 'react'
 
-import Seo from '../../components/common/Seo/index.tsx'
 import HeaderTitle from '../../components/common/Texts/HeaderTitle.tsx'
 import Chart from '../../components/parts/Chart/index.tsx'
 import DetailsCompany from '../../components/parts/DetailsCompany/index.tsx'
@@ -16,22 +14,15 @@ import TableCompany from '../../components/parts/TableCompany/TableCompany.tsx'
 import { PaginationTableCompany } from '../../components/parts/TableCompany/tableCompany.type.ts'
 import { columnsTableCompany } from '../../data/types/columns.ts'
 import { Company } from '../../data/types/company.ts'
-import { RANDOM_UNSEEN_ENDPOINT } from '../../data/types/index.types.ts'
-import joyrideMessages from '../../onboarding/joyride.messages.ts'
-import joyrideSteps from '../../onboarding/steps.tsx'
-import { formatMessage } from '../../services/intl/intl.tsx'
+import JoyRideOnboarding from '../../onboarding/containers/JoyRide.tsx'
 import useAuthStore from '../../store/authStore.tsx'
 import { useCompanyFilterStore } from '../../store/filtersStore.tsx'
 import { updateUserOnboarding } from '../../utils/api/mutations.ts'
 import { fetchCompaniesWithUrlAndPage } from '../../utils/api/queries.ts'
-import { constructURLWithFilter } from '../../utils/api/utils.ts'
-import { returnInverseOfBoolean } from '../../utils/utils.ts'
+import useFilteredUrl from './hooks/useFilteredUrl.tsx'
 
 const DashboardPage: FC = () => {
   const { authUser, setAuthUser } = useAuthStore()
-  const [isTourRunning, setIsTourRunning] = useState<boolean>(
-    returnInverseOfBoolean(!!authUser?.hasCompletedOnboarding),
-  )
 
   const { searchParams } = useCompanyFilterStore()
   const [company, setCompany] = useState<Company>()
@@ -60,81 +51,21 @@ const DashboardPage: FC = () => {
     }))
   }
 
-  useEffect(() => {
-    const changeURL = () => {
-      let newUrl = ''
-
-      if (
-        searchParams.city.length === 0 &&
-        searchParams.industrySector.length === 0 &&
-        searchParams.legalForm.length === 0 &&
-        searchParams.region.length === 0 &&
-        searchParams.employee.amount === undefined &&
-        searchParams.socials.length === 0 &&
-        searchParams.contact.length === 0 &&
-        searchParams.isCompanySeen === false
-      ) {
-        setDataPagination((prevDataPagination) => ({
-          ...prevDataPagination,
-          page: 0,
-        }))
-        newUrl = `${RANDOM_UNSEEN_ENDPOINT}?`
-      } else {
-        setDataPagination((prevDataPagination) => ({
-          ...prevDataPagination,
-          page: 0,
-        }))
-        newUrl = constructURLWithFilter(searchParams, 'filter-by-parameters?')
-      }
-
-      if (url !== newUrl) {
-        setUrl(newUrl)
-      }
-    }
-
-    changeURL()
-  }, [searchParams])
-
-  const handleJoyrideCallback = (data: CallBackProps) => {
-    const { status } = data
-    const finishedStatuses: string[] = [STATUS.FINISHED, STATUS.SKIPPED]
-
-    if (finishedStatuses.includes(status)) {
-      setIsTourRunning(false)
-      setAuthUser({ ...authUser, hasCompletedOnboarding: true })
-      onboardingMutation.mutate()
-    }
-  }
+  useFilteredUrl({
+    searchParams,
+    url,
+    setDataPagination,
+    setUrl,
+  })
 
   return (
     <>
-      <Joyride
-        continuous
-        showProgress
-        showSkipButton
-        callback={handleJoyrideCallback}
-        locale={{
-          back: formatMessage(joyrideMessages.back),
-          close: formatMessage(joyrideMessages.close),
-          last: formatMessage(joyrideMessages.last),
-          next: formatMessage(joyrideMessages.next),
-          skip: formatMessage(joyrideMessages.skip),
-        }}
-        run={isTourRunning}
-        steps={joyrideSteps}
-        styles={{
-          options: {
-            zIndex: 3000,
-          },
-        }}
+      <JoyRideOnboarding
+        authUser={authUser}
+        onboardingMutation={onboardingMutation}
+        setAuthUser={setAuthUser}
       />
       <Grid flexDirection="column" sx={{ px: { xs: 2, md: 6 } }}>
-        <Seo
-          description="Dashboard"
-          name="Dashboard"
-          title="Dashboard"
-          type="Dashboard"
-        />
         <HeaderTitle text="Dashboard" />
 
         <Box mt={1}>

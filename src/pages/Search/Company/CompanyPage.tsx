@@ -9,7 +9,6 @@ import { GlobalErrorButton } from '../../../components/common/Buttons/GlobalErro
 import ScrapCompanyButton from '../../../components/common/Buttons/scrapCompanyButton.tsx'
 import StatutIcon from '../../../components/common/Icons/StatutIcon.tsx'
 import { handleChangeStatut } from '../../../components/common/Icons/stautIcon.util.ts'
-import Seo from '../../../components/common/Seo/index.tsx'
 import Chart from '../../../components/parts/Chart/index.tsx'
 import DetailsCompany from '../../../components/parts/DetailsCompany/index.tsx'
 import ListOfLeaders from '../../../components/parts/LeaderList/LeaderList.tsx'
@@ -59,10 +58,6 @@ const CompanyPage: FC = () => {
   } else if (isNotNU(company)) {
     return (
       <Box sx={{ display: 'flex' }}>
-        <Seo
-          description={`Details of ${company.companyName}`}
-          title={company.companyName}
-        />
         <Box
           component="main"
           sx={{
