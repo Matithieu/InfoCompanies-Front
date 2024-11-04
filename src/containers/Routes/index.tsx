@@ -1,26 +1,26 @@
 import { lazy } from '@loadable/component'
+import AccountPage from 'pages/Account/AccountPage.tsx'
+import Page404 from 'pages/Error/404.tsx'
+import Test from 'pages/Error/test.tsx'
+import FavoritesPage from 'pages/Favorites/FavoritesPage.tsx'
+import LandingPage from 'pages/Landing/LandingPage.tsx'
+import Layout from 'pages/Layout/Layout.tsx'
+import LeaderPage from 'pages/Leader/LeaderPage.tsx'
+import LegalInformation from 'pages/Legal/legal.tsx'
+import PrivacyPolicy from 'pages/Legal/privacy.tsx'
+import TermsAndConditions from 'pages/Legal/terms.tsx'
+import OrderFailurePage from 'pages/Purchasing/OrderFailurePage.tsx'
+import OrderSuccessPage from 'pages/Purchasing/OrderSuccessPage.tsx'
+import CompanyPage from 'pages/Search/Company/CompanyPage.tsx'
+import SearchPage from 'pages/Search/SearchPage.tsx'
+import SettingsPage from 'pages/Settings/SettingsPage.tsx'
+import SubscriptionPage from 'pages/Subscription/SubscriptionPage.tsx'
 import { FC } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
-import AccountPage from '../../pages/Account/AccountPage.tsx'
-import Page404 from '../../pages/Error/404.tsx'
-import Test from '../../pages/Error/test.tsx'
-import FavoritesPage from '../../pages/Favorites/FavoritesPage.tsx'
-import LandingPage from '../../pages/Landing/LandingPage.tsx'
-import Layout from '../../pages/Layout/Layout.tsx'
-import LeaderPage from '../../pages/Leader/LeaderPage.tsx'
-import LegalInformation from '../../pages/Legal/legal.tsx'
-import PrivacyPolicy from '../../pages/Legal/privacy.tsx'
-import TermsAndConditions from '../../pages/Legal/terms.tsx'
-import OrderFailurePage from '../../pages/Purchasing/OrderFailurePage.tsx'
-import OrderSuccessPage from '../../pages/Purchasing/OrderSuccessPage.tsx'
-import CompanyPage from '../../pages/Search/Company/CompanyPage.tsx'
-import SearchPage from '../../pages/Search/SearchPage.tsx'
-import SettingsPage from '../../pages/Settings/SettingsPage.tsx'
-import SubscriptionPage from '../../pages/Subscription/SubscriptionPage.tsx'
 import { ProtectedRoutes, ProtectedSimpleRoutes } from './ProtectedRoutes.tsx'
 
-const Dashboard = lazy(() => import('../../pages/Dashboard/DashboardPage.tsx'))
+const Dashboard = lazy(() => import('pages/Dashboard/DashboardPage.tsx'))
 
 // Might want to switch to createBrowserRouter instead of BrowserRouter
 
