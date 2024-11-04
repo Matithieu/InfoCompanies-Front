@@ -1,6 +1,6 @@
 import { lazy } from '@loadable/component'
 import { FC } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 import AccountPage from '../../pages/Account/AccountPage.tsx'
 import Page404 from '../../pages/Error/404.tsx'
@@ -22,36 +22,40 @@ import { ProtectedRoutes, ProtectedSimpleRoutes } from './ProtectedRoutes.tsx'
 
 const Dashboard = lazy(() => import('../../pages/Dashboard/DashboardPage.tsx'))
 
+// Might want to switch to createBrowserRouter instead of BrowserRouter
+
 const AppRouter: FC = () => {
   return (
-    <Routes>
-      <Route path="/ui">
-        <Route element={<LandingPage />} path="" />
-        <Route element={<TermsAndConditions />} path="terms" />
-        <Route element={<PrivacyPolicy />} path="privacy" />
-        <Route element={<LegalInformation />} path="legal" />
-        <Route element={<Test />} path="test" />
+    <Router>
+      <Routes>
+        <Route path="/ui">
+          <Route element={<LandingPage />} path="" />
+          <Route element={<TermsAndConditions />} path="terms" />
+          <Route element={<PrivacyPolicy />} path="privacy" />
+          <Route element={<LegalInformation />} path="legal" />
+          <Route element={<Test />} path="test" />
 
-        <Route element={<ProtectedSimpleRoutes />}>
-          <Route element={<SubscriptionPage />} path="subscription" />
-          <Route element={<OrderFailurePage />} path="failure" />
-          <Route element={<OrderSuccessPage />} path="completion" />
-        </Route>
-
-        <Route element={<ProtectedRoutes />}>
-          <Route element={<Layout />}>
-            <Route element={<Dashboard />} path="dashboard" />
-            <Route element={<FavoritesPage />} path="favorites" />
-            <Route element={<SettingsPage />} path="settings" />
-            <Route element={<AccountPage />} path="account" />
-            <Route element={<SearchPage />} path="search/:searchTerm" />
-            <Route element={<CompanyPage />} path="company/:companyId" />
-            <Route element={<LeaderPage />} path="leaders/:siren" />
+          <Route element={<ProtectedSimpleRoutes />}>
+            <Route element={<SubscriptionPage />} path="subscription" />
+            <Route element={<OrderFailurePage />} path="failure" />
+            <Route element={<OrderSuccessPage />} path="completion" />
           </Route>
+
+          <Route element={<ProtectedRoutes />}>
+            <Route element={<Layout />}>
+              <Route element={<Dashboard />} path="dashboard" />
+              <Route element={<FavoritesPage />} path="favorites" />
+              <Route element={<SettingsPage />} path="settings" />
+              <Route element={<AccountPage />} path="account" />
+              <Route element={<SearchPage />} path="search/:searchTerm" />
+              <Route element={<CompanyPage />} path="company/:companyId" />
+              <Route element={<LeaderPage />} path="leaders/:siren" />
+            </Route>
+          </Route>
+          <Route element={<Page404 />} path="*" />
         </Route>
-        <Route element={<Page404 />} path="*" />
-      </Route>
-    </Routes>
+      </Routes>
+    </Router>
   )
 }
 
