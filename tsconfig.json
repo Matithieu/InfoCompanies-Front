@@ -15,7 +15,10 @@
     "jsx": "react-jsx",
 
     /* Absolute import */
-    "baseUrl": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
 
     /* Linting */
     "strict": true,
