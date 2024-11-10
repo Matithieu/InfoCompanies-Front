@@ -1,11 +1,11 @@
+import LoadingText from '@/components/common/Loading/TextLoading'
 import { ListDivider, Typography } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
-import { FC, Fragment } from 'react'
+import { FC } from 'react'
 
 import commonMessages from '../../../services/intl/common.messages'
 import { formatMessage } from '../../../services/intl/intl'
 import { fetchLeadersBySirens } from '../../../utils/api/queries'
-import { LoadingText } from '../../common/Loading/TextLoading'
 import { PleaseSelectACompanyText } from '../../common/Texts/PleaseSelectACompanyText'
 import DetailsLeaderRow from './components/DetailsLeaderRow'
 
@@ -14,7 +14,11 @@ type ListOfLeadersProps = {
 }
 
 const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
-  const { data: leaders, isLoading } = useQuery({
+  const {
+    data: leaders,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ['leader', siren],
     queryFn: async () => {
       if (siren) {
@@ -25,7 +29,7 @@ const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
   })
 
   if (isLoading) {
-    return <LoadingText />
+    return <LoadingText error={error} />
   }
 
   if (leaders === undefined) {
@@ -50,7 +54,7 @@ const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
   }
 
   return (
-    <Fragment>
+    <>
       <div style={{ textAlign: 'center', marginBottom: 16 }}>
         <Typography level="h4">
           {formatMessage(commonMessages.leaders, {
@@ -74,7 +78,7 @@ const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
           </div>
         ))}
       </div>
-    </Fragment>
+    </>
   )
 }
 

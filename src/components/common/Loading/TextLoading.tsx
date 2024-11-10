@@ -2,8 +2,21 @@ import { FC } from 'react'
 
 import commonMessages from '../../../services/intl/common.messages'
 import { formatMessage } from '../../../services/intl/intl'
+import { GlobalErrorButton } from '../Buttons/GlobalErrorButton'
 
-export const LoadingText: FC = () => {
+type LoadingTextProps = {
+  text?: string
+  error?: Error | null
+}
+
+const LoadingText: FC<LoadingTextProps> = ({
+  text = formatMessage(commonMessages.loading),
+  error,
+}) => {
+  if (error) {
+    return <GlobalErrorButton error={error} />
+  }
+
   return (
     <div
       style={{
@@ -12,7 +25,9 @@ export const LoadingText: FC = () => {
         alignItems: 'center',
       }}
     >
-      <p>{formatMessage(commonMessages.loading)}</p>
+      <p>{text}</p>
     </div>
   )
 }
+
+export default LoadingText

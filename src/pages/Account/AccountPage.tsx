@@ -1,7 +1,7 @@
+import LoadingText from '@/components/common/Loading/TextLoading'
 import { Box, Grid } from '@mui/joy'
 import { FC } from 'react'
 
-import { LoadingText } from '../../components/common/Loading/TextLoading'
 import Tabs from '../../components/common/Tabs'
 import HeaderTitle from '../../components/common/Texts/HeaderTitle'
 import { formatMessage, formatMessagePlural } from '../../services/intl/intl'
