@@ -10,6 +10,7 @@ import LoadingCircular from './components/common/Loading/LoadingCircular.tsx'
 import LocaleProvider from './containers/LocaleProvider/index.tsx'
 import MaterialProvider from './containers/MUI/index.tsx'
 import AppRouter from './containers/Routes/index.tsx'
+import ShadCNThemeProvider from './containers/ShadCN/index.tsx'
 import ToastProvider from './containers/Toast/index.tsx'
 
 const queryClient = new QueryClient({
@@ -35,16 +36,18 @@ function App() {
   return (
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
-        <MaterialProvider>
-          <LocaleProvider>
-            <HelmetProvider>
-              <Suspense fallback={<LoadingCircular />}>
-                <AppRouter />
-              </Suspense>
-            </HelmetProvider>
-            <ToastProvider />
-          </LocaleProvider>
-        </MaterialProvider>
+        <ShadCNThemeProvider>
+          <MaterialProvider>
+            <LocaleProvider>
+              <HelmetProvider>
+                <Suspense fallback={<LoadingCircular />}>
+                  <AppRouter />
+                </Suspense>
+              </HelmetProvider>
+              <ToastProvider />
+            </LocaleProvider>
+          </MaterialProvider>
+        </ShadCNThemeProvider>
       </QueryClientProvider>
     </React.StrictMode>
   )

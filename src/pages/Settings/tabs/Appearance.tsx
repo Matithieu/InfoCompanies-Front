@@ -1,3 +1,4 @@
+import { ShadCNModeToggle } from '@/containers/ShadCN/mode-toggle'
 import { Box, Card, Divider, Typography } from '@mui/joy'
 import { FC } from 'react'
 
@@ -41,6 +42,7 @@ const AppearanceTab: FC = () => {
         </Typography>
         <Box>
           <ColorSchemeToggle />
+          <ShadCNModeToggle />
         </Box>
       </Card>
     </Box>
