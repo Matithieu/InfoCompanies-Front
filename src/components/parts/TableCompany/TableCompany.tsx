@@ -12,7 +12,7 @@ import { formatMessage } from '../../../services/intl/intl'
 import { fetchCompanyScrap } from '../../../utils/api/queries'
 import { GlobalErrorButton } from '../../common/Buttons/GlobalErrorButton'
 import Pagination from '../../common/Buttons/Pagination'
-import { handleChangeStatut } from '../../common/Icons/stautIcon.util'
+import { handleChangeCompanyStatut } from '../../common/Icons/stautIcon.util'
 import TableCompanyHeaders from './components/TableCompanyHeaders'
 import TableCompanyRow from './components/TableCompanyRow'
 import { canBeScrapped, chunkArray } from './tableCompany.util'
@@ -102,7 +102,7 @@ const TableCompany: FC<TableCompanyProps> = ({
   }, [data, queryClient, isScrapping])
 
   const handleStatusChange = (company: Company) => {
-    const updatedCompany = handleChangeStatut({ company })
+    const updatedCompany = handleChangeCompanyStatut({ company })
 
     setTableData((prevData) => {
       if (prevData) {

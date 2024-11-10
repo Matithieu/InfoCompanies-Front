@@ -4,7 +4,9 @@ interface handleChangeStatutProps {
   company: Company
 }
 
-export const handleChangeStatut = ({ company }: handleChangeStatutProps) => {
+export const handleChangeCompanyStatut = ({
+  company,
+}: handleChangeStatutProps) => {
   let newStatus: CheckStatus
 
   switch (company.userCompanyStatus.status) {
