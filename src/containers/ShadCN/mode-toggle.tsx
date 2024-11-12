@@ -5,12 +5,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { useColorScheme } from '@mui/joy/styles'
 import { Moon, Sun } from 'lucide-react'
 
 import { useTheme } from './ThemeProvider'
 
 export function ShadCNModeToggle() {
   const { setTheme } = useTheme()
+  const { setMode } = useColorScheme()
 
   return (
     <DropdownMenu>
@@ -22,13 +24,28 @@ export function ShadCNModeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme('light')}>
+        <DropdownMenuItem
+          onClick={() => {
+            setTheme('light')
+            setMode('light')
+          }}
+        >
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('dark')}>
+        <DropdownMenuItem
+          onClick={() => {
+            setTheme('dark')
+            setMode('dark')
+          }}
+        >
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('system')}>
+        <DropdownMenuItem
+          onClick={() => {
+            setTheme('system')
+            setMode('system')
+          }}
+        >
           System
         </DropdownMenuItem>
       </DropdownMenuContent>

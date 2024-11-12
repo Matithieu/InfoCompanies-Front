@@ -1,4 +1,5 @@
-import { Button, Typography } from '@mui/joy'
+import { Button } from '@/components/ui/button'
+import { Typography } from '@mui/joy'
 
 import useAuthManager from '../../../hooks/useAuthManager'
 import { useAppNavigate } from '../../../utils/navigation/navigation'
@@ -15,13 +16,11 @@ export function LoginButton({ message }: ButtonProps) {
       <Typography>
         {message}
         <Button
-          color="primary"
-          variant="soft"
           onClick={() => {
             authUser.signIn()
           }}
         >
-          Se connecter
+          Login
         </Button>
       </Typography>
     </div>
@@ -36,7 +35,6 @@ export function LogoutButton({ message }: ButtonProps) {
       {message}
       <Button
         color="primary"
-        variant="soft"
         onClick={() => {
           authUser.signOut()
         }}
@@ -55,7 +53,6 @@ export function SelectSubscriptionButton({ message }: ButtonProps) {
       {message}
       <Button
         color="primary"
-        variant="soft"
         onClick={() => {
           navigation.toSubscription()
         }}
@@ -80,7 +77,6 @@ export function QuotaExceededButton({ message }: ButtonProps) {
       <Typography>{message}</Typography>
       <Button
         color="primary"
-        variant="soft"
         onClick={() => {
           navigation.toAccount()
         }}

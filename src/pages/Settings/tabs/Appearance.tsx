@@ -4,7 +4,6 @@ import { FC } from 'react'
 
 import ChangeLanguageSelect from '../../../components/common/Select/ChangeLanguageSelect'
 import { formatMessage } from '../../../services/intl/intl'
-import ColorSchemeToggle from '../../Layout/components/ColorScheme'
 import settingsMessages from '../settings.messages'
 
 const AppearanceTab: FC = () => {
@@ -41,7 +40,6 @@ const AppearanceTab: FC = () => {
           {formatMessage(settingsMessages.appearance)}
         </Typography>
         <Box>
-          <ColorSchemeToggle />
           <ShadCNModeToggle />
         </Box>
       </Card>
