@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM node:latest AS build-stage
+FROM node:18.20.4-alpine as build-stage
 
 # Install pnpm
 RUN npm install -g pnpm
