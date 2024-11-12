@@ -1,6 +1,5 @@
 import AccountPage from '@/pages/Account/AccountPage.tsx'
 import Page404 from '@/pages/Error/404.tsx'
-import Test from '@/pages/Error/test.tsx'
 import FavoritesPage from '@/pages/Favorites/FavoritesPage.tsx'
 import LandingPage from '@/pages/Landing/LandingPage.tsx'
 import Layout from '@/pages/Layout/Layout.tsx'
@@ -14,6 +13,7 @@ import CompanyPage from '@/pages/Search/Company/CompanyPage.tsx'
 import SearchPage from '@/pages/Search/SearchPage.tsx'
 import SettingsPage from '@/pages/Settings/SettingsPage.tsx'
 import SubscriptionPage from '@/pages/Subscription/SubscriptionPage.tsx'
+import TestPage from '@/pages/Test/TestPage.tsx'
 import { lazy } from '@loadable/component'
 import { FC } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
@@ -33,7 +33,7 @@ const AppRouter: FC = () => {
           <Route element={<TermsAndConditions />} path="terms" />
           <Route element={<PrivacyPolicy />} path="privacy" />
           <Route element={<LegalInformation />} path="legal" />
-          <Route element={<Test />} path="test" />
+          <Route element={<TestPage />} path="test" />
 
           <Route element={<ProtectedSimpleRoutes />}>
             <Route element={<SubscriptionPage />} path="subscription" />
