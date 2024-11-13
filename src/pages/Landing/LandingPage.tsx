@@ -12,6 +12,7 @@ import { FooterSection } from './components/sections/Footer'
 import { HeroSection } from './components/sections/Hero'
 import { PricingSection } from './components/sections/Pricing'
 import { TestimonialSection } from './components/sections/Testimonial'
+import Tutorial from './components/sections/Tutorial'
 import { Navbar } from './Navbar'
 
 const LandingPage: FC = () => {
@@ -32,6 +33,7 @@ const LandingPage: FC = () => {
             <BenefitsSection />
             <FeaturesSection />
             <TestimonialSection />
+            <Tutorial />
             {/* <TeamSection /> */}
             <PricingSection />
             <FAQSection />
