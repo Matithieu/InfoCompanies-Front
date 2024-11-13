@@ -2,6 +2,7 @@ import './globals.css'
 
 import ShadCNThemeProvider from '@/containers/ShadCN'
 import { cn } from '@/lib/utils'
+import { DemoVideo } from '@/pages/Landing/components/sections/VideoDialog.tsx'
 import { FC } from 'react'
 
 import LandingTableCompany from './components/LandingTableCompany/LandingTableCompany'
@@ -31,6 +32,8 @@ const LandingPage: FC = () => {
             <LandingTableCompany />
             <BenefitsSection />
             <FeaturesSection />
+            {/* eslint-disable-next-line react/jsx-no-undef */}
+            <DemoVideo />
             <TestimonialSection />
             {/* <TeamSection /> */}
             <PricingSection />

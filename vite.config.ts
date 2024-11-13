@@ -22,8 +22,8 @@ export default defineConfig({
   base: '/',
   server: {
     https: {
-      key: '../config/certs/server.key',
-      cert: '../config/certs/server.crt',
+      key: './server.key',
+      cert: './server.crt',
     },
     port: 5173,
     proxy: {
