@@ -4,7 +4,7 @@ import { ChevronsDownIcon } from 'lucide-react'
 
 export const FooterSection = () => {
   return (
-    <footer className="container py-24 sm:py-32" id="footer">
+    <footer className="container py-12 sm:py-16" id="footer">
       <div className="rounded-2xl border border-secondary bg-card p-10">
         <div className="grid gap-x-12 gap-y-8 md:grid-cols-4">
           <div className="md:col-span-1">
