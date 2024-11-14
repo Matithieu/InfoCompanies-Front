@@ -13,7 +13,7 @@ interface FAQProps {
 
 const FAQList: FAQProps[] = [
   {
-    question: "Est-ce que ce j'ai besoin de rentrer ma CB ?",
+    question: "Est-ce que j'ai besoin de rentrer ma CB ?",
     answer:
       'Non, vous pouvez tester notre plateforme gratuitement sans rentrer vos informations de paiement.',
     value: 'item-1',

@@ -29,7 +29,7 @@ const reviewList: ReviewProps[] = [
     name: 'Julie Martin',
     userName: 'Business Analyst',
     comment:
-      "La plateforme m’a permis de trouver rapidement des informations précises sur les entreprises et leurs secteurs d'activités. Un gain de temps incroyable!",
+      "La plateforme m’a permis de trouver rapidement des informations précises sur les entreprises et leurs secteurs d'activité. Un gain de temps incroyable!",
     rating: 5.0,
   },
   {
@@ -83,7 +83,7 @@ export const TestimonialSection = () => {
         </h2>
 
         <h2 className="mb-4 text-center text-3xl font-bold md:text-4xl">
-          Ceux que nos clients en disent
+          Ce que nos clients en disent
         </h2>
       </div>
 

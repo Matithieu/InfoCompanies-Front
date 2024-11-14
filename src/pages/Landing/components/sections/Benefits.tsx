@@ -23,7 +23,7 @@ const benefitList: BenefitsProps[] = [
   },
   {
     icon: 'TrendingUp',
-    title: 'Optimisez Vos Opportunités',
+    title: 'Optimisez vos Opportunités',
     description:
       'Trouvez les meilleures entreprises pour vos projets et opportunités professionnelles, et établissez des connexions précieuses.',
   },
@@ -40,16 +40,18 @@ export const BenefitsSection = () => {
     <section className="container py-24 sm:py-32" id="benefits">
       <div className="grid place-items-center lg:grid-cols-2 lg:gap-24">
         <div>
-          <h2 className="mb-2 text-lg tracking-wider text-primary">Benefits</h2>
+          <h2 className="mb-2 text-lg tracking-wider text-primary">
+            Avantages
+          </h2>
 
           <h2 className="mb-4 text-3xl font-bold md:text-4xl">
             Ne perdez pas plus de temps
           </h2>
           <p className="mb-8 text-xl text-muted-foreground">
-            Parcourez plus de 4 millions d&apos;entreprises Françaises.
+            Parcourez plus de 4 millions d&apos;entreprises françaises.
             <br />
             <br />
-            Filtrez vos recherches avec des filtres puissants:
+            Filtrez vos recherches avec des filtres puissants :
             <br />
             ville, effectif, secteur d&apos;activité et bien plus encore.
           </p>

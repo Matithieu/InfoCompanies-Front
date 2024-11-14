@@ -35,9 +35,9 @@ const featureList: FeaturesProps[] = [
   },
   {
     icon: 'UserPlus',
-    title: 'Connexions Facilitée',
+    title: 'Connexions Facilitées',
     description:
-      "Découvrez les details de l'entreprise tels que les noms des dirigeants, leur poste et bien plus.",
+      "Découvrez les détails de l'entreprise tels que les noms des dirigeants, leur poste et bien plus.",
   },
   {
     icon: 'Search',
