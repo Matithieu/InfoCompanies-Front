@@ -30,7 +30,7 @@ const plans: PlanProps[] = [
     price: 0,
     description:
       'Testez notre plateforme gratuitement et découvrez nos outils !',
-    buttonText: 'Start Free Trial',
+    buttonText: 'Essai gratuit',
     benefitList: ['15 requêtes/jour'],
   },
   {
@@ -38,7 +38,7 @@ const plans: PlanProps[] = [
     popular: PopularPlan.YES,
     price: 25,
     description: 'Poussez vos recherches plus loin !',
-    buttonText: 'Get Started',
+    buttonText: "Let's go !",
     benefitList: ['100 requêtes/jour'],
   },
   {
@@ -46,7 +46,7 @@ const plans: PlanProps[] = [
     popular: PopularPlan.NO,
     price: 35,
     description: "Prospectez à plusieurs et accédez à plus d'entreprises !",
-    buttonText: 'Contact Us',
+    buttonText: 'En avant !',
     benefitList: ['200 requêtes/jour'],
   },
 ]
@@ -86,7 +86,7 @@ export const PricingSection = () => {
 
                 <div>
                   <span className="text-3xl font-bold">${price}</span>
-                  <span className="text-muted-foreground"> /month</span>
+                  <span className="text-muted-foreground"> / jour</span>
                 </div>
               </CardHeader>
 
