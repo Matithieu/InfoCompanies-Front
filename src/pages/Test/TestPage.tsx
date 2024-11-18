@@ -1,8 +1,7 @@
 import { Button } from '@/components/ui/button copy'
 import AddIcon from '@mui/icons-material/Add'
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import { Typography } from '@mui/material'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { FC } from 'react'
 
 const Test: FC = () => {
@@ -23,12 +22,14 @@ const Test: FC = () => {
           alignItems: 'center',
         }}
       >
-        <Button style={{ borderRadius: '50%' }}>
-          <KeyboardArrowLeftIcon />
+        <Button size="icon">
+          <ChevronLeft />
         </Button>
-        <Typography variant="body2"> 1 / 10 </Typography>
-        <Button style={{ borderRadius: '50%' }}>
-          <KeyboardArrowRightIcon />
+        <div style={{ padding: 10 }}>
+          <Typography variant="body2"> 1 / 10 </Typography>
+        </div>
+        <Button size="icon">
+          <ChevronRight />
         </Button>
       </div>
     </>

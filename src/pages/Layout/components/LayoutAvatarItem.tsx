@@ -37,7 +37,13 @@ const LayoutAvatarItem: FC<LayoutAvatarItemProps> = ({ open }) => {
           navigation.toAccount()
         }}
       >
-        <Avatar size="md" variant="outlined">
+        <Avatar
+          size="md"
+          sx={{
+            borderColor: 'hsl(var(--primary))',
+          }}
+          variant="outlined"
+        >
           {authUser?.firstName?.charAt(0).toLocaleUpperCase() ?? 'X'}
         </Avatar>
 

@@ -1,5 +1,12 @@
+import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import AddIcon from '@mui/icons-material/Add'
-import { Dropdown, ListDivider, Menu, MenuButton, MenuItem } from '@mui/joy'
 import { Box } from '@mui/material'
 import { FC, useEffect, useState } from 'react'
 
@@ -179,27 +186,36 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
         ))}
 
         {availableFilters.length > 0 && (
-          <Dropdown>
+          <DropdownMenu>
             <div id="joyride-step-2">
-              <MenuButton
-                sx={{ flexShrink: 0, width: '40px', maxWidth: '250px' }}
-                variant="soft"
-              >
-                <AddIcon style={{ fontSize: '1.2rem' }} />
-              </MenuButton>
+              <DropdownMenuTrigger>
+                <Button
+                  style={{
+                    flexShrink: 0,
+                    width: '40px',
+                    maxWidth: '250px',
+                  }}
+                >
+                  <AddIcon fontSize="large" />
+                </Button>
+              </DropdownMenuTrigger>
             </div>
 
-            <Menu sx={{ zIndex: 3000 }}>
+            <DropdownMenuContent style={{ zIndex: 3000 }}>
               {availableFilters.map((filter, index) => (
                 <div key={filter}>
-                  <MenuItem onClick={() => addFilter(filter)}>
+                  <DropdownMenuItem onClick={() => addFilter(filter)}>
                     {filterDescriptions[filter]}
-                  </MenuItem>
-                  {index === availableFilters.length - 1 ? '' : <ListDivider />}
+                  </DropdownMenuItem>
+                  {index === availableFilters.length - 1 ? (
+                    ''
+                  ) : (
+                    <DropdownMenuSeparator />
+                  )}
                 </div>
               ))}
-            </Menu>
-          </Dropdown>
+            </DropdownMenuContent>
+          </DropdownMenu>
         )}
 
         {selectedFilters.length !== 0 && filterComponents['searchButton']}

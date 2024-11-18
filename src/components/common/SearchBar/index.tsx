@@ -1,5 +1,5 @@
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
-import { FormHelperText, Input } from '@mui/joy'
+import { Input } from '@/components/ui/input'
+import { FormHelperText } from '@mui/joy'
 import { FC, FormEvent, useState } from 'react'
 
 import commonMessages from '../../../services/intl/common.messages'
@@ -44,12 +44,9 @@ const SearchAppBar: FC<SearchAppBarProps> = ({ isSidebarOpen }) => {
   return (
     <form onSubmit={handleSearch}>
       <Input
-        error={isSearchBarError} // Apply error state to input
-        placeholder={formatMessage(commonMessages.search)}
-        size="md"
-        startDecorator={<SearchRoundedIcon />}
-        sx={{
-          borderColor: isSearchBarError ? 'red' : undefined, // Conditionally apply red border
+        placeholder={'🔍' + ' ' + formatMessage(commonMessages.search)}
+        style={{
+          borderColor: isSearchBarError ? 'red' : 'hsl(var(--primary))', // Conditionally apply red border
         }}
         value={searchTerm}
         onChange={handleInputChange}

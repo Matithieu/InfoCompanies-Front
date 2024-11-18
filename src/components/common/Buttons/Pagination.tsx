@@ -1,12 +1,6 @@
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
-import {
-  Box,
-  IconButton,
-  iconButtonClasses,
-  Tooltip,
-  Typography,
-} from '@mui/joy'
+import { Button } from '@/components/ui/button'
+import Icon from '@/components/ui/icon'
+import { Box, iconButtonClasses, Tooltip, Typography } from '@mui/joy'
 import React from 'react'
 
 type DataPaginationProps = {
@@ -42,31 +36,37 @@ export default function Pagination({
             }}
           >
             <Tooltip title="Page précédente">
-              <IconButton
-                color="neutral"
+              <Button
                 disabled={dataPagination.page === 0}
-                size="sm"
-                sx={{ bgcolor: 'background.surface' }}
-                variant="outlined"
+                size="icon"
+                variant="outline"
                 onClick={() => handleChangePage(dataPagination.page - 1)}
               >
-                <KeyboardArrowLeftIcon />
-              </IconButton>
+                <Icon
+                  className="text-primary"
+                  color="hsl(var(--primary))"
+                  name="ChevronLeft"
+                  size={24}
+                />{' '}
+              </Button>
             </Tooltip>
             <Typography level="body-md">
               {dataPagination.page + 1} / {dataPagination.totalPages}
             </Typography>
             <Tooltip title="Page suivante">
-              <IconButton
-                color="neutral"
+              <Button
                 disabled={dataPagination.page === dataPagination.totalPages - 1}
-                size="sm"
-                sx={{ bgcolor: 'background.surface' }}
-                variant="outlined"
+                size="icon"
+                variant="outline"
                 onClick={() => handleChangePage(dataPagination.page + 1)}
               >
-                <KeyboardArrowRightIcon />
-              </IconButton>
+                <Icon
+                  className="text-primary"
+                  color="hsl(var(--primary))"
+                  name="ChevronRight"
+                  size={24}
+                />
+              </Button>
             </Tooltip>
           </Box>
         </Box>

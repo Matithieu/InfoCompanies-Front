@@ -1,6 +1,4 @@
-import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded'
-import PendingIcon from '@mui/icons-material/Pending'
-import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded'
+import Icon from '@/components/ui/icon'
 import {
   Box,
   Divider,
@@ -53,10 +51,11 @@ const LayoutListItems: FC<LayoutListItemsProps> = ({ open }) => {
                 navigation.toDashboard()
               }}
             >
-              <DashboardRoundedIcon
-                sx={{
-                  fontSize: { xs: '1.5rem', md: '1.5rem' },
-                }}
+              <Icon
+                className="text-primary"
+                color="hsl(var(--primary))"
+                name="LayoutDashboard"
+                size={24}
               />
               {open && (
                 <ListItemContent>
@@ -74,10 +73,11 @@ const LayoutListItems: FC<LayoutListItemsProps> = ({ open }) => {
                 navigation.toFavorites()
               }}
             >
-              <PendingIcon
-                sx={{
-                  fontSize: { xs: '1.5rem', md: '1.5rem' },
-                }}
+              <Icon
+                className="text-primary"
+                color="hsl(var(--primary))"
+                name="Waypoints"
+                size={24}
               />
               {open && ( // If there a written space, it moves
                 <ListItemContent>
@@ -104,10 +104,11 @@ const LayoutListItems: FC<LayoutListItemsProps> = ({ open }) => {
                 navigation.toSettings()
               }}
             >
-              <SettingsRoundedIcon
-                sx={{
-                  fontSize: { xs: '1.5rem', md: 'inherit' },
-                }}
+              <Icon
+                className="text-primary"
+                color="hsl(var(--primary))"
+                name="Settings"
+                size={24}
               />
               {open && (
                 <ListItemContent>

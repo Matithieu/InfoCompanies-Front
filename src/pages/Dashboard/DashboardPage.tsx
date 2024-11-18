@@ -1,11 +1,18 @@
 import './style.css'
 
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb.tsx'
 import { Box, Card, Stack } from '@mui/joy'
 import { Grid } from '@mui/material'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { FC, useState } from 'react'
 
-import HeaderTitle from '../../components/common/Texts/HeaderTitle.tsx'
 import Chart from '../../components/parts/Chart/index.tsx'
 import DetailsCompany from '../../components/parts/DetailsCompany/index.tsx'
 import Filters from '../../components/parts/Filters/index.tsx'
@@ -66,7 +73,18 @@ const DashboardPage: FC = () => {
         setAuthUser={setAuthUser}
       />
       <Grid flexDirection="column" sx={{ px: { xs: 2, md: 6 } }}>
-        <HeaderTitle text="Dashboard" />
+        <Breadcrumb className="py-5">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/ui/dashboard">Dashboard</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+
+            <BreadcrumbItem>
+              <BreadcrumbPage>Home</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
 
         <Box mt={1}>
           <Grid item md={4} sm={6} sx={{ marginBottom: 2 }} xs={12}>
@@ -112,7 +130,9 @@ const DashboardPage: FC = () => {
               </Stack>
             </Grid>
 
-            {/* Container on the second row */}
+            {/* Container on the second row 
+              To Refactor: the cards should be in a separate component
+            */}
             <Grid
               container
               aria-label="tabs"
@@ -121,14 +141,18 @@ const DashboardPage: FC = () => {
             >
               {/* DetailsCompany of the company */}
               <Grid item lg={4} md={12} sm={12} xl={4} xs={12}>
-                <Card sx={{ minHeight: 220 }}>
+                <Card
+                  sx={{ minHeight: 220, borderColor: 'hsl(var(--primary))' }}
+                >
                   <DetailsCompany company={company} />
                 </Card>
               </Grid>
 
               {/* Leaders of the company */}
               <Grid item lg={4} md={12} sm={12} xl={4} xs={12}>
-                <Card sx={{ minHeight: 220 }}>
+                <Card
+                  sx={{ minHeight: 220, borderColor: 'hsl(var(--primary))' }}
+                >
                   <ListOfLeaders siren={company?.sirenNumber} />
                 </Card>
               </Grid>
@@ -139,6 +163,7 @@ const DashboardPage: FC = () => {
                   sx={{
                     height: 220,
                     minWidth: 1,
+                    borderColor: 'hsl(var(--primary))',
                   }}
                 >
                   <Chart company={company} />

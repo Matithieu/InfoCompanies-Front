@@ -149,6 +149,7 @@ const TableCompany: FC<TableCompanyProps> = ({
           borderRadius: 'sm',
           minHeight: 0,
           overflow: 'auto',
+          borderColor: 'hsl(var(--primary))',
         }}
         variant="outlined"
       >
