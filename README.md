@@ -30,3 +30,26 @@ How to add a filter -
     - filter : (...)
 - landing page
 - constructUrlWithFilter
+
+# Target local bakend
+
+To target the local backend, use the following command:
+
+```sh
+VITE_API_PREFIX=http://localhost:8083/api pnpm run dev
+```
+
+# Browser extension
+
+You can install ModHeader extension on your browser to add the following headers:
+
+```sh
+X-Auth-Request-Email: xxx
+X-Auth-Request-User: xxx
+```
+
+The headers are used to authenticate the user.
+
+_Tab filter on the URL doesn't work_
+
+![alt text](public/dev-backend.png)
