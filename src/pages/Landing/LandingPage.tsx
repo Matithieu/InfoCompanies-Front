@@ -38,6 +38,7 @@ const LandingPage: FC = () => {
             <PricingSection />
             <FAQSection />
             <FooterSection />
+            {/* <CookieConsent /> */}
           </ShadCNThemeProvider>
         </div>
       </div>
