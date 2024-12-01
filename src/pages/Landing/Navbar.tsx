@@ -1,4 +1,7 @@
-import { LoginButton } from '@/components/common/Buttons/AuthButtons'
+import {
+  LoginButton,
+  LogoutButton,
+} from '@/components/common/Buttons/AuthButtons'
 import { Button } from '@/components/ui/button'
 import {
   NavigationMenu,
@@ -16,9 +19,10 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { ShadCNModeToggle } from '@/containers/ShadCN/mode-toggle'
+import useAuthStore from '@/store/authStore'
 import { Link } from '@mui/material'
 import { ChevronsDown, Menu } from 'lucide-react'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 interface RouteProps {
   href: string
@@ -27,21 +31,57 @@ interface RouteProps {
 
 const routeList: RouteProps[] = [
   {
-    href: '/ui/#testimonials',
+    href: '/ui#testimonials',
     label: 'Témoinages',
   },
   {
-    href: '/ui/#pricing',
+    href: '/ui#pricing',
     label: 'Pricing',
   },
   {
-    href: '/ui/#faq',
+    href: '/ui#faq',
     label: 'FAQ',
   },
 ]
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false)
+  const { authUser } = useAuthStore()
+
+  const ButtonToDisplay = () => {
+    if (authUser) {
+      return <LogoutButton />
+    }
+
+    return <LoginButton />
+  }
+
+  /**
+   * When navigating to /ui#hash, scroll to the element with the id of hash
+   * The hash can be #pricing, #faq, #testimonials...
+   */
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash
+
+      if (hash) {
+        const element = document.querySelector(hash)
+
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }
+    }
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange)
+
+    // On component mount, handle the current hash
+    handleHashChange()
+
+    // Cleanup listener on unmount
+    return () => window.removeEventListener('hashchange', handleHashChange)
+  }, [])
 
   return (
     <header className="sticky top-5 z-40 mx-auto flex w-[90%] items-center justify-between rounded-2xl border border-secondary bg-card bg-opacity-15 p-2 shadow-inner md:w-[70%] lg:w-[75%] lg:max-w-screen-xl">
@@ -109,7 +149,7 @@ export const Navbar = () => {
               <Separator className="mb-2" />
 
               <ShadCNModeToggle />
-              <LoginButton />
+              <ButtonToDisplay />
             </SheetFooter>
           </SheetContent>
         </Sheet>
@@ -138,7 +178,7 @@ export const Navbar = () => {
       <div className="hidden gap-4 lg:flex">
         <ShadCNModeToggle />
 
-        <LoginButton />
+        <ButtonToDisplay />
       </div>
     </header>
   )
