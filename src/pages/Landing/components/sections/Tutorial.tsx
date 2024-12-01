@@ -3,7 +3,7 @@ import { FC } from 'react'
 
 const Tutorial: FC = () => {
   return (
-    <section className="container py-12 sm:py-16" id="pricing">
+    <section className="container py-12 sm:py-16">
       <h2 className="mb-2 text-center text-lg tracking-wider text-primary">
         Tutoriel
       </h2>

@@ -1,20 +1,26 @@
-import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { Check } from 'lucide-react'
+import { useState } from 'react'
 
-enum PopularPlan {
+import SubscriptionCard from './components/SubscriptionCard'
+
+const STRIPE_PRICE_ID_FREE = import.meta.env.VITE_STRIPE_PRICE_ID_FREE
+const STRIPE_PRICE_ID_BASIC = import.meta.env.VITE_STRIPE_PRICE_ID_BASIC
+const STRIPE_PRICE_ID_PREMIUM = import.meta.env.VITE_STRIPE_PRICE_ID_PREMIUM
+
+const returnIdIfEmpty = (data: string | undefined, id: string) => {
+  if (data === '' || data === undefined) {
+    return id
+  }
+
+  return data
+}
+
+export enum PopularPlan {
   NO = 0,
   YES = 1,
 }
 
-interface PlanProps {
+export interface PlanProps {
+  id: string
   title: string
   popular: PopularPlan
   price: number
@@ -25,6 +31,7 @@ interface PlanProps {
 
 const plans: PlanProps[] = [
   {
+    id: returnIdIfEmpty(STRIPE_PRICE_ID_FREE, 'price_1PdHWLKjCboMtBPjo3G7vEiC'),
     title: 'Free',
     popular: PopularPlan.NO,
     price: 0,
@@ -34,6 +41,10 @@ const plans: PlanProps[] = [
     benefitList: ['15 requêtes/jour'],
   },
   {
+    id: returnIdIfEmpty(
+      STRIPE_PRICE_ID_BASIC,
+      'price_1PSHL4KjCboMtBPjAF9ZID55',
+    ),
     title: 'Premium',
     popular: PopularPlan.YES,
     price: 25,
@@ -42,6 +53,10 @@ const plans: PlanProps[] = [
     benefitList: ['100 requêtes/jour'],
   },
   {
+    id: returnIdIfEmpty(
+      STRIPE_PRICE_ID_PREMIUM,
+      'price_1PSHL1KjCboMtBPjlaDDyTTo',
+    ),
     title: 'Enterprise',
     popular: PopularPlan.NO,
     price: 35,
@@ -52,6 +67,13 @@ const plans: PlanProps[] = [
 ]
 
 export const PricingSection = () => {
+  const [buttonClicked, setButtonClicked] = useState(false)
+
+  // Refactor: useToggle hook
+  const handleCardClick = () => {
+    setButtonClicked(true)
+  }
+
   return (
     <section className="container py-12 sm:py-16" id="pricing">
       <h2 className="mb-2 text-center text-lg tracking-wider text-primary">
@@ -67,53 +89,14 @@ export const PricingSection = () => {
       </h3>
 
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-4">
-        {plans.map(
-          ({ title, popular, price, description, buttonText, benefitList }) => (
-            <Card
-              key={title}
-              className={
-                popular === PopularPlan?.YES
-                  ? 'border-[1.5px] border-primary shadow-black/10 drop-shadow-xl dark:shadow-white/10 lg:scale-110'
-                  : ''
-              }
-            >
-              <CardHeader>
-                <CardTitle className="pb-2">{title}</CardTitle>
-
-                <CardDescription className="pb-4">
-                  {description}
-                </CardDescription>
-
-                <div>
-                  <span className="text-3xl font-bold">${price}</span>
-                  <span className="text-muted-foreground"> / jour</span>
-                </div>
-              </CardHeader>
-
-              <CardContent className="flex">
-                <div className="space-y-4">
-                  {benefitList.map((benefit) => (
-                    <span key={benefit} className="flex">
-                      <Check className="mr-2 text-primary" />
-                      <h3>{benefit}</h3>
-                    </span>
-                  ))}
-                </div>
-              </CardContent>
-
-              <CardFooter>
-                <Button
-                  className="w-full"
-                  variant={
-                    popular === PopularPlan?.YES ? 'default' : 'secondary'
-                  }
-                >
-                  {buttonText}
-                </Button>
-              </CardFooter>
-            </Card>
-          ),
-        )}
+        {plans.map((plan) => (
+          <SubscriptionCard
+            key={plan.id}
+            isDisabled={buttonClicked}
+            subscriptionItem={plan}
+            onCardClick={handleCardClick}
+          />
+        ))}
       </div>
     </section>
   )
