@@ -13,7 +13,7 @@ import useAuthManager from '../../hooks/useAuthManager'
 import useAuthStore from '../../store/authStore'
 import { fetchUser } from '../../utils/api/queries'
 import { isNotNU } from '../../utils/assertion.util'
-import { routesPath } from '../../utils/navigation/routesPath'
+import { routesPath } from './routesPath'
 
 export const ProtectedRoutes = () => {
   const { authUser, setAuthUser, requestLoading } = useAuthStore()
@@ -75,14 +75,14 @@ export const ProtectedSimpleRoutes = () => {
 
   if (
     authUser?.isVerified === false &&
-    urlLocation !== '/ui/subscription' &&
+    urlLocation !== routesPath.subscription &&
     isSuccess
   ) {
     toastWarnSelectSubscription()
     return <Navigate to={routesPath.subscription} />
   }
 
-  if (authUser?.isVerified && urlLocation === '/ui/subscription') {
+  if (authUser?.isVerified && urlLocation === routesPath.subscription) {
     toastSuccessAlreadySubscribed()
     // Renew the cookie to have the correct roles
     authManager.signIn()

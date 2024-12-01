@@ -1,8 +1,8 @@
 import { Button, Typography } from '@mui/joy'
 import { toast } from 'react-toastify'
 
+import { useAppNavigate } from '../../../hooks/useAppNavigate'
 import useAuthManager from '../../../hooks/useAuthManager'
-import { useAppNavigate } from '../../../utils/navigation/navigation'
 
 interface ErrorButtonProps {
   error: Error

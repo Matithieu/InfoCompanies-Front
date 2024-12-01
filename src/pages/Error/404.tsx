@@ -1,7 +1,7 @@
 import { Box, Button, Container, Typography } from '@mui/joy'
 
+import { useAppNavigate } from '../../hooks/useAppNavigate'
 import { formatMessage } from '../../services/intl/intl'
-import { useAppNavigate } from '../../utils/navigation/navigation'
 import errorMessages from './error.messages'
 
 export default function Page404() {

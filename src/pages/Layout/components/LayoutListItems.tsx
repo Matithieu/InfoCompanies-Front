@@ -13,8 +13,8 @@ import {
 } from '@mui/joy'
 import { FC, Fragment } from 'react'
 
+import { useAppNavigate } from '../../../hooks/useAppNavigate'
 import { formatMessage } from '../../../services/intl/intl'
-import { useAppNavigate } from '../../../utils/navigation/navigation'
 import layoutMessages from '../layout.messages'
 import LayoutAvatarItem from './LayoutAvatarItem'
 

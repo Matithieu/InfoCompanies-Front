@@ -2,9 +2,9 @@ import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 import { FormHelperText, Input } from '@mui/joy'
 import { FC, FormEvent, useState } from 'react'
 
+import { useAppNavigate } from '../../../hooks/useAppNavigate'
 import commonMessages from '../../../services/intl/common.messages'
 import { formatMessage } from '../../../services/intl/intl'
-import { useAppNavigate } from '../../../utils/navigation/navigation'
 
 type SearchAppBarProps = {
   isSidebarOpen: boolean

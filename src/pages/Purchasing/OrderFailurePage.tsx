@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { useAppNavigate } from '../../utils/navigation/navigation'
+import { useAppNavigate } from '../../hooks/useAppNavigate'
 
 const OrderFailurePage: FC = () => {
   const queryParams = new URLSearchParams(window.location.search)

@@ -2,9 +2,9 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded'
 import { Avatar, Box, IconButton, Typography } from '@mui/joy'
 import { FC } from 'react'
 
+import { useAppNavigate } from '../../../hooks/useAppNavigate'
 import useAuthManager from '../../../hooks/useAuthManager'
 import useAuthStore from '../../../store/authStore'
-import { useAppNavigate } from '../../../utils/navigation/navigation'
 
 interface LayoutAvatarItemProps {
   open: boolean

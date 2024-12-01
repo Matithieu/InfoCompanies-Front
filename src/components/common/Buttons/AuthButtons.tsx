@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button'
 import { Typography } from '@mui/joy'
 
+import { useAppNavigate } from '../../../hooks/useAppNavigate'
 import useAuthManager from '../../../hooks/useAuthManager'
-import { useAppNavigate } from '../../../utils/navigation/navigation'
 
 type ButtonProps = {
   message?: string

@@ -1,6 +1,6 @@
 import { Box, Button, Container, Typography } from '@mui/joy'
 
-import { useAppNavigate } from '../../utils/navigation/navigation'
+import { useAppNavigate } from '../../hooks/useAppNavigate'
 
 export default function Page401() {
   const { navigation } = useAppNavigate()

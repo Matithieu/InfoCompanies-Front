@@ -1,6 +1,6 @@
 import { Box, Link } from '@mui/material'
 
-import { useAppNavigate } from '../../utils/navigation/navigation'
+import { useAppNavigate } from '../../hooks/useAppNavigate'
 
 export default function Footer() {
   const { navigation } = useAppNavigate()

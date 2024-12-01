@@ -7,9 +7,9 @@ import HeaderTitle from '../../components/common/Texts/HeaderTitle.tsx'
 import TableCompany from '../../components/parts/TableCompany/TableCompany.tsx'
 import { PaginationTableCompany } from '../../components/parts/TableCompany/tableCompany.type.ts'
 import { columnsTableCompanySearch } from '../../data/types/columns.ts'
+import { useAppNavigate } from '../../hooks/useAppNavigate.tsx'
 import { formatMessage } from '../../services/intl/intl.tsx'
 import { fetchCompanyBySearchTerm } from '../../utils/api/queries.ts'
-import { useAppNavigate } from '../../utils/navigation/navigation.tsx'
 import searchMessages from './search.messages.ts'
 
 const SearchPage: FC = () => {
