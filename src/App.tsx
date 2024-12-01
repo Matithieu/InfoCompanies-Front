@@ -11,7 +11,6 @@ import LocaleProvider from './containers/LocaleProvider/index.tsx'
 import MaterialProvider from './containers/MUI/index.tsx'
 import AppRouter from './containers/Routes/index.tsx'
 import ShadCNThemeProvider from './containers/ShadCN/index.tsx'
-import ToastProvider from './containers/Toast/index.tsx'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -44,7 +43,6 @@ function App() {
                   <AppRouter />
                 </Suspense>
               </HelmetProvider>
-              <ToastProvider />
             </LocaleProvider>
           </MaterialProvider>
         </ShadCNThemeProvider>

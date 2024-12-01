@@ -12,12 +12,12 @@ import OrderSuccessPage from '@/pages/Purchasing/OrderSuccessPage.tsx'
 import CompanyPage from '@/pages/Search/Company/CompanyPage.tsx'
 import SearchPage from '@/pages/Search/SearchPage.tsx'
 import SettingsPage from '@/pages/Settings/SettingsPage.tsx'
-import SubscriptionPage from '@/pages/Subscription/SubscriptionPage.tsx'
 import TestPage from '@/pages/Test/TestPage.tsx'
 import { lazy } from '@loadable/component'
 import { FC } from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
+import ToastProvider from '../Toast/index.tsx'
 import { ProtectedRoutes, ProtectedSimpleRoutes } from './ProtectedRoutes.tsx'
 
 const Dashboard = lazy(() => import('@/pages/Dashboard/DashboardPage.tsx'))
@@ -26,7 +26,7 @@ const Dashboard = lazy(() => import('@/pages/Dashboard/DashboardPage.tsx'))
 
 const AppRouter: FC = () => {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
         <Route path="/ui">
           <Route element={<LandingPage />} path="" />
@@ -36,7 +36,6 @@ const AppRouter: FC = () => {
           <Route element={<TestPage />} path="test" />
 
           <Route element={<ProtectedSimpleRoutes />}>
-            <Route element={<SubscriptionPage />} path="subscription" />
             <Route element={<OrderFailurePage />} path="failure" />
             <Route element={<OrderSuccessPage />} path="completion" />
           </Route>
@@ -55,7 +54,10 @@ const AppRouter: FC = () => {
           <Route element={<Page404 />} path="*" />
         </Route>
       </Routes>
-    </Router>
+
+      {/* ToastProvider has useAppNavigate inside to it needs to be there */}
+      <ToastProvider />
+    </BrowserRouter>
   )
 }
 
