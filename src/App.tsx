@@ -9,6 +9,7 @@ import { HelmetProvider } from 'react-helmet-async'
 import LoadingCircular from './components/common/Loading/LoadingCircular.tsx'
 import LocaleProvider from './containers/LocaleProvider/index.tsx'
 import MaterialProvider from './containers/MUI/index.tsx'
+import PostHogProvider from './containers/PostHog/index.tsx'
 import AppRouter from './containers/Routes/index.tsx'
 import ShadCNThemeProvider from './containers/ShadCN/index.tsx'
 
@@ -34,19 +35,21 @@ function App() {
 
   return (
     <React.StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <ShadCNThemeProvider>
-          <MaterialProvider>
-            <LocaleProvider>
-              <HelmetProvider>
-                <Suspense fallback={<LoadingCircular />}>
-                  <AppRouter />
-                </Suspense>
-              </HelmetProvider>
-            </LocaleProvider>
-          </MaterialProvider>
-        </ShadCNThemeProvider>
-      </QueryClientProvider>
+      <PostHogProvider>
+        <QueryClientProvider client={queryClient}>
+          <ShadCNThemeProvider>
+            <MaterialProvider>
+              <LocaleProvider>
+                <HelmetProvider>
+                  <Suspense fallback={<LoadingCircular />}>
+                    <AppRouter />
+                  </Suspense>
+                </HelmetProvider>
+              </LocaleProvider>
+            </MaterialProvider>
+          </ShadCNThemeProvider>
+        </QueryClientProvider>
+      </PostHogProvider>
     </React.StrictMode>
   )
 }
