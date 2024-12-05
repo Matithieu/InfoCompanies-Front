@@ -1,8 +1,11 @@
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import useAuthManager from '@/hooks/useAuthManager'
 import { ArrowRight } from 'lucide-react'
 
 export const HeroSection = () => {
+  const { signIn } = useAuthManager()
+
   return (
     <section className="container w-full">
       <div className="mx-auto grid place-items-center gap-8 py-20 md:py-32 lg:max-w-screen-xl">
@@ -29,7 +32,12 @@ export const HeroSection = () => {
           </p>
 
           <div className="space-y-4 md:space-x-4 md:space-y-0">
-            <Button className="group/arrow w-5/6 font-bold md:w-1/4">
+            <Button
+              className="group/arrow w-5/6 font-bold md:w-1/4"
+              onClick={() => {
+                signIn()
+              }}
+            >
               Let&apos;s go !
               <ArrowRight className="ml-2 size-5 transition-transform group-hover/arrow:translate-x-1" />
             </Button>
