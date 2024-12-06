@@ -27,7 +27,8 @@ export const FooterSection = () => {
                   <Link
                     className="opacity-60 hover:opacity-100"
                     color="inherit"
-                    href="#"
+                    href="https://github.com/Matithieu"
+                    target="_blank"
                     underline="none"
                   >
                     Github
@@ -37,7 +38,8 @@ export const FooterSection = () => {
                   <Link
                     className="opacity-60 hover:opacity-100"
                     color="inherit"
-                    href="#"
+                    href="https://www.linkedin.com/in/mathieu-yahia-amar-070574234/"
+                    target="_blank"
                     underline="none"
                   >
                     LinkedIn
@@ -87,7 +89,7 @@ export const FooterSection = () => {
         <Separator className="my-6" />
         <section className="">
           <h3 className="">
-            &copy; 2024 Designed and developed by{' '}
+            &copy; 2024 Developed by{' '}
             <Link
               className="ml-1 border-primary text-primary transition-all hover:border-b-2"
               color="inherit"
