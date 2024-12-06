@@ -16,7 +16,9 @@ const PostHogProvider: FC<PostHogProps> = ({ children }) => {
 
   useEffect(() => {
     if (authUser) {
-      posthog.identify(authUser.id)
+      posthog.identify(authUser.id, {
+        email: authUser.email,
+      })
     }
   }, [authUser])
 
