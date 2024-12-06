@@ -50,6 +50,7 @@ export const useConstructedUrl = () => {
     if (url !== newUrl) {
       setUrl(newUrl)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [city, industrySector])
 
   return url

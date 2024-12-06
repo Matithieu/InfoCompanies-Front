@@ -53,7 +53,7 @@ export const TeamSection = () => {
   }
 
   return (
-    <section className="container py-24 sm:py-32 lg:w-[75%]" id="team">
+    <section className="container py-24 sm:py-32 lg:w-3/4" id="team">
       <div className="mb-8 text-center">
         <h2 className="mb-2 text-center text-lg tracking-wider text-primary">
           Team

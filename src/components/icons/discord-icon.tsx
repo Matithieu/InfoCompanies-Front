@@ -7,7 +7,7 @@ function DiscordIcon(props: React.SVGProps<SVGSVGElement> | undefined) {
       width="80"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
-      className="icon icon-tabler icons-tabler-filled icon-tabler-brand-discord mb-4"
+      className="mb-4"
       fill="currentColor"
       viewBox="0 0 24 24"
     >

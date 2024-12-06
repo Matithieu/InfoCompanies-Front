@@ -22,8 +22,6 @@ export interface JSONObject {
   [x: string]: JSONValue
 }
 
-export interface JSONArray extends Array<JSONValue> {}
-
 export function parseJsonToCompany(
   company: JSONObject,
   userCompanyStatus: UserCompanyStatus,

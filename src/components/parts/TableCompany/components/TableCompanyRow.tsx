@@ -31,7 +31,7 @@ const TableCompanyRow: FC<TableCompanyRowProps> = ({
       {companies.map((companyRow, index) => (
         <tr
           key={companyRow.id}
-          className={`fade-in table-row ${index % 2 === 0 ? 'even' : 'odd'} ${
+          className={`table-row fade-in ${index % 2 === 0 ? 'even' : 'odd'} ${
             rowSelected === companyRow.id ? 'selected-row' : ''
           }`}
           role="row"

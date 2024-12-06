@@ -1,17 +1,11 @@
-const animate = require('tailwindcss-animate')
+import animate from 'tailwindcss-animate'
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   darkMode: ['class'],
   safelist: ['dark'],
   prefix: '',
-
-  content: [
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-  ],
-
+  content: ['./src/**/*.{ts,tsx}'],
   theme: {
     container: {
       center: true,

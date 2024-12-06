@@ -96,6 +96,7 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
       setAvailableFilters,
     )
     // Don't add `searchTerm` to the dependencies array
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm, filtersToShow, showAddFilterButton])
 
   const handleSelectChange =

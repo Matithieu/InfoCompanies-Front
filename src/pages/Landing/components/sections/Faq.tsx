@@ -59,7 +59,7 @@ export const FAQSection = () => {
         </h2>
       </div>
 
-      <Accordion collapsible className="AccordionRoot" type="single">
+      <Accordion collapsible type="single">
         {FAQList.map(({ question, answer, value }) => (
           <AccordionItem key={value} value={value}>
             <AccordionTrigger className="text-left">

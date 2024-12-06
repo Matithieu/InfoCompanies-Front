@@ -1,5 +1,3 @@
-import { fetchUserEmail } from '../utils/proxy'
-
 export default function useAuthManager() {
   const LOGIN_URL = import.meta.env.VITE_OAUTH_SIGNIN_URL
   const LOGOUT_URL = import.meta.env.VITE_OAUTH_SIGNOUT_URL
@@ -18,6 +16,5 @@ export default function useAuthManager() {
       signOutUrl.searchParams.set('rd', LOGOUT_REDIRECT_URL)
       window.open(signOutUrl.toString(), '_self')
     },
-    getUserEmail: async () => await fetchUserEmail(),
   }
 }

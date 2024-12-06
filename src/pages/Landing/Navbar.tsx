@@ -84,7 +84,7 @@ export const Navbar = () => {
   }, [])
 
   return (
-    <header className="sticky top-5 z-40 mx-auto flex w-[90%] items-center justify-between rounded-2xl border border-secondary bg-card bg-opacity-15 p-2 shadow-inner md:w-[70%] lg:w-[75%] lg:max-w-screen-xl">
+    <header className="sticky top-5 z-40 mx-auto flex w-[90%] items-center justify-between rounded-2xl border border-secondary bg-card p-2 shadow-inner md:w-[70%] lg:w-3/4 lg:max-w-screen-xl">
       <Link
         className="flex items-center text-lg font-bold"
         color="inherit"

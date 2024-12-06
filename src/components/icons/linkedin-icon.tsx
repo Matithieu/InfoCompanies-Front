@@ -3,7 +3,7 @@ import * as React from 'react'
 function LinkedInIcon(props: React.SVGProps<SVGSVGElement> | undefined) {
   return (
     <svg
-      className="ionicon fill-foreground"
+      className="fill-foreground"
       height="20px"
       viewBox="0 0 512 512"
       width="20px"
