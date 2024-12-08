@@ -19,6 +19,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { ShadCNModeToggle } from '@/containers/ShadCN/mode-toggle'
+import useToggle from '@/hooks/useToggle'
 import useAuthStore from '@/store/authStore'
 import { Link } from '@mui/material'
 import { ChevronsDown, Menu } from 'lucide-react'
@@ -45,7 +46,7 @@ const routeList: RouteProps[] = [
 ]
 
 export const Navbar = () => {
-  const [isOpen, setIsOpen] = React.useState(false)
+  const [isOpen, setIsOpen] = useToggle(false)
   const { authUser } = useAuthStore()
 
   const ButtonToDisplay = () => {

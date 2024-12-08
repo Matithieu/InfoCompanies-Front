@@ -1,7 +1,8 @@
 import { Button } from '@/components/ui/button'
+import useToggle from '@/hooks/useToggle'
 import { cn } from '@/lib/utils'
 import { CookieIcon } from 'lucide-react'
-import { FC, useCallback, useEffect, useState } from 'react'
+import { FC, useCallback, useEffect } from 'react'
 
 type CookieConsentProps = {
   demo?: boolean
@@ -29,15 +30,15 @@ const CookieConsent: FC<CookieConsentProps> = ({
   onAcceptCallback = () => {},
   onDeclineCallback = () => {},
 }) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [hide, setHide] = useState(false)
+  const [isOpen, setIsOpen] = useToggle(false)
+  const [isHidden, setIsHidden] = useToggle(false)
 
   const hideConsent = useCallback(() => {
     setIsOpen(false)
     setTimeout(() => {
-      setHide(true)
+      setIsHidden(true)
     }, HIDE_DELAY)
-  }, [])
+  }, [setIsHidden, setIsOpen])
 
   const accept = useCallback(() => {
     setCookieConsent()
@@ -58,9 +59,9 @@ const CookieConsent: FC<CookieConsentProps> = ({
     if (hasCookieConsent() && !demo) {
       hideConsent()
     }
-  }, [demo, hideConsent])
+  }, [demo, hideConsent, setIsOpen])
 
-  if (hide) return null
+  if (isHidden) return null
 
   return (
     <div

@@ -1,3 +1,4 @@
+import useToggle from '@/hooks/useToggle'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 import { FormHelperText, Input } from '@mui/joy'
 import { FC, FormEvent, useState } from 'react'
@@ -13,7 +14,7 @@ type SearchAppBarProps = {
 const SearchAppBar: FC<SearchAppBarProps> = ({ isSidebarOpen }) => {
   const { navigation } = useAppNavigate()
   const [searchTerm, setSearchTerm] = useState('')
-  const [isSearchBarError, setIsSearchBarError] = useState(false)
+  const [isSearchBarError, setIsSearchBarError] = useToggle(false)
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()

@@ -1,5 +1,6 @@
+import useToggle from '@/hooks/useToggle'
 import { UseMutationResult } from '@tanstack/react-query'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import Joyride, { CallBackProps, STATUS } from 'react-joyride'
 
 import { User } from '../../data/types/index.types'
@@ -19,7 +20,7 @@ const JoyRideOnboarding: FC<JoyRideProps> = ({
   authUser,
   onboardingMutation,
 }) => {
-  const [isTourRunning, setIsTourRunning] = useState<boolean>(
+  const [isTourRunning, setIsTourRunning] = useToggle(
     returnInverseOfBoolean(!!authUser?.hasCompletedOnboarding),
   )
 

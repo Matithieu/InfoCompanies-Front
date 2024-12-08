@@ -1,6 +1,7 @@
+import useToggle from '@/hooks/useToggle'
 import { Button, CircularProgress, Tooltip } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect } from 'react'
 import { toast } from 'react-toastify'
 
 import { Company } from '../../../data/types/company'
@@ -16,7 +17,7 @@ const ScrapCompanyButton: FC<ScrapCompanyButtonProps> = ({
   company,
   onScraped,
 }) => {
-  const [isDisabled, setIsDisabled] = useState<boolean>(false)
+  const [isDisabled, setIsDisabled] = useToggle(false)
 
   useEffect(() => {
     const calculateIsDisabled = (): boolean => {
@@ -37,7 +38,7 @@ const ScrapCompanyButton: FC<ScrapCompanyButtonProps> = ({
     if (company.scrapingDate) {
       setIsDisabled(calculateIsDisabled())
     }
-  }, [company.scrapingDate])
+  }, [company.scrapingDate, setIsDisabled])
 
   const { data, error, refetch, isFetching, isError } = useQuery({
     queryKey: ['companyScraped', company.id],
@@ -52,7 +53,7 @@ const ScrapCompanyButton: FC<ScrapCompanyButtonProps> = ({
       setIsDisabled(true)
       refetch()
     }
-  }, [refetch, data, isFetching, company, isError])
+  }, [refetch, data, isFetching, company, isError, setIsDisabled])
 
   const handleClick = async () => {
     setIsDisabled(true)
