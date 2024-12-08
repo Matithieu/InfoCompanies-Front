@@ -22,6 +22,9 @@ const PostHogProvider: FC<PostHogProps> = ({ children }) => {
     }
   }, [authUser])
 
+  // Avoid sending events in development
+  if (window.location.host === 'localhost:5173') return <>{children}</>
+
   return (
     <PostHog
       apiKey={process.env.REACT_APP_PUBLIC_POSTHOG_KEY}
