@@ -26,7 +26,9 @@ const Dashboard = lazy(() => import('@/pages/Dashboard/DashboardPage.tsx'))
 
 const AppRouter: FC = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter
+      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+    >
       <Routes>
         <Route path="/ui">
           <Route element={<LandingPage />} path="" />
