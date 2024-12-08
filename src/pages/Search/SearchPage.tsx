@@ -1,7 +1,7 @@
 import { Box, Grid } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
 import { FC, useEffect, useState } from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router'
 
 import HeaderTitle from '../../components/common/Texts/HeaderTitle.tsx'
 import TableCompany from '../../components/parts/TableCompany/TableCompany.tsx'

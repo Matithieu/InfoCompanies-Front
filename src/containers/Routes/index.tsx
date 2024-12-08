@@ -15,51 +15,58 @@ import SettingsPage from '@/pages/Settings/SettingsPage.tsx'
 import TestPage from '@/pages/Test/TestPage.tsx'
 import { lazy } from '@loadable/component'
 import { FC } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router'
 
 import ToastProvider from '../Toast/index.tsx'
 import { ProtectedRoutes, ProtectedSimpleRoutes } from './ProtectedRoutes.tsx'
 
 const Dashboard = lazy(() => import('@/pages/Dashboard/DashboardPage.tsx'))
 
-// Might want to switch to createBrowserRouter instead of BrowserRouter
+const router = createBrowserRouter([
+  {
+    path: '/ui',
+    children: [
+      { index: true, element: <LandingPage /> },
+      { path: 'terms', element: <TermsAndConditions /> },
+      { path: 'privacy', element: <PrivacyPolicy /> },
+      { path: 'legal', element: <LegalInformation /> },
+      { path: 'test', element: <TestPage /> },
+      {
+        element: <ProtectedSimpleRoutes />,
+        children: [
+          { path: 'failure', element: <OrderFailurePage /> },
+          { path: 'completion', element: <OrderSuccessPage /> },
+        ],
+      },
+      {
+        element: <ProtectedRoutes />,
+        children: [
+          {
+            element: <Layout />,
+            children: [
+              { path: 'dashboard', element: <Dashboard /> },
+              { path: 'favorites', element: <FavoritesPage /> },
+              { path: 'settings', element: <SettingsPage /> },
+              { path: 'account', element: <AccountPage /> },
+              { path: 'search/:searchTerm', element: <SearchPage /> },
+              { path: 'company/:companyId', element: <CompanyPage /> },
+              { path: 'leaders/:siren', element: <LeaderPage /> },
+            ],
+          },
+        ],
+      },
+      { path: '*', element: <Page404 /> },
+    ],
+  },
+])
 
 const AppRouter: FC = () => {
   return (
-    <BrowserRouter
-      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-    >
-      <Routes>
-        <Route path="/ui">
-          <Route element={<LandingPage />} path="" />
-          <Route element={<TermsAndConditions />} path="terms" />
-          <Route element={<PrivacyPolicy />} path="privacy" />
-          <Route element={<LegalInformation />} path="legal" />
-          <Route element={<TestPage />} path="test" />
-
-          <Route element={<ProtectedSimpleRoutes />}>
-            <Route element={<OrderFailurePage />} path="failure" />
-            <Route element={<OrderSuccessPage />} path="completion" />
-          </Route>
-
-          <Route element={<ProtectedRoutes />}>
-            <Route element={<Layout />}>
-              <Route element={<Dashboard />} path="dashboard" />
-              <Route element={<FavoritesPage />} path="favorites" />
-              <Route element={<SettingsPage />} path="settings" />
-              <Route element={<AccountPage />} path="account" />
-              <Route element={<SearchPage />} path="search/:searchTerm" />
-              <Route element={<CompanyPage />} path="company/:companyId" />
-              <Route element={<LeaderPage />} path="leaders/:siren" />
-            </Route>
-          </Route>
-          <Route element={<Page404 />} path="*" />
-        </Route>
-      </Routes>
-
-      {/* ToastProvider has useAppNavigate inside to it needs to be there */}
+    <>
+      <RouterProvider router={router} />
+      {/* ToastProvider has useAppNavigate inside, so it needs to be here */}
       <ToastProvider />
-    </BrowserRouter>
+    </>
   )
 }
 

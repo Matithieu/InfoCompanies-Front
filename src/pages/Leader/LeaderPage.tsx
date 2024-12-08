@@ -1,7 +1,7 @@
 import { Box, Grid, Sheet, Typography } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
 import { FC } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 
 import DetailsLeaderRow from '../../components/parts/LeaderList/components/DetailsLeaderRow.tsx'
 import commonMessages from '../../services/intl/common.messages.ts'

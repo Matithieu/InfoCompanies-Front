@@ -4,7 +4,7 @@ import LoadingText from '@/components/common/Loading/TextLoading.tsx'
 import { Box, Card, Grid } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
 import { FC, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 
 import { GlobalErrorButton } from '../../../components/common/Buttons/GlobalErrorButton.tsx'
 import ScrapCompanyButton from '../../../components/common/Buttons/scrapCompanyButton.tsx'
