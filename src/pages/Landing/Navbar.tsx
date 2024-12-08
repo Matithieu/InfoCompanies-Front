@@ -23,7 +23,7 @@ import useToggle from '@/hooks/useToggle'
 import useAuthStore from '@/store/authStore'
 import { Link } from '@mui/material'
 import { ChevronsDown, Menu } from 'lucide-react'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
 interface RouteProps {
   href: string
