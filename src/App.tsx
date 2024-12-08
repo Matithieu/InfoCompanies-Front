@@ -2,7 +2,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import './index.css'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import React, { Suspense, useEffect } from 'react'
+import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
 
@@ -27,12 +27,6 @@ const queryClient = new QueryClient({
 })
 
 function App() {
-  useEffect(() => {
-    if (window.location.pathname === '/') {
-      window.location.href = '/ui'
-    }
-  }, [])
-
   return (
     <React.StrictMode>
       <PostHogProvider>

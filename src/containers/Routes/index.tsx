@@ -15,7 +15,7 @@ import SettingsPage from '@/pages/Settings/SettingsPage.tsx'
 import TestPage from '@/pages/Test/TestPage.tsx'
 import { lazy } from '@loadable/component'
 import { FC } from 'react'
-import { createBrowserRouter, RouterProvider } from 'react-router'
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router'
 
 import ToastProvider from '../Toast/index.tsx'
 import { ProtectedRoutes, ProtectedSimpleRoutes } from './ProtectedRoutes.tsx'
@@ -23,6 +23,10 @@ import { ProtectedRoutes, ProtectedSimpleRoutes } from './ProtectedRoutes.tsx'
 const Dashboard = lazy(() => import('@/pages/Dashboard/DashboardPage.tsx'))
 
 const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Navigate replace to="/ui" />,
+  },
   {
     path: '/ui',
     children: [
