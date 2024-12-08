@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import useToggle from '@/hooks/useToggle'
 
 import SubscriptionCard from './components/SubscriptionCard'
 
@@ -67,9 +67,8 @@ const plans: PlanProps[] = [
 ]
 
 export const PricingSection = () => {
-  const [buttonClicked, setButtonClicked] = useState(false)
+  const [buttonClicked, setButtonClicked] = useToggle(false)
 
-  // Refactor: useToggle hook
   const handleCardClick = () => {
     setButtonClicked(true)
   }
