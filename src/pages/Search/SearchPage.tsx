@@ -1,7 +1,7 @@
 import { Box, Grid } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
 import { FC, useEffect, useState } from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router'
+import { useLocation, useParams } from 'react-router'
 
 import HeaderTitle from '../../components/common/Texts/HeaderTitle.tsx'
 import TableCompany from '../../components/parts/TableCompany/TableCompany.tsx'
@@ -15,7 +15,6 @@ import searchMessages from './search.messages.ts'
 const SearchPage: FC = () => {
   const { navigation } = useAppNavigate()
   const { searchTerm } = useParams()
-  const navigate = useNavigate()
   const location = useLocation()
 
   // Extract the current page from the URL query params
@@ -42,7 +41,7 @@ const SearchPage: FC = () => {
       page: page,
     }))
 
-    navigate(`?page=${page}`, { replace: true })
+    navigation.toPage(`?page=${page}`, { replace: true })
   }
 
   useEffect(() => {

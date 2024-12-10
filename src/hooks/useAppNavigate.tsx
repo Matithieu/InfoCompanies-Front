@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router'
+import { NavigateOptions, useNavigate } from 'react-router'
 
 import { routesPath } from '../containers/Router/routesPath'
 
@@ -6,7 +6,7 @@ export const useAppNavigate = () => {
   const navigate = useNavigate()
 
   // Generic navigation helper
-  const navigateTo = (path: string, state?: Record<string, any>) => {
+  const navigateTo = (path: string, state?: NavigateOptions) => {
     navigate(path, state ? { state } : undefined)
 
     /**
@@ -39,18 +39,19 @@ export const useAppNavigate = () => {
     toPrivacy: () => navigateTo(routesPath.privacy),
     toLegal: () => navigateTo(routesPath.legal),
     toSearch: (searchTerm: string) =>
-      navigateTo(`${routesPath.search}/${searchTerm}`, { searchTerm }),
+      navigateTo(`${routesPath.search}/${searchTerm}`),
     toCompany: (companyId: string) =>
-      navigateTo(`${routesPath.company}/${companyId}`, { companyId }),
+      navigateTo(`${routesPath.company}/${companyId}`, {
+        replace: true,
+      }),
     toLeader: (leaderPath: string) =>
-      navigateTo(`${routesPath.leader}/${leaderPath}`, { leaderPath }),
+      navigateTo(`${routesPath.leader}/${leaderPath}`),
     toSubscription: () => navigateTo(routesPath.subscription),
     toFailure: () => navigateTo(routesPath.failure),
     toOrderConfirmation: () => navigateTo(routesPath.completion),
     toTest: () => navigateTo(routesPath.test),
     toErrorNotFound: () => navigateTo(routesPath.errorNotFound),
-    toPage: (path: string, state?: Record<string, any>) =>
-      navigateTo(path, state),
+    toPage: (path: string, state?: NavigateOptions) => navigateTo(path, state),
   }
 
   return { navigation }
