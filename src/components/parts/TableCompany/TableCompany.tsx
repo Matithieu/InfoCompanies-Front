@@ -1,5 +1,6 @@
 import './style.css'
 
+import { chunkArray } from '@/utils/array.util'
 import { Sheet, Skeleton, Table, Typography } from '@mui/joy'
 import { useQueryClient } from '@tanstack/react-query'
 import { FC, Fragment, useEffect, useState } from 'react'
@@ -15,7 +16,7 @@ import Pagination from '../../common/Buttons/Pagination'
 import { handleChangeCompanyStatut } from '../../common/Icons/stautIcon.util'
 import TableCompanyHeaders from './components/TableCompanyHeaders'
 import TableCompanyRow from './components/TableCompanyRow'
-import { canBeScrapped, chunkArray } from './tableCompany.util'
+import { canBeScrapped } from './tableCompany.util'
 
 type TableCompanyProps = {
   data: Page<Company> | undefined
@@ -59,7 +60,7 @@ const TableCompany: FC<TableCompanyProps> = ({
 
       for (const batch of companyBatches) {
         const batchPromises = batch.map(async (company) => {
-          if (canBeScrapped(company, null, false, false)) {
+          if (canBeScrapped(company, undefined, false, false)) {
             try {
               const scrapResult = await queryClient.fetchQuery({
                 staleTime: Infinity,
