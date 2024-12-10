@@ -1,9 +1,11 @@
-// src/hooks/useConstructedUrl.ts
 import { LANDING_FILTER_ENDPOINT } from '@/data/types/index.types'
 import { useCompanyFilterStore } from '@/stores/filtersStore'
 import { constructURLWithFilter } from '@/utils/api/utils'
 import { useEffect, useState } from 'react'
 
+/**
+ * This hook builds the URL based on the selected city and industry sector
+ */
 export const useConstructedUrl = () => {
   const [url, setUrl] = useState<string | undefined>(undefined)
 
@@ -15,7 +17,7 @@ export const useConstructedUrl = () => {
     let newUrl = ''
 
     if (city.length === 0 && industrySector.length === 0) {
-      // Filtre par défaut lorsqu'aucune ville ou secteur industriel n'est sélectionné
+      // Define default URL when no city and industry sector are selected
       newUrl = constructURLWithFilter(
         {
           region: ['Bretagne'],
@@ -30,7 +32,7 @@ export const useConstructedUrl = () => {
         `${LANDING_FILTER_ENDPOINT}?`,
       )
     } else {
-      // Construire l'URL en fonction de la ville et du secteur industriel sélectionnés
+      // Construct URL with selected city and industry sector
       newUrl = constructURLWithFilter(
         {
           city,
@@ -46,7 +48,6 @@ export const useConstructedUrl = () => {
       )
     }
 
-    // Mettre à jour l'état de l'URL uniquement si elle a changé
     if (url !== newUrl) {
       setUrl(newUrl)
     }

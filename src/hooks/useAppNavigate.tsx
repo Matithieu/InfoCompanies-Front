@@ -2,6 +2,9 @@ import { NavigateOptions, useNavigate } from 'react-router'
 
 import { routesPath } from '../containers/Router/routesPath'
 
+/**
+ * This hook provides a set of predefined navigation functions
+ */
 export const useAppNavigate = () => {
   const navigate = useNavigate()
 

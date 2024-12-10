@@ -16,7 +16,7 @@ type useFilteredProps = {
 }
 
 /**
- * This hook builds and update the given pagination and url depending on the filters
+ * This hook builds and update the given url and pagination depending on the filters
  */
 const useFilteredUrl = ({
   searchParams,

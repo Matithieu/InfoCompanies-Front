@@ -1,20 +1,22 @@
+/**
+ * Provides signIn and signOut functions to handle OAuth login and logout.
+ */
 export default function useAuthManager() {
-  const LOGIN_URL = import.meta.env.VITE_OAUTH_SIGNIN_URL
-  const LOGOUT_URL = import.meta.env.VITE_OAUTH_SIGNOUT_URL
-
-  const LOGIN_REDIRECT_URL = import.meta.env.VITE_OAUTH_SIGNIN_REDIRECT_URL
-  const LOGOUT_REDIRECT_URL = import.meta.env.VITE_OAUTH_SIGNOUT_REDIRECT_URL
+  const loginUrl = import.meta.env.VITE_OAUTH_SIGNIN_URL
+  const logoutURL = import.meta.env.VITE_OAUTH_SIGNOUT_URL
+  const loginRedirectUrl = import.meta.env.VITE_OAUTH_SIGNIN_REDIRECT_URL
+  const logoutRedirectUrl = import.meta.env.VITE_OAUTH_SIGNOUT_REDIRECT_URL
 
   return {
     signIn: () => {
-      const signInUrl = new URL(LOGIN_URL)
-      signInUrl.searchParams.set('rd', LOGIN_REDIRECT_URL)
-      window.open(signInUrl.toString(), '_self')
+      const signInUrl = new URL(loginUrl)
+      signInUrl.searchParams.set('rd', loginRedirectUrl)
+      window.location.href = signInUrl.toString()
     },
     signOut: () => {
-      const signOutUrl = new URL(LOGOUT_URL)
-      signOutUrl.searchParams.set('rd', LOGOUT_REDIRECT_URL)
-      window.open(signOutUrl.toString(), '_self')
+      const signOutUrl = new URL(logoutURL)
+      signOutUrl.searchParams.set('rd', logoutRedirectUrl)
+      window.location.href = signOutUrl.toString()
     },
   }
 }
