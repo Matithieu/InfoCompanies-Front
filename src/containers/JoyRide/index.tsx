@@ -9,13 +9,13 @@ import { returnInverseOfBoolean } from '../../utils/utils'
 import joyrideMessages from './joyride.messages'
 import joyrideSteps from './joyrideSteps'
 
-type JoyRideProps = {
+type JoyRideOnboardingProviderProps = {
   user: User | null
   onboardingMutation: UseMutationResult<void, Error, void, unknown>
   setUser: (user: Partial<User> | null) => void
 }
 
-const JoyRideOnboardingProvider: FC<JoyRideProps> = ({
+const JoyRideOnboardingProvider: FC<JoyRideOnboardingProviderProps> = ({
   user,
   onboardingMutation,
   setUser,
