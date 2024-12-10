@@ -6,8 +6,8 @@ import Joyride, { CallBackProps, STATUS } from 'react-joyride'
 import { User } from '../../data/types/index.types'
 import { formatMessage } from '../../services/intl/intl'
 import { returnInverseOfBoolean } from '../../utils/utils'
-import joyrideMessages from '../joyride.messages'
-import joyrideSteps from '../steps'
+import joyrideMessages from './joyride.messages'
+import joyrideSteps from './joyrideSteps'
 
 type JoyRideProps = {
   setAuthUser: (user: Partial<User> | null) => void
@@ -15,7 +15,7 @@ type JoyRideProps = {
   onboardingMutation: UseMutationResult<void, Error, void, unknown>
 }
 
-const JoyRideOnboarding: FC<JoyRideProps> = ({
+const JoyRideOnboardingProvider: FC<JoyRideProps> = ({
   setAuthUser,
   authUser,
   onboardingMutation,
@@ -59,4 +59,4 @@ const JoyRideOnboarding: FC<JoyRideProps> = ({
   )
 }
 
-export default JoyRideOnboarding
+export default JoyRideOnboardingProvider

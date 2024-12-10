@@ -12,9 +12,9 @@ import Filters from '../../components/parts/Filters/index.tsx'
 import ListOfLeaders from '../../components/parts/LeaderList/LeaderList.tsx'
 import TableCompany from '../../components/parts/TableCompany/TableCompany.tsx'
 import { PaginationTableCompany } from '../../components/parts/TableCompany/tableCompany.type.ts'
+import JoyRideOnboardingProvider from '../../containers/JoyRide/index.tsx'
 import { columnsTableCompany } from '../../data/types/columns.ts'
 import { Company } from '../../data/types/company.ts'
-import JoyRideOnboarding from '../../onboarding/containers/JoyRide.tsx'
 import useAuthStore from '../../store/authStore.tsx'
 import { useCompanyFilterStore } from '../../store/filtersStore.tsx'
 import { updateUserOnboarding } from '../../utils/api/mutations.ts'
@@ -60,7 +60,7 @@ const DashboardPage: FC = () => {
 
   return (
     <>
-      <JoyRideOnboarding
+      <JoyRideOnboardingProvider
         authUser={authUser}
         onboardingMutation={onboardingMutation}
         setAuthUser={setAuthUser}
