@@ -6,7 +6,7 @@ import {
 } from '../../data/types/company'
 import { AutoCompleteType, Leader, User } from '../../data/types/index.types'
 import { Page } from '../../data/types/index.types'
-import { parseJsonToCompany, parseJsonToUser } from '../parseJsonToObject'
+import { parseJsonToCompany, parseJsonToUser } from '../parseJsonToObject.util'
 import { fetchWithConfig } from './config'
 import handleStatusError from './errors/handleStatusError'
 import {

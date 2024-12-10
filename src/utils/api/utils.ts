@@ -5,7 +5,7 @@ import { isNotNU } from '../assertion.util'
 import {
   parseJsonToCompany,
   parseJsonToUserCompanyStatus,
-} from '../parseJsonToObject'
+} from '../parseJsonToObject.util'
 
 /**
  * Clean leaders by removing duplicates based on their first and last names

@@ -1,6 +1,6 @@
 import enTranslationMessages from '../../translations/en.json'
 import frTranslationMessages from '../../translations/fr.json'
-import { ValueOf } from '../../utils/types'
+import { ValueOf } from '../../utils/types.util'
 
 export const appLocales = {
   enUS: 'en-US',
