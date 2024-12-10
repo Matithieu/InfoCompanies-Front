@@ -10,7 +10,7 @@ import LoadingCircular from './components/common/Loading/LoadingCircular.tsx'
 import LocaleProvider from './containers/LocaleProvider/index.tsx'
 import MaterialProvider from './containers/MUI/index.tsx'
 import PostHogProvider from './containers/PostHog/index.tsx'
-import AppRouter from './containers/Routes/index.tsx'
+import AppRouter from './containers/Router/index.tsx'
 import ShadCNThemeProvider from './containers/ShadCN/index.tsx'
 
 const queryClient = new QueryClient({

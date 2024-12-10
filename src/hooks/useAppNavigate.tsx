@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router'
 
-import { routesPath } from '../containers/Routes/routesPath'
+import { routesPath } from '../containers/Router/routesPath'
 
 export const useAppNavigate = () => {
   const navigate = useNavigate()
