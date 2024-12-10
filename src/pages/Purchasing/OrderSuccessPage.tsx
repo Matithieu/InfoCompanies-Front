@@ -4,12 +4,12 @@ import { FC } from 'react'
 
 import useAuthManager from '../../hooks/useAuthManager'
 import { formatMessage } from '../../services/intl/intl'
-import useAuthStore from '../../store/authStore'
+import useUserStore from '../../store/userStore'
 import purchasingMessages from './purchasing.messages'
 
 const OrderSuccessPage: FC = () => {
   // const queryParams = new URLSearchParams(window.location.search)
-  const { setAuthUser } = useAuthStore()
+  const { setUser } = useUserStore()
   const { signIn } = useAuthManager()
 
   return (
@@ -43,7 +43,7 @@ const OrderSuccessPage: FC = () => {
           style={{ marginTop: '20px' }}
           variant="soft"
           onClick={() => {
-            setAuthUser(null)
+            setUser(null)
             // Going through signIn flow refresh the token inside the oauth2 proxy
             // Allowing the roles inside the token to be updated
             signIn()

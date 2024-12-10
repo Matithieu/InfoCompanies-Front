@@ -10,36 +10,36 @@ import {
   toastWarnSelectSubscription,
 } from '../../components/common/Toasts/toasts'
 import useAuthManager from '../../hooks/useAuthManager'
-import useAuthStore from '../../store/authStore'
+import useUserStore from '../../store/userStore'
 import { fetchUser } from '../../utils/api/queries'
 import { isNotNU } from '../../utils/assertion.util'
 import { routesPath } from './routesPath'
 
 export const ProtectedRoutes = () => {
-  const { authUser, setAuthUser, requestLoading } = useAuthStore()
+  const { user, setUser } = useUserStore()
 
   const { data, isFetching, isSuccess } = useQuery({
-    queryKey: ['user query', authUser],
-    queryFn: () => (authUser === null ? fetchUser() : Promise.resolve(null)),
+    queryKey: ['user query', user],
+    queryFn: () => (user === null ? fetchUser() : Promise.resolve(null)),
     refetchOnWindowFocus: false,
   })
 
   useEffect(() => {
     if (isNotNU(data)) {
-      setAuthUser(data)
+      setUser(data)
     }
-  }, [data, setAuthUser])
+  }, [data, setUser])
 
-  if (requestLoading || isFetching) {
+  if (isFetching) {
     return <LoadingCircular />
   }
 
-  if (authUser === null && !isSuccess) {
+  if (user === null && !isSuccess) {
     toastErrorReconnect()
     return <Navigate to={routesPath.base} />
   }
 
-  if (authUser?.isVerified === false && isSuccess) {
+  if (user?.isVerified === false && isSuccess) {
     toastWarnSelectSubscription()
     return <Navigate to={routesPath.base} />
   }
@@ -48,33 +48,33 @@ export const ProtectedRoutes = () => {
 }
 
 export const ProtectedSimpleRoutes = () => {
-  const { authUser, setAuthUser, requestLoading } = useAuthStore()
+  const { user, setUser } = useUserStore()
   const authManager = useAuthManager()
   const urlLocation = window.location.pathname
 
   const { data, isFetching, isSuccess } = useQuery({
-    queryKey: ['user query', authUser],
-    queryFn: () => (authUser === null ? fetchUser() : Promise.resolve(null)),
+    queryKey: ['user query', user],
+    queryFn: () => (user === null ? fetchUser() : Promise.resolve(null)),
     refetchOnWindowFocus: false,
   })
 
   useEffect(() => {
     if (isNotNU(data)) {
-      setAuthUser(data)
+      setUser(data)
     }
-  }, [data, setAuthUser])
+  }, [data, setUser])
 
-  if (requestLoading || isFetching) {
+  if (isFetching) {
     return <LoadingCircular />
   }
 
-  if (authUser === null && !isSuccess) {
+  if (user === null && !isSuccess) {
     toastErrorConnect()
     return <Navigate to={routesPath.base} />
   }
 
   if (
-    authUser?.isVerified === false &&
+    user?.isVerified === false &&
     urlLocation !== routesPath.subscription &&
     isSuccess
   ) {
@@ -82,7 +82,7 @@ export const ProtectedSimpleRoutes = () => {
     return <Navigate to={routesPath.subscription} />
   }
 
-  if (authUser?.isVerified && urlLocation === routesPath.subscription) {
+  if (user?.isVerified && urlLocation === routesPath.subscription) {
     toastSuccessAlreadySubscribed()
     // Renew the cookie to have the correct roles
     authManager.signIn()

@@ -15,14 +15,14 @@ import { PaginationTableCompany } from '../../components/parts/TableCompany/tabl
 import JoyRideOnboardingProvider from '../../containers/JoyRide/index.tsx'
 import { columnsTableCompany } from '../../data/types/columns.ts'
 import { Company } from '../../data/types/company.ts'
-import useAuthStore from '../../store/authStore.tsx'
 import { useCompanyFilterStore } from '../../store/filtersStore.tsx'
+import useUserStore from '../../store/userStore.tsx'
 import { updateUserOnboarding } from '../../utils/api/mutations.ts'
 import { fetchCompaniesWithUrlAndPage } from '../../utils/api/queries.ts'
 import useFilteredUrl from './hooks/useFilteredUrl.tsx'
 
 const DashboardPage: FC = () => {
-  const { authUser, setAuthUser } = useAuthStore()
+  const { user, setUser } = useUserStore()
 
   const { searchParams } = useCompanyFilterStore()
   const [company, setCompany] = useState<Company>()
@@ -61,9 +61,9 @@ const DashboardPage: FC = () => {
   return (
     <>
       <JoyRideOnboardingProvider
-        authUser={authUser}
         onboardingMutation={onboardingMutation}
-        setAuthUser={setAuthUser}
+        setUser={setUser}
+        user={user}
       />
       <Grid flexDirection="column" sx={{ px: { xs: 2, md: 6 } }}>
         <HeaderTitle text="Dashboard" />

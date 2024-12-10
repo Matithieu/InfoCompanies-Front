@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 
-import useAuthStore from '../../store/authStore'
+import useUserStore from '../../store/userStore'
 
 function ViewInvoices() {
-  const { authUser } = useAuthStore()
-  const emailInURL = encodeURIComponent(authUser?.email ?? '')
+  const { user } = useUserStore()
+  const emailInURL = encodeURIComponent(user?.email ?? '')
   const STRIPE_BILLING_CODE = import.meta.env.VITE_STRIPE_BILLING_PORTAL_CODE
 
   // Alert the user that they are being redirected to the Stripe billing page

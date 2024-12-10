@@ -1,4 +1,4 @@
-import useAuthStore from '@/store/authStore'
+import useUserStore from '@/store/userStore'
 import posthog, { PostHogConfig } from 'posthog-js'
 import { PostHogProvider as PostHog } from 'posthog-js/react'
 import { FC, ReactNode, useEffect } from 'react'
@@ -8,19 +8,19 @@ type PostHogProps = {
 }
 
 const PostHogProvider: FC<PostHogProps> = ({ children }) => {
-  const { authUser } = useAuthStore()
+  const { user } = useUserStore()
 
   const options: Partial<PostHogConfig> = {
     api_host: process.env.REACT_APP_PUBLIC_POSTHOG_HOST,
   }
 
   useEffect(() => {
-    if (authUser) {
-      posthog.identify(authUser.id, {
-        email: authUser.email,
+    if (user) {
+      posthog.identify(user.id, {
+        email: user.email,
       })
     }
-  }, [authUser])
+  }, [user])
 
   // Avoid sending events in development
   if (window.location.host === 'localhost:5173') return <>{children}</>

@@ -10,18 +10,18 @@ import joyrideMessages from './joyride.messages'
 import joyrideSteps from './joyrideSteps'
 
 type JoyRideProps = {
-  setAuthUser: (user: Partial<User> | null) => void
-  authUser: User | null
+  user: User | null
   onboardingMutation: UseMutationResult<void, Error, void, unknown>
+  setUser: (user: Partial<User> | null) => void
 }
 
 const JoyRideOnboardingProvider: FC<JoyRideProps> = ({
-  setAuthUser,
-  authUser,
+  user,
   onboardingMutation,
+  setUser,
 }) => {
   const [isTourRunning, setIsTourRunning] = useToggle(
-    returnInverseOfBoolean(!!authUser?.hasCompletedOnboarding),
+    returnInverseOfBoolean(!!user?.hasCompletedOnboarding),
   )
 
   const handleJoyrideCallback = (data: CallBackProps) => {
@@ -30,7 +30,7 @@ const JoyRideOnboardingProvider: FC<JoyRideProps> = ({
 
     if (finishedStatuses.includes(status)) {
       setIsTourRunning(false)
-      setAuthUser({ ...authUser, hasCompletedOnboarding: true })
+      setUser({ ...user, hasCompletedOnboarding: true })
       onboardingMutation.mutate()
     }
   }

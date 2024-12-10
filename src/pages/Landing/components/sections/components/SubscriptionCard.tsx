@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import useAuthManager from '@/hooks/useAuthManager'
-import useAuthStore from '@/store/authStore'
+import useUserStore from '@/store/userStore'
 import { startStripeSubscription } from '@/utils/api/queries'
 import { useQuery } from '@tanstack/react-query'
 import { Check } from 'lucide-react'
@@ -26,7 +26,7 @@ const SubscriptionCard: FC<SubscriptionCardProps> = ({
   isDisabled,
   onCardClick,
 }) => {
-  const { authUser } = useAuthStore()
+  const { user } = useUserStore()
   const { signIn } = useAuthManager()
 
   const { data, refetch, isSuccess } = useQuery({
@@ -36,7 +36,7 @@ const SubscriptionCard: FC<SubscriptionCardProps> = ({
   })
 
   const handleClick = () => {
-    if (authUser) {
+    if (user) {
       onCardClick()
       refetch()
     } else {

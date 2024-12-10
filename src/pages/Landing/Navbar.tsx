@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/sheet'
 import { ShadCNModeToggle } from '@/containers/ShadCN/mode-toggle'
 import useToggle from '@/hooks/useToggle'
-import useAuthStore from '@/store/authStore'
+import useUserStore from '@/store/userStore'
 import { Link } from '@mui/material'
 import { ChevronsDown, Menu } from 'lucide-react'
 import { useEffect } from 'react'
@@ -47,10 +47,10 @@ const routeList: RouteProps[] = [
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useToggle(false)
-  const { authUser } = useAuthStore()
+  const { user } = useUserStore()
 
   const ButtonToDisplay = () => {
-    if (authUser) {
+    if (user) {
       return <LogoutButton />
     }
 

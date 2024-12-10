@@ -4,14 +4,14 @@ import { FC } from 'react'
 
 import { useAppNavigate } from '../../../hooks/useAppNavigate'
 import useAuthManager from '../../../hooks/useAuthManager'
-import useAuthStore from '../../../store/authStore'
+import useUserStore from '../../../store/userStore'
 
 interface LayoutAvatarItemProps {
   open: boolean
 }
 
 const LayoutAvatarItem: FC<LayoutAvatarItemProps> = ({ open }) => {
-  const { authUser } = useAuthStore()
+  const { user } = useUserStore()
   const authManager = useAuthManager()
   const { navigation } = useAppNavigate()
 
@@ -38,7 +38,7 @@ const LayoutAvatarItem: FC<LayoutAvatarItemProps> = ({ open }) => {
         }}
       >
         <Avatar size="md" variant="outlined">
-          {authUser?.firstName?.charAt(0).toLocaleUpperCase() ?? 'X'}
+          {user?.firstName?.charAt(0).toLocaleUpperCase() ?? 'X'}
         </Avatar>
 
         {open && (
@@ -58,7 +58,7 @@ const LayoutAvatarItem: FC<LayoutAvatarItemProps> = ({ open }) => {
                 maxWidth: '100%',
               }}
             >
-              {authUser?.firstName ?? 'Error'}
+              {user?.firstName ?? 'Error'}
             </Typography>
             <Typography
               level="body-sm"
@@ -69,7 +69,7 @@ const LayoutAvatarItem: FC<LayoutAvatarItemProps> = ({ open }) => {
                 maxWidth: '100%',
               }}
             >
-              {authUser?.lastName ?? 'Error'}
+              {user?.lastName ?? 'Error'}
             </Typography>
           </Box>
         )}

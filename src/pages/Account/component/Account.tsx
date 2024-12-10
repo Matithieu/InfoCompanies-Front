@@ -16,15 +16,15 @@ import { toast } from 'react-toastify'
 import { User } from '../../../data/types/index.types'
 import commonMessages from '../../../services/intl/common.messages'
 import { formatMessage } from '../../../services/intl/intl'
-import useAuthStore from '../../../store/authStore'
+import useUserStore from '../../../store/userStore'
 import { fetchUser, updateUser } from '../../../utils/api/queries'
 import { isNotNU } from '../../../utils/assertion.util'
 import AccountMessages from '../account.messages'
 
 const Account: FC = () => {
-  const { authUser, setAuthUser } = useAuthStore()
+  const { user, setUser } = useUserStore()
   const [editMode, setEditMode] = useState(false)
-  const [editedUser, setEditedUser] = useState<User | null>(authUser)
+  const [editedUser, setEditedUser] = useState<User | null>(user)
 
   const { data, refetch } = useQuery({
     queryKey: ['user'],
@@ -49,16 +49,16 @@ const Account: FC = () => {
   useEffect(() => {
     if (data) {
       setEditedUser(data)
-      setAuthUser(data)
+      setUser(data)
     }
-  }, [data, setAuthUser])
+  }, [data, setUser])
 
   const handleEdit = () => {
     setEditMode(true)
   }
 
   const handleSave = () => {
-    if (authUser !== null) {
+    if (user !== null) {
       setEditMode(false)
       mutation.mutate()
     }
