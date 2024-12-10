@@ -1,5 +1,3 @@
-import './style.css'
-
 import { Box, Card, Stack } from '@mui/joy'
 import { Grid } from '@mui/material'
 import { useMutation, useQuery } from '@tanstack/react-query'
