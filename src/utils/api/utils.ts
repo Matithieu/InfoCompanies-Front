@@ -1,6 +1,6 @@
 import { Company, CompanyWithStatus } from '../../data/types/company'
 import { Leader, Page } from '../../data/types/index.types'
-import { SearchParams } from '../../store/filtersStore'
+import { SearchParams } from '../../stores/filtersStore'
 import { isNotNU } from '../assertion.util'
 import {
   parseJsonToCompany,

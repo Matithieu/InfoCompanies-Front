@@ -1,4 +1,4 @@
-import { SearchParams } from '../../../store/filtersStore'
+import { SearchParams } from '../../../stores/filtersStore'
 
 import { FiltersProps } from '.'
 

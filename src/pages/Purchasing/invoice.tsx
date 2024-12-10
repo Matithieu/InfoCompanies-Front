@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import useUserStore from '../../store/userStore'
+import useUserStore from '../../stores/userStore'
 
 function ViewInvoices() {
   const { user } = useUserStore()

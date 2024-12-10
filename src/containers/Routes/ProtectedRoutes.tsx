@@ -10,7 +10,7 @@ import {
   toastWarnSelectSubscription,
 } from '../../components/common/Toasts/toasts'
 import useAuthManager from '../../hooks/useAuthManager'
-import useUserStore from '../../store/userStore'
+import useUserStore from '../../stores/userStore'
 import { fetchUser } from '../../utils/api/queries'
 import { isNotNU } from '../../utils/assertion.util'
 import { routesPath } from './routesPath'

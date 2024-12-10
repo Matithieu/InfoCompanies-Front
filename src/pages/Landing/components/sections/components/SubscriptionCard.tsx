@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import useAuthManager from '@/hooks/useAuthManager'
-import useUserStore from '@/store/userStore'
+import useUserStore from '@/stores/userStore'
 import { startStripeSubscription } from '@/utils/api/queries'
 import { useQuery } from '@tanstack/react-query'
 import { Check } from 'lucide-react'

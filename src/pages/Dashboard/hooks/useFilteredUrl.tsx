@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 import { PaginationTableCompany } from '../../../components/parts/TableCompany/tableCompany.type'
 import { RANDOM_UNSEEN_ENDPOINT } from '../../../data/types/index.types'
-import { SearchParams } from '../../../store/filtersStore'
+import { SearchParams } from '../../../stores/filtersStore'
 import { constructURLWithFilter } from '../../../utils/api/utils'
 
 // Note: Can become a generic hook for filtering in different views

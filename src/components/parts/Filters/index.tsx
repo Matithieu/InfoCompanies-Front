@@ -6,7 +6,7 @@ import { FC, useEffect, useState } from 'react'
 import {
   SearchParams,
   useCompanyFilterStore,
-} from '../../../store/filtersStore'
+} from '../../../stores/filtersStore'
 import getFilterComponents from './components'
 import { filterDescriptions, SelectedFilterType } from './filter.type'
 import { updateFilterStates } from './filter.util'

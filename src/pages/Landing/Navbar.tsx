@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/sheet'
 import { ShadCNModeToggle } from '@/containers/ShadCN/mode-toggle'
 import useToggle from '@/hooks/useToggle'
-import useUserStore from '@/store/userStore'
+import useUserStore from '@/stores/userStore'
 import { Link } from '@mui/material'
 import { ChevronsDown, Menu } from 'lucide-react'
 import { useEffect } from 'react'

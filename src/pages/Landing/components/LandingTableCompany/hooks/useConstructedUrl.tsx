@@ -1,6 +1,6 @@
 // src/hooks/useConstructedUrl.ts
 import { LANDING_FILTER_ENDPOINT } from '@/data/types/index.types'
-import { useCompanyFilterStore } from '@/store/filtersStore'
+import { useCompanyFilterStore } from '@/stores/filtersStore'
 import { constructURLWithFilter } from '@/utils/api/utils'
 import { useEffect, useState } from 'react'
 
