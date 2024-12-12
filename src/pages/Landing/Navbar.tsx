@@ -46,15 +46,11 @@ const routeList: RouteProps[] = [
 ]
 
 export const Navbar = () => {
-  const [isOpen, setIsOpen] = useToggle(false)
+  const [isOpen, setIsOpen] = useToggle()
   const { user } = useUserStore()
 
   const ButtonToDisplay = () => {
-    if (user) {
-      return <LogoutButton />
-    }
-
-    return <LoginButton />
+    return user ? <LogoutButton /> : <LoginButton />
   }
 
   /**

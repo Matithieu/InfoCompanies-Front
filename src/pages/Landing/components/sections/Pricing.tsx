@@ -67,7 +67,7 @@ const plans: PlanProps[] = [
 ]
 
 export const PricingSection = () => {
-  const [buttonClicked, setButtonClicked] = useToggle(false)
+  const [buttonClicked, setButtonClicked] = useToggle()
 
   const handleCardClick = () => {
     setButtonClicked(true)

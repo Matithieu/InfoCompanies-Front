@@ -30,8 +30,8 @@ const CookieConsent: FC<CookieConsentProps> = ({
   onAcceptCallback = () => {},
   onDeclineCallback = () => {},
 }) => {
-  const [isOpen, setIsOpen] = useToggle(false)
-  const [isHidden, setIsHidden] = useToggle(false)
+  const [isOpen, setIsOpen] = useToggle()
+  const [isHidden, setIsHidden] = useToggle()
 
   const hideConsent = useCallback(() => {
     setIsOpen(false)

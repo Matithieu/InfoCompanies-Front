@@ -17,7 +17,7 @@ const ScrapCompanyButton: FC<ScrapCompanyButtonProps> = ({
   company,
   onScraped,
 }) => {
-  const [isDisabled, setIsDisabled] = useToggle(false)
+  const [isDisabled, setIsDisabled] = useToggle()
 
   useEffect(() => {
     const calculateIsDisabled = (): boolean => {

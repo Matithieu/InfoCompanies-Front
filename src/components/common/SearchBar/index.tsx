@@ -14,7 +14,7 @@ type SearchAppBarProps = {
 const SearchAppBar: FC<SearchAppBarProps> = ({ isSidebarOpen }) => {
   const { navigation } = useAppNavigate()
   const [searchTerm, setSearchTerm] = useState('')
-  const [isSearchBarError, setIsSearchBarError] = useToggle(false)
+  const [isSearchBarError, setIsSearchBarError] = useToggle()
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
