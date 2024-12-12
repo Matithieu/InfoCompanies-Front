@@ -1,4 +1,6 @@
 import { Button } from '@/components/ui/button'
+import commonMessages from '@/services/intl/common.messages'
+import { formatMessage } from '@/services/intl/intl'
 import { FC } from 'react'
 
 import useAuthManager from '../../../hooks/useAuthManager'
@@ -12,7 +14,7 @@ export const LoginButton: FC = () => {
         authUser.signIn()
       }}
     >
-      Login
+      {formatMessage(commonMessages.toLogin)}
     </Button>
   )
 }
@@ -27,7 +29,7 @@ export const LogoutButton: FC = () => {
         authUser.signOut()
       }}
     >
-      Se déconnecter
+      {formatMessage(commonMessages.toLogout)}
     </Button>
   )
 }

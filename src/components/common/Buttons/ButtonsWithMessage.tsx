@@ -1,8 +1,11 @@
 import { Button } from '@/components/ui/button'
 import { useAppNavigate } from '@/hooks/useAppNavigate'
 import useAuthManager from '@/hooks/useAuthManager'
+import { formatMessage } from '@/services/intl/intl'
 import { Typography } from '@mui/joy'
 import { FC } from 'react'
+
+import toastMessages from '../Toasts/toast.messages'
 
 type ButtonProps = {
   message?: string
@@ -42,7 +45,7 @@ export const LoginButtonWithMessage: FC<MessageButtonProps> = ({ message }) => {
 
   return (
     <ActionButton
-      buttonLabel="Login"
+      buttonLabel={formatMessage(toastMessages.errorConnect)}
       handleButtonClick={authUser.signIn}
       message={message}
     />
@@ -56,7 +59,7 @@ export const LogoutButtonWithMessage: FC<MessageButtonProps> = ({
 
   return (
     <ActionButton
-      buttonLabel="Se déconnecter"
+      buttonLabel={formatMessage(toastMessages.errorReconnect)}
       handleButtonClick={authUser.signOut}
       message={message}
     />
@@ -70,7 +73,7 @@ export const SelectSubscriptionButtonWithMessage: FC<MessageButtonProps> = ({
 
   return (
     <ActionButton
-      buttonLabel="Select Subscription"
+      buttonLabel={formatMessage(toastMessages.warnSelectSubscription)}
       handleButtonClick={navigation.toSubscription}
       message={message}
     />
@@ -84,7 +87,7 @@ export const QuotaExceededButtonWithMessage: FC<MessageButtonProps> = ({
 
   return (
     <ActionButton
-      buttonLabel="Change Plan"
+      buttonLabel={formatMessage(toastMessages.errorQuotaExceeded)}
       handleButtonClick={navigation.toAccount}
       message={message}
     />

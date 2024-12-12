@@ -151,6 +151,14 @@ export default defineMessages({
     defaultMessage: 'No data available',
     id: `${scope}.noAvailableData`,
   },
+  toLogin: {
+    defaultMessage: 'Login',
+    id: `${scope}.toLogin`,
+  },
+  toLogout: {
+    defaultMessage: 'Logout',
+    id: `${scope}.toLogout`,
+  },
   turnOver: {
     defaultMessage: 'Turn over',
     id: `${scope}.turnOver`,
