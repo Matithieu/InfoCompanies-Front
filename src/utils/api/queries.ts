@@ -7,7 +7,7 @@ import {
 import { AutoCompleteType, Leader, User } from '../../data/types/index.types'
 import { Page } from '../../data/types/index.types'
 import { parseJsonToCompany, parseJsonToUser } from '../parseJsonToObject.util'
-import { fetchWithConfig } from './config'
+import { fetchThroughProxy } from './config'
 import handleStatusError from './errors/handleStatusError'
 import {
   cleanLeaders,
@@ -21,7 +21,7 @@ import {
  *
  */
 export const fetchUser = async () => {
-  const response = await fetchWithConfig('/v1/user', 'GET')
+  const response = await fetchThroughProxy('/v1/user', 'GET')
 
   if (response.ok) {
     return parseJsonToUser(await response.json())
@@ -40,7 +40,7 @@ export async function fetchCompaniesWithUrlAndPage(
   page: number,
   userCompanyStatusParsing = true,
 ) {
-  const response = await fetchWithConfig(
+  const response = await fetchThroughProxy(
     `/v1/company/${url}page=${page}`,
     'GET',
   )
@@ -76,7 +76,7 @@ export async function fetchCompanyBySearchTerm(
   searchTerm: string,
   page: number,
 ) {
-  const response = await fetchWithConfig(
+  const response = await fetchThroughProxy(
     `/v1/company/search-by-name?companyName=${searchTerm}&page=${page}`,
     'GET',
   )
@@ -104,7 +104,7 @@ export async function fetchCompanyBySearchTerm(
 }
 
 export async function fetchCompanyById(id: string) {
-  const response = await fetchWithConfig(`/v1/company/get-by-id/${id}`, 'GET')
+  const response = await fetchThroughProxy(`/v1/company/get-by-id/${id}`, 'GET')
 
   if (response.ok) {
     return parseAndConertCompanyWithStatus(await response.json())
@@ -116,7 +116,7 @@ export async function fetchCompanyById(id: string) {
 }
 
 export async function fetchCompanyScrap(companyId: number) {
-  const response = await fetchWithConfig(
+  const response = await fetchThroughProxy(
     `/v1/company/scrap?companyId=${companyId}`,
     'GET',
   )
@@ -138,7 +138,7 @@ export async function fetchCompanyScrap(companyId: number) {
 }
 
 export async function fetchFavorites(page: number) {
-  const response = await fetchWithConfig(
+  const response = await fetchThroughProxy(
     `/v1/company/get-seen-by-user?page=${page}
     `,
     'GET',
@@ -153,7 +153,7 @@ export async function fetchFavorites(page: number) {
 }
 
 export async function updateUser(user: User) {
-  const response = await fetchWithConfig('/v1/update-user', 'PUT', {
+  const response = await fetchThroughProxy('/v1/update-user', 'PUT', {
     body: user,
   })
 
@@ -170,7 +170,7 @@ export async function updateUser(user: User) {
  *
  */
 export const fetchLeadersBySirens = async (siren: string) => {
-  const response = await fetchWithConfig(
+  const response = await fetchThroughProxy(
     `/v1/leader/get-by-siren?siren=${siren}`,
     'GET',
   )
@@ -184,7 +184,7 @@ export const fetchLeadersBySirens = async (siren: string) => {
 }
 
 export const fetchLeaderById = async (id: string) => {
-  const response = await fetchWithConfig(
+  const response = await fetchThroughProxy(
     `/v1/leader/get-by-id?id=${id}}`,
     'GET',
   )
@@ -205,7 +205,7 @@ export async function fetchAutoComplete(
   autoComplete: 'legal-form' | 'industry-sector' | 'city',
   searchTerm: string,
 ) {
-  const response = await fetchWithConfig(
+  const response = await fetchThroughProxy(
     `/v1/autocomplete/${autoComplete}?query=${searchTerm}`,
     'GET',
   )
@@ -228,7 +228,7 @@ export async function fetchAutoComplete(
  *
  */
 export async function startStripeSubscription(priceId: string) {
-  const response = await fetchWithConfig(
+  const response = await fetchThroughProxy(
     '/v1/stripe/subscriptions/trial',
     'POST',
     {
@@ -254,7 +254,7 @@ export async function startStripeSubscription(priceId: string) {
  *
  */
 export const fetchTest = async () => {
-  const response = await fetchWithConfig('/v1/company/test', 'GET')
+  const response = await fetchThroughProxy('/v1/company/test', 'GET')
 
   if (response.ok) {
     return response.toString()

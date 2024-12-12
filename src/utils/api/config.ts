@@ -1,5 +1,10 @@
 import handleToastErrors from './errors/handleToastErrors'
 
+export type FetchOptions = {
+  headers?: Record<string, string>
+  body?: Record<string, unknown>
+}
+
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
 
 /**
@@ -11,12 +16,16 @@ export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
  * @throws An error if the API request fails.
  * @example fetchWithConfig("/api/v1/data", "POST")
  */
-export const fetchWithConfig = async (
+export const fetchThroughProxy = async (
   url: string,
   method: HttpMethod,
-  options?: { body?: any; headers?: Record<string, string> },
+  options?: FetchOptions,
 ): Promise<Response> => {
-  const baseUrl = import.meta.env.VITE_API_PREFIX
+  const baseUrl = import.meta.env.VITE_API_PREFIX || ''
+
+  if (!baseUrl) {
+    throw new Error('API prefix is not defined')
+  }
 
   const response = await fetch(baseUrl + url, {
     ...options,
@@ -28,7 +37,9 @@ export const fetchWithConfig = async (
     body: options?.body ? JSON.stringify(options.body) : undefined,
   })
 
-  handleToastErrors(response, url)
+  if (!response.ok) {
+    handleToastErrors(response, url)
+  }
 
   return response
 }
