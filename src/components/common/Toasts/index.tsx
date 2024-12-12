@@ -2,22 +2,26 @@ import { toast } from 'react-toastify'
 
 import { formatMessage } from '../../../services/intl/intl'
 import {
-  LoginButton,
-  QuotaExceededButton,
-  SelectSubscriptionButton,
-} from '../Buttons/AuthButtons'
+  LoginButtonWithMessage,
+  QuotaExceededButtonWithMessage,
+  SelectSubscriptionButtonWithMessage,
+} from '../Buttons/ButtonsWithMessage'
 import toastMessages from './toast.messages'
 
 export function toastErrorConnect() {
-  return toast.error(
-    <LoginButton message={formatMessage(toastMessages.errorConnect)} />,
+  return toast.warn(
+    <LoginButtonWithMessage
+      message={formatMessage(toastMessages.errorConnect)}
+    />,
   )
 }
 
 export function toastErrorReconnect(text?: string) {
-  return toast.error(
+  return toast.warn(
     <>
-      <LoginButton message={formatMessage(toastMessages.errorReconnect)} />
+      <LoginButtonWithMessage
+        message={formatMessage(toastMessages.errorReconnect)}
+      />
       {text}
     </>,
   )
@@ -25,7 +29,7 @@ export function toastErrorReconnect(text?: string) {
 
 export function toastWarnSelectSubscription() {
   return toast.warn(
-    <SelectSubscriptionButton
+    <SelectSubscriptionButtonWithMessage
       message={formatMessage(toastMessages.warnSelectSubscription)}
     />,
   )
@@ -37,7 +41,7 @@ export function toastSuccessAlreadySubscribed() {
 
 export function toastErrorQuotaExceeded() {
   return toast.error(
-    <QuotaExceededButton
+    <QuotaExceededButtonWithMessage
       message={formatMessage(toastMessages.errorQuotaExceeded)}
     />,
   )

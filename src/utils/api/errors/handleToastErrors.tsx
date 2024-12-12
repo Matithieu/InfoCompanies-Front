@@ -2,7 +2,7 @@ import {
   toastErrorQuotaExceeded,
   toastErrorReconnect,
   toastSuccessAlreadySubscribed,
-} from '../../../components/common/Toasts/toasts'
+} from '../../../components/common/Toasts'
 
 const handleToastErrors = async (response: Response, url: string) => {
   switch (response.status) {

@@ -8,7 +8,7 @@ import {
   toastErrorReconnect,
   toastSuccessAlreadySubscribed,
   toastWarnSelectSubscription,
-} from '../../components/common/Toasts/toasts'
+} from '../../components/common/Toasts'
 import useAuthManager from '../../hooks/useAuthManager'
 import useUserStore from '../../stores/userStore'
 import { fetchUser } from '../../utils/api/queries'
