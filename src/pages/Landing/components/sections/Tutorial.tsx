@@ -23,7 +23,7 @@ const Tutorial: FC = () => {
             allow="autoplay; picture-in-picture;"
             className="h-64 w-full rounded-lg shadow-lg sm:h-80 md:h-[450px] md:w-[700px] lg:h-[600px] lg:w-[900px]"
             loading="lazy"
-            src="https://www.youtube.com/embed/8pqasjyDkKc"
+            src="https://www.youtube-nocookie.com/embed/8pqasjyDkKc"
             title="Video Tutorial"
           />
         </Card>
