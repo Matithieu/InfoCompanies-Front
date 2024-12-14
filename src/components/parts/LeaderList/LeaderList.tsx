@@ -26,6 +26,7 @@ const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
       }
     },
     enabled: !!siren,
+    staleTime: Infinity,
   })
 
   if (isLoading) {
