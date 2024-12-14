@@ -5,11 +5,10 @@ import { SearchParams } from '../../../stores/filtersStore'
 import { constructURLWithFilter } from '../../../utils/api/utils'
 
 // Note: Can become a generic hook for filtering in different views
-type useFilteredProps = {
+type UseFilteredProps = {
   searchParams: SearchParams
   url: string | undefined
   setPagination: (page: number) => void
-
   setUrl: React.Dispatch<React.SetStateAction<string | undefined>>
 }
 
@@ -21,7 +20,7 @@ const useFilteredUrl = ({
   url,
   setPagination,
   setUrl,
-}: useFilteredProps) => {
+}: UseFilteredProps) => {
   useEffect(() => {
     const changeURL = () => {
       let newUrl = ''
