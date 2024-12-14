@@ -5,8 +5,8 @@ import { Navigate, Outlet } from 'react-router'
 import LoadingCircular from '../../components/common/Loading/LoadingCircular'
 import {
   toastErrorConnect,
-  toastErrorReconnect,
   toastSuccessAlreadySubscribed,
+  toastWarnReconnect,
   toastWarnSelectSubscription,
 } from '../../components/common/Toasts'
 import useAuthManager from '../../hooks/useAuthManager'
@@ -35,7 +35,7 @@ export const ProtectedRoutes = () => {
   }
 
   if (user === null && !isSuccess) {
-    toastErrorReconnect()
+    toastWarnReconnect()
     return <Navigate to={routesPath.base} />
   }
 

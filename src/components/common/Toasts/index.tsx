@@ -4,6 +4,7 @@ import { formatMessage } from '../../../services/intl/intl'
 import {
   LoginButtonWithMessage,
   QuotaExceededButtonWithMessage,
+  ReConnectButtonWithMessage,
   SelectSubscriptionButtonWithMessage,
 } from '../Buttons/ButtonsWithMessage'
 import toastMessages from './toast.messages'
@@ -16,10 +17,10 @@ export function toastErrorConnect() {
   )
 }
 
-export function toastErrorReconnect(text?: string) {
+export function toastWarnReconnect(text?: string) {
   return toast.warn(
     <>
-      <LoginButtonWithMessage
+      <ReConnectButtonWithMessage
         message={formatMessage(toastMessages.errorReconnect)}
       />
       {text}

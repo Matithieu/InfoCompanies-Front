@@ -1,11 +1,10 @@
 import { Button } from '@/components/ui/button'
 import { useAppNavigate } from '@/hooks/useAppNavigate'
 import useAuthManager from '@/hooks/useAuthManager'
+import commonMessages from '@/services/intl/common.messages'
 import { formatMessage } from '@/services/intl/intl'
 import { Typography } from '@mui/joy'
 import { FC } from 'react'
-
-import toastMessages from '../Toasts/toast.messages'
 
 type ButtonProps = {
   message?: string
@@ -17,7 +16,6 @@ type MessageButtonProps = {
   message?: string
 }
 
-// Generic Button Component
 const ActionButton: FC<ButtonProps> = ({
   message,
   handleButtonClick,
@@ -45,7 +43,21 @@ export const LoginButtonWithMessage: FC<MessageButtonProps> = ({ message }) => {
 
   return (
     <ActionButton
-      buttonLabel={formatMessage(toastMessages.errorConnect)}
+      buttonLabel={formatMessage(commonMessages.toLogin)}
+      handleButtonClick={authUser.signIn}
+      message={message}
+    />
+  )
+}
+
+export const ReConnectButtonWithMessage: FC<MessageButtonProps> = ({
+  message,
+}) => {
+  const authUser = useAuthManager()
+
+  return (
+    <ActionButton
+      buttonLabel={formatMessage(commonMessages.toReconnect)}
       handleButtonClick={authUser.signIn}
       message={message}
     />
@@ -59,7 +71,7 @@ export const LogoutButtonWithMessage: FC<MessageButtonProps> = ({
 
   return (
     <ActionButton
-      buttonLabel={formatMessage(toastMessages.errorReconnect)}
+      buttonLabel={formatMessage(commonMessages.toLogout)}
       handleButtonClick={authUser.signOut}
       message={message}
     />
@@ -73,7 +85,7 @@ export const SelectSubscriptionButtonWithMessage: FC<MessageButtonProps> = ({
 
   return (
     <ActionButton
-      buttonLabel={formatMessage(toastMessages.warnSelectSubscription)}
+      buttonLabel={formatMessage(commonMessages.subscribe)}
       handleButtonClick={navigation.toSubscription}
       message={message}
     />
@@ -87,7 +99,7 @@ export const QuotaExceededButtonWithMessage: FC<MessageButtonProps> = ({
 
   return (
     <ActionButton
-      buttonLabel={formatMessage(toastMessages.errorQuotaExceeded)}
+      buttonLabel={formatMessage(commonMessages.changePlan)}
       handleButtonClick={navigation.toAccount}
       message={message}
     />

@@ -99,6 +99,10 @@ export default defineMessages({
     defaultMessage: 'Website',
     id: `${scope}.website`,
   },
+  changePlan: {
+    defaultMessage: 'Change plan',
+    id: `${scope}.changePlan`,
+  },
   clear: {
     defaultMessage: 'Clear',
     id: `${scope}.clear`,
@@ -158,6 +162,10 @@ export default defineMessages({
   toLogout: {
     defaultMessage: 'Logout',
     id: `${scope}.toLogout`,
+  },
+  toReconnect: {
+    defaultMessage: 'Reconnect',
+    id: `${scope}.toReconnect`,
   },
   turnOver: {
     defaultMessage: 'Turn over',
