@@ -15,32 +15,33 @@ import { handleChangeCompanyStatut } from '../../common/Icons/stautIcon.util'
 import NoCompaniesFound from './components/NoCompaniesFound'
 import TableCompanyHeaders from './components/TableCompanyHeaders'
 import TableCompanyRow from './components/TableCompanyRow'
+import useSetTableData from './hooks/UseSetTableData'
 import { canBeScrapped } from './tableCompany.util'
 
 type TableCompanyProps = {
-  data: Page<Company> | undefined
   columns: Column[]
-  handleDetailsClick: (company: Company) => void | undefined
-  handleChangePage: (newPage: number) => void | undefined
-  isPending: boolean
+  data: Page<Company> | undefined
   error: Error | null
-  isPagination?: boolean
   isCheckboxVisible?: boolean
+  isPagination?: boolean
+  isPending: boolean
   isScrapping?: boolean
+  onCompanyDetailsClick: (company: Company) => void | undefined
+  onPageChange: (newPage: number) => void | undefined
 }
 
 const TableCompany: FC<TableCompanyProps> = ({
-  data,
   columns,
+  data,
   error,
   isCheckboxVisible = true,
   isPagination = true,
   isPending,
   isScrapping = false,
-  handleChangePage,
-  handleDetailsClick,
+  onPageChange,
+  onCompanyDetailsClick,
 }) => {
-  const [tableData, setTableData] = useState<Page<Company> | undefined>(data)
+  const [tableData, setTableData, updateCompanyData] = useSetTableData(data)
   const [rowSelected, setRowSelected] = useState<number | undefined>(undefined)
   const queryClient = useQueryClient()
 
@@ -48,7 +49,7 @@ const TableCompany: FC<TableCompanyProps> = ({
     if (data) {
       setTableData(data)
     }
-  }, [data])
+  }, [setTableData, data])
 
   useEffect(() => {
     if (!data?.content || !isScrapping) return
@@ -67,21 +68,11 @@ const TableCompany: FC<TableCompanyProps> = ({
                 queryFn: () => fetchCompanyScrap(company.id),
                 retry: 0,
               })
+
               const updatedCompany = { ...company, ...scrapResult }
 
               if (updatedCompany) {
-                setTableData((prevData) => {
-                  if (prevData) {
-                    return {
-                      ...prevData,
-                      content: prevData.content.map((c) =>
-                        c.id === company.id ? updatedCompany : c,
-                      ),
-                    }
-                  }
-
-                  return prevData
-                })
+                updateCompanyData(company, updatedCompany)
               }
 
               return updatedCompany
@@ -99,23 +90,15 @@ const TableCompany: FC<TableCompanyProps> = ({
     }
 
     fetchBatchCompanies()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, queryClient, isScrapping])
 
   const handleStatusChange = (company: Company) => {
     const updatedCompany = handleChangeCompanyStatut({ company })
 
-    setTableData((prevData) => {
-      if (prevData) {
-        return {
-          ...prevData,
-          content: prevData.content.map((row) =>
-            row.id === updatedCompany.id ? updatedCompany : row,
-          ),
-        }
-      }
-
-      return prevData
-    })
+    // Update the company in the table
+    updateCompanyData(company, updatedCompany)
   }
 
   if (error) {
@@ -161,7 +144,7 @@ const TableCompany: FC<TableCompanyProps> = ({
               <TableCompanyRow
                 columns={columns}
                 companies={tableData?.content}
-                handleDetailsClick={handleDetailsClick}
+                handleDetailsClick={onCompanyDetailsClick}
                 handleStatusChange={handleStatusChange}
                 isCheckboxVisible={isCheckboxVisible}
                 rowSelected={rowSelected}
@@ -185,7 +168,7 @@ const TableCompany: FC<TableCompanyProps> = ({
         <Pagination
           page={tableData?.number ?? 0}
           totalPages={tableData?.totalPages ?? 0}
-          onPageChange={handleChangePage}
+          onPageChange={onPageChange}
         />
       ) : undefined}
     </>

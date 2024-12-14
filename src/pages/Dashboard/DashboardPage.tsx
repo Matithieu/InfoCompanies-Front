@@ -85,11 +85,11 @@ const DashboardPage: FC = () => {
                   columns={columnsTableCompany}
                   data={data}
                   error={error}
-                  handleChangePage={setPagination}
-                  handleDetailsClick={(company) => setCompany(company)}
                   isPending={isLoading}
                   // temporary, need to pay some proxy to get the data
                   isScrapping={false}
+                  onCompanyDetailsClick={(company) => setCompany(company)}
+                  onPageChange={setPagination}
                 />
               </Stack>
             </Grid>

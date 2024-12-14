@@ -61,13 +61,13 @@ const SearchPage: FC = () => {
               columns={columnsTableCompanySearch}
               data={data}
               error={error}
-              handleChangePage={handleChangePage}
-              handleDetailsClick={(company) => {
-                navigation.toCompany(company.id.toString())
-              }}
               isCheckboxVisible={false}
               isPending={isPending}
               isScrapping={false}
+              onCompanyDetailsClick={(company) => {
+                navigation.toCompany(company.id.toString())
+              }}
+              onPageChange={handleChangePage}
             />
           </Box>
         </Grid>

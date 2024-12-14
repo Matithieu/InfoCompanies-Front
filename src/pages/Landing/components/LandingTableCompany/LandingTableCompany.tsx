@@ -37,11 +37,11 @@ const LandingTableCompany: FC = () => {
             columns={columnsTableCompany}
             data={data}
             error={error}
-            handleChangePage={() => {}}
-            handleDetailsClick={() => {}}
             isCheckboxVisible={false}
             isPagination={false}
             isPending={isPending}
+            onCompanyDetailsClick={() => {}}
+            onPageChange={() => {}}
           />
         </div>
       </div>

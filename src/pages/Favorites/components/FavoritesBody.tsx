@@ -46,9 +46,9 @@ const FavoritesBody: FC<FavoritesBodyProps> = ({
             columns={columnsTableCompany}
             data={data}
             error={error}
-            handleChangePage={handleChangePage}
-            handleDetailsClick={(company) => setCompany(company)}
             isPending={isPending}
+            onCompanyDetailsClick={(company) => setCompany(company)}
+            onPageChange={handleChangePage}
           />
         </Stack>
       </Grid>
