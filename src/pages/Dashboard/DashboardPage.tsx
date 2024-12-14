@@ -20,12 +20,12 @@ import { fetchCompaniesWithUrlAndPage } from '../../utils/api/queries.ts'
 import useFilteredUrl from './hooks/useFilteredUrl.tsx'
 
 const DashboardPage: FC = () => {
-  const { user, setUser } = useUserStore()
-
-  const { searchParams } = useCompanyFilterStore()
-  const [company, setCompany] = useState<Company>()
   const [url, setUrl] = useState<string | undefined>(undefined)
+  const [company, setCompany] = useState<Company>()
   const [pagination, setPagination] = usePagination()
+
+  const { user, setUser } = useUserStore()
+  const { searchParams } = useCompanyFilterStore()
 
   const { isLoading, data, error } = useQuery({
     queryKey: ['companies', url, pagination.page],

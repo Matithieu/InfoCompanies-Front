@@ -10,7 +10,7 @@ import TableCompanyRowCell from './TableCompanyRowCell'
 type TableCompanyRowProps = {
   companies: Company[]
   columns: Column[]
-  rowSelected: number | null
+  rowSelected: number | undefined
   isCheckboxVisible: boolean
   handleDetailsClick: (company: Company) => void
   handleStatusChange: (company: Company) => void

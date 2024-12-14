@@ -1,19 +1,18 @@
 import './style.css'
 
 import { chunkArray } from '@/utils/array.util'
-import { Sheet, Skeleton, Table, Typography } from '@mui/joy'
+import { Sheet, Skeleton, Table } from '@mui/joy'
 import { useQueryClient } from '@tanstack/react-query'
 import { FC, Fragment, useEffect, useState } from 'react'
 
 import { Column } from '../../../data/types/columns'
 import { Company } from '../../../data/types/company'
 import { Page } from '../../../data/types/index.types'
-import commonMessages from '../../../services/intl/common.messages'
-import { formatMessage } from '../../../services/intl/intl'
 import { fetchCompanyScrap } from '../../../utils/api/queries'
 import { GlobalErrorButton } from '../../common/Buttons/GlobalErrorButton'
 import Pagination from '../../common/Buttons/Pagination'
 import { handleChangeCompanyStatut } from '../../common/Icons/stautIcon.util'
+import NoCompaniesFound from './components/NoCompaniesFound'
 import TableCompanyHeaders from './components/TableCompanyHeaders'
 import TableCompanyRow from './components/TableCompanyRow'
 import { canBeScrapped } from './tableCompany.util'
@@ -42,7 +41,7 @@ const TableCompany: FC<TableCompanyProps> = ({
   handleDetailsClick,
 }) => {
   const [tableData, setTableData] = useState<Page<Company> | undefined>(data)
-  const [rowSelected, setRowSelected] = useState<number | null>(null)
+  const [rowSelected, setRowSelected] = useState<number | undefined>(undefined)
   const queryClient = useQueryClient()
 
   useEffect(() => {
@@ -120,24 +119,11 @@ const TableCompany: FC<TableCompanyProps> = ({
   }
 
   if (error) {
-    console.error('Error fetching companies:', error)
     return <GlobalErrorButton error={error} />
   }
 
   if (data && data.empty) {
-    return (
-      <div
-        style={{
-          marginRight: 'auto',
-          //fontSize: '19px',
-          //border: '10px solid var(--joy-palette-border)',
-        }}
-      >
-        <Typography level="h4" style={{ marginTop: 20 }}>
-          {formatMessage(commonMessages.noCompaniesFound)}
-        </Typography>
-      </div>
-    )
+    return <NoCompaniesFound />
   }
 
   return (
