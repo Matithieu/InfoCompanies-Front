@@ -197,11 +197,9 @@ const TableCompany: FC<TableCompanyProps> = ({
       </Sheet>
       {isPagination && tableData && tableData.totalPages > 0 ? (
         <Pagination
-          dataPagination={{
-            page: tableData?.number ?? 0,
-            totalPages: tableData?.totalPages ?? 0,
-          }}
-          handleChangePage={handleChangePage}
+          page={tableData?.number ?? 0}
+          totalPages={tableData?.totalPages ?? 0}
+          onPageChange={handleChangePage}
         />
       ) : undefined}
     </>
