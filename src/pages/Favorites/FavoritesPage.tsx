@@ -1,9 +1,9 @@
+import usePagination from '@/hooks/usePagination.tsx'
 import { Grid, Typography } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
 import { FC, useState } from 'react'
 
 import HeaderTitle from '../../components/common/Texts/HeaderTitle.tsx'
-import { PaginationTableCompany } from '../../components/parts/TableCompany/tableCompany.type.ts'
 import { Company } from '../../data/types/company.ts'
 import { formatMessage } from '../../services/intl/intl.tsx'
 import { fetchFavorites } from '../../utils/api/queries.ts'
@@ -12,26 +12,15 @@ import favoritesMessages from './favorites.messages.ts'
 
 const FavoritesPage: FC = () => {
   const [company, setCompany] = useState<Company>()
-  const [dataPagination, setDataPagination] = useState<PaginationTableCompany>({
-    page: 0,
-    rowsPerPage: 10,
-    totalPages: 0,
-  })
+  const [pagination, setPagination] = usePagination()
 
   const { data, error, isPending } = useQuery({
-    queryKey: ['companies', dataPagination.page],
-    queryFn: () => fetchFavorites(dataPagination.page),
+    queryKey: ['companies', pagination.page],
+    queryFn: () => fetchFavorites(pagination.page),
     refetchOnWindowFocus: false,
     refetchOnMount: true,
     refetchOnReconnect: false,
   })
-
-  const handleChangePage = (page: number) => {
-    setDataPagination((prevDataPagination) => ({
-      ...prevDataPagination,
-      page,
-    }))
-  }
 
   return (
     <Grid flexDirection="column" sx={{ px: { xs: 2, md: 6 } }}>
@@ -53,7 +42,7 @@ const FavoritesPage: FC = () => {
           company={company}
           data={data}
           error={error}
-          handleChangePage={handleChangePage}
+          handleChangePage={setPagination}
           isPending={isPending}
           setCompany={setCompany}
         />

@@ -1,11 +1,12 @@
+import usePagination from '@/hooks/usePagination.tsx'
+import { asserts, isNotNU } from '@/utils/assertion.util.ts'
 import { Box, Grid } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
-import { FC, useEffect, useState } from 'react'
-import { useLocation, useParams } from 'react-router'
+import { FC } from 'react'
+import { useParams } from 'react-router'
 
 import HeaderTitle from '../../components/common/Texts/HeaderTitle.tsx'
 import TableCompany from '../../components/parts/TableCompany/TableCompany.tsx'
-import { PaginationTableCompany } from '../../components/parts/TableCompany/tableCompany.type.ts'
 import { columnsTableCompanySearch } from '../../data/types/columns.ts'
 import { useAppNavigate } from '../../hooks/useAppNavigate.tsx'
 import { formatMessage } from '../../services/intl/intl.tsx'
@@ -13,44 +14,26 @@ import { fetchCompanyBySearchTerm } from '../../utils/api/queries.ts'
 import searchMessages from './search.messages.ts'
 
 const SearchPage: FC = () => {
-  const { navigation } = useAppNavigate()
   const { searchTerm } = useParams()
-  const location = useLocation()
+  asserts(isNotNU(searchTerm))
 
   // Extract the current page from the URL query params
   const queryParams = new URLSearchParams(location.search)
   const currentPage = Number(queryParams.get('page')) || 0
 
-  const [dataPagination, setDataPagination] = useState<PaginationTableCompany>({
-    page: currentPage,
-    rowsPerPage: 10,
-    totalPages: 0,
-  })
+  const [pagination, setPagination] = usePagination(currentPage)
+  const { navigation } = useAppNavigate()
 
   const { isPending, data, error } = useQuery({
-    queryKey: ['companies', searchTerm, dataPagination.page],
-    queryFn: () =>
-      fetchCompanyBySearchTerm(searchTerm ?? '', dataPagination.page),
-    refetchOnWindowFocus: false,
+    queryKey: ['search-page', searchTerm, pagination.page],
+    queryFn: () => fetchCompanyBySearchTerm(searchTerm, pagination.page),
+    staleTime: Infinity,
   })
 
-  // Update page in the state and URL
   const handleChangePage = (page: number) => {
-    setDataPagination((prevDataPagination) => ({
-      ...prevDataPagination,
-      page: page,
-    }))
-
+    setPagination(page)
     navigation.toPage(`?page=${page}`, { replace: true })
   }
-
-  useEffect(() => {
-    // Sync the page state with the URL when the component mounts
-    setDataPagination((prevDataPagination) => ({
-      ...prevDataPagination,
-      page: currentPage,
-    }))
-  }, [currentPage])
 
   return (
     <Grid flexDirection="column" sx={{ px: { xs: 2, md: 6 } }}>

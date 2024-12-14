@@ -1,3 +1,4 @@
+import usePagination from '@/hooks/usePagination.tsx'
 import { Box, Card, Stack } from '@mui/joy'
 import { Grid } from '@mui/material'
 import { useMutation, useQuery } from '@tanstack/react-query'
@@ -9,7 +10,6 @@ import DetailsCompany from '../../components/parts/DetailsCompany/index.tsx'
 import Filters from '../../components/parts/Filters/index.tsx'
 import ListOfLeaders from '../../components/parts/LeaderList/LeaderList.tsx'
 import TableCompany from '../../components/parts/TableCompany/TableCompany.tsx'
-import { PaginationTableCompany } from '../../components/parts/TableCompany/tableCompany.type.ts'
 import JoyRideOnboardingProvider from '../../containers/JoyRide/index.tsx'
 import { columnsTableCompany } from '../../data/types/columns.ts'
 import { Company } from '../../data/types/company.ts'
@@ -25,15 +25,11 @@ const DashboardPage: FC = () => {
   const { searchParams } = useCompanyFilterStore()
   const [company, setCompany] = useState<Company>()
   const [url, setUrl] = useState<string | undefined>(undefined)
-  const [dataPagination, setDataPagination] = useState<PaginationTableCompany>({
-    page: 0,
-    rowsPerPage: 10,
-    totalPages: 0,
-  })
+  const [pagination, setPagination] = usePagination()
 
   const { isLoading, data, error } = useQuery({
-    queryKey: ['companies', url, dataPagination.page],
-    queryFn: () => fetchCompaniesWithUrlAndPage(url!, dataPagination.page),
+    queryKey: ['companies', url, pagination.page],
+    queryFn: () => fetchCompaniesWithUrlAndPage(url!, pagination.page),
     staleTime: Infinity,
     enabled: !!url,
   })
@@ -42,19 +38,7 @@ const DashboardPage: FC = () => {
     mutationFn: () => updateUserOnboarding(),
   })
 
-  const handleChangePage = (page: number) => {
-    setDataPagination((prevDataPagination) => ({
-      ...prevDataPagination,
-      page: page,
-    }))
-  }
-
-  useFilteredUrl({
-    searchParams,
-    url,
-    setDataPagination,
-    setUrl,
-  })
+  useFilteredUrl({ searchParams, url, setPagination, setUrl })
 
   return (
     <>
@@ -101,7 +85,7 @@ const DashboardPage: FC = () => {
                   columns={columnsTableCompany}
                   data={data}
                   error={error}
-                  handleChangePage={handleChangePage}
+                  handleChangePage={setPagination}
                   handleDetailsClick={(company) => setCompany(company)}
                   isPending={isLoading}
                   // temporary, need to pay some proxy to get the data

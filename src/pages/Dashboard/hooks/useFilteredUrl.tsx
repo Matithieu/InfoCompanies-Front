@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 
-import { PaginationTableCompany } from '../../../components/parts/TableCompany/tableCompany.type'
 import { RANDOM_UNSEEN_ENDPOINT } from '../../../data/types/index.types'
 import { SearchParams } from '../../../stores/filtersStore'
 import { constructURLWithFilter } from '../../../utils/api/utils'
@@ -9,9 +8,8 @@ import { constructURLWithFilter } from '../../../utils/api/utils'
 type useFilteredProps = {
   searchParams: SearchParams
   url: string | undefined
-  setDataPagination: React.Dispatch<
-    React.SetStateAction<PaginationTableCompany>
-  >
+  setPagination: (page: number) => void
+
   setUrl: React.Dispatch<React.SetStateAction<string | undefined>>
 }
 
@@ -21,7 +19,7 @@ type useFilteredProps = {
 const useFilteredUrl = ({
   searchParams,
   url,
-  setDataPagination,
+  setPagination,
   setUrl,
 }: useFilteredProps) => {
   useEffect(() => {
@@ -38,16 +36,10 @@ const useFilteredUrl = ({
         searchParams.contact.length === 0 &&
         searchParams.isCompanySeen === false
       ) {
-        setDataPagination((prevDataPagination) => ({
-          ...prevDataPagination,
-          page: 0,
-        }))
+        setPagination(0)
         newUrl = `${RANDOM_UNSEEN_ENDPOINT}?`
       } else {
-        setDataPagination((prevDataPagination) => ({
-          ...prevDataPagination,
-          page: 0,
-        }))
+        setPagination(0)
         newUrl = constructURLWithFilter(searchParams, 'filter-by-parameters?')
       }
 
