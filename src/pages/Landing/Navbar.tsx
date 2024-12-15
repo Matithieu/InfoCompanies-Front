@@ -13,6 +13,7 @@ import { Separator } from '@/components/ui/separator'
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -118,6 +119,7 @@ export const Navbar = () => {
                     InfoCompanies
                   </Link>
                 </SheetTitle>
+                <SheetDescription></SheetDescription>
               </SheetHeader>
 
               <div className="flex flex-col gap-2">
