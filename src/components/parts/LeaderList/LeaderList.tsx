@@ -1,4 +1,5 @@
 import LoadingText from '@/components/common/Loading/TextLoading'
+import { NoAvailableLeaderText } from '@/components/common/Texts/NoContentAvailable/NoContentAvailable'
 import { ListDivider, Typography } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
 import { FC } from 'react'
@@ -38,20 +39,7 @@ const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
   }
 
   if (leaders.length === 0) {
-    return (
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Typography level="h4">
-          {' '}
-          {formatMessage(commonMessages.noLeadersFound)}
-        </Typography>
-      </div>
-    )
+    return <NoAvailableLeaderText />
   }
 
   return (
