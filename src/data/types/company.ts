@@ -108,7 +108,9 @@ export type TurnOver = {
   turnOver: number[]
 }
 
-export function getTotalOfTurnOver(company: Company): TurnOver {
+export function getTotalTurnOver(company: Company | undefined) {
+  if (!company) return undefined
+
   const turnOver = {
     date: [2018, 2019, 2020, 2021, 2022, 2023],
     turnOver: [

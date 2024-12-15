@@ -8,7 +8,7 @@ import { useParams } from 'react-router'
 
 import { GlobalErrorButton } from '../../../components/common/Buttons/GlobalErrorButton.tsx'
 import ScrapCompanyButton from '../../../components/common/Buttons/scrapCompanyButton.tsx'
-import Chart from '../../../components/parts/Chart/index.tsx'
+import Chart from '../../../components/parts/Chart/Chart.tsx'
 import DetailsCompany from '../../../components/parts/DetailsCompany/index.tsx'
 import ListOfLeaders from '../../../components/parts/LeaderList/LeaderList.tsx'
 import { Company } from '../../../data/types/company.ts'

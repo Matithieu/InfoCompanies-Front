@@ -5,7 +5,7 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { FC, useState } from 'react'
 
 import HeaderTitle from '../../components/common/Texts/HeaderTitle.tsx'
-import Chart from '../../components/parts/Chart/index.tsx'
+import Chart from '../../components/parts/Chart/Chart.tsx'
 import DetailsCompany from '../../components/parts/DetailsCompany/index.tsx'
 import Filters from '../../components/parts/Filters/index.tsx'
 import ListOfLeaders from '../../components/parts/LeaderList/LeaderList.tsx'

@@ -2,7 +2,7 @@ import { Card, Stack } from '@mui/joy'
 import { Grid } from '@mui/material'
 import { FC } from 'react'
 
-import Chart from '../../../components/parts/Chart'
+import Chart from '../../../components/parts/Chart/Chart'
 import DetailsCompany from '../../../components/parts/DetailsCompany'
 import ListOfLeaders from '../../../components/parts/LeaderList/LeaderList'
 import TableCompany from '../../../components/parts/TableCompany/TableCompany'
