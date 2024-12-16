@@ -19,7 +19,7 @@ import CompanyHeader from './components/CompanyHeader.tsx'
 const CompanyPage: FC = () => {
   const { companyId } = useParams()
   const [company, setCompany] = useState<Company>()
-  asserts(companyId !== undefined, "companyId can't be undefined")
+  asserts(isNotNU(companyId), "companyId can't be undefined")
 
   const { isPending, data, error } = useQuery({
     queryKey: ['company', companyId],
@@ -36,63 +36,63 @@ const CompanyPage: FC = () => {
     return <GlobalErrorButton error={error} />
   }
 
-  if (isPending) {
-    return <LoadingText error={error} />
-  } else if (isNotNU(company)) {
-    return (
-      <Box sx={{ display: 'flex' }}>
-        <Box
-          sx={{
-            flexGrow: 1,
-          }}
-        >
-          <CompanyHeader company={company} setCompany={setCompany} />
-
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <ScrapCompanyButton
-              company={company}
-              onScraped={(updatedCompany) => {
-                setCompany(updatedCompany)
-              }}
-            />
-          </div>
-
-          <div style={{ marginTop: '100px' }} />
-
-          <Grid
-            container
-            direction="row"
-            display="flex"
-            justifyContent="center"
-            spacing={2}
-          >
-            <Grid lg={8} md={8} sm={8} xl={4} xs={8}>
-              <Card sx={{ minHeight: 220 }}>
-                <DetailsCompany company={company} />
-              </Card>
-            </Grid>
-
-            <Grid lg={8} md={8} sm={8} xl={4} xs={8}>
-              <Card sx={{ minHeight: 220 }}>
-                <ListOfLeaders siren={company?.sirenNumber} />
-              </Card>
-            </Grid>
-
-            <Grid lg={8} md={8} sm={8} xl={5} xs={8}>
-              <Card
-                sx={{
-                  height: 220,
-                  minWidth: 1,
-                }}
-              >
-                <Chart company={company} />
-              </Card>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
-    )
+  if (isPending || company === undefined) {
+    return <LoadingText />
   }
+
+  return (
+    <Box sx={{ display: 'flex' }}>
+      <Box
+        sx={{
+          flexGrow: 1,
+        }}
+      >
+        <CompanyHeader company={company} setCompany={setCompany} />
+
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <ScrapCompanyButton
+            company={company}
+            onScraped={(updatedCompany) => {
+              setCompany(updatedCompany)
+            }}
+          />
+        </div>
+
+        <div style={{ marginTop: '100px' }} />
+
+        <Grid
+          container
+          direction="row"
+          display="flex"
+          justifyContent="center"
+          spacing={2}
+        >
+          <Grid lg={5} md={5} sm={8} xl={8} xs={8}>
+            <Card sx={{ minHeight: 220 }}>
+              <DetailsCompany company={company} />
+            </Card>
+          </Grid>
+
+          <Grid lg={5} md={5} sm={8} xl={8} xs={8}>
+            <Card sx={{ minHeight: 220 }}>
+              <ListOfLeaders siren={company?.sirenNumber} />
+            </Card>
+          </Grid>
+
+          <Grid lg={5} md={5} sm={8} xl={8} xs={8}>
+            <Card
+              sx={{
+                height: 220,
+                minWidth: 1,
+              }}
+            >
+              <Chart company={company} />
+            </Card>
+          </Grid>
+        </Grid>
+      </Box>
+    </Box>
+  )
 }
 
 export default CompanyPage
