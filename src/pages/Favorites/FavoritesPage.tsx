@@ -15,11 +15,10 @@ const FavoritesPage: FC = () => {
   const [pagination, setPagination] = usePagination()
 
   const { data, error, isPending } = useQuery({
-    queryKey: ['companies', pagination.page],
+    queryKey: ['favorites-companies', pagination.page],
     queryFn: () => fetchFavorites(pagination.page),
-    refetchOnWindowFocus: false,
     refetchOnMount: true,
-    refetchOnReconnect: false,
+    staleTime: Infinity,
   })
 
   return (
