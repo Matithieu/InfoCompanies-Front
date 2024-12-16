@@ -47,30 +47,17 @@ const LayoutAvatarItem: FC<LayoutAvatarItemProps> = ({ open }) => {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'flex-start',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              maxWidth: '100%',
             }}
           >
-            <Typography
-              level="title-md"
-              sx={{
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                maxWidth: '100%',
-              }}
-            >
+            <Typography level="title-md">
               {user?.firstName ?? 'Error'}
             </Typography>
-            <Typography
-              level="body-sm"
-              sx={{
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                maxWidth: '100%',
-              }}
-            >
-              {user?.lastName ?? 'Error'}
-            </Typography>
+
+            <Typography level="body-sm">{user?.lastName ?? 'Error'}</Typography>
           </Box>
         )}
       </IconButton>
