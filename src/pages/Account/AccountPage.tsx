@@ -29,15 +29,21 @@ const AccountPage: FC = () => {
         </Box>
 
         <Tabs
-          tabsContent={[
-            <Account key={formatMessage(accountMessages.accountProfile)} />,
-            <ViewInvoices
-              key={formatMessagePlural(accountMessages.invoices)}
-            />,
-          ]}
-          tabsName={[
-            formatMessage(accountMessages.accountProfile),
-            formatMessagePlural(accountMessages.invoices),
+          tabs={[
+            {
+              content: (
+                <Account key={formatMessage(accountMessages.accountProfile)} />
+              ),
+              name: formatMessage(accountMessages.accountProfile),
+            },
+            {
+              content: (
+                <ViewInvoices
+                  key={formatMessagePlural(accountMessages.invoices)}
+                />
+              ),
+              name: formatMessagePlural(accountMessages.invoices),
+            },
           ]}
         />
       </Box>

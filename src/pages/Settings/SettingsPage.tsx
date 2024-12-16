@@ -15,10 +15,12 @@ const SettingsPage: FC = () => {
       </Box>
 
       <Tabs
-        tabsContent={[
-          <AppearanceTab key={formatMessage(settingsMessages.appearance)} />,
+        tabs={[
+          {
+            content: <AppearanceTab />,
+            name: formatMessage(settingsMessages.appearance),
+          },
         ]}
-        tabsName={[formatMessage(settingsMessages.appearance)]}
       />
     </Grid>
   )

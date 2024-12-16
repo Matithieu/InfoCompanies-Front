@@ -9,11 +9,13 @@ import {
 import { FC } from 'react'
 
 interface TabsProps {
-  tabsContent: JSX.Element[]
-  tabsName: string[]
+  tabs: Array<{
+    content: JSX.Element
+    name: string
+  }>
 }
 
-const Tabs: FC<TabsProps> = ({ tabsContent, tabsName }) => {
+const Tabs: FC<TabsProps> = ({ tabs }) => {
   return (
     <MUITabs defaultValue={0} sx={{ backgroundColor: 'transparent' }}>
       <TabList
@@ -37,14 +39,15 @@ const Tabs: FC<TabsProps> = ({ tabsContent, tabsName }) => {
         }}
         tabFlex={1}
       >
-        {tabsName.map((name, index) => (
+        {tabs.map(({ name }, index) => (
           <Tab key={index} indicatorInset sx={{ borderRadius: '6px 6px 0 0' }}>
             {name}
           </Tab>
         ))}
       </TabList>
+
       <Stack spacing={4}>
-        {tabsContent.map((content, index) => (
+        {tabs.map(({ content }, index) => (
           <TabPanel key={index} value={index}>
             {content}
           </TabPanel>
