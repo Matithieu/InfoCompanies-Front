@@ -1,6 +1,18 @@
 import { Company } from '../../../data/types/company'
 import { remplaceBackSlashInDate } from '../../../utils/date.util'
 
+export const isDateLessThanOneDay = (date: string): boolean => {
+  const lastScrapingDate = new Date(remplaceBackSlashInDate(date))
+  const now = new Date()
+
+  // If the last scraping date is less than 24 hours ago, we don't scrap
+  const isLessThanOneDay =
+    lastScrapingDate !== null &&
+    now.getTime() - lastScrapingDate.getTime() <= 24 * 60 * 60 * 1000 // Include 24-hour boundary
+
+  return isLessThanOneDay
+}
+
 export const canBeScrapped = (
   company: Company,
   data: Company | undefined,
@@ -10,15 +22,7 @@ export const canBeScrapped = (
   const scrapingDateExists =
     company.scrapingDate !== null && company.scrapingDate !== undefined
 
-  const lastScrapingDate = scrapingDateExists
-    ? new Date(remplaceBackSlashInDate(company.scrapingDate))
-    : null
-  const now = new Date()
-
-  // If the last scraping date is less than 24 hours ago, we don't scrap
-  const isLessThanOneDay =
-    lastScrapingDate !== null &&
-    now.getTime() - lastScrapingDate.getTime() < 24 * 60 * 60 * 1000 // 24 hours
+  const isLessThanOneDay = isDateLessThanOneDay(company.scrapingDate)
 
   const hasPhoneNumber = company.phoneNumber !== null
 

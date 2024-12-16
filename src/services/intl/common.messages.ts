@@ -171,4 +171,17 @@ export default defineMessages({
     defaultMessage: 'Turn over',
     id: `${scope}.turnOver`,
   },
+  refresh: {
+    defaultMessage: 'Refresh',
+    id: `${scope}.refresh`,
+  },
+  refreshCompanyData: {
+    defaultMessage: 'Refresh company data',
+    id: `${scope}.refreshCompanyData`,
+  },
+  refreshLimit: {
+    defaultMessage:
+      'You can only refresh once a day. \nLast refresh: {scrapingDate}',
+    id: `${scope}.refreshLimit`,
+  },
 })
