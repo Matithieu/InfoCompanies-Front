@@ -1,7 +1,7 @@
+import Loading from '@/components/common/Loading/Loading'
 import {
   Button,
   Card,
-  CircularProgress,
   Divider,
   FormControl,
   FormLabel,
@@ -21,9 +21,10 @@ import { fetchUser, updateUser } from '../../../utils/api/queries'
 import { isNotNU } from '../../../utils/assertion.util'
 import AccountMessages from '../account.messages'
 
+// ToDo: Migrate this to React Hook Form
 const Account: FC = () => {
   const { user, setUser } = useUserStore()
-  const [editMode, setEditMode] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
   const [editedUser, setEditedUser] = useState<User | null>(user)
 
   const { data, refetch } = useQuery({
@@ -54,21 +55,23 @@ const Account: FC = () => {
   }, [data, setUser])
 
   const handleEdit = () => {
-    setEditMode(true)
+    setIsEditing(true)
   }
 
   const handleSave = () => {
     if (user !== null) {
-      setEditMode(false)
+      setIsEditing(false)
       mutation.mutate()
     }
   }
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    key: string,
+    key: keyof User,
   ) => {
-    setEditedUser({ ...editedUser, [key]: e.target.value } as User)
+    if (editedUser) {
+      setEditedUser({ ...editedUser, [key]: e.target.value })
+    }
   }
 
   if (isNotNU(editedUser)) {
@@ -95,7 +98,7 @@ const Account: FC = () => {
                   {formatMessage(commonMessages.firstName)}
                 </FormLabel>
                 <Input
-                  disabled={!editMode}
+                  disabled={!isEditing}
                   id="firstName"
                   value={editedUser.firstName}
                   onChange={(e) => handleChange(e, 'firstName')}
@@ -107,7 +110,7 @@ const Account: FC = () => {
                   {formatMessage(commonMessages.lastName)}
                 </FormLabel>
                 <Input
-                  disabled={!editMode}
+                  disabled={!isEditing}
                   id="lastName"
                   value={editedUser.lastName}
                   onChange={(e) => handleChange(e, 'lastName')}
@@ -121,14 +124,15 @@ const Account: FC = () => {
                   {formatMessage(commonMessages.phone)}
                 </FormLabel>
                 <Input
-                  disabled={!editMode}
+                  disabled={!isEditing}
                   id="phone"
-                  value={editedUser.phone ?? undefined}
+                  value={editedUser.phone}
                   onChange={(e) => handleChange(e, 'phone')}
                 />
               </FormControl>
             </Grid>
           </Grid>
+
           <div
             style={{
               marginTop: '20px',
@@ -136,29 +140,17 @@ const Account: FC = () => {
               justifyContent: 'flex-end',
             }}
           >
-            {mutation.isPending ? (
-              <CircularProgress />
-            ) : (
-              <>
-                {editMode ? (
-                  <Button
-                    color="neutral"
-                    variant="outlined"
-                    onClick={handleSave}
-                  >
-                    {formatMessage(commonMessages.save)}
-                  </Button>
-                ) : (
-                  <Button
-                    color="primary"
-                    variant="outlined"
-                    onClick={handleEdit}
-                  >
-                    {formatMessage(commonMessages.edit)}
-                  </Button>
-                )}
-              </>
-            )}
+            <Loading isCentered isLoading={mutation.isPending}>
+              <Button
+                color={isEditing ? 'primary' : 'neutral'}
+                variant="outlined"
+                onClick={isEditing ? handleSave : handleEdit}
+              >
+                {isEditing
+                  ? formatMessage(commonMessages.save)
+                  : formatMessage(commonMessages.edit)}
+              </Button>
+            </Loading>
           </div>
         </form>
       </Card>
