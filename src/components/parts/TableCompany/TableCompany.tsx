@@ -3,7 +3,7 @@ import './style.css'
 import { chunkArray } from '@/utils/array.util'
 import { Sheet, Skeleton, Table } from '@mui/joy'
 import { useQueryClient } from '@tanstack/react-query'
-import { FC, Fragment, useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 import { Column } from '../../../data/types/columns'
 import { Company } from '../../../data/types/company'
@@ -144,14 +144,14 @@ const TableCompany: FC<TableCompanyProps> = ({
               <TableCompanyRow
                 columns={columns}
                 companies={tableData?.content}
-                handleDetailsClick={onCompanyDetailsClick}
-                handleStatusChange={handleStatusChange}
                 isCheckboxVisible={isCheckboxVisible}
                 rowSelected={rowSelected}
-                setRowSelected={setRowSelected}
+                onCompanyDetailsClick={onCompanyDetailsClick}
+                onRowSelect={setRowSelected}
+                onStatusUpdate={handleStatusChange}
               />
             ) : (
-              <Fragment>
+              <>
                 {Array.from({ length: 10 }, (_, i) => (
                   <tr key={i} className="fade-in">
                     <td colSpan={columns.length}>
@@ -159,7 +159,7 @@ const TableCompany: FC<TableCompanyProps> = ({
                     </td>
                   </tr>
                 ))}
-              </Fragment>
+              </>
             )}
           </tbody>
         </Table>

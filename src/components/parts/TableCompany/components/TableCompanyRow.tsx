@@ -12,9 +12,9 @@ type TableCompanyRowProps = {
   columns: Column[]
   rowSelected: number | undefined
   isCheckboxVisible: boolean
-  handleDetailsClick: (company: Company) => void
-  handleStatusChange: (company: Company) => void
-  setRowSelected: (id: number) => void
+  onCompanyDetailsClick: (company: Company) => void
+  onStatusUpdate: (company: Company) => void
+  onRowSelect: (id: number) => void
 }
 
 const TableCompanyRow: FC<TableCompanyRowProps> = ({
@@ -22,9 +22,9 @@ const TableCompanyRow: FC<TableCompanyRowProps> = ({
   columns,
   rowSelected,
   isCheckboxVisible,
-  handleDetailsClick,
-  handleStatusChange,
-  setRowSelected,
+  onCompanyDetailsClick,
+  onStatusUpdate,
+  onRowSelect,
 }) => {
   return (
     <Fragment>
@@ -45,8 +45,8 @@ const TableCompanyRow: FC<TableCompanyRowProps> = ({
           tabIndex={-1}
           onClick={(e) => {
             e.stopPropagation()
-            handleDetailsClick(companyRow)
-            setRowSelected(companyRow.id)
+            onCompanyDetailsClick(companyRow)
+            onRowSelect(companyRow.id)
           }}
         >
           {isCheckboxVisible && (
@@ -65,7 +65,7 @@ const TableCompanyRow: FC<TableCompanyRowProps> = ({
                   }}
                   onClick={(e) => {
                     e.stopPropagation()
-                    handleStatusChange(companyRow)
+                    onStatusUpdate(companyRow)
                   }}
                 >
                   <StatutIcon
