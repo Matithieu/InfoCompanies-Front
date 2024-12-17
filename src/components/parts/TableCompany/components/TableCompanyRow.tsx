@@ -1,7 +1,7 @@
 import { Tooltip } from '@mui/joy'
 import { FC, Fragment } from 'react'
 
-import { Column } from '../../../../data/types/columns'
+import { Column } from '../../../../data/types/Columns/columns'
 import { Company } from '../../../../data/types/company'
 import StatutIcon from '../../../common/Icons/StatutIcon'
 import { getStatutEnumPretty } from '../../../common/Icons/stautIcon.util'

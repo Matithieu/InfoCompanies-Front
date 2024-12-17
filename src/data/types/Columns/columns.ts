@@ -1,4 +1,4 @@
-import { formatMessage } from '../../services/intl/intl'
+import { formatMessage } from '../../../services/intl/intl'
 import columnsMessages from './columns.messages'
 
 export interface Column {

@@ -1,7 +1,7 @@
 // src/components/TestTableCompany.tsx
 import Filters from '@/components/parts/Filters'
 import TableCompany from '@/components/parts/TableCompany/TableCompany'
-import { columnsTableCompany } from '@/data/types/columns'
+import { columnsTableCompany } from '@/data/types/Columns/columns'
 import { fetchCompaniesWithUrlAndPage } from '@/utils/api/queries'
 import { useQuery } from '@tanstack/react-query'
 import { FC } from 'react'

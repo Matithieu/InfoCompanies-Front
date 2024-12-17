@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { toast } from 'react-toastify'
 
-import { Column } from '../../../../data/types/columns'
+import { Column } from '../../../../data/types/Columns/columns'
 import { Company } from '../../../../data/types/company'
 import { formatMessage } from '../../../../services/intl/intl'
 import { asserts } from '../../../../utils/assertion.util'

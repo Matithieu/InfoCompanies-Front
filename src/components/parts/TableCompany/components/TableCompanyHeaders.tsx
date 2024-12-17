@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Column } from '../../../../data/types/columns'
+import { Column } from '../../../../data/types/Columns/columns'
 
 type TableCompanyHeadersProps = {
   columns: Column[]

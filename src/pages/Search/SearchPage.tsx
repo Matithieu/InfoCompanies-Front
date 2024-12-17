@@ -7,7 +7,7 @@ import { useParams } from 'react-router'
 
 import HeaderTitle from '../../components/common/Texts/HeaderTitle.tsx'
 import TableCompany from '../../components/parts/TableCompany/TableCompany.tsx'
-import { columnsTableCompanySearch } from '../../data/types/columns.ts'
+import { columnsTableCompanySearch } from '../../data/types/Columns/columns.ts'
 import { useAppNavigate } from '../../hooks/useAppNavigate.tsx'
 import { formatMessage } from '../../services/intl/intl.tsx'
 import { fetchCompanyBySearchTerm } from '../../utils/api/queries.ts'

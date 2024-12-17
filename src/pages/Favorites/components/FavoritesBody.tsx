@@ -6,7 +6,7 @@ import Chart from '../../../components/parts/Chart/Chart'
 import DetailsCompany from '../../../components/parts/DetailsCompany'
 import ListOfLeaders from '../../../components/parts/LeaderList/LeaderList'
 import TableCompany from '../../../components/parts/TableCompany/TableCompany'
-import { columnsTableCompany } from '../../../data/types/columns'
+import { columnsTableCompany } from '../../../data/types/Columns/columns'
 import { Company } from '../../../data/types/company'
 import { Page } from '../../../data/types/index.types'
 

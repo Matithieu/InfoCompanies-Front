@@ -5,7 +5,7 @@ import { Sheet, Skeleton, Table } from '@mui/joy'
 import { useQueryClient } from '@tanstack/react-query'
 import { FC, useEffect, useState } from 'react'
 
-import { Column } from '../../../data/types/columns'
+import { Column } from '../../../data/types/Columns/columns'
 import { Company } from '../../../data/types/company'
 import { Page } from '../../../data/types/index.types'
 import { fetchCompanyScrap } from '../../../utils/api/queries'
