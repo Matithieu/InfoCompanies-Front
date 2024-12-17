@@ -32,31 +32,31 @@ const TableCompanyRowCell: FC<TableCompanyRowCellProps> = ({ column, row }) => {
     case 'email':
       return (
         <CellContentTooltip
-          copyToClipboard
+          isCopyEnabled
           content={row.email}
-          handleFunction={handleCopyToClipboard}
+          onContentClick={handleCopyToClipboard}
         />
       )
     case 'website':
       return (
         <CellContentTooltip
           content={row.website}
-          handleFunction={() => open(row.website)}
+          onContentClick={() => open(row.website)}
         />
       )
     case 'phoneNumber':
       return (
         <CellContentTooltip
-          copyToClipboard
+          isCopyEnabled
           content={row.phoneNumber}
-          handleFunction={() => handleCopyToClipboard(row.phoneNumber)}
+          onContentClick={() => handleCopyToClipboard(row.phoneNumber)}
         />
       )
     case 'companyName':
       return (
         <CellContentTooltip
           content={row.companyName}
-          handleFunction={() => {
+          onContentClick={() => {
             const url = `${row.companyName} ${row.city}`
             handleOpenInNewTab(url)
           }}

@@ -6,37 +6,41 @@ import tableCompanyMessages from '../../tableCompany.messages'
 
 type CellContentTooltipProps = {
   content: string
-  copyToClipboard?: boolean
-  handleFunction: (content: string) => void
+  isCopyEnabled?: boolean
+  onContentClick: (content: string) => void
 }
 
 const CellContentTooltip: FC<CellContentTooltipProps> = ({
   content,
-  copyToClipboard = false,
-  handleFunction,
+  isCopyEnabled = false,
+  onContentClick,
 }) => {
   return (
     <Tooltip
       title={(() => {
         if (!content) return null
-        return copyToClipboard
-          ? formatMessage(tableCompanyMessages.clickToCopyToClipboard)
-          : formatMessage(tableCompanyMessages.clickToOpenInNewTab)
+
+        return formatMessage(
+          isCopyEnabled
+            ? tableCompanyMessages.clickToCopyToClipboard
+            : tableCompanyMessages.clickToOpenInNewTab,
+        )
       })()}
     >
       <span
         style={{
           cursor: 'pointer',
           color: content ? 'inherit' : '#808080',
-          textDecoration: content && !copyToClipboard ? 'underline' : 'none',
+          textDecoration: content && !isCopyEnabled ? 'underline' : 'none',
         }}
         onClick={(e) => {
           if (!content) return
+
           e.stopPropagation()
-          handleFunction(content)
+          onContentClick(content)
         }}
       >
-        {content ?? 'N/A'}
+        {content ?? '-'}
       </span>
     </Tooltip>
   )
