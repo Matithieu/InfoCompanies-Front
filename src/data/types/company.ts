@@ -5,15 +5,15 @@ export type CompanySeen = {
 }
 
 export type FinancialYear = {
-  closingDate1: string
-  turnover1: number
-  result1: number
-  closingDate2: string
-  turnover2: number
-  result2: number
-  closingDate3: string
-  turnover3: number
-  result3: number
+  closingDate1?: string
+  turnover1?: number
+  result1?: number
+  closingDate2?: string
+  turnover2?: number
+  result2?: number
+  closingDate3?: string
+  turnover3?: number
+  result3?: number
 }
 
 export type SocialMedia = {
@@ -88,39 +88,42 @@ export type CompanyWithStatus = {
 }
 
 export function getTurnOverByYear(company: Company, year: number): number {
+  const financialYear = company.financialYears[year]
+  if (!financialYear) return 0
+
   return (
-    company.financialYears[year].turnover1 +
-    company.financialYears[year].turnover2 +
-    company.financialYears[year].turnover3
+    (financialYear.turnover1 ?? 0) +
+    (financialYear.turnover2 ?? 0) +
+    (financialYear.turnover3 ?? 0)
   )
 }
 
 export function getResultsByYear(company: Company, year: number): number {
+  const financialYear = company.financialYears[year]
+  if (!financialYear) return 0
+
   return (
-    company.financialYears[year].result1 +
-    company.financialYears[year].result2 +
-    company.financialYears[year].result3
+    (financialYear.result1 ?? 0) +
+    (financialYear.result2 ?? 0) +
+    (financialYear.result3 ?? 0)
   )
 }
 
-export type TurnOver = {
-  date: number[]
-  turnOver: number[]
-}
+export type TurnOver = Array<{
+  date: number
+  amount: number
+}>
 
-export function getTotalTurnOver(company: Company | undefined) {
-  if (!company) return undefined
+export function getTotalTurnOver(company: Company) {
+  const currentYear = new Date().getFullYear()
+  const startYear = 2018
+  const turnOver: TurnOver = []
 
-  const turnOver = {
-    date: [2018, 2019, 2020, 2021, 2022, 2023],
-    turnOver: [
-      getTurnOverByYear(company, 2018),
-      getTurnOverByYear(company, 2019),
-      getTurnOverByYear(company, 2020),
-      getTurnOverByYear(company, 2021),
-      getTurnOverByYear(company, 2022),
-      getTurnOverByYear(company, 2023),
-    ],
+  for (let year = startYear; year <= currentYear; year++) {
+    turnOver.push({
+      date: year,
+      amount: getTurnOverByYear(company, year),
+    })
   }
 
   return turnOver

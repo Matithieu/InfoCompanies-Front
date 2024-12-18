@@ -1,4 +1,5 @@
 import { NoAvailableDataText } from '@/components/common/Texts/NoContentAvailable/NoContentAvailable'
+import { isNotNU } from '@/utils/assertion.util'
 import { Typography } from '@mui/joy'
 import { useTheme } from '@mui/joy/styles'
 import { FC, Fragment } from 'react'
@@ -25,34 +26,17 @@ type ChartProps = {
 const Chart: FC<ChartProps> = ({ company }) => {
   const theme = useTheme()
 
-  const turnOverChartData = (() => {
-    const totalTurnOver = getTotalTurnOver(company)
-    // The chart only accepts objects with date and amount properties
-    const data: { date: number; amount: number }[] = []
-
-    if (totalTurnOver) {
-      for (let i = 0; i < totalTurnOver.date.length; i++) {
-        const turnOverIndex = totalTurnOver.turnOver[i]
-
-        if (turnOverIndex !== null && !isNaN(turnOverIndex)) {
-          if (
-            totalTurnOver.date.length > 1 &&
-            totalTurnOver.turnOver.length > 1
-          ) {
-            data.push({ date: totalTurnOver.date[i], amount: turnOverIndex })
-          }
-        }
-      }
+  const totalTurnOver = (() => {
+    if (isNotNU(company)) {
+      return getTotalTurnOver(company)
     }
-
-    return data
   })()
 
   if (company === undefined) {
     return <PleaseSelectACompanyText />
   }
 
-  if (turnOverChartData.every((item) => item.amount === 0)) {
+  if (totalTurnOver!.every((data) => data.amount === 0)) {
     return <NoAvailableDataText />
   }
 
@@ -65,7 +49,7 @@ const Chart: FC<ChartProps> = ({ company }) => {
       </div>
       <ResponsiveContainer>
         <LineChart
-          data={turnOverChartData}
+          data={totalTurnOver}
           margin={{
             top: 16,
             right: 16,
