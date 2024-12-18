@@ -1,8 +1,10 @@
+import { useAppNavigate } from '@/hooks/useAppNavigate'
 import LogoDevIcon from '@mui/icons-material/LogoDev'
 import Box from '@mui/joy/Box'
 import GlobalStyles from '@mui/joy/GlobalStyles'
 import Sheet from '@mui/joy/Sheet'
 import Typography from '@mui/joy/Typography'
+import { IconButton } from '@mui/material'
 import { FC, useEffect, useRef, useState } from 'react'
 
 import SearchAppBar from '../../../components/common/SearchBar'
@@ -14,6 +16,7 @@ const LayoutSidebar: FC = () => {
   const [manualOpen, setManualOpen] = useState(false) // Track manual open state
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const sidebarRef = useRef<HTMLDivElement | null>(null) // Ref for sidebar element
+  const { navigation } = useAppNavigate()
 
   const handleMouseEnter = () => {
     if (manualOpen) return // Prevent hover actions if sidebar was manually opened
@@ -150,11 +153,19 @@ const LayoutSidebar: FC = () => {
           gap: 2,
         }}
       >
-        <LogoDevIcon fontSize="large" />
-
+        {!open && (
+          <IconButton
+            style={{ color: 'inherit' }}
+            onClick={() => navigation.toDashboard()}
+          >
+            <LogoDevIcon fontSize="large" />
+          </IconButton>
+        )}
         {open && (
           <>
-            <Typography level="title-lg">Info&apos;Companies</Typography>
+            <button onClick={() => navigation.toDashboard()}>
+              <Typography level="title-lg">Info&apos;Companies</Typography>
+            </button>
           </>
         )}
       </Box>
