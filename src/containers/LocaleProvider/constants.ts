@@ -14,7 +14,7 @@ export const changeAppLocales = ({
   languageAppLocale,
 }: Optional<ChangeAppLocalesParams, 'languageAppLocale'>) => {
   if (languageAppLocale) {
-    const storage = new StorageService<AppLocale>('infocp-locale_')
+    const storage = new StorageService<AppLocale>()
     storage.setItem('language', languageAppLocale)
   }
 

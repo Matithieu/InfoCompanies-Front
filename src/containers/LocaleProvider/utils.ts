@@ -8,7 +8,7 @@ function isValidAppLocale(locale: string): locale is AppLocale {
 }
 
 export const getLanguageAppLocale = (): AppLocale => {
-  const storage = new StorageService<AppLocale>('infocp-locale_')
+  const storage = new StorageService<AppLocale>()
   const possibleLanguageAppLocale: AppLocale =
     storage.getItem('language') || 'fr-FR'
 

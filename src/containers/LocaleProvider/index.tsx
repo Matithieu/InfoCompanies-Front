@@ -1,11 +1,15 @@
-import { ReactNode } from 'react'
+import { FC, ReactNode } from 'react'
 import { IntlProvider } from 'react-intl'
 
 import { StorageService } from '../../services/storage'
 import { AppLocale, appLocaleToTranslationMessages } from './types'
 
-const LocaleProvider = ({ children }: { children: ReactNode }) => {
-  const storage = new StorageService<AppLocale>('infocp-locale_')
+type LocaleProviderProps = {
+  children: ReactNode
+}
+
+const LocaleProvider: FC<LocaleProviderProps> = ({ children }) => {
+  const storage = new StorageService<AppLocale>()
   const languageAppLocale: AppLocale = storage.getItem('language') || 'fr-FR'
 
   return (

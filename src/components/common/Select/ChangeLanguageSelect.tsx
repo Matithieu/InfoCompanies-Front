@@ -10,7 +10,7 @@ import { StorageService } from '../../../services/storage'
 import { isNotNU } from '../../../utils/assertion.util'
 
 const ChangeLanguageSelect: FC = () => {
-  const storage = new StorageService<AppLocale>('infocp-locale_')
+  const storage = new StorageService<AppLocale>()
   const languageAppLocale: AppLocale = storage.getItem('language') ?? 'fr-FR'
 
   const handleLanguageChange = (

@@ -1,17 +1,23 @@
+const LOCAL_STORAGE_PREFIX = 'infocp-' as const
+type LocalStorageKeys = 'settings' | 'language'
+
+/**
+ * A generic service for managing localStorage with a specified prefix.
+ *
+ * @template T - The type of the value to be stored.
+ */
 export class StorageService<T> {
   private readonly prefix: string
 
-  constructor(prefix: string = '') {
+  constructor(prefix: string = LOCAL_STORAGE_PREFIX) {
     this.prefix = prefix
   }
 
-  // Save data to localStorage
   setItem(key: LocalStorageKeys, value: T): void {
     const stringValue = JSON.stringify(value)
     localStorage.setItem(this.prefix + key, stringValue)
   }
 
-  // Retrieve data from localStorage
   getItem(key: LocalStorageKeys): T | null {
     const value = localStorage.getItem(this.prefix + key)
     if (value === null) return null
@@ -25,12 +31,10 @@ export class StorageService<T> {
     }
   }
 
-  // Remove data from localStorage
   removeItem(key: LocalStorageKeys): void {
     localStorage.removeItem(this.prefix + key)
   }
 
-  // Clear all items under the current prefix from localStorage
   clear(): void {
     const keysToRemove = Object.keys(localStorage).filter((key) =>
       key.startsWith(this.prefix),
@@ -41,7 +45,6 @@ export class StorageService<T> {
     }
   }
 
-  // Get all items stored with the current prefix
   getAllItems(): Record<string, T> {
     const items: Record<string, T> = {}
 
@@ -66,10 +69,7 @@ export class StorageService<T> {
     return items
   }
 
-  // Check if an item exists
   hasItem(key: LocalStorageKeys): boolean {
     return localStorage.getItem(this.prefix + key) !== null
   }
 }
-
-type LocalStorageKeys = 'settings' | 'language'
