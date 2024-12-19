@@ -18,8 +18,8 @@ import CompanyHeader from './components/CompanyHeader.tsx'
 
 const CompanyPage: FC = () => {
   const { companyId } = useParams()
-  const [company, setCompany] = useState<Company>()
   asserts(isNotNU(companyId), "companyId can't be undefined")
+  const [company, setCompany] = useState<Company>()
 
   const { isPending, data, error } = useQuery({
     queryKey: ['company', companyId],
