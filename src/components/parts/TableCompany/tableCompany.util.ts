@@ -1,7 +1,9 @@
 import { Company } from '../../../data/types/company'
 import { remplaceBackSlashInDate } from '../../../utils/date.util'
 
-export const isDateLessThanOneDay = (date: string): boolean => {
+export const isDateLessThanOneDay = (date: string | null): boolean => {
+  if (date === null) return true
+
   const lastScrapingDate = new Date(remplaceBackSlashInDate(date))
   const now = new Date()
 
