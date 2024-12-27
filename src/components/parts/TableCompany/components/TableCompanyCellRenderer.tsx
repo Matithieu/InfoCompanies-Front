@@ -8,7 +8,7 @@ import { asserts } from '../../../../utils/assertion.util'
 import tableCompanyMessages from '../tableCompany.messages'
 import CellContent from './content/CellContent'
 import CellContentTooltip from './content/CellContentTooltip'
-import TableCompanySocial from './TableCompanySocial'
+import TableCompanySocial from './TableCompanySocialRenderer'
 
 type TableCompanyRowCellProps = {
   column: Column

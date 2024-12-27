@@ -5,7 +5,7 @@ import { Column } from '../../../../data/types/Columns/columns'
 import { Company } from '../../../../data/types/company'
 import StatutIcon from '../../../common/Icons/StatutIcon'
 import { getStatutEnumPretty } from '../../../common/Icons/stautIcon.util'
-import TableCompanyRowCell from './TableCompanyRowCell'
+import TableCompanyRowCell from './TableCompanyCellRenderer'
 
 type TableCompanyRowProps = {
   companies: Company[]
@@ -77,10 +77,11 @@ const TableCompanyRow: FC<TableCompanyRowProps> = ({
               </Tooltip>
             </td>
           )}
-          {columns.slice(1).map((column) => (
+          {columns.slice(1).map((column, index) => (
             <td
               key={column.id}
               align={column.align}
+              aria-colindex={index + 1}
               style={{
                 maxWidth: '20px',
                 maxHeight: '1.5em',

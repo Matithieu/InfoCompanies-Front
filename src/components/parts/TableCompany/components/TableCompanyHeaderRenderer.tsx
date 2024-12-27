@@ -15,10 +15,12 @@ const TableCompanyHeaders: FC<TableCompanyHeadersProps> = ({
     <>
       <thead>
         <tr>
-          {columns.slice(isCheckboxVisible ? 0 : 1).map((column) => (
+          {columns.slice(isCheckboxVisible ? 0 : 1).map((column, index) => (
             <th
               key={column.id}
               align={column.align}
+              aria-colindex={index}
+              scope="col"
               style={{
                 width: column.minWidth,
                 fontSize: 16,
