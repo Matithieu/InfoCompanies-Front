@@ -1,5 +1,11 @@
 import Close from '@mui/icons-material/Close'
-import { Chip, CircularProgress, FormControl } from '@mui/joy'
+import {
+  AutocompleteOption,
+  Chip,
+  CircularProgress,
+  FormControl,
+  ListItemContent,
+} from '@mui/joy'
 import Autocomplete from '@mui/joy/Autocomplete'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useMemo, useState } from 'react'
@@ -78,6 +84,29 @@ const FetchAutoComplete = ({
             : formatMessage(commonMessages.enterAtLeastCharacters, { count: 2 })
         }
         options={mergedOptions}
+        renderOption={(props, option) => (
+          <AutocompleteOption {...props} key={option.id}>
+            <ListItemContent>{option.name}</ListItemContent>
+          </AutocompleteOption>
+        )}
+        slotProps={{
+          input: {
+            label: inputLabel,
+            enddecorator: (
+              <>{isLoading ? <CircularProgress size="sm" /> : null}</>
+            ),
+          },
+        }}
+        value={value}
+        onChange={(_, newValue) => {
+          if (newValue) {
+            handleSelectChange(newValue as AutoCompleteType[])
+          }
+        }}
+        // eslint-disable-next-line react/jsx-sort-props
+        onInputChange={(_, newInputValue) => {
+          setInputValue(newInputValue)
+        }}
         placeholder={isLabelHidden ? undefined : inputLabel}
         // So each tag has a different key
         renderTags={(tags, getTagProps) =>
@@ -95,23 +124,6 @@ const FetchAutoComplete = ({
             )
           })
         }
-        slotProps={{
-          input: {
-            label: inputLabel,
-            enddecorator: (
-              <>{isLoading ? <CircularProgress size="sm" /> : null}</>
-            ),
-          },
-        }}
-        value={value}
-        onChange={(_, newValue) => {
-          if (newValue) {
-            handleSelectChange(newValue as AutoCompleteType[])
-          }
-        }}
-        onInputChange={(_, newInputValue) => {
-          setInputValue(newInputValue)
-        }}
       />
     </FormControl>
   )
