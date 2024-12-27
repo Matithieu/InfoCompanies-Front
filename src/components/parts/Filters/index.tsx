@@ -1,6 +1,7 @@
+import { formatMessage } from '@/services/intl/intl'
 import AddIcon from '@mui/icons-material/Add'
 import { Dropdown, ListDivider, Menu, MenuButton, MenuItem } from '@mui/joy'
-import { Box } from '@mui/material'
+import { Box, Tooltip } from '@mui/material'
 import { FC, useEffect, useState } from 'react'
 
 import {
@@ -8,8 +9,9 @@ import {
   useCompanyFilterStore,
 } from '../../../stores/filtersStore'
 import getFilterComponents from './components'
-import { filterDescriptions, SelectedFilterType } from './filter.type'
+import { filterDisplayNames, SelectedFilterType } from './filter.type'
 import { updateFilterStates } from './filter.util'
+import filtersMessages from './filters.messages'
 
 export interface FiltersProps {
   filtersToShow: Array<
@@ -148,6 +150,7 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
   if (showAddFilterButton === false) {
     return (
       <Box
+        aria-label="filters"
         sx={{
           display: 'flex',
           flexDirection: 'row',
@@ -182,20 +185,23 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
         {availableFilters.length > 0 && (
           <Dropdown>
             <div id="joyride-step-2">
-              <MenuButton
-                sx={{ flexShrink: 0, width: '40px', maxWidth: '250px' }}
-                variant="soft"
-              >
-                <AddIcon style={{ fontSize: '1.2rem' }} />
-              </MenuButton>
+              <Tooltip title={formatMessage(filtersMessages.addFilter)}>
+                <MenuButton
+                  sx={{ flexShrink: 0, width: '40px', maxWidth: '250px' }}
+                  variant="soft"
+                >
+                  <AddIcon style={{ fontSize: '1.2rem' }} />
+                </MenuButton>
+              </Tooltip>
             </div>
 
             <Menu sx={{ zIndex: 3000 }}>
               {availableFilters.map((filter, index) => (
                 <div key={filter}>
                   <MenuItem onClick={() => addFilter(filter)}>
-                    {filterDescriptions[filter]}
+                    {filterDisplayNames[filter]}
                   </MenuItem>
+
                   {index === availableFilters.length - 1 ? '' : <ListDivider />}
                 </div>
               ))}

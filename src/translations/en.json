@@ -12,6 +12,7 @@
   "columns.region": "Region",
   "columns.socialMedia": "Social Media",
   "columns.website": "Website",
+  "filters.addFilter": "Add a filter",
   "intl.addressTooltip": "Address",
   "intl.changePlan": "Change plan",
   "intl.city": "City",

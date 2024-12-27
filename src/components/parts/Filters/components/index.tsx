@@ -1,3 +1,4 @@
+import columnsMessages from '@/data/types/Columns/columns.messages'
 import SearchIcon from '@mui/icons-material/Search'
 import { Box, Button, Switch, Typography } from '@mui/joy'
 
@@ -21,7 +22,10 @@ const getFilterComponents = (
   handleSearch: () => void,
 ) => ({
   legalForm: (
-    <Box sx={{ flexShrink: 0, maxWidth: '250px' }}>
+    <Box
+      aria-label={formatMessage(commonMessages.legalForm)}
+      sx={{ flexShrink: 0, maxWidth: '250px' }}
+    >
       <FetchAutoComplete
         fetchFunction={(searchTerm) =>
           fetchAutoComplete('legal-form', searchTerm)
@@ -35,7 +39,10 @@ const getFilterComponents = (
     </Box>
   ),
   industrySector: (
-    <Box sx={{ flexShrink: 0, maxWidth: '250px' }}>
+    <Box
+      aria-label={formatMessage(commonMessages.industrySector)}
+      sx={{ flexShrink: 0, maxWidth: '250px' }}
+    >
       <FetchAutoComplete
         fetchFunction={(searchTerm) =>
           fetchAutoComplete('industry-sector', searchTerm)
@@ -49,7 +56,10 @@ const getFilterComponents = (
     </Box>
   ),
   region: (
-    <Box sx={{ flexShrink: 0, maxWidth: '250px' }}>
+    <Box
+      aria-label={formatMessage(commonMessages.region)}
+      sx={{ flexShrink: 0, maxWidth: '250px' }}
+    >
       <SimpleAutoComplete
         handleSelectChange={handleSelectChange('region')}
         isLabelHidden={searchTerm.region.length > 0}
@@ -60,7 +70,10 @@ const getFilterComponents = (
     </Box>
   ),
   city: (
-    <Box sx={{ flexShrink: 0, maxWidth: '250px' }}>
+    <Box
+      aria-label={formatMessage(commonMessages.city)}
+      sx={{ flexShrink: 0, maxWidth: '250px' }}
+    >
       <FetchAutoComplete
         fetchFunction={(searchTerm) => fetchAutoComplete('city', searchTerm)}
         handleSelectChange={handleSelectChange('city')}
@@ -72,7 +85,10 @@ const getFilterComponents = (
     </Box>
   ),
   employee: (
-    <Box sx={{ flexShrink: 0, maxWidth: '250px' }}>
+    <Box
+      aria-label={formatMessage(columnsMessages.numberOfEmployee)}
+      sx={{ flexShrink: 0, maxWidth: '250px' }}
+    >
       <ComparatorInput
         value={searchTerm.employee}
         onValueChange={handleSelectChange('employee')}
@@ -80,7 +96,10 @@ const getFilterComponents = (
     </Box>
   ),
   socials: (
-    <Box sx={{ flexShrink: 0, maxWidth: '200px', minWidth: '200px' }}>
+    <Box
+      aria-label={formatMessage(commonMessages.socials)}
+      sx={{ flexShrink: 0, maxWidth: '200px', minWidth: '200px' }}
+    >
       <SocialsFilter
         values={searchTerm.socials}
         onChange={handleSelectChange('socials')}
@@ -88,7 +107,10 @@ const getFilterComponents = (
     </Box>
   ),
   contact: (
-    <Box sx={{ flexShrink: 0, maxWidth: '200px', minWidth: '200px' }}>
+    <Box
+      aria-label={formatMessage(commonMessages.contact)}
+      sx={{ flexShrink: 0, maxWidth: '200px', minWidth: '200px' }}
+    >
       <ContactFilter
         values={searchTerm.contact}
         onChange={handleSelectChange('contact')}
@@ -96,7 +118,10 @@ const getFilterComponents = (
     </Box>
   ),
   isCompanySeen: (
-    <Box sx={{ flexShrink: 0 }}>
+    <Box
+      aria-label={formatMessage(commonMessages.isCompanySeen)}
+      sx={{ flexShrink: 0 }}
+    >
       <Typography
         component="label"
         endDecorator={
@@ -114,7 +139,10 @@ const getFilterComponents = (
     </Box>
   ),
   searchButton: (
-    <Box sx={{ flexShrink: 0, maxWidth: '250px' }}>
+    <Box
+      aria-label={formatMessage(commonMessages.search)}
+      sx={{ flexShrink: 0, maxWidth: '250px' }}
+    >
       <Button
         fullWidth
         endDecorator={<SearchIcon />}

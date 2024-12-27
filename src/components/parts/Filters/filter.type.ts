@@ -6,7 +6,7 @@ import { Contact } from './components/ContactFilter'
 
 import { FiltersProps } from '.'
 
-export const filterDescriptions: {
+export const filterDisplayNames: {
   [key in FiltersProps['filtersToShow'][number]]: string
 } = {
   city: formatMessage(commonMessages.city),
