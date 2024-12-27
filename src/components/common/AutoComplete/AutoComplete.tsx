@@ -1,5 +1,12 @@
 import Close from '@mui/icons-material/Close'
-import { Autocomplete, Chip, FormControl } from '@mui/joy'
+import {
+  Autocomplete,
+  AutocompleteOption,
+  Chip,
+  FormControl,
+  ListItemContent,
+} from '@mui/joy'
+import { FC } from 'react'
 
 type SimpleAutoCompleteProps = {
   label: string
@@ -9,13 +16,13 @@ type SimpleAutoCompleteProps = {
   handleSelectChange: (selectedValue: string[]) => void
 }
 
-const SimpleAutoComplete = ({
+const SimpleAutoComplete: FC<SimpleAutoCompleteProps> = ({
   label,
   options,
   selectedValues,
   isLabelHidden,
   handleSelectChange,
-}: SimpleAutoCompleteProps) => {
+}) => {
   return (
     <FormControl>
       <Autocomplete
@@ -24,6 +31,11 @@ const SimpleAutoComplete = ({
         limitTags={1}
         options={options}
         placeholder={isLabelHidden ? undefined : label}
+        renderOption={(props, option) => (
+          <AutocompleteOption {...props} key={option}>
+            <ListItemContent>{option}</ListItemContent>
+          </AutocompleteOption>
+        )}
         renderTags={(tags, getTagProps) =>
           tags.map((selectedValue, index) => {
             const { key, ...otherTagProps } = getTagProps({ index })
