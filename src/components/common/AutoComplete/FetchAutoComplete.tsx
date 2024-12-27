@@ -8,7 +8,7 @@ import {
 } from '@mui/joy'
 import Autocomplete from '@mui/joy/Autocomplete'
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useMemo, useState } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 
 import { AutoCompleteType } from '../../../data/types/index.types'
 import commonMessages from '../../../services/intl/common.messages'
@@ -23,14 +23,14 @@ type FetchAutoCompleteProps<T> = {
   value?: T[]
 }
 
-const FetchAutoComplete = ({
+const FetchAutoComplete: FC<FetchAutoCompleteProps<AutoCompleteType>> = ({
   handleSelectChange,
   fetchFunction,
   queryKeyBase,
   inputLabel,
   isLabelHidden,
   value = [],
-}: FetchAutoCompleteProps<AutoCompleteType>) => {
+}) => {
   const [inputValue, setInputValue] = useState<string>('')
   const [debouncedInputValue, setDebouncedInputValue] = useState<string>('')
 
