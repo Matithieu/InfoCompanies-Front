@@ -36,26 +36,28 @@ const JoyRideOnboardingProvider: FC<JoyRideOnboardingProviderProps> = ({
   }
 
   return (
-    <Joyride
-      continuous
-      showProgress
-      showSkipButton
-      callback={handleJoyrideCallback}
-      locale={{
-        back: formatMessage(joyrideMessages.back),
-        close: formatMessage(joyrideMessages.close),
-        last: formatMessage(joyrideMessages.last),
-        next: formatMessage(joyrideMessages.next),
-        skip: formatMessage(joyrideMessages.skip),
-      }}
-      run={isTourRunning}
-      steps={joyrideSteps}
-      styles={{
-        options: {
-          zIndex: 3000,
-        },
-      }}
-    />
+    <div style={{ display: 'none' }}>
+      <Joyride
+        continuous
+        showProgress
+        showSkipButton
+        callback={handleJoyrideCallback}
+        locale={{
+          back: formatMessage(joyrideMessages.back),
+          close: formatMessage(joyrideMessages.close),
+          last: formatMessage(joyrideMessages.last),
+          next: formatMessage(joyrideMessages.next),
+          skip: formatMessage(joyrideMessages.skip),
+        }}
+        run={isTourRunning}
+        steps={joyrideSteps}
+        styles={{
+          options: {
+            zIndex: 3000,
+          },
+        }}
+      />
+    </div>
   )
 }
 

@@ -152,7 +152,7 @@ const LayoutSidebar: FC = () => {
           },
           marginBottom: {
             xs: 0,
-            md: 2.6,
+            md: 1.5,
           },
           alignItems: 'center',
           justifyContent: 'center',
