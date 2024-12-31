@@ -11,7 +11,7 @@ import { fetchThroughProxy } from './config'
 import handleStatusError from './errors/handleStatusError'
 import {
   cleanLeaders,
-  parseAndConertCompanyWithStatus,
+  parseAndConvertCompanyWithStatus,
   parseAndConvertPageCompaniesWithStatus,
 } from './utils'
 
@@ -107,7 +107,7 @@ export async function fetchCompanyById(id: string) {
   const response = await fetchThroughProxy(`/v1/company/get-by-id/${id}`, 'GET')
 
   if (response.ok) {
-    return parseAndConertCompanyWithStatus(await response.json())
+    return parseAndConvertCompanyWithStatus(await response.json())
   }
 
   throw new Error(

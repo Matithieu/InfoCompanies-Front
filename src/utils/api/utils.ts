@@ -73,7 +73,7 @@ export const constructURLWithFilter = (
   return urlParts.join('')
 }
 
-export const parseAndConertCompanyWithStatus = (
+export const parseAndConvertCompanyWithStatus = (
   companyWithStatus: CompanyWithStatus,
 ) => {
   const userCompanyStatusData = parseJsonToUserCompanyStatus(
@@ -86,7 +86,7 @@ export const parseAndConvertPageCompaniesWithStatus = (
   data: Page<CompanyWithStatus>,
 ) => {
   const parsedCompanies = data.content.map(({ company, userCompanyStatus }) => {
-    return parseAndConertCompanyWithStatus({ company, userCompanyStatus })
+    return parseAndConvertCompanyWithStatus({ company, userCompanyStatus })
   })
 
   const pageCompany: Page<Company> = {
