@@ -169,9 +169,9 @@ export async function updateUser(user: User) {
  * Leader
  *
  */
-export const fetchLeadersBySirens = async (siren: string) => {
+export const fetchLeadersBySiren = async (siren: string) => {
   const response = await fetchThroughProxy(
-    `/v1/leader/get-by-siren?siren=${siren}`,
+    `/v1/leader/get-by-siren/${siren}`,
     'GET',
   )
 
