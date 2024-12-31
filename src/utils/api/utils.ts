@@ -29,46 +29,48 @@ export const cleanLeaders = (leaders: Leader[]) => {
 export const constructURLWithFilter = (
   searchParams: SearchParams,
   baseUrl: string,
-) => {
-  let url = baseUrl
+): string => {
+  const urlParts: string[] = [baseUrl]
 
-  if (searchParams.region.length > 0) {
-    url += `regions=${searchParams.region.join(',')}&`
+  const appendQuery = (key: string, value: string | string[]) => {
+    if (Array.isArray(value) && value.length > 0) {
+      urlParts.push(`${key}=${value.join(',')}&`)
+    } else if (value) {
+      urlParts.push(`${key}=${value}&`)
+    }
   }
 
-  if (searchParams.city.length > 0) {
-    url += `cities=${searchParams.city.map((city) => city.name).join(',')}&`
-  }
-
-  if (searchParams.industrySector.length > 0) {
-    url += `industrySectors=${searchParams.industrySector.map((sector) => sector.name).join(',')}&`
-  }
-
-  if (searchParams.legalForm.length > 0) {
-    url += `legalForms=${searchParams.legalForm.map((form) => form.name).join(',')}&`
-  }
+  appendQuery('regions', searchParams.region)
+  appendQuery(
+    'cities',
+    searchParams.city.map((city) => city.name),
+  )
+  appendQuery(
+    'industrySectors',
+    searchParams.industrySector.map((sector) => sector.name),
+  )
+  appendQuery(
+    'legalForms',
+    searchParams.legalForm.map((form) => form.name),
+  )
 
   if (
     searchParams.employee &&
     isNotNU(searchParams.employee.amount) &&
     isNotNU(searchParams.employee.comparator)
   ) {
-    url += `numberOfEmployee=${searchParams.employee.amount}&comparator=${searchParams.employee.comparator}&`
+    urlParts.push(`numberOfEmployee=${searchParams.employee.amount}&`)
+    urlParts.push(`comparator=${searchParams.employee.comparator}&`)
   }
 
-  if (searchParams.socials.length > 0) {
-    url += `socials=${searchParams.socials.join(',')}&`
-  }
-
-  if (searchParams.contact.length > 0) {
-    url += `contacts=${searchParams.contact.join(',')}&`
-  }
+  appendQuery('socials', searchParams.socials)
+  appendQuery('contacts', searchParams.contact)
 
   if (searchParams.isCompanySeen) {
-    url += `isCompanySeen=${searchParams.isCompanySeen}&`
+    urlParts.push(`isCompanySeen=${searchParams.isCompanySeen}&`)
   }
 
-  return url
+  return urlParts.join('')
 }
 
 export const parseAndConertCompanyWithStatus = (
