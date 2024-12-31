@@ -10,12 +10,15 @@ import CellContent from './content/CellContent'
 import CellContentTooltip from './content/CellContentTooltip'
 import TableCompanySocial from './TableCompanySocialRenderer'
 
-type TableCompanyRowCellProps = {
+type TableCompanyCellRendererProps = {
   column: Column
   row: Company
 }
 
-const TableCompanyRowCell: FC<TableCompanyRowCellProps> = ({ column, row }) => {
+const TableCompanyCellRenderer: FC<TableCompanyCellRendererProps> = ({
+  column,
+  row,
+}) => {
   const handleCopyToClipboard = (content: string) => {
     navigator.clipboard.writeText(content)
     toast.success(formatMessage(tableCompanyMessages.copyToClipboard))
@@ -82,4 +85,4 @@ const TableCompanyRowCell: FC<TableCompanyRowCellProps> = ({ column, row }) => {
   }
 }
 
-export default TableCompanyRowCell
+export default TableCompanyCellRenderer

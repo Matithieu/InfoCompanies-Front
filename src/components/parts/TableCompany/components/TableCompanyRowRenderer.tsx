@@ -5,7 +5,7 @@ import { Column } from '../../../../data/types/Columns/columns'
 import { Company } from '../../../../data/types/company'
 import StatutIcon from '../../../common/Icons/StatutIcon'
 import { getStatutEnumPretty } from '../../../common/Icons/stautIcon.util'
-import TableCompanyRowCell from './TableCompanyCellRenderer'
+import TableCompanyCellRenderer from './TableCompanyCellRenderer'
 
 type TableCompanyRowRendererProps = {
   companies: Company[]
@@ -90,7 +90,7 @@ const TableCompanyRowRenderer: FC<TableCompanyRowRendererProps> = ({
                 whiteSpace: 'nowrap',
               }}
             >
-              <TableCompanyRowCell column={column} row={companyRow} />
+              <TableCompanyCellRenderer column={column} row={companyRow} />
             </td>
           ))}
         </tr>
