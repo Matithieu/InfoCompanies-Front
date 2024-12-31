@@ -48,7 +48,7 @@ const AppRouter: FC = () => {
                 <Route element={<AccountPage />} path="account" />
                 <Route element={<SearchPage />} path="search/:searchTerm" />
                 <Route element={<CompanyPage />} path="company/:companyId" />
-                <Route element={<LeaderPage />} path="leaders/:siren" />
+                <Route element={<LeaderPage />} path="leader/:id" />
               </Route>
             </Route>
 

@@ -184,10 +184,7 @@ export const fetchLeadersBySiren = async (siren: string) => {
 }
 
 export const fetchLeaderById = async (id: string) => {
-  const response = await fetchThroughProxy(
-    `/v1/leader/get-by-id?id=${id}}`,
-    'GET',
-  )
+  const response = await fetchThroughProxy(`/v1/leader/get-by-id/${id}`, 'GET')
 
   if (response) {
     return (await response.json()) as Leader
