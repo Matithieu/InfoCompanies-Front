@@ -63,6 +63,7 @@ const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
           <div key={index} style={{ marginBottom: 15 }}>
             <DetailsLeaderRow key={index} leader={leader} />
             <div style={{ marginBottom: 10 }} />
+
             {index < leaders.length - 1 && <ListDivider />}
           </div>
         ))}
