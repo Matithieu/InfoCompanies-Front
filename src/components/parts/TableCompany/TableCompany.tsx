@@ -13,7 +13,7 @@ import { GlobalErrorButton } from '../../common/Buttons/GlobalErrorButton'
 import Pagination from '../../common/Buttons/Pagination'
 import { handleChangeCompanyStatut } from '../../common/Icons/stautIcon.util'
 import NoCompaniesFound from './components/NoCompaniesFound'
-import TableCompanyHeaders from './components/TableCompanyHeaderRenderer'
+import TableCompanyHeadersRenderer from './components/TableCompanyHeaderRenderer'
 import TableCompanyRow from './components/TableCompanyRowRenderer'
 import useSetTableData from './hooks/UseSetTableData'
 import { canBeScrapped } from './tableCompany.util'
@@ -135,7 +135,7 @@ const TableCompany: FC<TableCompanyProps> = ({
             '--TableCell-paddingX': '8px',
           }}
         >
-          <TableCompanyHeaders
+          <TableCompanyHeadersRenderer
             columns={columns}
             isCheckboxVisible={isCheckboxVisible}
           />

@@ -2,12 +2,12 @@ import { FC } from 'react'
 
 import { Column } from '../../../../data/types/Columns/columns'
 
-type TableCompanyHeadersProps = {
+type TableCompanyHeadersRendererProps = {
   columns: Column[]
   isCheckboxVisible?: boolean
 }
 
-const TableCompanyHeaders: FC<TableCompanyHeadersProps> = ({
+const TableCompanyHeadersRenderer: FC<TableCompanyHeadersRendererProps> = ({
   columns,
   isCheckboxVisible = true,
 }) => {
@@ -35,4 +35,4 @@ const TableCompanyHeaders: FC<TableCompanyHeadersProps> = ({
   )
 }
 
-export default TableCompanyHeaders
+export default TableCompanyHeadersRenderer
