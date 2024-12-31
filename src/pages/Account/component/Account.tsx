@@ -100,10 +100,11 @@ const Account: FC = () => {
                 <Input
                   disabled={!isEditing}
                   id="firstName"
-                  value={editedUser.firstName}
+                  value={editedUser.firstName ?? undefined}
                   onChange={(e) => handleChange(e, 'firstName')}
                 />
               </FormControl>
+
               <FormControl>
                 <FormLabel htmlFor="lastName">
                   {' '}
@@ -112,11 +113,12 @@ const Account: FC = () => {
                 <Input
                   disabled={!isEditing}
                   id="lastName"
-                  value={editedUser.lastName}
+                  value={editedUser.lastName ?? undefined}
                   onChange={(e) => handleChange(e, 'lastName')}
                 />
               </FormControl>
             </Grid>
+
             <Grid md={6} xs={12}>
               <FormControl>
                 <FormLabel htmlFor="phone">
@@ -126,7 +128,7 @@ const Account: FC = () => {
                 <Input
                   disabled={!isEditing}
                   id="phone"
-                  value={editedUser.phone}
+                  value={editedUser.phone ?? undefined}
                   onChange={(e) => handleChange(e, 'phone')}
                 />
               </FormControl>
@@ -146,9 +148,9 @@ const Account: FC = () => {
                 variant="outlined"
                 onClick={isEditing ? handleSave : handleEdit}
               >
-                {isEditing
-                  ? formatMessage(commonMessages.save)
-                  : formatMessage(commonMessages.edit)}
+                {formatMessage(
+                  isEditing ? commonMessages.save : commonMessages.edit,
+                )}
               </Button>
             </Loading>
           </div>
