@@ -18,7 +18,7 @@ const FavoritesPage: FC = () => {
     queryKey: ['favorites-companies', pagination.page],
     queryFn: () => fetchFavorites(pagination.page),
     refetchOnMount: true,
-    staleTime: Infinity,
+    staleTime: 0,
   })
 
   return (
