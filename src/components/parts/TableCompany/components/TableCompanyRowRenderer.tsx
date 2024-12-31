@@ -7,7 +7,7 @@ import StatutIcon from '../../../common/Icons/StatutIcon'
 import { getStatutEnumPretty } from '../../../common/Icons/stautIcon.util'
 import TableCompanyRowCell from './TableCompanyCellRenderer'
 
-type TableCompanyRowProps = {
+type TableCompanyRowRendererProps = {
   companies: Company[]
   columns: Column[]
   rowSelected: number | undefined
@@ -17,7 +17,7 @@ type TableCompanyRowProps = {
   onRowSelect: (id: number) => void
 }
 
-const TableCompanyRow: FC<TableCompanyRowProps> = ({
+const TableCompanyRowRenderer: FC<TableCompanyRowRendererProps> = ({
   companies,
   columns,
   rowSelected,
@@ -99,4 +99,4 @@ const TableCompanyRow: FC<TableCompanyRowProps> = ({
   )
 }
 
-export default TableCompanyRow
+export default TableCompanyRowRenderer

@@ -14,7 +14,7 @@ import Pagination from '../../common/Buttons/Pagination'
 import { handleChangeCompanyStatut } from '../../common/Icons/stautIcon.util'
 import NoCompaniesFound from './components/NoCompaniesFound'
 import TableCompanyHeadersRenderer from './components/TableCompanyHeaderRenderer'
-import TableCompanyRow from './components/TableCompanyRowRenderer'
+import TableCompanyRowRenderer from './components/TableCompanyRowRenderer'
 import useSetTableData from './hooks/UseSetTableData'
 import { canBeScrapped } from './tableCompany.util'
 
@@ -141,7 +141,7 @@ const TableCompany: FC<TableCompanyProps> = ({
           />
           <tbody id="#joyride-step-1" style={{ wordBreak: 'break-word' }}>
             {!isPending && tableData?.content?.length ? (
-              <TableCompanyRow
+              <TableCompanyRowRenderer
                 columns={columns}
                 companies={tableData?.content}
                 isCheckboxVisible={isCheckboxVisible}
