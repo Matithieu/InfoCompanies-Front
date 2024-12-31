@@ -1,6 +1,7 @@
 import { Tooltip, Typography } from '@mui/joy'
+import { FC } from 'react'
 
-type DetailsCompanyRowProps = {
+type DetailsCompanyRowRendererProps = {
   content: string
   noContent: string
   oppositeContent?: string
@@ -10,7 +11,7 @@ type DetailsCompanyRowProps = {
   isLink?: boolean
 }
 
-export default function DetailsCompanyRow({
+const DetailsCompanyRowRenderer: FC<DetailsCompanyRowRendererProps> = ({
   content,
   noContent,
   oppositeContent,
@@ -18,7 +19,7 @@ export default function DetailsCompanyRow({
   tooltipContent,
   style,
   isLink,
-}: DetailsCompanyRowProps) {
+}) => {
   const handleClick = () => {
     if (isLink && content) {
       window.open(content, '_blank')
@@ -63,3 +64,5 @@ export default function DetailsCompanyRow({
     </tr>
   )
 }
+
+export default DetailsCompanyRowRenderer

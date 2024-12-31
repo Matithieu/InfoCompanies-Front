@@ -10,7 +10,7 @@ import { Company } from '../../../data/types/company'
 import commonMessages from '../../../services/intl/common.messages'
 import { formatMessage } from '../../../services/intl/intl'
 import { PleaseSelectACompanyText } from '../../common/Texts/PleaseSelectACompanyText'
-import DetailsCompanyRow from './components/DetailsCompanyRow'
+import DetailsCompanyRowRenderer from './components/DetailsCompanyRowRenderer'
 
 type DetailsCompanyProps = {
   company: Company | undefined
@@ -31,21 +31,21 @@ const DetailsCompany: FC<DetailsCompanyProps> = ({ company }) => {
 
       <Table>
         <tbody>
-          <DetailsCompanyRow
+          <DetailsCompanyRowRenderer
             content={company.phoneNumber}
             icon={<PhoneIcon />}
             noContent={formatMessage(commonMessages.noPhone)}
             tooltipContent={formatMessage(commonMessages.phoneTooltip)}
           />
 
-          <DetailsCompanyRow
+          <DetailsCompanyRowRenderer
             content={company.email}
             icon={<EmailIcon />}
             noContent={formatMessage(commonMessages.noEmail)}
             tooltipContent={formatMessage(commonMessages.emailTooltip)}
           />
 
-          <DetailsCompanyRow
+          <DetailsCompanyRowRenderer
             isLink
             content={company.website}
             icon={<WebAssetIcon />}
@@ -53,7 +53,7 @@ const DetailsCompany: FC<DetailsCompanyProps> = ({ company }) => {
             tooltipContent={formatMessage(commonMessages.websiteTooltip)}
           />
 
-          <DetailsCompanyRow
+          <DetailsCompanyRowRenderer
             content={company.address}
             icon={<BusinessIcon />}
             noContent={formatMessage(commonMessages.noAddress)}
@@ -61,7 +61,7 @@ const DetailsCompany: FC<DetailsCompanyProps> = ({ company }) => {
             tooltipContent={formatMessage(commonMessages.addressTooltip)}
           />
 
-          <DetailsCompanyRow
+          <DetailsCompanyRowRenderer
             content={company.dateRegistration}
             icon={<CalendarTodayOutlinedIcon />}
             noContent={formatMessage(commonMessages.noCreationDate)}
