@@ -3,7 +3,6 @@ import LogoDevIcon from '@mui/icons-material/LogoDev'
 import Box from '@mui/joy/Box'
 import GlobalStyles from '@mui/joy/GlobalStyles'
 import Sheet from '@mui/joy/Sheet'
-import Typography from '@mui/joy/Typography'
 import { IconButton } from '@mui/material'
 import { FC, useEffect, useRef, useState } from 'react'
 
@@ -147,27 +146,25 @@ const LayoutSidebar: FC = () => {
           display: 'flex',
           minHeight: '1px', // Ensures consistent height
           flexDirection: 'row',
-          marginBottom: 4.5,
+          marginTop: {
+            xs: 5,
+            md: 0,
+          },
+          marginBottom: {
+            xs: 0,
+            md: 2.6,
+          },
           alignItems: 'center',
           justifyContent: 'center',
           gap: 2,
         }}
       >
-        {!open && (
-          <IconButton
-            style={{ color: 'inherit' }}
-            onClick={() => navigation.toDashboard()}
-          >
-            <LogoDevIcon fontSize="large" />
-          </IconButton>
-        )}
-        {open && (
-          <>
-            <button onClick={() => navigation.toDashboard()}>
-              <Typography level="title-lg">Info&apos;Companies</Typography>
-            </button>
-          </>
-        )}
+        <IconButton
+          style={{ color: 'inherit' }}
+          onClick={() => navigation.toDashboard()}
+        >
+          <LogoDevIcon fontSize="large" />
+        </IconButton>
       </Box>
 
       <Box>
