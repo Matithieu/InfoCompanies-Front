@@ -4,11 +4,11 @@ import { FC } from 'react'
 
 import { Leader } from '../../../../data/types/index.types'
 
-type DetailsLeaderRowProps = {
+type LeaderListRowRendererProps = {
   leader: Leader
 }
 
-const DetailsLeaderRow: FC<DetailsLeaderRowProps> = ({ leader }) => {
+const LeaderListRowRenderer: FC<LeaderListRowRendererProps> = ({ leader }) => {
   return (
     <div
       style={{
@@ -19,6 +19,7 @@ const DetailsLeaderRow: FC<DetailsLeaderRowProps> = ({ leader }) => {
     >
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <PersonIcon />
+
         <Typography style={{ marginLeft: 8 }}>
           {leader.firstName} {leader.lastName}
         </Typography>
@@ -28,4 +29,4 @@ const DetailsLeaderRow: FC<DetailsLeaderRowProps> = ({ leader }) => {
   )
 }
 
-export default DetailsLeaderRow
+export default LeaderListRowRenderer

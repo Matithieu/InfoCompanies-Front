@@ -8,7 +8,7 @@ import commonMessages from '../../../services/intl/common.messages'
 import { formatMessage } from '../../../services/intl/intl'
 import { fetchLeadersBySiren } from '../../../utils/api/queries'
 import { PleaseSelectACompanyText } from '../../common/Texts/PleaseSelectACompanyText'
-import DetailsLeaderRow from './components/DetailsLeaderRow'
+import LeaderListRowRenderer from './components/LeaderListRowRenderer'
 
 type ListOfLeadersProps = {
   siren: string | undefined
@@ -61,7 +61,7 @@ const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
       >
         {leaders.map((leader, index) => (
           <div key={index} style={{ marginBottom: 15 }}>
-            <DetailsLeaderRow key={index} leader={leader} />
+            <LeaderListRowRenderer key={index} leader={leader} />
             <div style={{ marginBottom: 10 }} />
 
             {index < leaders.length - 1 && <ListDivider />}
