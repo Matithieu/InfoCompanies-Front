@@ -83,15 +83,10 @@ export const Navbar = () => {
 
   return (
     <header className="sticky top-5 z-40 mx-auto flex w-[90%] items-center justify-between rounded-2xl border border-secondary bg-card p-2 shadow-inner md:w-[70%] lg:w-3/4 lg:max-w-screen-xl">
-      <Link
-        className="flex items-center text-lg font-bold"
-        color="inherit"
-        href="/"
-        underline="none"
-      >
+      <div className="flex items-center text-lg font-bold" color="inherit">
         <ChevronsDown className="mr-2 size-9 rounded-lg border border-secondary bg-gradient-to-tr from-primary via-primary/70 to-primary text-white" />
         InfoCompanies
-      </Link>
+      </div>
       {/* <!-- Mobile --> */}
       <div className="flex items-center lg:hidden">
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -109,15 +104,10 @@ export const Navbar = () => {
             <div>
               <SheetHeader className="mb-4 ml-4">
                 <SheetTitle className="flex items-center">
-                  <Link
-                    className="flex items-center"
-                    color="inherit"
-                    href="/"
-                    underline="none"
-                  >
+                  <div className="flex items-center" color="inherit">
                     <ChevronsDown className="mr-2 size-9 rounded-lg border border-secondary bg-gradient-to-tr from-primary via-primary/70 to-primary text-white" />
                     InfoCompanies
-                  </Link>
+                  </div>
                 </SheetTitle>
                 <SheetDescription></SheetDescription>
               </SheetHeader>
