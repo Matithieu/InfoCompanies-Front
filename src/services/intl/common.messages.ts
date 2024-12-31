@@ -184,4 +184,12 @@ export default defineMessages({
       'You can only refresh once a day. \nLast refresh: {scrapingDate}',
     id: `${scope}.refreshLimit`,
   },
+  field: {
+    defaultMessage: 'Field',
+    id: `${scope}.field`,
+  },
+  value: {
+    defaultMessage: 'Value',
+    id: `${scope}.value`,
+  },
 })

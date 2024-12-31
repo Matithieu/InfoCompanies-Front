@@ -1,8 +1,11 @@
 import { Leader } from '@/data/types/index.types'
+import commonMessages from '@/services/intl/common.messages'
+import { formatMessage } from '@/services/intl/intl'
 import { Table } from '@mui/joy'
 import { Paper, TableBody, TableContainer, TableHead } from '@mui/material'
 import { FC } from 'react'
 
+import leaderMessages from '../leader.messages'
 import LeaderHeaderRenderer from './LeaderHeaderRenderer'
 import LeaderRowRenderer from './LeaderRowRenderer'
 
@@ -11,36 +14,43 @@ type LeaderTableProps = {
 }
 
 const LeaderTable: FC<LeaderTableProps> = ({ leader }) => {
+  const rows = [
+    { label: formatMessage(leaderMessages.siren), value: leader.siren },
+    { label: formatMessage(leaderMessages.role), value: leader.role },
+    {
+      label: formatMessage(leaderMessages.gestionNumber),
+      value: leader.gestionNumber,
+    },
+    { label: formatMessage(leaderMessages.type), value: leader.type },
+    { label: formatMessage(leaderMessages.eventName), value: leader.eventName },
+    { label: formatMessage(leaderMessages.usageName), value: leader.usageName },
+    { label: formatMessage(leaderMessages.pseudo), value: leader.pseudo },
+    {
+      label: formatMessage(leaderMessages.companyName),
+      value: leader.companyName,
+    },
+    { label: formatMessage(leaderMessages.legalForm), value: leader.legalForm },
+  ]
+
   return (
     <TableContainer component={Paper}>
-      <Table aria-label="simple table" sx={{ minWidth: 650 }}>
+      <Table>
         <TableHead>
           <LeaderHeaderRenderer
             headers={[
-              {
-                label: 'Leader',
-              },
-              {
-                label: 'Value',
-                align: 'right',
-              },
+              { label: formatMessage(commonMessages.field) },
+              { label: formatMessage(commonMessages.value), align: 'right' },
             ]}
           />
         </TableHead>
         <TableBody>
-          <LeaderRowRenderer label="Siren" value={leader.siren} />
-          <LeaderRowRenderer label="Role" value={leader.role} />
-          <LeaderRowRenderer
-            label="Gestion Number"
-            value={leader.gestionNumber}
-          />
-          <LeaderRowRenderer label="Type" value={leader.type} />
-          <LeaderRowRenderer label="Event name" value={leader.eventName} />
-          <LeaderRowRenderer label="Usage name" value={leader.usageName} />
-          <LeaderRowRenderer label="Pseudo" value={leader.pseudo} />
-          <LeaderRowRenderer label="Company Name" value={leader.companyName} />
-          <LeaderRowRenderer label="Legal form" value={leader.legalForm} />
-          <LeaderRowRenderer label="ID" value={leader.idData.toString()} />
+          {rows.map((row, index) => (
+            <LeaderRowRenderer
+              key={index}
+              label={row.label}
+              value={row.value}
+            />
+          ))}
         </TableBody>
       </Table>
     </TableContainer>
