@@ -1,4 +1,4 @@
-import { Tooltip } from '@mui/joy'
+import { Tooltip } from '@mui/material'
 import { FC } from 'react'
 
 import { formatMessage } from '../../../../../services/intl/intl'
@@ -17,6 +17,7 @@ const CellContentTooltip: FC<CellContentTooltipProps> = ({
 }) => {
   return (
     <Tooltip
+      enterDelay={500}
       title={(() => {
         if (!content) return null
 
