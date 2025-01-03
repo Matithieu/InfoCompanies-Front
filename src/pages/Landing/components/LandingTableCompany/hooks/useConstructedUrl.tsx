@@ -20,8 +20,13 @@ export const useConstructedUrl = () => {
       // Define default URL when no city and industry sector are selected
       newUrl = constructURLWithFilter(
         {
-          region: ['Bretagne'],
-          city: [],
+          region: [],
+          city: [
+            {
+              id: 0,
+              name: 'PARIS',
+            },
+          ],
           industrySector: [],
           legalForm: [],
           employee: { amount: undefined, comparator: undefined },

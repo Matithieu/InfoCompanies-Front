@@ -40,7 +40,10 @@ export const constructURLWithFilter = (
     }
   }
 
-  appendQuery('regions', searchParams.region)
+  appendQuery(
+    'regions',
+    searchParams.region.map((region) => region.name),
+  )
   appendQuery(
     'cities',
     searchParams.city.map((city) => city.name),

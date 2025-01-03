@@ -9,7 +9,7 @@ export interface SearchParams {
   city: AutoCompleteType[]
   industrySector: AutoCompleteType[]
   legalForm: AutoCompleteType[]
-  region: string[]
+  region: AutoCompleteType[]
   employee: EmployeeFilter
   socials: Array<keyof SocialMedia>
   contact: Array<keyof Contact>

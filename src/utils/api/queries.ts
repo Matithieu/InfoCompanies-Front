@@ -199,7 +199,7 @@ export const fetchLeaderById = async (id: string) => {
  *
  */
 export async function fetchAutoComplete(
-  autoComplete: 'legal-form' | 'industry-sector' | 'city',
+  autoComplete: 'legal-form' | 'industry-sector' | 'city' | 'region',
   searchTerm: string,
 ) {
   const response = await fetchThroughProxy(

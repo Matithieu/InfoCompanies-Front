@@ -2,12 +2,10 @@ import columnsMessages from '@/data/types/Columns/columns.messages'
 import SearchIcon from '@mui/icons-material/Search'
 import { Box, Button, Switch, Typography } from '@mui/joy'
 
-import { listOfRegions } from '../../../../data/Options/region.type'
 import commonMessages from '../../../../services/intl/common.messages'
 import { formatMessage } from '../../../../services/intl/intl'
 import { SearchParams } from '../../../../stores/filtersStore'
 import { fetchAutoComplete } from '../../../../utils/api/queries'
-import SimpleAutoComplete from '../../../common/AutoComplete/AutoComplete'
 import FetchAutoComplete from '../../../common/AutoComplete/FetchAutoComplete'
 import ComparatorInput from '../../../common/Input/ComparatorInput'
 import { SelectedFilterType } from '../filter.type'
@@ -60,12 +58,13 @@ const getFilterComponents = (
       aria-label={formatMessage(commonMessages.region)}
       sx={{ flexShrink: 0, maxWidth: '250px' }}
     >
-      <SimpleAutoComplete
+      <FetchAutoComplete
+        fetchFunction={(searchTerm) => fetchAutoComplete('region', searchTerm)}
         handleSelectChange={handleSelectChange('region')}
+        inputLabel={formatMessage(commonMessages.region)}
         isLabelHidden={searchTerm.region.length > 0}
-        label={formatMessage(commonMessages.region)}
-        options={listOfRegions}
-        selectedValues={searchTerm.region}
+        queryKeyBase="regions"
+        value={searchTerm.region}
       />
     </Box>
   ),
