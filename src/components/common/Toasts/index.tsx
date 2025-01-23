@@ -28,10 +28,10 @@ export function toastWarnReconnect(text?: string) {
   )
 }
 
-export function toastWarnSelectSubscription() {
-  return toast.warn(
+export function toastInfoSelectSubscription() {
+  return toast.info(
     <SelectSubscriptionButtonWithMessage
-      message={formatMessage(toastMessages.warnSelectSubscription)}
+      message={formatMessage(toastMessages.infoSelectSubscription)}
     />,
   )
 }

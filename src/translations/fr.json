@@ -112,5 +112,5 @@
   "toasts.error.quotaExceeded": "Quota dépassé ! Changez de plan pour continuer ou veuillez attendre demain.",
   "toasts.error.reconnect": "Veuillez vous reconnecter pour continuer.",
   "toasts.success.alreadySubscribed": "Vous êtes déjà abonné ! Effacez vos cookies pour changer de compte.",
-  "toasts.warn.selectSubscription": "Veuillez sélectionner un abonnement pour continuer."
+  "toasts.info.selectSubscription": "Déjà connecté, veuillez sélectionner un abonnement pour continuer."
 }

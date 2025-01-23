@@ -5,9 +5,9 @@ import { Navigate, Outlet } from 'react-router'
 import LoadingCircular from '../../components/common/Loading/LoadingCircular'
 import {
   toastErrorConnect,
+  toastInfoSelectSubscription,
   toastSuccessAlreadySubscribed,
   toastWarnReconnect,
-  toastWarnSelectSubscription,
 } from '../../components/common/Toasts'
 import useAuthManager from '../../hooks/useAuthManager'
 import useUserStore from '../../stores/userStore'
@@ -40,7 +40,7 @@ export const ProtectedRoutes = () => {
   }
 
   if (user?.isVerified === false && isSuccess) {
-    toastWarnSelectSubscription()
+    toastInfoSelectSubscription()
     return <Navigate to={routesPath.base} />
   }
 
@@ -78,7 +78,7 @@ export const ProtectedSimpleRoutes = () => {
     urlLocation !== routesPath.subscription &&
     isSuccess
   ) {
-    toastWarnSelectSubscription()
+    toastInfoSelectSubscription()
     return <Navigate to={routesPath.subscription} />
   }
 

@@ -11,9 +11,10 @@ export default defineMessages({
     defaultMessage: 'Please reconnect to continue.',
     id: `${scope}.error.reconnect`,
   },
-  warnSelectSubscription: {
-    defaultMessage: 'Please select a subscription to continue.',
-    id: `${scope}.warn.selectSubscription`,
+  infoSelectSubscription: {
+    defaultMessage:
+      'Already connected, please select a subscription to continue.',
+    id: `${scope}.info.selectSubscription`,
   },
   successAlreadySubscribed: {
     defaultMessage:
