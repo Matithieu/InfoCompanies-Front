@@ -42,7 +42,7 @@ const SubscriptionCard: FC<SubscriptionCardProps> = ({
       const result = await refetch()
 
       if (result.isSuccess && result.data) {
-        window.open(result.data, '_blank')
+        window.location.href = result.data
       }
     } else {
       signIn()
