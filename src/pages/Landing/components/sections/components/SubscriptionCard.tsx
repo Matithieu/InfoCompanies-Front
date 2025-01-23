@@ -12,7 +12,7 @@ import useUserStore from '@/stores/userStore'
 import { startStripeSubscription } from '@/utils/api/queries'
 import { useQuery } from '@tanstack/react-query'
 import { Check } from 'lucide-react'
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 
 import { PlanProps, PopularPlan } from '../Pricing'
 type SubscriptionCardProps = {
@@ -29,26 +29,25 @@ const SubscriptionCard: FC<SubscriptionCardProps> = ({
   const { user } = useUserStore()
   const { signIn } = useAuthManager()
 
-  const { data, refetch, isSuccess } = useQuery({
+  const { refetch } = useQuery({
     queryKey: ['sub' + item.id],
     queryFn: () => startStripeSubscription(item.id),
     enabled: false,
   })
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (user) {
       onCardClick()
-      refetch()
+
+      const result = await refetch()
+
+      if (result.isSuccess && result.data) {
+        window.open(result.data, '_blank')
+      }
     } else {
       signIn()
     }
   }
-
-  useEffect(() => {
-    if (isSuccess && data) {
-      window.open(data, '__blank')
-    }
-  }, [data, isSuccess])
 
   return (
     <Card
