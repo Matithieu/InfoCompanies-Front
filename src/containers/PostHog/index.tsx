@@ -11,7 +11,7 @@ const PostHogProvider: FC<PostHogProps> = ({ children }) => {
   const { user } = useUserStore()
 
   const options: Partial<PostHogConfig> = {
-    api_host: process.env.REACT_APP_PUBLIC_POSTHOG_HOST,
+    api_host: import.meta.env.REACT_APP_PUBLIC_POSTHOG_HOST,
   }
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const PostHogProvider: FC<PostHogProps> = ({ children }) => {
 
   return (
     <PostHog
-      apiKey={process.env.REACT_APP_PUBLIC_POSTHOG_KEY}
+      apiKey={import.meta.env.REACT_APP_PUBLIC_POSTHOG_KEY ?? ''}
       options={options}
     >
       {children}
