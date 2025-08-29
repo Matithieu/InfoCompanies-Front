@@ -25,9 +25,9 @@
     "useDefineForClassFields": true,
 
     /* Absolute import */
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["*"]
     }
   },
   "include": ["src", "vite-env.d.ts", "scripts"]
