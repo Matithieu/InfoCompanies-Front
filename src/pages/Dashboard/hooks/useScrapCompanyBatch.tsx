@@ -64,5 +64,6 @@ export const useScrapCompanyBatch = ({
     }
 
     fetchBatchCompanies()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableData, queryClient])
 }

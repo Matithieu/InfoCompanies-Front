@@ -69,10 +69,7 @@ const SearchPage: FC = () => {
               columns={landingColumnsDef}
               data={data?.content}
               error={error}
-              handleRowClick={({ id }) => {
-                console.log('Navigating to company with ID:', id)
-                navigation.toCompany(id)
-              }}
+              handleRowClick={({ id }) => navigation.toCompany(id)}
               isPending={isPending}
               pagination={{
                 pageNumber: pagination.page,
