@@ -1,4 +1,4 @@
-import useSetTableData from '@/components/parts/TableCompany/hooks/useSetTableData'
+import { useSetTableData } from '@/components/parts/TableCompany/hooks/useSetTableData'
 import {
   handleCopyToClipboard,
   handleOpenInNewTab,

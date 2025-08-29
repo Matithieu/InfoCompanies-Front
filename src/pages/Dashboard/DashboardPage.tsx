@@ -1,4 +1,4 @@
-import useSetTableData from '@/components/parts/TableCompany/hooks/useSetTableData'
+import { useSetTableData } from '@/components/parts/TableCompany/hooks/useSetTableData'
 import usePagination from '@/hooks/usePagination'
 import { CheckStatus, CompanyDTO } from '@/types/index.types'
 import { Box, Card, Stack } from '@mui/joy'
