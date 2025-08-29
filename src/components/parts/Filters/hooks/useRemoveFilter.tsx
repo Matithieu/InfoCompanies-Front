@@ -1,9 +1,6 @@
 import { FilterParams } from '@/stores/FiltersStore'
 import { useEffect } from 'react'
 
-// Ensure the mapping is typed correctly
-// If not, update filter.type to: export const filterToShowToFilterKeyMapping: Record<keyof FilterParams, string> = { ... }
-
 export const useRemoveFilter = (
   displayedFilters: FilterParams,
   handleSearch: () => void,
