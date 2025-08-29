@@ -1,39 +1,43 @@
-import usePagination from '@/hooks/usePagination.tsx'
-import { asserts, isNotNU } from '@/utils/assertion.util.ts'
+import { useAppNavigate } from '@/hooks/useAppNavigate'
+import usePagination from '@/hooks/usePagination'
+import { asserts, isNotNU } from '@/utils/assertion.util'
 import { Box, Grid } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { useParams } from 'react-router'
 
-import HeaderTitle from '../../components/common/Texts/HeaderTitle.tsx'
-import TableCompany from '../../components/parts/TableCompany/TableCompany.tsx'
-import { columnsTableCompanySearch } from '../../data/types/Columns/columns.ts'
-import { useAppNavigate } from '../../hooks/useAppNavigate.tsx'
-import { formatMessage } from '../../services/intl/intl.tsx'
-import { fetchCompanyBySearchTerm } from '../../utils/api/queries.ts'
-import searchMessages from './search.messages.ts'
+import HeaderTitle from '../../components/common/Texts/HeaderTitle'
+import TableCompany from '../../components/parts/TableCompany/TableCompany'
+import { formatMessage } from '../../services/intl/intl'
+import { fetchCompanyByCompanyName } from '../../utils/api/queries'
+import { handleOpenInNewTab } from '../Dashboard/dashboardPage.util'
+import { useSearchColumnsDef } from './hooks/useSearchColumnDef'
+import searchMessages from './search.messages'
+import { SearchColumnGenerics } from './search.types'
 
 const SearchPage: FC = () => {
   const { searchTerm } = useParams()
   asserts(isNotNU(searchTerm))
 
-  // Extract the current page from the URL query params
-  const queryParams = new URLSearchParams(location.search)
-  const currentPage = Number(queryParams.get('page')) || 0
-
-  const [pagination, setPagination] = usePagination(currentPage)
+  const [pagination, setPagination] = usePagination()
   const { navigation } = useAppNavigate()
 
   const { isPending, data, error } = useQuery({
     queryKey: ['search-page', searchTerm, pagination.page],
-    queryFn: () => fetchCompanyBySearchTerm(searchTerm, pagination.page),
+    queryFn: () =>
+      fetchCompanyByCompanyName({
+        companyName: searchTerm,
+        page: pagination.page,
+      }),
     staleTime: Infinity,
   })
 
-  const handleChangePage = (page: number) => {
-    setPagination(page)
-    navigation.toPage(`?page=${page}`, { replace: true })
-  }
+  useEffect(() => {
+    if (data)
+      setPagination((prev) => ({ ...prev, totalPages: data.totalPages }))
+  }, [data, setPagination])
+
+  const landingColumnsDef = useSearchColumnsDef({ handleOpenInNewTab })
 
   return (
     <Grid flexDirection="column" sx={{ px: { xs: 2, md: 6 } }}>
@@ -57,17 +61,24 @@ const SearchPage: FC = () => {
               margin: 'auto',
             }}
           >
-            <TableCompany
-              columns={columnsTableCompanySearch}
-              data={data}
+            <TableCompany<
+              SearchColumnGenerics['TId'],
+              SearchColumnGenerics['FSubId'],
+              SearchColumnGenerics['TRow']
+            >
+              columns={landingColumnsDef}
+              data={data?.content}
               error={error}
-              isCheckboxVisible={false}
-              isPending={isPending}
-              isScrapping={false}
-              onCompanyDetailsClick={(company) => {
-                navigation.toCompany(company.id.toString())
+              handleRowClick={({ id }) => {
+                console.log('Navigating to company with ID:', id)
+                navigation.toCompany(id)
               }}
-              onPageChange={handleChangePage}
+              isPending={isPending}
+              pagination={{
+                pageNumber: pagination.page,
+                totalPages: pagination.totalPages,
+                handlePageChange: setPagination,
+              }}
             />
           </Box>
         </Grid>

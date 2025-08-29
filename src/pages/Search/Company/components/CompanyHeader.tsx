@@ -1,30 +1,21 @@
 import StatutIcon from '@/components/common/Icons/StatutIcon'
-import { handleChangeCompanyStatut } from '@/components/common/Icons/stautIcon.util'
-import { Company } from '@/data/types/company'
+import {
+  CheckStatus,
+  CompanyDTO,
+  CompanyDtoWithStatusDTO,
+} from '@/types/index.types'
 import { Typography } from '@mui/joy'
 import { FC } from 'react'
 
 type CompanyHeaderProps = {
-  company: Company
-  setCompany: React.Dispatch<React.SetStateAction<Company | undefined>>
+  companyDTOWithStatusDTO: CompanyDtoWithStatusDTO
+  handleStatusChange: (company: CompanyDTO, newStatus: CheckStatus) => void
 }
 
-const CompanyHeader: FC<CompanyHeaderProps> = ({ company, setCompany }) => {
-  const handleStatusChange = (company: Company) => {
-    const updatedCompany = handleChangeCompanyStatut({ company })
-
-    setCompany((prevData) => {
-      if (prevData) {
-        return {
-          ...prevData,
-          updatedCompany,
-        }
-      }
-
-      return prevData
-    })
-  }
-
+const CompanyHeader: FC<CompanyHeaderProps> = ({
+  companyDTOWithStatusDTO,
+  handleStatusChange,
+}) => {
   return (
     <div
       style={{
@@ -43,17 +34,16 @@ const CompanyHeader: FC<CompanyHeaderProps> = ({ company, setCompany }) => {
             cursor: 'pointer',
             paddingRight: 10,
           }}
-          onClick={() => {
-            handleStatusChange(company)
-          }}
         >
           <StatutIcon
-            companyId={company.id}
-            statut={company.userCompanyStatus.status}
+            handleStatusUpdate={(newStatus) =>
+              handleStatusChange(companyDTOWithStatusDTO.companyDTO, newStatus)
+            }
+            statut={companyDTOWithStatusDTO.userCompanyStatus?.status}
             style={{ fontSize: '1.5rem' }}
           />
         </button>
-        {company.companyName}
+        {companyDTOWithStatusDTO.companyDTO.companyName}
       </Typography>
     </div>
   )

@@ -8,39 +8,67 @@ import {
 } from '@mui/joy'
 import Autocomplete from '@mui/joy/Autocomplete'
 import { useQuery } from '@tanstack/react-query'
-import { FC, useEffect, useMemo, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
-import { AutoCompleteType } from '../../../data/types/index.types'
 import commonMessages from '../../../services/intl/common.messages'
 import { formatMessage } from '../../../services/intl/intl'
+import {
+  AutocompleteByNameQueries,
+  AutocompleteByNamesQueries,
+  AutoCompleteItem,
+} from '../../../types/index.types'
 
-type FetchAutoCompleteProps<T> = {
-  handleSelectChange: (items: T[]) => void
-  fetchFunction: (input: string) => Promise<T[]>
+type FetchAutoCompleteProps = {
+  handleSelectChange: (items: Array<string>) => void
+  fetchAutocompleteByName: (
+    input: AutocompleteByNameQueries,
+  ) => Promise<AutoCompleteItem[]>
+  fetchAutocompleteByNames: (
+    input: AutocompleteByNamesQueries,
+  ) => Promise<AutoCompleteItem[]>
   queryKeyBase: string
   inputLabel: string
   isLabelHidden?: boolean
-  value?: T[]
+  autocompleteItems: Array<string> | undefined
 }
 
-const FetchAutoComplete: FC<FetchAutoCompleteProps<AutoCompleteType>> = ({
+const FetchAutoComplete: FC<FetchAutoCompleteProps> = ({
   handleSelectChange,
-  fetchFunction,
+  fetchAutocompleteByName,
+  fetchAutocompleteByNames,
   queryKeyBase,
   inputLabel,
   isLabelHidden,
-  value = [],
+  autocompleteItems,
 }) => {
   const [inputValue, setInputValue] = useState<string>('')
   const [debouncedInputValue, setDebouncedInputValue] = useState<string>('')
+  const [selectedItems, setSelectedItems] = useState<AutoCompleteItem[]>([])
 
-  const {
-    data: fetchedOptions = [],
-    refetch,
-    isLoading,
-  } = useQuery({
+  const valuesToFetch = autocompleteItems
+    ? autocompleteItems.filter(
+        (name) => !selectedItems.map((item) => item.name).includes(name),
+      )
+    : []
+
+  // As we receive only names in the filter, we need to fetch the full objects to display them as selected
+  // Also, we don't want to refetch what's already selected
+  const { data: initialValues } = useQuery({
+    queryKey: [`autocomplete ${inputLabel}`, valuesToFetch],
+    queryFn: () =>
+      valuesToFetch
+        ? fetchAutocompleteByNames({ query: valuesToFetch })
+        : Promise.resolve([]),
+    enabled: valuesToFetch ? valuesToFetch?.length > 0 : false,
+  })
+
+  useEffect(() => {
+    if (initialValues) setSelectedItems(initialValues)
+  }, [initialValues])
+
+  const { data, refetch, isLoading } = useQuery({
     queryKey: [queryKeyBase, debouncedInputValue],
-    queryFn: () => fetchFunction(debouncedInputValue),
+    queryFn: () => fetchAutocompleteByName({ query: debouncedInputValue }),
     enabled: false,
   })
 
@@ -58,16 +86,6 @@ const FetchAutoComplete: FC<FetchAutoCompleteProps<AutoCompleteType>> = ({
     refetch()
   }, [debouncedInputValue, refetch])
 
-  // Merging selected values with fetched options
-  const mergedOptions = useMemo(() => {
-    const valueIds = value.map((item) => item.id)
-    const merged = [
-      ...value,
-      ...fetchedOptions.filter((option) => !valueIds.includes(option.id)),
-    ]
-    return merged
-  }, [value, fetchedOptions])
-
   return (
     <FormControl>
       <Autocomplete
@@ -78,12 +96,14 @@ const FetchAutoComplete: FC<FetchAutoCompleteProps<AutoCompleteType>> = ({
         isOptionEqualToValue={(option, value) => option.id === value.id}
         limitTags={1}
         loading={isLoading}
-        noOptionsText={
-          fetchedOptions.length === 0
-            ? formatMessage(commonMessages.noResults)
-            : formatMessage(commonMessages.enterAtLeastCharacters, { count: 2 })
-        }
-        options={mergedOptions}
+        noOptionsText={(() => {
+          if (data === undefined) return 'Loading...'
+          if (data.length === 0) return formatMessage(commonMessages.noResults)
+          return formatMessage(commonMessages.enterAtLeastCharacters, {
+            count: 2,
+          })
+        })()}
+        options={data || []}
         renderOption={(props, option) => (
           <AutocompleteOption {...props} key={option.id}>
             <ListItemContent>{option.name}</ListItemContent>
@@ -97,16 +117,13 @@ const FetchAutoComplete: FC<FetchAutoCompleteProps<AutoCompleteType>> = ({
             ),
           },
         }}
-        value={value}
+        value={selectedItems}
         onChange={(_, newValue) => {
-          if (newValue) {
-            handleSelectChange(newValue as AutoCompleteType[])
-          }
+          setSelectedItems(newValue)
+          handleSelectChange(newValue.map((item) => item.name))
         }}
         // eslint-disable-next-line react/jsx-sort-props
-        onInputChange={(_, newInputValue) => {
-          setInputValue(newInputValue)
-        }}
+        onInputChange={(_, newInputValue) => setInputValue(newInputValue)}
         placeholder={isLabelHidden ? undefined : inputLabel}
         // So each tag has a different key
         renderTags={(tags, getTagProps) =>

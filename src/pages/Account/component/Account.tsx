@@ -13,10 +13,10 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { ChangeEvent, FC, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { User } from '../../../data/types/index.types'
 import commonMessages from '../../../services/intl/common.messages'
 import { formatMessage } from '../../../services/intl/intl'
-import useUserStore from '../../../stores/userStore'
+import useUserStore from '../../../stores/UserStore'
+import { User } from '../../../types/index.types'
 import { fetchUser, updateUser } from '../../../utils/api/queries'
 import { isNotNU } from '../../../utils/assertion.util'
 import AccountMessages from '../account.messages'
@@ -36,7 +36,10 @@ const Account: FC = () => {
   })
 
   const mutation = useMutation({
-    mutationFn: () => updateUser(editedUser as User),
+    mutationFn: () => {
+      if (isNotNU(editedUser)) return updateUser({ user: editedUser })
+      else throw new Error('No user to update')
+    },
     mutationKey: ['updateUser' + editedUser?.email],
     onError: (error) => {
       toast.error(`Error updating user: ${error.message}`)

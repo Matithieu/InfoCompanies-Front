@@ -1,6 +1,7 @@
 import { IconButton } from '@mui/joy'
 import { FC, Fragment } from 'react'
 
+// TODO: translate
 const ComparaisonValues: FC = () => {
   return (
     <Fragment>

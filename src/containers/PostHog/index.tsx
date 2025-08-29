@@ -1,4 +1,4 @@
-import useUserStore from '@/stores/userStore'
+import useUserStore from '@/stores/UserStore'
 import posthog, { PostHogConfig } from 'posthog-js'
 import { PostHogProvider as PostHog } from 'posthog-js/react'
 import { FC, ReactNode, useEffect } from 'react'

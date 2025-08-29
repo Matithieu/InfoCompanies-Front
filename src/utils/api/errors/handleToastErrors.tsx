@@ -1,14 +1,13 @@
+import { paths } from '@/types/codegen/api'
+
 import {
   toastErrorQuotaExceeded,
   toastSuccessAlreadySubscribed,
   toastWarnReconnect,
 } from '../../../components/common/Toasts'
 
-const handleToastErrors = async (response: Response, url: string) => {
+const handleToastErrors = async (response: Response, url: keyof paths) => {
   switch (response.status) {
-    case 401:
-      break
-
     case 403:
       return toastWarnReconnect()
 

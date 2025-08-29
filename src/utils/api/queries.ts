@@ -1,19 +1,12 @@
+import { operations } from '@/types/codegen/api'
 import {
-  CheckStatus,
-  Company,
-  CompanyWithStatus,
-  UserCompanyStatus,
-} from '../../data/types/company'
-import { AutoCompleteType, Leader, User } from '../../data/types/index.types'
-import { Page } from '../../data/types/index.types'
-import { parseJsonToCompany, parseJsonToUser } from '../parseJsonToObject.util'
+  AutocompleteByNameQueries,
+  AutocompleteByNamesQueries,
+  AutocompleteEndpointPlural,
+  AutocompleteEndpointSingular,
+} from '@/types/index.types'
+
 import { fetchThroughProxy } from './config'
-import handleStatusError from './errors/handleStatusError'
-import {
-  cleanLeaders,
-  parseAndConvertCompanyWithStatus,
-  parseAndConvertPageCompaniesWithStatus,
-} from './utils'
 
 /**
  *
@@ -21,241 +14,130 @@ import {
  *
  */
 export const fetchUser = async () => {
-  const response = await fetchThroughProxy('/v1/user', 'GET')
-
-  if (response.ok) {
-    return parseJsonToUser(await response.json())
-  }
-
-  throw new Error(await handleStatusError(response, 'Error fetching user'))
+  return await fetchThroughProxy('/v1/user', 'get')
 }
 
-/**
- *
- * Company
- *
- */
-export async function fetchCompaniesWithUrlAndPage(
-  url: string,
-  page: number,
-  userCompanyStatusParsing = true,
+// Company
+export async function fetchCompanyOnLandingPage(
+  query: operations['getCompaniesOnLandingByFilters']['parameters']['query'],
 ) {
-  const response = await fetchThroughProxy(
-    `/v1/company/${url}page=${page}`,
-    'GET',
-  )
-
-  if (response.ok) {
-    if (userCompanyStatusParsing) {
-      const data: Page<CompanyWithStatus> = await response.json()
-      return parseAndConvertPageCompaniesWithStatus(data)
-    }
-
-    const data: Page<Company> = await response.json()
-    const userCompanyStatus: UserCompanyStatus = {
-      companyId: 0,
-      id: 0,
-      status: CheckStatus.NOT_DONE,
-      userId: '',
-    }
-
-    const parsedCompanies = data.content.map((company) =>
-      parseJsonToCompany(company, userCompanyStatus),
-    )
-
-    data.content = parsedCompanies
-    return data
-  }
-
-  throw new Error(
-    await handleStatusError(response, `/v1/company/${url}page=${page}`),
-  )
-}
-
-export async function fetchCompanyBySearchTerm(
-  searchTerm: string,
-  page: number,
-) {
-  const response = await fetchThroughProxy(
-    `/v1/company/search-by-name?companyName=${searchTerm}&page=${page}`,
-    'GET',
-  )
-
-  if (response.ok) {
-    const data: Page<Company> = await response.json()
-    const userCompanyStatus: UserCompanyStatus = {
-      companyId: 0,
-      id: 0,
-      status: CheckStatus.NOT_DONE,
-      userId: '',
-    }
-
-    const parsedCompanies = data.content.map((company) =>
-      parseJsonToCompany(company, userCompanyStatus),
-    )
-
-    data.content = parsedCompanies
-    return data
-  }
-
-  throw new Error(
-    await handleStatusError(response, 'Error fetching company by search term'),
-  )
-}
-
-export async function fetchCompanyById(id: string) {
-  const response = await fetchThroughProxy(`/v1/company/get-by-id/${id}`, 'GET')
-
-  if (response.ok) {
-    return parseAndConvertCompanyWithStatus(await response.json())
-  }
-
-  throw new Error(
-    await handleStatusError(response, `Error fetching company by id ${id}`),
-  )
-}
-
-export async function fetchCompanyScrap(companyId: number) {
-  const response = await fetchThroughProxy(
-    `/v1/company/scrap?companyId=${companyId}`,
-    'GET',
-  )
-
-  if (response.ok) {
-    const data: Company = await response.json()
-    const userCompanyStatus: UserCompanyStatus = {
-      companyId: 0,
-      id: 0,
-      status: CheckStatus.NOT_DONE,
-      userId: '',
-    }
-    return parseJsonToCompany(data, userCompanyStatus)
-  }
-
-  throw new Error(
-    await handleStatusError(response, `Error fetching company scrap`),
-  )
-}
-
-export async function fetchFavorites(page: number) {
-  const response = await fetchThroughProxy(
-    `/v1/company/get-seen-by-user?page=${page}
-    `,
-    'GET',
-  )
-
-  if (response.ok) {
-    const data: Page<CompanyWithStatus> = await response.json()
-    return parseAndConvertPageCompaniesWithStatus(data)
-  }
-
-  throw new Error(await handleStatusError(response, `Error fetching favorites`))
-}
-
-export async function updateUser(user: User) {
-  const response = await fetchThroughProxy('/v1/update-user', 'PUT', {
-    body: user,
+  return await fetchThroughProxy('/v1/company/landing-filter', 'get', {
+    parameters: { query },
   })
-
-  if (response.ok) {
-    return
-  }
-
-  throw new Error(await handleStatusError(response, `Error updating user`))
 }
 
-/**
- *
- * Leader
- *
- */
-export const fetchLeadersBySiren = async (siren: string) => {
-  const response = await fetchThroughProxy(
-    `/v1/leader/get-by-siren/${siren}`,
-    'GET',
-  )
-
-  if (response) {
-    const leaders = (await response.json()) as Leader[]
-    return cleanLeaders(leaders)
-  }
-
-  throw new Error('Failed to fetch leaders by siren')
-}
-
-export const fetchLeaderById = async (id: string) => {
-  const response = await fetchThroughProxy(`/v1/leader/get-by-id/${id}`, 'GET')
-
-  if (response) {
-    return (await response.json()) as Leader
-  }
-
-  throw new Error('Failed to fetch leader by id')
-}
-
-/**
- *
- * AutoComplete
- *
- */
-export async function fetchAutoComplete(
-  autoComplete: 'legal-form' | 'industry-sector' | 'city' | 'region',
-  searchTerm: string,
+export async function fetchRandomUnseenCompany(
+  query: operations['getRandomUnseenCompanies']['parameters']['query'],
 ) {
-  const response = await fetchThroughProxy(
-    `/v1/autocomplete/${autoComplete}?query=${searchTerm}`,
-    'GET',
-  )
-
-  if (response.ok) {
-    return (await response.json()) as AutoCompleteType[]
-  }
-
-  throw new Error(
-    await handleStatusError(
-      response,
-      `Error fetching autocomplete for ${autoComplete}`,
-    ),
-  )
+  return await fetchThroughProxy('/v1/company/random-unseen', 'get', {
+    parameters: { query },
+  })
 }
 
-/**
- *
- * Stripe
- *
- */
-export async function startStripeSubscription(priceId: string) {
-  const response = await fetchThroughProxy(
-    '/v1/stripe/subscriptions/trial',
-    'POST',
+export async function fetchCompaniesWithFilters(
+  requestBody: NonNullable<
+    operations['getCompaniesByFilters']['requestBody']
+  >['content']['application/json'],
+) {
+  return await fetchThroughProxy('/v1/company/filter-by-parameters', 'post', {
+    requestBody,
+  })
+}
+
+export async function fetchCompanyByCompanyName(
+  query: operations['searchCompaniesByName']['parameters']['query'],
+) {
+  return await fetchThroughProxy('/v1/company/search-by-name', 'get', {
+    parameters: { query },
+  })
+}
+
+export async function fetchCompanyById(
+  path: operations['getCompanyById']['parameters']['path'],
+) {
+  return await fetchThroughProxy(`/v1/company/get-by-id/{id}`, 'get', {
+    parameters: { path },
+  })
+}
+
+export async function fetchCompanyScrap(
+  query: operations['scrapCompany']['parameters']['query'],
+) {
+  return await fetchThroughProxy(`/v1/company/scrap`, 'get', {
+    parameters: { query },
+  })
+}
+
+export async function fetchFavorites(
+  query: operations['getCompaniesSeenByUser']['parameters']['query'],
+) {
+  return await fetchThroughProxy(`/v1/company/get-seen-by-user`, 'get', {
+    parameters: { query },
+  })
+}
+
+export async function updateUser(
+  query: operations['updateUser']['parameters']['query'],
+) {
+  return await fetchThroughProxy('/v1/update-user', 'put', {
+    parameters: { query },
+  })
+}
+
+// Leader
+export const fetchLeadersBySiren = async (
+  path: operations['getLeaderBySiren']['parameters']['path'],
+) => {
+  return await fetchThroughProxy(`/v1/leader/get-by-siren/{siren}`, 'get', {
+    parameters: { path },
+  })
+}
+
+export const fetchLeaderById = async (
+  path: operations['getLeaderById']['parameters']['path'],
+) => {
+  return await fetchThroughProxy(`/v1/leader/get-by-id/{id}`, 'get', {
+    parameters: { path },
+  })
+}
+
+// AutoComplete
+export async function fetchAutoCompleteByName(
+  autoComplete: AutocompleteEndpointSingular,
+  query: AutocompleteByNameQueries,
+) {
+  return await fetchThroughProxy(`/v1/autocomplete/${autoComplete}`, 'get', {
+    parameters: { query },
+  })
+}
+
+export async function fetchAutoCompleteByNames(
+  autoComplete: AutocompleteEndpointPlural,
+  query: AutocompleteByNamesQueries,
+) {
+  return await fetchThroughProxy(`/v1/autocomplete/${autoComplete}`, 'get', {
+    parameters: { query },
+  })
+}
+
+export async function fetchAutoCompleteByIds(
+  autoComplete: AutocompleteEndpointSingular,
+  ids: number[],
+) {
+  return await fetchThroughProxy(
+    `/v1/autocomplete/${autoComplete}/ids`,
+    'get',
     {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'X-priceId': priceId,
-      },
+      parameters: { query: { query: ids } },
     },
   )
-
-  if (response.ok) {
-    return response.text()
-  }
-
-  // ToDo handle error
-  // handleStatusError(response, '/v1/stripe/subscriptions/trial')
-  return null
 }
 
-/**
- *
- * Test
- *
- */
-export const fetchTest = async () => {
-  const response = await fetchThroughProxy('/v1/company/test', 'GET')
-
-  if (response.ok) {
-    return response.toString()
-  }
-
-  return null
+// Stripe
+export async function startStripeSubscription(
+  header: operations['newSubscriptionWithTrial']['parameters']['header'],
+) {
+  return await fetchThroughProxy('/v1/stripe/subscriptions/trial', 'post', {
+    parameters: { header },
+  })
 }

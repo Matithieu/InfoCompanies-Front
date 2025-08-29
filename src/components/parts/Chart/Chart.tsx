@@ -1,5 +1,6 @@
 import { NoAvailableDataText } from '@/components/common/Texts/NoContentAvailable/NoContentAvailable'
-import { isNotNU } from '@/utils/assertion.util'
+import { CompanyDTO } from '@/types/index.types'
+import { getTotalTurnOver } from '@/utils/company.util'
 import { Typography } from '@mui/joy'
 import { useTheme } from '@mui/joy/styles'
 import { FC, Fragment } from 'react'
@@ -13,24 +14,19 @@ import {
   YAxis,
 } from 'recharts'
 
-import { Company, getTotalTurnOver } from '../../../data/types/company'
 import commonMessages from '../../../services/intl/common.messages'
 import { formatMessage } from '../../../services/intl/intl'
 import { PleaseSelectACompanyText } from '../../common/Texts/PleaseSelectACompanyText'
 import chartMessages from './chart.messages'
 
 type ChartProps = {
-  company: Company | undefined
+  company: CompanyDTO | undefined
 }
 
 const Chart: FC<ChartProps> = ({ company }) => {
   const theme = useTheme()
 
-  const totalTurnOver = (() => {
-    if (isNotNU(company)) {
-      return getTotalTurnOver(company)
-    }
-  })()
+  const totalTurnOver = company ? getTotalTurnOver(company) : undefined
 
   if (company === undefined) {
     return <PleaseSelectACompanyText />

@@ -30,7 +30,7 @@ const ArrowButtonWithTooltip = ({
           color="neutral"
           disabled={isDisabled}
           size="sm"
-          sx={{ bgcolor: 'background.surface', ...style }}
+          style={{ backgroundColor: 'background.surface', ...style }}
           variant="outlined"
           onClick={() => onPageChange(page)}
         >

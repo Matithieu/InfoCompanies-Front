@@ -1,18 +1,18 @@
 import useToggle from '@/hooks/useToggle'
 import commonMessages from '@/services/intl/common.messages'
 import { formatMessage } from '@/services/intl/intl'
+import { CompanyDTO } from '@/types/index.types'
 import { Button, CircularProgress, Tooltip } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
 import { FC, useEffect } from 'react'
 import { toast } from 'react-toastify'
 
-import { Company } from '../../../data/types/company'
 import { fetchCompanyScrap } from '../../../utils/api/queries'
 import { isDateLessThanOneDay } from '../../parts/TableCompany/tableCompany.util'
 
 type ScrapCompanyButtonProps = {
-  company: Company
-  onScraped: (company: Company) => void
+  company: CompanyDTO
+  onScraped: (company: CompanyDTO) => void
 }
 
 const ScrapCompanyButton: FC<ScrapCompanyButtonProps> = ({
@@ -25,21 +25,19 @@ const ScrapCompanyButton: FC<ScrapCompanyButtonProps> = ({
 
   const { data, error, refetch, isFetching } = useQuery({
     queryKey: ['company-scrap', company.id],
-    queryFn: () => fetchCompanyScrap(company.id),
+    queryFn: () => fetchCompanyScrap({ companyId: company.id }),
     enabled: !isDisabled,
     staleTime: Infinity,
   })
 
   useEffect(() => {
-    const newDisabledState = isDateLessThanOneDay(company.scrapingDate)
-    setIsDisabled(newDisabledState)
-  }, [company.scrapingDate, setIsDisabled])
-
-  useEffect(() => {
     if (data) {
       onScraped(data)
+      setIsDisabled(isDateLessThanOneDay(data.scrapingDate))
     }
-  }, [data, onScraped])
+    // Fix: having its own state would remove the infinite render loop caused by the dependency on "onScraped" (parent function)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, setIsDisabled])
 
   const handleClick = async () => {
     setIsDisabled(true)

@@ -1,7 +1,5 @@
-export type RoutesPath = Record<string, string>
-
 // Centralized route paths
-export const routesPath: RoutesPath = {
+export const routesPath = {
   base: '/ui',
   dashboard: '/ui/dashboard',
   favorites: '/ui/favorites',
@@ -20,4 +18,4 @@ export const routesPath: RoutesPath = {
   terms: '/ui/terms',
   privacy: '/ui/privacy',
   legal: '/ui/legal',
-}
+} as const

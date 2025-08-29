@@ -1,44 +1,88 @@
-import usePagination from '@/hooks/usePagination.tsx'
+import useSetTableData from '@/components/parts/TableCompany/hooks/useSetTableData'
+import usePagination from '@/hooks/usePagination'
+import { CheckStatus, CompanyDTO } from '@/types/index.types'
 import { Box, Card, Stack } from '@mui/joy'
 import { Grid } from '@mui/material'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { FC, useState } from 'react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { FC, useEffect, useState } from 'react'
 
-import HeaderTitle from '../../components/common/Texts/HeaderTitle.tsx'
-import Chart from '../../components/parts/Chart/Chart.tsx'
-import DetailsCompany from '../../components/parts/DetailsCompany/index.tsx'
-import Filters from '../../components/parts/Filters/index.tsx'
-import ListOfLeaders from '../../components/parts/LeaderList/LeaderList.tsx'
-import TableCompany from '../../components/parts/TableCompany/TableCompany.tsx'
-import JoyRideOnboardingProvider from '../../containers/JoyRide/index.tsx'
-import { columnsTableCompany } from '../../data/types/Columns/columns.ts'
-import { Company } from '../../data/types/company.ts'
-import { useCompanyFilterStore } from '../../stores/filtersStore.tsx'
-import useUserStore from '../../stores/userStore.tsx'
-import { updateUserOnboarding } from '../../utils/api/mutations.ts'
-import { fetchCompaniesWithUrlAndPage } from '../../utils/api/queries.ts'
-import useFilteredUrl from './hooks/useFilteredUrl.tsx'
+import HeaderTitle from '../../components/common/Texts/HeaderTitle'
+import Chart from '../../components/parts/Chart/Chart'
+import DetailsCompany from '../../components/parts/DetailsCompany/index'
+import Filters from '../../components/parts/Filters/Filters'
+import ListOfLeaders from '../../components/parts/LeaderList/LeaderList'
+import TableCompany from '../../components/parts/TableCompany/TableCompany'
+import JoyRideOnboardingProvider from '../../containers/JoyRide/index'
+import { useCompanyFilterStore } from '../../stores/FiltersStore'
+import useUserStore from '../../stores/UserStore'
+import { updateUserOnboarding } from '../../utils/api/mutations'
+import { DashboardColumnGenerics } from './dashboard.types'
+import {
+  handleCopyToClipboard,
+  handleOpenInNewTab,
+  selectQueryForDashboard,
+} from './dashboardPage.util'
+import { useDashboardColumnsDef } from './hooks/useDashboardColumnDef'
+import { useScrapCompanyBatch } from './hooks/useScrapCompanyBatch'
+import { useUpdateStatus } from './hooks/useUpdateStatus'
 
 const DashboardPage: FC = () => {
-  const [url, setUrl] = useState<string | undefined>(undefined)
-  const [company, setCompany] = useState<Company>()
+  const [company, setCompany] = useState<CompanyDTO>()
   const [pagination, setPagination] = usePagination()
-
   const { user, setUser } = useUserStore()
-  const { searchParams } = useCompanyFilterStore()
+  const { filterValues } = useCompanyFilterStore()
+  const queryClient = useQueryClient()
 
+  // As we have the useEffect next, it re-trigger the query when pagination changes
+  const { page } = pagination
   const { isLoading, data, error } = useQuery({
-    queryKey: ['companies', url, pagination.page],
-    queryFn: () => fetchCompaniesWithUrlAndPage(url!, pagination.page),
+    queryKey: ['companies', filterValues, page],
+    queryFn: () =>
+      selectQueryForDashboard({ searchParams: filterValues, page }),
     staleTime: Infinity,
-    enabled: !!url,
   })
+
+  const [tableData, setTableData, updateCompanyData] = useSetTableData(data)
+
+  useEffect(() => {
+    if (data) {
+      setTableData(data)
+      setPagination((prev) => ({ ...prev, totalPages: data.totalPages }))
+    }
+  }, [data, setTableData, pagination.totalPages, setPagination])
 
   const onboardingMutation = useMutation({
     mutationFn: () => updateUserOnboarding(),
   })
 
-  useFilteredUrl({ searchParams, url, setPagination, setUrl })
+  const updateStatusMutation = useUpdateStatus({ updateCompanyData })
+
+  const handleStatusChange = async (
+    companyDTO: CompanyDTO,
+    newStatus: CheckStatus,
+  ) => {
+    updateStatusMutation.mutate({
+      companyDTO,
+      status: newStatus,
+    })
+  }
+
+  const dashboardColumnsDef = useDashboardColumnsDef({
+    handleCopyToClipboard,
+    handleOpenInNewTab,
+    handleStatusChange,
+  })
+
+  const isScrapping = false // temporary, need to pay some proxy to get the data
+
+  if (isScrapping) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useScrapCompanyBatch({
+      queryClient,
+      tableData,
+      updateCompanyData,
+    })
+  }
 
   return (
     <>
@@ -55,13 +99,12 @@ const DashboardPage: FC = () => {
             <Filters
               showAddFilterButton
               filtersToShow={[
-                'city',
-                'region',
-                'industrySector',
-                'legalForm',
-                'employee',
+                'cityNames',
+                'regionNames',
+                'industrySectorNames',
+                'numberOfEmployeeFilter',
                 'socials',
-                'contact',
+                'contacts',
                 'isCompanySeen',
               ]}
             />
@@ -75,21 +118,25 @@ const DashboardPage: FC = () => {
                   display: 'flex',
                   alignItems: 'center',
                   flexDirection: 'column',
-                  minHeight: 530,
-                  maxHeight: 530,
+                  height: 530,
                   borderRadius: 3,
                 }}
               >
-                <TableCompany
-                  isCheckboxVisible
-                  columns={columnsTableCompany}
-                  data={data}
+                <TableCompany<
+                  DashboardColumnGenerics['TId'],
+                  DashboardColumnGenerics['FSubId'],
+                  DashboardColumnGenerics['TRow']
+                >
+                  columns={dashboardColumnsDef}
+                  data={tableData?.content}
                   error={error}
+                  handleRowClick={({ companyDTO }) => setCompany(companyDTO)}
                   isPending={isLoading}
-                  // temporary, need to pay some proxy to get the data
-                  isScrapping={false}
-                  onCompanyDetailsClick={(company) => setCompany(company)}
-                  onPageChange={setPagination}
+                  pagination={{
+                    pageNumber: pagination.page,
+                    totalPages: pagination.totalPages,
+                    handlePageChange: setPagination,
+                  }}
                 />
               </Stack>
             </Grid>

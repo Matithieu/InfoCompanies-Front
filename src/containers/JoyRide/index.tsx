@@ -3,15 +3,15 @@ import { UseMutationResult } from '@tanstack/react-query'
 import { FC } from 'react'
 import Joyride, { CallBackProps, STATUS } from 'react-joyride'
 
-import { User } from '../../data/types/index.types'
 import { formatMessage } from '../../services/intl/intl'
+import { User } from '../../types/index.types'
 import { returnInverseOfBoolean } from '../../utils/utils'
 import joyrideMessages from './joyride.messages'
 import joyrideSteps from './joyrideSteps'
 
 type JoyRideOnboardingProviderProps = {
   user: User | null
-  onboardingMutation: UseMutationResult<void, Error, void, unknown>
+  onboardingMutation: UseMutationResult<unknown, Error, void, unknown>
   setUser: (user: Partial<User> | null) => void
 }
 

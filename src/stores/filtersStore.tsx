@@ -1,46 +1,42 @@
+import { SearchParams, SearchParamsNonNullable } from '@/types/index.types'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-import { Contact } from '../components/parts/Filters/components/ContactFilter'
-import { SocialMedia } from '../data/types/company'
-import { AutoCompleteType, EmployeeFilter } from '../data/types/index.types'
+export type FilterParams = Omit<
+  Required<
+    SearchParams & {
+      numberOfEmployeeFilter:
+        | SearchParamsNonNullable['numberOfEmployeeFilter']
+        | undefined
+      contacts: NonNullable<SearchParamsNonNullable['contacts']> | null
+      socials: NonNullable<SearchParamsNonNullable['socials']> | null
+    }
+  >,
+  'page' | 'size'
+>
 
-export interface SearchParams {
-  city: AutoCompleteType[]
-  industrySector: AutoCompleteType[]
-  legalForm: AutoCompleteType[]
-  region: AutoCompleteType[]
-  employee: EmployeeFilter
-  socials: Array<keyof SocialMedia>
-  contact: Array<keyof Contact>
-  isCompanySeen: boolean
-}
-
-interface CompanyFilterState {
-  searchParams: SearchParams
-  setSearchParams: (params: Partial<SearchParams>) => void
+type CompanyFilterState = {
+  filterValues: FilterParams
+  setFilterValues: (params: FilterParams) => void
 }
 
 export const useCompanyFilterStore = create<CompanyFilterState>()(
   persist(
     (set) => ({
-      searchParams: {
-        city: [],
-        industrySector: [],
-        legalForm: [],
-        region: [],
-        employee: {
-          amount: undefined,
-          comparator: undefined,
-        },
-        socials: [],
-        contact: [],
+      filterValues: {
+        cityNames: [],
+        legalFormNames: [],
+        industrySectorNames: [],
+        regionNames: [],
+        numberOfEmployeeFilter: null,
+        contacts: null,
         isCompanySeen: false,
+        socials: null,
       },
-      setSearchParams: (params) => {
+      setFilterValues: (params) => {
         set((state) => {
-          const newParams = { ...state.searchParams, ...params }
-          return { searchParams: newParams }
+          const newParams = { ...state.filterValues, ...params }
+          return { filterValues: newParams }
         })
       },
     }),

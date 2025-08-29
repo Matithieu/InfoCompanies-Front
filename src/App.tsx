@@ -6,12 +6,12 @@ import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
 
-import LoadingCircular from './components/common/Loading/LoadingCircular.tsx'
-import LocaleProvider from './containers/LocaleProvider/index.tsx'
-import MaterialProvider from './containers/MUI/index.tsx'
-import PostHogProvider from './containers/PostHog/index.tsx'
-import AppRouter from './containers/Router/index.tsx'
-import ShadCNThemeProvider from './containers/ShadCN/index.tsx'
+import LoadingCircular from './components/common/Loading/LoadingCircular'
+import LocaleProvider from './containers/LocaleProvider/index'
+import MaterialProvider from './containers/MUI/index'
+import PostHogProvider from './containers/PostHog/index'
+import AppRouter from './containers/Router/index'
+import ShadCNThemeProvider from './containers/ShadCN/index'
 
 const queryClient = new QueryClient({
   defaultOptions: {

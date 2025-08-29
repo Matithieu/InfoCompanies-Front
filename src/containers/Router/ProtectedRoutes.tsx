@@ -10,7 +10,7 @@ import {
   toastWarnReconnect,
 } from '../../components/common/Toasts'
 import useAuthManager from '../../hooks/useAuthManager'
-import useUserStore from '../../stores/userStore'
+import useUserStore from '../../stores/UserStore'
 import { fetchUser } from '../../utils/api/queries'
 import { isNotNU } from '../../utils/assertion.util'
 import { routesPath } from './routesPath'
@@ -39,7 +39,7 @@ export const ProtectedRoutes = () => {
     return <Navigate to={routesPath.base} />
   }
 
-  if (user?.isVerified === false && isSuccess) {
+  if (user?.verified === false && isSuccess) {
     toastInfoSelectSubscription()
     return <Navigate to={routesPath.base} />
   }
@@ -74,7 +74,7 @@ export const ProtectedSimpleRoutes = () => {
   }
 
   if (
-    user?.isVerified === false &&
+    user?.verified === false &&
     urlLocation !== routesPath.subscription &&
     isSuccess
   ) {
@@ -82,7 +82,7 @@ export const ProtectedSimpleRoutes = () => {
     return <Navigate to={routesPath.subscription} />
   }
 
-  if (user?.isVerified && urlLocation === routesPath.subscription) {
+  if (user?.verified && urlLocation === routesPath.subscription) {
     toastSuccessAlreadySubscribed()
     // Renew the cookie to have the correct roles
     authManager.signIn()

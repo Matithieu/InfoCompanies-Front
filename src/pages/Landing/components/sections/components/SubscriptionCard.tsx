@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import useAuthManager from '@/hooks/useAuthManager'
-import useUserStore from '@/stores/userStore'
+import useUserStore from '@/stores/UserStore'
 import { startStripeSubscription } from '@/utils/api/queries'
 import { useQuery } from '@tanstack/react-query'
 import { Check } from 'lucide-react'
@@ -31,7 +31,7 @@ const SubscriptionCard: FC<SubscriptionCardProps> = ({
 
   const { refetch } = useQuery({
     queryKey: ['sub' + item.id],
-    queryFn: () => startStripeSubscription(item.id),
+    queryFn: () => startStripeSubscription({ 'X-priceId': item.id }),
     enabled: false,
   })
 

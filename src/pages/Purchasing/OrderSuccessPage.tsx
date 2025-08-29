@@ -4,7 +4,7 @@ import { FC } from 'react'
 
 import useAuthManager from '../../hooks/useAuthManager'
 import { formatMessage } from '../../services/intl/intl'
-import useUserStore from '../../stores/userStore'
+import useUserStore from '../../stores/UserStore'
 import purchasingMessages from './purchasing.messages'
 
 const OrderSuccessPage: FC = () => {

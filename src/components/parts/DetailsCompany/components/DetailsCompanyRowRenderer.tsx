@@ -2,7 +2,7 @@ import { Tooltip, Typography } from '@mui/joy'
 import { FC } from 'react'
 
 type DetailsCompanyRowRendererProps = {
-  content: string
+  content: string | null | undefined
   noContent: string
   oppositeContent?: string
   tooltipContent: string

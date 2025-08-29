@@ -1,60 +1,82 @@
 import 'react-toastify/dist/ReactToastify.css'
 
-import LoadingText from '@/components/common/Loading/TextLoading.tsx'
+import LoadingText from '@/components/common/Loading/TextLoading'
+import { useUpdateStatus } from '@/pages/Dashboard/hooks/useUpdateStatus'
+import {
+  CheckStatus,
+  CompanyDTO,
+  CompanyDtoWithStatusDTO,
+} from '@/types/index.types'
 import { Box, Card, Grid } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
 import { FC, useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 
-import { GlobalErrorButton } from '../../../components/common/Buttons/GlobalErrorButton.tsx'
-import ScrapCompanyButton from '../../../components/common/Buttons/scrapCompanyButton.tsx'
-import Chart from '../../../components/parts/Chart/Chart.tsx'
-import DetailsCompany from '../../../components/parts/DetailsCompany/index.tsx'
-import ListOfLeaders from '../../../components/parts/LeaderList/LeaderList.tsx'
-import { Company } from '../../../data/types/company.ts'
-import { fetchCompanyById } from '../../../utils/api/queries.ts'
-import { asserts, isNotNU } from '../../../utils/assertion.util.ts'
-import CompanyHeader from './components/CompanyHeader.tsx'
+import { GlobalErrorButton } from '../../../components/common/Buttons/GlobalErrorButton'
+import ScrapCompanyButton from '../../../components/common/Buttons/scrapCompanyButton'
+import Chart from '../../../components/parts/Chart/Chart'
+import DetailsCompany from '../../../components/parts/DetailsCompany/index'
+import ListOfLeaders from '../../../components/parts/LeaderList/LeaderList'
+import { fetchCompanyById } from '../../../utils/api/queries'
+import { asserts, isNotNU } from '../../../utils/assertion.util'
+import CompanyHeader from './components/CompanyHeader'
 
 const CompanyPage: FC = () => {
   const { companyId } = useParams()
-  asserts(isNotNU(companyId), "companyId can't be undefined")
-  const [company, setCompany] = useState<Company>()
+  asserts(isNotNU(companyId), 'companyId is undefined')
+  const [companiesDtoWithStatusDTO, setCompaniesDtoWithStatusDTO] = useState<
+    CompanyDtoWithStatusDTO | undefined
+  >()
 
   const { isPending, data, error } = useQuery({
     queryKey: ['company', companyId],
-    queryFn: () => fetchCompanyById(companyId),
+    queryFn: () => fetchCompanyById({ id: Number(companyId) }),
   })
 
   useEffect(() => {
-    if (data !== null) {
-      setCompany(data)
-    }
-  }, [data])
+    if (data) setCompaniesDtoWithStatusDTO(data)
+  }, [data, setCompaniesDtoWithStatusDTO])
+
+  const updateStatusMutation = useUpdateStatus({
+    updateCompanyData: setCompaniesDtoWithStatusDTO,
+  })
+
+  const handleStatusChange = async (
+    companyDTO: CompanyDTO,
+    newStatus: CheckStatus,
+  ) => {
+    updateStatusMutation.mutate({ companyDTO, status: newStatus })
+  }
 
   if (error !== null) {
     return <GlobalErrorButton error={error} />
   }
 
-  if (isPending || company === undefined) {
+  if (isPending || companiesDtoWithStatusDTO === undefined) {
     return <LoadingText />
   }
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <Box
-        sx={{
-          flexGrow: 1,
-        }}
-      >
-        <CompanyHeader company={company} setCompany={setCompany} />
+      <Box sx={{ flexGrow: 1 }}>
+        <CompanyHeader
+          companyDTOWithStatusDTO={companiesDtoWithStatusDTO}
+          handleStatusChange={handleStatusChange}
+        />
 
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <ScrapCompanyButton
-            company={company}
-            onScraped={(updatedCompany) => {
-              setCompany(updatedCompany)
-            }}
+            company={companiesDtoWithStatusDTO.companyDTO}
+            onScraped={(updatedCompany) =>
+              setCompaniesDtoWithStatusDTO((prevState) =>
+                prevState
+                  ? {
+                      ...prevState,
+                      companyDTO: updatedCompany,
+                    }
+                  : undefined,
+              )
+            }
           />
         </div>
 
@@ -69,13 +91,15 @@ const CompanyPage: FC = () => {
         >
           <Grid lg={5} md={5} sm={8} xl={8} xs={8}>
             <Card sx={{ minHeight: 220 }}>
-              <DetailsCompany company={company} />
+              <DetailsCompany company={companiesDtoWithStatusDTO.companyDTO} />
             </Card>
           </Grid>
 
           <Grid lg={5} md={5} sm={8} xl={8} xs={8}>
             <Card sx={{ minHeight: 220 }}>
-              <ListOfLeaders siren={company?.sirenNumber} />
+              <ListOfLeaders
+                siren={companiesDtoWithStatusDTO.companyDTO.sirenNumber}
+              />
             </Card>
           </Grid>
 
@@ -86,7 +110,7 @@ const CompanyPage: FC = () => {
                 minWidth: 1,
               }}
             >
-              <Chart company={company} />
+              <Chart company={companiesDtoWithStatusDTO.companyDTO} />
             </Card>
           </Grid>
         </Grid>

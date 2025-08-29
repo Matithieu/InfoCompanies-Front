@@ -12,7 +12,7 @@ const LeaderHeaderRenderer: FC<LeaderHeaderRendererProps> = ({ headers }) => {
   return (
     <>
       <TableRow>
-        {headers.map(({ label, align }) => (
+        {headers.map(({ label, align = 'left' }) => (
           <TableCell key={label} align={align}>
             {label}
           </TableCell>

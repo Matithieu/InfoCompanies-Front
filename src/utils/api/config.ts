@@ -1,45 +1,89 @@
+import { paths } from '@/types/codegen/api'
+
+import { CombinedParametersType } from './api.types'
+import handleStatusError from './errors/handleStatusError'
 import handleToastErrors from './errors/handleToastErrors'
 
-export type FetchOptions = {
-  headers?: Record<string, string>
-  body?: Record<string, unknown>
-}
+export const fetchThroughProxy = async <
+  U extends keyof paths,
+  M extends keyof paths[U],
+>(
+  url: U,
+  method: M,
+  options?: CombinedParametersType<U, M>,
+): Promise<
+  paths[U][M] extends { responses: { 200: { content: { '*/*': infer R } } } }
+    ? R
+    : unknown
+> => {
+  const { requestBody, parameters } = options || {}
 
-export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
+  const baseUrl = import.meta.env.VITE_API_PREFIX
+  if (!baseUrl) throw new Error('API prefix is not defined')
 
-/**
- * Fetches data from the API with the provided configuration.
- * @param url - The URL to fetch data from.
- * @param method - The HTTP method to use for the request.
- * @param options - Additional options for the fetch request.
- * @returns A Promise that resolves to the fetched data.
- * @throws An error if the API request fails.
- * @example fetchWithConfig("/api/v1/data", "POST")
- */
-export const fetchThroughProxy = async (
-  url: string,
-  method: HttpMethod,
-  options?: FetchOptions,
-): Promise<Response> => {
-  const baseUrl = import.meta.env.VITE_API_PREFIX || ''
-
-  if (!baseUrl) {
-    throw new Error('API prefix is not defined')
-  }
-
-  const response = await fetch(baseUrl + url, {
-    ...options,
-    method: method,
+  let finalUrl = baseUrl + url
+  const fetchOptions: RequestInit = {
+    method: method.toString().toUpperCase(),
     headers: {
       'Content-Type': 'application/json',
-      ...options?.headers,
     },
-    body: options?.body ? JSON.stringify(options.body) : undefined,
-  })
+  }
+
+  // handle path params
+  // handle path params
+  if (
+    parameters &&
+    typeof parameters === 'object' &&
+    'path' in parameters &&
+    parameters.path
+  ) {
+    Object.entries(parameters.path).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        finalUrl = finalUrl.replace(
+          new RegExp(`{${key}}`, 'g'),
+          encodeURIComponent(String(value)),
+        )
+      }
+    })
+  }
+
+  // handle query params
+  if (
+    parameters &&
+    typeof parameters === 'object' &&
+    'query' in parameters &&
+    parameters.query
+  ) {
+    const searchParams = new URLSearchParams()
+    Object.entries(parameters.query).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        searchParams.append(key, String(value))
+      }
+    })
+
+    if (searchParams.toString()) {
+      finalUrl += `?${searchParams.toString()}`
+    }
+  }
+
+  // handle request body for non-GET methods
+  if (
+    requestBody &&
+    method !== 'get' &&
+    method !== 'delete' &&
+    method !== 'head'
+  ) {
+    fetchOptions.body = JSON.stringify(requestBody)
+  }
+
+  const response = await fetch(finalUrl, fetchOptions)
 
   if (!response.ok) {
     handleToastErrors(response, url)
+    throw new Error(
+      await handleStatusError(response, `Error fetching data from ${url}`),
+    )
   }
 
-  return response
+  return await response.json()
 }

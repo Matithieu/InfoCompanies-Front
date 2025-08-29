@@ -1,23 +1,35 @@
 // src/components/TestTableCompany.tsx
-import Filters from '@/components/parts/Filters'
+import Filters from '@/components/parts/Filters/Filters'
 import TableCompany from '@/components/parts/TableCompany/TableCompany'
-import { columnsTableCompany } from '@/data/types/Columns/columns'
-import { fetchCompaniesWithUrlAndPage } from '@/utils/api/queries'
+import {
+  handleCopyToClipboard,
+  handleOpenInNewTab,
+} from '@/pages/Dashboard/dashboardPage.util'
+import { useCompanyFilterStore } from '@/stores/FiltersStore'
+import { fetchCompanyOnLandingPage } from '@/utils/api/queries'
 import { useQuery } from '@tanstack/react-query'
 import { FC } from 'react'
 
-import { useConstructedUrl } from './hooks/useConstructedUrl'
+import { useLandingColumnsDef } from './hooks/useLandingColumnDef'
+import { LandingColumnGenerics } from './landing.types'
 
 const LandingTableCompany: FC = () => {
-  const url = useConstructedUrl()
+  const {
+    filterValues: { cityNames, industrySectorNames },
+  } = useCompanyFilterStore()
+
+  const landingColumnsDef = useLandingColumnsDef({
+    handleCopyToClipboard: handleCopyToClipboard,
+    handleOpenInNewTab: handleOpenInNewTab,
+  })
 
   const { isPending, data, error } = useQuery({
-    queryKey: ['companies', url],
-    queryFn: () => fetchCompaniesWithUrlAndPage(url!, 0, false),
+    queryKey: ['companies', cityNames, industrySectorNames],
+    queryFn: () =>
+      fetchCompanyOnLandingPage({ cityNames, industrySectorNames }),
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     refetchOnReconnect: false,
-    enabled: !!url,
   })
 
   return (
@@ -28,20 +40,20 @@ const LandingTableCompany: FC = () => {
         <div className="md:pb-32">
           <div className="flex items-center justify-center pb-10">
             <Filters
-              filtersToShow={['city', 'industrySector']}
+              filtersToShow={['cityNames', 'industrySectorNames']}
               showAddFilterButton={false}
             />
           </div>
 
-          <TableCompany
-            columns={columnsTableCompany}
-            data={data}
+          <TableCompany<
+            LandingColumnGenerics['TId'],
+            LandingColumnGenerics['FSubId'],
+            LandingColumnGenerics['TRow']
+          >
+            columns={landingColumnsDef}
+            data={data?.content}
             error={error}
-            isCheckboxVisible={false}
-            isPagination={false}
             isPending={isPending}
-            onCompanyDetailsClick={() => {}}
-            onPageChange={() => {}}
           />
         </div>
       </div>

@@ -1,3 +1,4 @@
+import { CompanyDTO } from '@/types/index.types'
 import BusinessIcon from '@mui/icons-material/Business'
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined'
 import EmailIcon from '@mui/icons-material/Email'
@@ -6,14 +7,13 @@ import WebAssetIcon from '@mui/icons-material/WebAsset'
 import { Table, Typography } from '@mui/joy'
 import { FC } from 'react'
 
-import { Company } from '../../../data/types/company'
 import commonMessages from '../../../services/intl/common.messages'
 import { formatMessage } from '../../../services/intl/intl'
 import { PleaseSelectACompanyText } from '../../common/Texts/PleaseSelectACompanyText'
 import DetailsCompanyRowRenderer from './components/DetailsCompanyRowRenderer'
 
 type DetailsCompanyProps = {
-  company: Company | undefined
+  company: CompanyDTO | undefined
 }
 
 const DetailsCompany: FC<DetailsCompanyProps> = ({ company }) => {
@@ -32,14 +32,14 @@ const DetailsCompany: FC<DetailsCompanyProps> = ({ company }) => {
       <Table>
         <tbody>
           <DetailsCompanyRowRenderer
-            content={company.phoneNumber}
+            content={company.contact?.phoneNumber}
             icon={<PhoneIcon />}
             noContent={formatMessage(commonMessages.noPhone)}
             tooltipContent={formatMessage(commonMessages.phoneTooltip)}
           />
 
           <DetailsCompanyRowRenderer
-            content={company.email}
+            content={company.contact?.email}
             icon={<EmailIcon />}
             noContent={formatMessage(commonMessages.noEmail)}
             tooltipContent={formatMessage(commonMessages.emailTooltip)}
@@ -47,7 +47,7 @@ const DetailsCompany: FC<DetailsCompanyProps> = ({ company }) => {
 
           <DetailsCompanyRowRenderer
             isLink
-            content={company.website}
+            content={company.contact?.website}
             icon={<WebAssetIcon />}
             noContent={formatMessage(commonMessages.noWebsite)}
             tooltipContent={formatMessage(commonMessages.websiteTooltip)}
@@ -62,7 +62,7 @@ const DetailsCompany: FC<DetailsCompanyProps> = ({ company }) => {
           />
 
           <DetailsCompanyRowRenderer
-            content={company.dateRegistration}
+            content={company.registrationDate}
             icon={<CalendarTodayOutlinedIcon />}
             noContent={formatMessage(commonMessages.noCreationDate)}
             tooltipContent={formatMessage(commonMessages.creationDateTooltip)}

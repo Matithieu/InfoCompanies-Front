@@ -2,7 +2,7 @@ import PersonIcon from '@mui/icons-material/Person'
 import { Typography } from '@mui/joy'
 import { FC } from 'react'
 
-import { Leader } from '../../../../data/types/index.types'
+import { Leader } from '../../../../types/index.types'
 
 type LeaderListRowRendererProps = {
   leader: Leader

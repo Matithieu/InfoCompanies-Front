@@ -1,8 +1,8 @@
 import { FC } from 'react'
 
 type CellContentProps = {
-  content: string
-  handleFunction?: (content: string) => void
+  content: string | number | undefined
+  handleFunction?: (content: string | number | undefined) => void
 }
 
 const CellContent: FC<CellContentProps> = ({ content, handleFunction }) => {
@@ -10,12 +10,15 @@ const CellContent: FC<CellContentProps> = ({ content, handleFunction }) => {
     <span
       style={{
         color: content ? 'inherit' : '#808080',
+        display: 'block',
+        width: '100%',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
       }}
       onClick={(e) => {
-        e.stopPropagation()
-
-        if (handleFunction) {
-          if (!content) return null
+        if (content && handleFunction) {
+          e.stopPropagation()
           handleFunction(content)
         }
       }}

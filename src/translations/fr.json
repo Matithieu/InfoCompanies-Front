@@ -2,7 +2,7 @@
   "chart.yAxisLabel": "En Euro (€)",
   "columns.address": "Adresse",
   "columns.city": "Ville",
-  "columns.dateRegistration": "Date Immatriculation",
+  "columns.registrationDate": "Date Immatriculation",
   "columns.email": "E-mail",
   "columns.industrySector": "Secteur d'Activité",
   "columns.legalForm": "Forme Juridique",

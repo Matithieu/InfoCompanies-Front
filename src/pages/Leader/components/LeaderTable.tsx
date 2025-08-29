@@ -1,6 +1,6 @@
-import { Leader } from '@/data/types/index.types'
 import commonMessages from '@/services/intl/common.messages'
 import { formatMessage } from '@/services/intl/intl'
+import { Leader } from '@/types/index.types'
 import { Table } from '@mui/joy'
 import { Paper, TableBody, TableContainer, TableHead } from '@mui/material'
 import { FC } from 'react'

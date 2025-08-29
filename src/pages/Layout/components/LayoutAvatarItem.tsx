@@ -4,7 +4,7 @@ import { FC } from 'react'
 
 import { useAppNavigate } from '../../../hooks/useAppNavigate'
 import useAuthManager from '../../../hooks/useAuthManager'
-import useUserStore from '../../../stores/userStore'
+import useUserStore from '../../../stores/UserStore'
 
 interface LayoutAvatarItemProps {
   open: boolean
