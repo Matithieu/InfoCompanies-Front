@@ -4,7 +4,7 @@ import {
 } from '@/types/index.types'
 import { useState } from 'react'
 
-export const useSetTableData = (
+const useSetTableData = (
   companiesDtoWithStatusDTO: PageCompanyDtoWithStatusDTO | undefined,
 ) => {
   const [tableData, setTableData] = useState<
