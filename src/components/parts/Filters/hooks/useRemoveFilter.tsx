@@ -1,7 +1,8 @@
 import { FilterParams } from '@/stores/FiltersStore'
 import { useEffect } from 'react'
 
-import { filterToShowToFilterKeyMapping } from '../filter.type'
+// Ensure the mapping is typed correctly
+// If not, update filter.type to: export const filterToShowToFilterKeyMapping: Record<keyof FilterParams, string> = { ... }
 
 export const useRemoveFilter = (
   displayedFilters: FilterParams,
@@ -16,9 +17,11 @@ export const useRemoveFilter = (
     const currFilters = displayedFilters
 
     // Find filters whose value transitioned from set to cleared
-    const clearedFilters = Object.keys(currFilters).filter((key) => {
-      const prevValue = prevFilters[key as keyof FilterParams]
-      const currValue = currFilters[key as keyof FilterParams]
+    const clearedFilters = (
+      Object.keys(currFilters) as Array<keyof FilterParams>
+    ).filter((key) => {
+      const prevValue = prevFilters[key]
+      const currValue = currFilters[key]
 
       const wasSet =
         prevValue !== null &&
@@ -37,12 +40,7 @@ export const useRemoveFilter = (
 
     if (clearedFilters.length > 0) {
       setSelectedFilters((prevSelected) =>
-        prevSelected.filter(
-          (filter) =>
-            !clearedFilters.includes(
-              filterToShowToFilterKeyMapping[filter] as string,
-            ),
-        ),
+        prevSelected.filter((filter) => !clearedFilters.includes(filter)),
       )
       handleSearch()
     }
