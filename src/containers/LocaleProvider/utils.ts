@@ -4,7 +4,7 @@ import { DEFAULT_APP_LOCALE } from './locales'
 import { AppLocale, appLocales } from './types'
 
 function isValidAppLocale(locale: string): locale is AppLocale {
-  return Object.values(appLocales).includes(locale as any)
+  return Object.values(appLocales).includes(locale as AppLocale)
 }
 
 export const getLanguageAppLocale = (): AppLocale => {

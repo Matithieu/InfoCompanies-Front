@@ -6,14 +6,14 @@ import { formatMessage } from '@/services/intl/intl'
 import { Typography } from '@mui/joy'
 import { FC } from 'react'
 
-type ButtonProps = {
-  message?: string
-  handleButtonClick: () => void
-  buttonLabel: string
-}
-
 type MessageButtonProps = {
   message?: string
+}
+
+type ButtonProps = {
+  message: MessageButtonProps['message']
+  handleButtonClick: () => void
+  buttonLabel: string
 }
 
 const ActionButton: FC<ButtonProps> = ({

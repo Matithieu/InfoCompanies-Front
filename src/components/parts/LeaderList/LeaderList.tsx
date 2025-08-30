@@ -9,21 +9,18 @@ import { formatMessage } from '../../../services/intl/intl'
 import { fetchLeadersBySiren } from '../../../utils/api/queries'
 import { PleaseSelectACompanyText } from '../../common/Texts/PleaseSelectACompanyText'
 import LeaderListRowRenderer from './components/LeaderListRowRenderer'
+import { removeLeadersWithSameName } from './leader.util'
 
 type ListOfLeadersProps = {
   siren: string | undefined
 }
 
 const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
-  const {
-    data: leaders,
-    isLoading,
-    error,
-  } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ['leader', siren],
     queryFn: async () => {
       if (siren) {
-        return await fetchLeadersBySiren(siren)
+        return await fetchLeadersBySiren({ siren })
       }
     },
     enabled: !!siren,
@@ -34,13 +31,15 @@ const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
     return <LoadingText error={error} />
   }
 
-  if (leaders === undefined) {
+  if (data === undefined) {
     return <PleaseSelectACompanyText />
   }
 
-  if (leaders.length === 0) {
+  if (data.length === 0) {
     return <NoAvailableLeaderText />
   }
+
+  const leaders = removeLeadersWithSameName(data)
 
   return (
     <>

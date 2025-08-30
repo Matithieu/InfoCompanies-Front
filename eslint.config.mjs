@@ -29,6 +29,7 @@ export default [
       'postcss.config.js',
       'eslint.config.mjs',
       'dist',
+      'scripts/build/**'
     ],
   },
   ...fixupConfigRules(
@@ -55,16 +56,14 @@ export default [
     },
 
     languageOptions: {
-      globals: {
-        ...globals.browser,
-      },
+      globals: globals.node,
 
       parser: tsParser,
       ecmaVersion: 'latest',
       sourceType: 'module',
 
       parserOptions: {
-        project: ['./tsconfig.json'],
+        project: ['./tsconfig.json', './scripts/tsconfig.json'],
         tsconfigRootDir: './',
         ecmaFeatures: {
           jsx: true,
@@ -83,7 +82,7 @@ export default [
     rules: {
       eqeqeq: 'error',
       'no-nested-ternary': 'error',
-      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-explicit-any': 'error',
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       '@typescript-eslint/strict-boolean-expressions': 'off',

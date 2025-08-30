@@ -1,22 +1,22 @@
-import HeaderTitle from '@/components/common/Texts/HeaderTitle.tsx'
+import HeaderTitle from '@/components/common/Texts/HeaderTitle'
 import { Grid } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
 import { FC } from 'react'
 import { useParams } from 'react-router'
 
-import commonMessages from '../../services/intl/common.messages.ts'
-import { formatMessage } from '../../services/intl/intl.tsx'
-import { fetchLeaderById } from '../../utils/api/queries.ts'
-import { asserts, isNotNU } from '../../utils/assertion.util.ts'
-import LeaderTable from './components/LeaderTable.tsx'
+import commonMessages from '../../services/intl/common.messages'
+import { formatMessage } from '../../services/intl/intl'
+import { fetchLeaderById } from '../../utils/api/queries'
+import { asserts, isNotNU } from '../../utils/assertion.util'
+import LeaderTable from './components/LeaderTable'
 
 const LeaderPage: FC = () => {
-  const id = useParams().id
+  const { id } = useParams()
   asserts(isNotNU(id))
 
   const { data: leader, isLoading } = useQuery({
     queryKey: ['leader', id],
-    queryFn: () => fetchLeaderById(id),
+    queryFn: () => fetchLeaderById({ id: Number(id) }),
   })
 
   if (isLoading) {

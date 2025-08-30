@@ -3,7 +3,7 @@
   "columns.address": "Address",
   "columns.city": "City",
   "columns.companyName": "Company Name",
-  "columns.dateRegistration": "Registration Date",
+  "columns.registrationDate": "Registration Date",
   "columns.email": "Email",
   "columns.industrySector": "Industry Sector",
   "columns.legalForm": "Legal Form",

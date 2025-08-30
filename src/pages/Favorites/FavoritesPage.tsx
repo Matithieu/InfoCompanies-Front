@@ -1,25 +1,30 @@
-import usePagination from '@/hooks/usePagination.tsx'
+import usePagination from '@/hooks/usePagination'
+import { CompanyDTO } from '@/types/index.types'
 import { Grid, Typography } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
-import HeaderTitle from '../../components/common/Texts/HeaderTitle.tsx'
-import { Company } from '../../data/types/company.ts'
-import { formatMessage } from '../../services/intl/intl.tsx'
-import { fetchFavorites } from '../../utils/api/queries.ts'
-import FavoritesBody from './components/FavoritesBody.tsx'
-import favoritesMessages from './favorites.messages.ts'
+import HeaderTitle from '../../components/common/Texts/HeaderTitle'
+import { formatMessage } from '../../services/intl/intl'
+import { fetchFavorites } from '../../utils/api/queries'
+import FavoritesBody from './components/FavoritesBody'
+import favoritesMessages from './favorites.messages'
 
 const FavoritesPage: FC = () => {
-  const [company, setCompany] = useState<Company>()
+  const [company, setCompany] = useState<CompanyDTO>()
   const [pagination, setPagination] = usePagination()
 
   const { data, error, isPending } = useQuery({
     queryKey: ['favorites-companies', pagination.page],
-    queryFn: () => fetchFavorites(pagination.page),
+    queryFn: () => fetchFavorites({ page: pagination.page }),
     refetchOnMount: true,
     staleTime: 0,
   })
+
+  useEffect(() => {
+    if (data)
+      setPagination((prev) => ({ ...prev, totalPages: data.totalPages }))
+  }, [data, setPagination])
 
   return (
     <Grid flexDirection="column" sx={{ px: { xs: 2, md: 6 } }}>
@@ -41,8 +46,12 @@ const FavoritesPage: FC = () => {
           company={company}
           data={data}
           error={error}
-          handleChangePage={setPagination}
           isPending={isPending}
+          pagination={{
+            pageNumber: pagination.page,
+            totalPages: pagination.totalPages,
+            handlePageChange: setPagination,
+          }}
           setCompany={setCompany}
         />
       )}

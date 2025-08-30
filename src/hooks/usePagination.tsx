@@ -1,26 +1,13 @@
+import { Page } from '@/types/index.types'
 import { useState } from 'react'
 
-export type Pagination = {
-  page: number
-  rowsPerPage: number
-  totalPages: number
-}
-
-export const usePagination = (initialPage = 0, rowsPerPage = 10) => {
-  const [pagination, setPagination] = useState<Pagination>({
+export const usePagination = (initialPage = 0) => {
+  const [pagination, setPagination] = useState<Page>({
     page: initialPage,
-    rowsPerPage,
     totalPages: 0,
   })
 
-  const setPage = (page: number) => {
-    setPagination((prevValue) => ({
-      ...prevValue,
-      page,
-    }))
-  }
-
-  return [pagination, setPage] as const
+  return [pagination, setPagination] as const
 }
 
 export default usePagination

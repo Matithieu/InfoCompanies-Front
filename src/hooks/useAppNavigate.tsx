@@ -43,7 +43,7 @@ export const useAppNavigate = () => {
     toLegal: () => navigateTo(routesPath.legal),
     toSearch: (searchTerm: string) =>
       navigateTo(`${routesPath.search}/${searchTerm}`),
-    toCompany: (companyId: string) =>
+    toCompany: (companyId: number) =>
       navigateTo(`${routesPath.company}/${companyId}`, {
         replace: true,
       }),

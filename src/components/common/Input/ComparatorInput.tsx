@@ -1,3 +1,5 @@
+import { EmployeeFilter, SignComparator } from '@/types/index.types'
+import { isNotNU } from '@/utils/assertion.util'
 import ClearIcon from '@mui/icons-material/Clear'
 import {
   Dropdown,
@@ -10,7 +12,6 @@ import {
 } from '@mui/joy'
 import { ChangeEvent, FC, SyntheticEvent, useState } from 'react'
 
-import { ComparatorType, EmployeeFilter } from '../../../data/types/index.types'
 import ComparaisonValues from './components/ComparaisonValues'
 
 interface ComparatorInputProps {
@@ -22,45 +23,64 @@ const ComparatorInput: FC<ComparatorInputProps> = ({
   value,
   onValueChange,
 }) => {
-  const [comparator, setComparator] = useState<ComparatorType | undefined>(
-    value.comparator ?? undefined,
-  )
-  const [amount, setAmount] = useState<number | undefined>(
-    value.amount ?? undefined,
-  )
+  const [employeeFilter, setEmployeeFilter] = useState<{
+    numberOfEmployee?: number
+    signComparator?: SignComparator
+  }>(value || {})
 
   const handleComparatorSelect = (
     _event: SyntheticEvent | null,
-    value: ComparatorType,
+    signComparator: SignComparator,
   ) => {
-    setComparator(value)
-    onValueChange({ comparator: value, amount })
+    const updatedFilter = { ...employeeFilter, signComparator }
+    setEmployeeFilter(updatedFilter)
+
+    // Only call onValueChange if both values are defined
+    if (
+      isNotNU(updatedFilter.numberOfEmployee) &&
+      isNotNU(updatedFilter.signComparator)
+    ) {
+      onValueChange({
+        numberOfEmployee: updatedFilter.numberOfEmployee,
+        signComparator: updatedFilter.signComparator,
+      })
+    }
   }
 
   const handleNumberChange = (event: ChangeEvent<HTMLInputElement>) => {
-    let newValue =
-      event.target.value === '' ? undefined : parseInt(event.target.value)
+    const inputValue = event.target.value
 
-    // Ensure the value doesn't exceed 100,000,000
-    if (
-      newValue &&
-      newValue > 100_000_000 &&
-      amount &&
-      newValue !== amount + 1
-    ) {
-      newValue = 100_000_000
+    if (inputValue === '') {
+      const updatedFilter = { ...employeeFilter, numberOfEmployee: undefined }
+      setEmployeeFilter(updatedFilter)
+      return
     }
 
-    setAmount(newValue)
-    onValueChange({ comparator, amount: newValue })
+    const numericValue = parseInt(inputValue, 10)
+
+    if (Number.isNaN(numericValue)) {
+      return
+    }
+
+    if (numericValue === employeeFilter.numberOfEmployee) return
+
+    let value = numericValue
+    if (value > 100_000_000) value = 100_000_000
+    if (value < 0) value = 0
+
+    const updatedFilter = { ...employeeFilter, numberOfEmployee: value }
+    setEmployeeFilter(updatedFilter)
+
+    // Only call onValueChange if both values are defined
+    if (updatedFilter.signComparator !== undefined) {
+      onValueChange({
+        numberOfEmployee: value,
+        signComparator: updatedFilter.signComparator,
+      })
+    }
   }
 
-  const handleDelete = () => {
-    setComparator(undefined)
-    setAmount(undefined)
-    onValueChange({ comparator: undefined, amount: undefined })
-  }
-
+  // TODO: translate
   return (
     <Dropdown>
       <MenuButton
@@ -69,7 +89,10 @@ const ComparatorInput: FC<ComparatorInputProps> = ({
             <div
               aria-label="Delete filter"
               style={{ zIndex: 3000, cursor: 'pointer' }}
-              onClick={handleDelete}
+              onClick={() => {
+                setEmployeeFilter({})
+                onValueChange(null)
+              }}
             >
               <ClearIcon />
             </div>
@@ -86,19 +109,22 @@ const ComparatorInput: FC<ComparatorInputProps> = ({
       >
         <Typography
           level={
-            amount === undefined || comparator === undefined
+            employeeFilter.numberOfEmployee === undefined ||
+            employeeFilter.signComparator === undefined
               ? 'body-sm'
               : 'inherit'
           }
           sx={{
             color:
-              amount === undefined || comparator === undefined
+              employeeFilter.numberOfEmployee === undefined ||
+              employeeFilter.signComparator === undefined
                 ? 'gray'
                 : 'inherit',
           }}
         >
-          {amount !== undefined && comparator !== undefined
-            ? `${comparator} ${amount}`
+          {employeeFilter.numberOfEmployee !== undefined &&
+          employeeFilter.signComparator !== undefined
+            ? `${employeeFilter.signComparator} ${employeeFilter.numberOfEmployee}`
             : 'Salariés'}
         </Typography>
       </MenuButton>
@@ -121,13 +147,13 @@ const ComparatorInput: FC<ComparatorInputProps> = ({
             placeholder="Enter number"
             sx={{ width: '150px' }}
             type="number"
-            value={amount ?? ''}
+            value={employeeFilter.numberOfEmployee ?? ''}
             onChange={handleNumberChange}
           />
           <ToggleButtonGroup
-            value={comparator}
+            value={employeeFilter.signComparator}
             onChange={(event, newValue) =>
-              handleComparatorSelect(event, newValue as ComparatorType)
+              handleComparatorSelect(event, newValue as SignComparator)
             }
           >
             <ComparaisonValues />

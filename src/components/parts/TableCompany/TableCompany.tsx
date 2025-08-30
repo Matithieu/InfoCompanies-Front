@@ -1,113 +1,39 @@
 import './style.css'
 
-import { chunkArray } from '@/utils/array.util'
-import { Sheet, Skeleton, Table } from '@mui/joy'
-import { useQueryClient } from '@tanstack/react-query'
-import { FC, useEffect, useState } from 'react'
+import { ColumnsDefinition } from '@/types/columns/columns.type'
+import { Page } from '@/types/index.types'
+import { Sheet, Table } from '@mui/joy'
+import { useState } from 'react'
 
-import { Column } from '../../../data/types/Columns/columns'
-import { Company } from '../../../data/types/company'
-import { Page } from '../../../data/types/index.types'
-import { fetchCompanyScrap } from '../../../utils/api/queries'
 import { GlobalErrorButton } from '../../common/Buttons/GlobalErrorButton'
-import Pagination from '../../common/Buttons/Pagination'
-import { handleChangeCompanyStatut } from '../../common/Icons/stautIcon.util'
-import NoCompaniesFound from './components/NoCompaniesFound'
-import TableCompanyHeadersRenderer from './components/TableCompanyHeaderRenderer'
-import TableCompanyRowRenderer from './components/TableCompanyRowRenderer'
-import useSetTableData from './hooks/UseSetTableData'
-import { canBeScrapped } from './tableCompany.util'
+import Pagination from '../../common/Buttons/Pagination/Pagination'
+import TableCompanyHeadersRenderer from './components/TableCompanyHeaderRenderer/TableCompanyHeaderRenderer'
+import TableCompanyRow from './components/TableCompanyRowRenderer/TableCompanyRowRenderer'
 
-type TableCompanyProps = {
-  columns: Column[]
-  data: Page<Company> | undefined
-  error: Error | null
-  isCheckboxVisible?: boolean
-  isPagination?: boolean
+type TableCompanyProps<TId, FSubId, TRow> = {
+  columns: ColumnsDefinition<TId, FSubId, TRow>
+  data: TRow[] | undefined
   isPending: boolean
-  isScrapping?: boolean
-  onCompanyDetailsClick: (company: Company) => void | undefined
-  onPageChange: (newPage: number) => void | undefined
+  error: Error | null
+  pagination?: {
+    pageNumber: number
+    totalPages: number
+    handlePageChange: (newPage: Page) => void
+  }
+  handleRowClick?: (row: TRow) => void
 }
 
-const TableCompany: FC<TableCompanyProps> = ({
+const TableCompany = <TId extends string, FSubId extends string, TRow>({
   columns,
   data,
   error,
-  isCheckboxVisible = true,
-  isPagination = true,
   isPending,
-  isScrapping = false,
-  onPageChange,
-  onCompanyDetailsClick,
-}) => {
-  const [tableData, setTableData, updateCompanyData] = useSetTableData(data)
+  handleRowClick,
+  pagination,
+}: TableCompanyProps<TId, FSubId, TRow>) => {
   const [rowSelected, setRowSelected] = useState<number | undefined>(undefined)
-  const queryClient = useQueryClient()
 
-  useEffect(() => {
-    if (data) {
-      setTableData(data)
-    }
-  }, [setTableData, data])
-
-  useEffect(() => {
-    if (!data?.content || !isScrapping) return
-
-    const fetchBatchCompanies = async () => {
-      const companies = data.content
-      const companyBatches = chunkArray(companies, 2)
-
-      for (const batch of companyBatches) {
-        const batchPromises = batch.map(async (company) => {
-          if (canBeScrapped(company, undefined, false, false)) {
-            try {
-              const scrapResult = await queryClient.fetchQuery({
-                staleTime: Infinity,
-                queryKey: ['company', company.id],
-                queryFn: () => fetchCompanyScrap(company.id),
-                retry: 0,
-              })
-
-              const updatedCompany = { ...company, ...scrapResult }
-
-              if (updatedCompany) {
-                updateCompanyData(company, updatedCompany)
-              }
-
-              return updatedCompany
-            } catch (error) {
-              console.error(`Error fetching company ${company.id}:`, error)
-              return company
-            }
-          }
-
-          return company
-        })
-
-        await Promise.all(batchPromises)
-      }
-    }
-
-    fetchBatchCompanies()
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, queryClient, isScrapping])
-
-  const handleStatusChange = (company: Company) => {
-    const updatedCompany = handleChangeCompanyStatut({ company })
-
-    // Update the company in the table
-    updateCompanyData(company, updatedCompany)
-  }
-
-  if (error) {
-    return <GlobalErrorButton error={error} />
-  }
-
-  if (data && data.empty) {
-    return <NoCompaniesFound />
-  }
+  if (error) return <GlobalErrorButton error={error} />
 
   return (
     <>
@@ -116,9 +42,11 @@ const TableCompany: FC<TableCompanyProps> = ({
         id="joyride-step-1"
         sx={{
           width: '100%',
+          height: '100%',
           borderRadius: 'sm',
           minHeight: 0,
-          overflow: 'auto',
+          overflowX: 'auto',
+          overflowY: 'auto',
         }}
         variant="outlined"
       >
@@ -126,6 +54,10 @@ const TableCompany: FC<TableCompanyProps> = ({
           hoverRow
           stickyHeader
           sx={{
+            // use fixed table layout so width styles are enforced
+            tableLayout: 'fixed',
+            // allow table to grow beyond container and scroll horizontally
+            minWidth: 'max-content',
             '--TableCell-headBackground':
               'var(--joy-palette-background-level1)',
             '--Table-headerUnderlineThickness': '1px',
@@ -135,42 +67,24 @@ const TableCompany: FC<TableCompanyProps> = ({
             '--TableCell-paddingX': '8px',
           }}
         >
-          <TableCompanyHeadersRenderer
+          {TableCompanyHeadersRenderer({ columns })}
+          <TableCompanyRow
             columns={columns}
-            isCheckboxVisible={isCheckboxVisible}
+            isPending={isPending}
+            rows={data}
+            rowSelected={rowSelected}
+            onRowClick={handleRowClick}
+            onRowSelect={setRowSelected}
           />
-          <tbody id="#joyride-step-1" style={{ wordBreak: 'break-word' }}>
-            {!isPending && tableData?.content?.length ? (
-              <TableCompanyRowRenderer
-                columns={columns}
-                companies={tableData?.content}
-                isCheckboxVisible={isCheckboxVisible}
-                rowSelected={rowSelected}
-                onCompanyDetailsClick={onCompanyDetailsClick}
-                onRowSelect={setRowSelected}
-                onStatusUpdate={handleStatusChange}
-              />
-            ) : (
-              <>
-                {Array.from({ length: 10 }, (_, i) => (
-                  <tr key={i} className="fade-in">
-                    <td colSpan={columns.length}>
-                      <Skeleton animation="wave" variant="text" />
-                    </td>
-                  </tr>
-                ))}
-              </>
-            )}
-          </tbody>
         </Table>
       </Sheet>
-      {isPagination && tableData && tableData.totalPages > 0 ? (
+      {pagination && (
         <Pagination
-          page={tableData?.number ?? 0}
-          totalPages={tableData?.totalPages ?? 0}
-          onPageChange={onPageChange}
+          pageNumber={pagination.pageNumber}
+          totalPages={pagination.totalPages}
+          onPageChange={pagination.handlePageChange}
         />
-      ) : undefined}
+      )}
     </>
   )
 }

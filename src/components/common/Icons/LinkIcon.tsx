@@ -2,12 +2,14 @@ import { IconButton } from '@mui/joy'
 import React from 'react'
 
 type LinkIconProps = {
-  url: string
+  url: string | undefined
   icon: JSX.Element
   style: React.CSSProperties
 }
 
 export default function LinkIcon({ url, icon, style }: LinkIconProps) {
+  if (!url) return <></>
+
   return (
     <IconButton
       style={{ ...style }}

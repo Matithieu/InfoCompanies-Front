@@ -1,54 +1,99 @@
+import { useSetTableData } from '@/components/parts/TableCompany/hooks/useSetTableData'
+import {
+  handleCopyToClipboard,
+  handleOpenInNewTab,
+} from '@/pages/Dashboard/dashboardPage.util'
+import { useDashboardColumnsDef } from '@/pages/Dashboard/hooks/useDashboardColumnDef'
+import { useUpdateStatus } from '@/pages/Dashboard/hooks/useUpdateStatus'
 import { Card, Stack } from '@mui/joy'
 import { Grid } from '@mui/material'
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 
 import Chart from '../../../components/parts/Chart/Chart'
 import DetailsCompany from '../../../components/parts/DetailsCompany'
 import ListOfLeaders from '../../../components/parts/LeaderList/LeaderList'
 import TableCompany from '../../../components/parts/TableCompany/TableCompany'
-import { columnsTableCompany } from '../../../data/types/Columns/columns'
-import { Company } from '../../../data/types/company'
-import { Page } from '../../../data/types/index.types'
+import {
+  CheckStatus,
+  CompanyDTO,
+  Page,
+  PageCompanyDtoWithStatusDTO,
+} from '../../../types/index.types'
+import { DashboardColumnGenerics } from '../favorites.types'
 
 type FavoritesBodyProps = {
-  data: Page<Company> | undefined
+  data: PageCompanyDtoWithStatusDTO | undefined
   error: Error | null
-  handleChangePage: (page: number) => void
-  setCompany: (company: Company) => void
-  company: Company | undefined
+  setCompany: (company: CompanyDTO) => void
+  company: CompanyDTO | undefined
   isPending: boolean
+  pagination: {
+    pageNumber: number
+    totalPages: number
+    handlePageChange: (newPage: Page) => void
+  }
 }
 
 const FavoritesBody: FC<FavoritesBodyProps> = ({
   company,
   data,
   error,
-  handleChangePage,
   isPending,
+  pagination,
   setCompany,
 }) => {
+  const [tableData, setTableData, updateCompanyData] = useSetTableData(data)
+
+  useEffect(() => {
+    if (data) setTableData(data)
+  }, [data, setTableData])
+
+  const updateStatusMutation = useUpdateStatus({ updateCompanyData })
+
+  const handleStatusChange = async (
+    companyDTO: CompanyDTO,
+    newStatus: CheckStatus,
+  ) => {
+    updateStatusMutation.mutate({
+      companyDTO,
+      status: newStatus,
+    })
+  }
+
+  const dashboardColumnsDef = useDashboardColumnsDef({
+    handleCopyToClipboard: handleCopyToClipboard,
+    handleOpenInNewTab: handleOpenInNewTab,
+    handleStatusChange,
+  })
+
   return (
     <Grid container spacing={3}>
       <Grid item md={8} xs={12}>
         <Stack
           sx={{
             display: 'flex',
-            flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'center',
-            minHeight: 400,
-            maxHeight: 550,
+            flexDirection: 'column',
+            height: 550,
             borderRadius: 3,
             marginTop: '8px',
           }}
         >
-          <TableCompany
-            columns={columnsTableCompany}
-            data={data}
+          <TableCompany<
+            DashboardColumnGenerics['TId'],
+            DashboardColumnGenerics['FSubId'],
+            DashboardColumnGenerics['TRow']
+          >
+            columns={dashboardColumnsDef}
+            data={tableData?.content}
             error={error}
+            handleRowClick={({ companyDTO }) => setCompany(companyDTO)}
             isPending={isPending}
-            onCompanyDetailsClick={(company) => setCompany(company)}
-            onPageChange={handleChangePage}
+            pagination={{
+              pageNumber: pagination.pageNumber,
+              totalPages: pagination.totalPages,
+              handlePageChange: pagination.handlePageChange,
+            }}
           />
         </Stack>
       </Grid>

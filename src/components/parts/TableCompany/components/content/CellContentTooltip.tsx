@@ -5,7 +5,7 @@ import { formatMessage } from '../../../../../services/intl/intl'
 import tableCompanyMessages from '../../tableCompany.messages'
 
 type CellContentTooltipProps = {
-  content: string
+  content: string | undefined
   isCopyEnabled?: boolean
   onContentClick: (content: string) => void
 }
@@ -32,13 +32,17 @@ const CellContentTooltip: FC<CellContentTooltipProps> = ({
         style={{
           cursor: 'pointer',
           color: content ? 'inherit' : '#808080',
-          textDecoration: content && !isCopyEnabled ? 'underline' : 'none',
+          display: 'block',
+          width: '100%',
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
         }}
         onClick={(e) => {
-          if (!content) return
-
-          e.stopPropagation()
-          onContentClick(content)
+          if (content) {
+            e.stopPropagation()
+            onContentClick(content)
+          }
         }}
       >
         {content ?? '-'}

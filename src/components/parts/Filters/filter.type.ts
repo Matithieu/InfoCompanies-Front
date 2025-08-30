@@ -1,37 +1,91 @@
-import { SocialMedia } from '../../../data/types/company'
-import { EmployeeFilter } from '../../../data/types/index.types'
 import commonMessages from '../../../services/intl/common.messages'
 import { formatMessage } from '../../../services/intl/intl'
-import { Contact } from './components/ContactFilter'
+import {
+  AutocompleteByNameQueries,
+  AutocompleteEndpointPlural,
+  AutocompleteEndpointSingular,
+  Contact,
+  SearchParamsNonNullable,
+} from '../../../types/index.types'
+import { FiltersProps } from './Filters'
 
-import { FiltersProps } from '.'
-
-export const filterDisplayNames: {
+export const filterNamesMapping: {
   [key in FiltersProps['filtersToShow'][number]]: string
 } = {
-  city: formatMessage(commonMessages.city),
-  region: formatMessage(commonMessages.region),
-  industrySector: formatMessage(commonMessages.industrySector),
-  legalForm: formatMessage(commonMessages.legalForm),
-  employee: formatMessage(commonMessages.employeeNumber),
+  cityNames: formatMessage(commonMessages.city),
+  regionNames: formatMessage(commonMessages.region),
+  industrySectorNames: formatMessage(commonMessages.industrySector),
+  legalFormNames: formatMessage(commonMessages.legalForm),
+  numberOfEmployeeFilter: formatMessage(commonMessages.employeeNumber),
   socials: formatMessage(commonMessages.socials),
-  contact: formatMessage(commonMessages.contact),
+  contacts: formatMessage(commonMessages.contact),
   isCompanySeen: formatMessage(commonMessages.isCompanySeen),
-  searchButton: formatMessage(commonMessages.search), // Not needed because not in the dropdown
 }
 
-export type SelectedFilterType =
-  | string[]
-  | unknown[]
-  | EmployeeFilter
-  | Array<keyof SocialMedia>
-  | Array<keyof Contact>
-  | boolean
+export const filterToShowToFilterKeyMapping: {
+  [key in FiltersProps['filtersToShow'][number]]: keyof SearchParamsNonNullable
+} = {
+  cityNames: 'cityNames',
+  regionNames: 'regionNames',
+  industrySectorNames: 'industrySectorNames',
+  legalFormNames: 'legalFormNames',
+  numberOfEmployeeFilter: 'numberOfEmployeeFilter',
+  socials: 'socials',
+  contacts: 'contacts',
+  isCompanySeen: 'isCompanySeen',
+}
+
+export type AutocompleteFilterFields = Pick<
+  SearchParamsNonNullable,
+  'cityNames' | 'regionNames' | 'industrySectorNames' | 'legalFormNames'
+>
+
+// Singular
+export const autocompleteSingularParamMapping: Record<
+  keyof AutocompleteFilterFields,
+  AutocompleteEndpointSingular
+> = {
+  cityNames: 'city',
+  regionNames: 'region',
+  industrySectorNames: 'industrySector',
+  legalFormNames: 'legalForm',
+}
+
+export const autocompleteSingularResultMapping: Record<
+  AutocompleteEndpointSingular,
+  keyof AutocompleteByNameQueries
+> = {
+  city: 'query',
+  region: 'query',
+  industrySector: 'query',
+  legalForm: 'query',
+}
+
+// Plural
+export const autocompletePluralParamMapping: Record<
+  keyof AutocompleteFilterFields,
+  AutocompleteEndpointPlural
+> = {
+  cityNames: 'cities',
+  regionNames: 'regions',
+  industrySectorNames: 'industrySectors',
+  legalFormNames: 'legalForms',
+}
+
+export const autocompletePluralResultMapping: Record<
+  AutocompleteEndpointPlural,
+  keyof AutocompleteByNameQueries
+> = {
+  cities: 'query',
+  regions: 'query',
+  industrySectors: 'query',
+  legalForms: 'query',
+}
 
 export const contactFilterDescription: {
-  [key in keyof Contact]: string
+  [key in keyof NonNullable<Contact>]: string
 } = {
   email: formatMessage(commonMessages.email),
-  phone: formatMessage(commonMessages.phone),
+  phoneNumber: formatMessage(commonMessages.phone),
   website: formatMessage(commonMessages.website),
 }
