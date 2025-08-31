@@ -22,6 +22,8 @@ const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
       if (siren) {
         return await fetchLeadersBySiren({ siren })
       }
+
+      return Promise.resolve(null)
     },
     enabled: !!siren,
     staleTime: Infinity,
@@ -35,7 +37,7 @@ const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
     return <PleaseSelectACompanyText />
   }
 
-  if (data.length === 0) {
+  if (data === null || data.length === 0) {
     return <NoAvailableLeaderText />
   }
 

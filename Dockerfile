@@ -7,13 +7,13 @@ RUN npm install -g pnpm
 WORKDIR /app
 
 # Copy package.json
-COPY InfoCompanies-Front/package.json ./
+COPY package.json ./
 
 # Install dependencies
 RUN pnpm install
 
 # Copy the rest of your application code
-COPY InfoCompanies-Front .
+COPY . .
 
 # Build the application
 RUN pnpm run build
