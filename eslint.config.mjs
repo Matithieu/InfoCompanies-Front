@@ -64,7 +64,6 @@ export default [
 
       parserOptions: {
         project: ['./tsconfig.json', './scripts/tsconfig.json'],
-        tsconfigRootDir: './',
         ecmaFeatures: {
           jsx: true,
         },
