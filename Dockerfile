@@ -6,14 +6,10 @@ RUN npm install -g pnpm
 
 WORKDIR /app
 
-# Copy package.json
-COPY package.json ./
+COPY . .
 
 # Install dependencies
 RUN pnpm install
-
-# Copy the rest of your application code
-COPY . .
 
 # Build the application
 RUN pnpm run build
