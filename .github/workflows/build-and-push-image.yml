@@ -62,13 +62,23 @@ jobs:
           docker push $IMAGE
           docker logout "${NEXUS_DOCKER_URL}"
 
+      - name: Set up SSH for CI
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
       - name: Create and push Git tag
-        if: github.event_name == 'pull_request'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: github.event_name != 'pull_request'
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git tag -a "${NEW_VERSION}" -m "Release ${NEW_VERSION}"
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
-          git push origin "${NEW_VERSION}"
+          git push origin "${NEW_VERSION}" --no-verify
+
+      - name: Remove SSH keys
+        run: rm -rf ~/.ssh
+
+      - name: Output new version
+        run: echo "New version is ${{ env.NEW_VERSION }}"
