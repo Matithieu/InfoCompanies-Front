@@ -33,7 +33,11 @@ jobs:
       - name: Get the last Git tag
         id: get_last_tag
         run: |
-          LAST_TAG=$(git describe --tags --abbrev=0 || echo "0.0.0")
+          git fetch --tags --force
+          LAST_TAG=$(git tag --sort=-creatordate | head -n 1)
+          if [ -z "$LAST_TAG" ]; then
+            LAST_TAG="0.0.0"
+          fi
           echo "LAST_TAG=${LAST_TAG}" >> $GITHUB_ENV
 
       - name: Calculate new version
