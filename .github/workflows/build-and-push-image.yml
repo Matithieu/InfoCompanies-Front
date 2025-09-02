@@ -63,9 +63,12 @@ jobs:
           docker logout "${NEXUS_DOCKER_URL}"
 
       - name: Create and push Git tag
-        if: github.event_name != 'pull_request'
+        if: github.event_name == 'pull_request'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git tag -a "${NEW_VERSION}" -m "Release ${NEW_VERSION}"
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
           git push origin "${NEW_VERSION}"
