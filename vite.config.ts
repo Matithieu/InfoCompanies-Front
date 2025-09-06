@@ -8,6 +8,21 @@ dotenv.config()
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/ui',
+  server: {
+    host: 'localhost',
+    https: {
+      key: '../config/certs/server.key',
+      cert: '../config/certs/server.crt',
+    },
+    port: 5173,
+    proxy: {
+      '/api': {
+        target: 'https://localhost:443',
+        secure: false,
+      },
+    },
+  },
   plugins: [
     react(),
     vitePluginEnvCompatible({
@@ -17,20 +32,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
-    },
-  },
-  base: '/',
-  server: {
-    https: {
-      key: '../config/certs/server.key',
-      cert: '../config/certs/server.crt',
-    },
-    port: 5173,
-    proxy: {
-      '/api': {
-        target: process.env.VITE_PROXY_BASE_URL,
-        secure: false,
-      },
     },
   },
   define: {
