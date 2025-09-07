@@ -103,6 +103,8 @@ export type Year = components['schemas']['FinancialPeriodDTO']['year']
 export type SocialMedia = components['schemas']['SocialMedia']
 export type Contact = components['schemas']['Contact']
 
+export type Configuration = components['schemas']['Configuration']
+
 // Other types (Not directly from the OpenAPI spec as they are JSONB in the DB)
 export type Schedule = {
   monday: string

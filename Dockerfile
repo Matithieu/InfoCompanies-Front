@@ -8,6 +8,8 @@ WORKDIR /app
 
 COPY . .
 
+ENV NODE_ENV=production
+
 # Install dependencies
 RUN pnpm install
 

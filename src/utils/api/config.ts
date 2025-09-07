@@ -18,7 +18,7 @@ export const fetchThroughProxy = async <
 > => {
   const { requestBody, parameters } = options || {}
 
-  const baseUrl = import.meta.env.VITE_API_PREFIX
+  const baseUrl = import.meta.env.VITE_API_PREFIX ?? '/api'
   if (!baseUrl) throw new Error('API prefix is not defined')
 
   let finalUrl = baseUrl + url

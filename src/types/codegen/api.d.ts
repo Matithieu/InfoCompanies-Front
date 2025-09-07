@@ -4,6 +4,22 @@
  */
 
 export interface paths {
+  '/configuration': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['getEnv']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/v1/autocomplete/cities': {
     parameters: {
       query?: never
@@ -531,6 +547,19 @@ export interface components {
       size: number
       socials: components['schemas']['SocialMedia']
     }
+    Configuration: {
+      oauthBaseUrl: string
+      oauthSignInRedirectUrl: string
+      oauthSignInUrl: string
+      oauthSignOutRedirectUrl: string
+      oauthSignOutUrl: string
+      publicPostHogHost: string
+      publicPostHogKey: string
+      stripeBillingPortalCode: string
+      stripePriceIdBasic: string
+      stripePriceIdFree: string
+      stripePriceIdPremium: string
+    }
     Contact: {
       email: string
       phoneNumber: string
@@ -827,6 +856,26 @@ export interface components {
 }
 export type $defs = Record<string, never>
 export interface operations {
+  getEnv: {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          '*/*': components['schemas']['Configuration']
+        }
+      }
+    }
+  }
   autocompleteCitiesByNames: {
     parameters: {
       query: {
@@ -1484,4 +1533,5 @@ export enum ApiPaths {
   autocompleteCitiesByName = '/v1/autocomplete/city',
   autocompleteCitiesByIds = '/v1/autocomplete/city/ids',
   autocompleteCitiesByNames = '/v1/autocomplete/cities',
+  getEnv = '/configuration',
 }

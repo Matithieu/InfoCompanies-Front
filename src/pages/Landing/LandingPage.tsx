@@ -1,6 +1,6 @@
 import './globals.css'
 
-import ShadCNThemeProvider from '@/containers/ShadCN'
+import ShadCNThemeProvider from '@/containers/ShadCN/ShadCnProvider'
 import { cn } from '@/lib/utils'
 import { FC } from 'react'
 

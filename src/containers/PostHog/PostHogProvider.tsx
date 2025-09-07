@@ -1,3 +1,4 @@
+import useConfigurationStore from '@/stores/ConfigurationStore'
 import useUserStore from '@/stores/UserStore'
 import posthog, { PostHogConfig } from 'posthog-js'
 import { PostHogProvider as PostHog } from 'posthog-js/react'
@@ -9,27 +10,21 @@ type PostHogProps = {
 
 const PostHogProvider: FC<PostHogProps> = ({ children }) => {
   const { user } = useUserStore()
+  const { configuration } = useConfigurationStore()
 
   const options: Partial<PostHogConfig> = {
-    api_host: import.meta.env.REACT_APP_PUBLIC_POSTHOG_HOST,
+    api_host: configuration?.publicPostHogHost,
   }
 
   useEffect(() => {
-    if (user) {
-      posthog.identify(user.id, {
-        email: user.email,
-      })
-    }
+    if (user) posthog.identify(user.id, { email: user.email })
   }, [user])
 
   // Avoid sending events in development
-  if (window.location.host === 'localhost:5173') return <>{children}</>
+  if (window.location.host.match('localhost')) return <>{children}</>
 
   return (
-    <PostHog
-      apiKey={import.meta.env.REACT_APP_PUBLIC_POSTHOG_KEY ?? ''}
-      options={options}
-    >
+    <PostHog apiKey={configuration?.publicPostHogKey ?? ''} options={options}>
       {children}
     </PostHog>
   )
