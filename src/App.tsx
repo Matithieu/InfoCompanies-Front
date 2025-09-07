@@ -7,11 +7,12 @@ import ReactDOM from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
 
 import LoadingCircular from './components/common/Loading/LoadingCircular'
-import LocaleProvider from './containers/LocaleProvider/index'
-import MaterialProvider from './containers/MUI/index'
-import PostHogProvider from './containers/PostHog/index'
-import AppRouter from './containers/Router/index'
-import ShadCNThemeProvider from './containers/ShadCN/index'
+import ConfigurationProvider from './containers/Configuration/ConfigurationProvider'
+import LocaleProvider from './containers/LocaleProvider/LocaleProvider'
+import MaterialProvider from './containers/Mui/MuiProvider'
+import PostHogProvider from './containers/PostHog/PostHogProvider'
+import AppRouter from './containers/Router/RouterProvider'
+import ShadCNThemeProvider from './containers/ShadCN/ShadCnProvider'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,21 +30,23 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <React.StrictMode>
-      <PostHogProvider>
-        <QueryClientProvider client={queryClient}>
-          <ShadCNThemeProvider>
-            <MaterialProvider>
-              <LocaleProvider>
-                <HelmetProvider>
-                  <Suspense fallback={<LoadingCircular />}>
-                    <AppRouter />
-                  </Suspense>
-                </HelmetProvider>
-              </LocaleProvider>
-            </MaterialProvider>
-          </ShadCNThemeProvider>
-        </QueryClientProvider>
-      </PostHogProvider>
+      <QueryClientProvider client={queryClient}>
+        <ConfigurationProvider>
+          <PostHogProvider>
+            <ShadCNThemeProvider>
+              <MaterialProvider>
+                <LocaleProvider>
+                  <HelmetProvider>
+                    <Suspense fallback={<LoadingCircular />}>
+                      <AppRouter />
+                    </Suspense>
+                  </HelmetProvider>
+                </LocaleProvider>
+              </MaterialProvider>
+            </ShadCNThemeProvider>
+          </PostHogProvider>
+        </ConfigurationProvider>
+      </QueryClientProvider>
     </React.StrictMode>
   )
 }

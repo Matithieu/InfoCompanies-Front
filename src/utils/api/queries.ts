@@ -133,6 +133,11 @@ export async function fetchAutoCompleteByIds(
   )
 }
 
+// Configuration
+export async function fetchConfiguration() {
+  return await fetchThroughProxy('/configuration', 'get')
+}
+
 // Stripe
 export async function startStripeSubscription(
   header: operations['newSubscriptionWithTrial']['parameters']['header'],

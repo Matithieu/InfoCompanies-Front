@@ -25,7 +25,6 @@ export default [
   {
     ignores: [
       'tailwind.config.js',
-      'vite.config.ts',
       'postcss.config.js',
       'eslint.config.mjs',
       'dist',
@@ -63,7 +62,8 @@ export default [
       sourceType: 'module',
 
       parserOptions: {
-        project: ['./tsconfig.json', './scripts/tsconfig.json'],
+        project: ['./tsconfig.json', './scripts/tsconfig.json', './tsconfig.build.json'],
+        tsconfigRootDir: __dirname,
         ecmaFeatures: {
           jsx: true,
         },

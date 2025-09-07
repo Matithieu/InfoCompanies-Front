@@ -17,7 +17,7 @@ import { lazy } from '@loadable/component'
 import { FC } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 
-import ToastProvider from '../Toast/index'
+import ToastProvider from '../Toast/ToastProvider'
 import { ProtectedRoutes, ProtectedSimpleRoutes } from './ProtectedRoutes'
 
 const Dashboard = lazy(() => import('@/pages/Dashboard/DashboardPage'))
