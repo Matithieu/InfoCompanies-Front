@@ -8,7 +8,7 @@ dotenv.config()
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/ui',
+  base: '/',
   server: {
     host: 'localhost',
     https: {
