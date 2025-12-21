@@ -20,6 +20,22 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/v1/ai': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    post: operations['askAi']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/v1/autocomplete/cities': {
     parameters: {
       query?: never
@@ -478,34 +494,29 @@ export interface paths {
 export type webhooks = Record<string, never>
 export interface components {
   schemas: {
+    AskRequest: {
+      prompt: string
+    }
     City: {
       /** Format: int32 */
       id: number
       name: string
     }
-    CompanyDetails: {
-      city: string
-      companyName: string
-      /** Format: int32 */
-      id: number
-      industrySector: string
-      region: string
-    }
-    CompanyDTO: {
+    Company: {
       address: string
       apeCode: string
       apeLabel: string
       city: string
       companyCategory: string
       companyName: string
-      contact: components['schemas']['Contact']
+      contact: components['schemas']['ContactDTO']
       /** Format: date */
       dateCreation: string
       department: string
       departmentNumber: string
       /** Format: date */
       deregistrationDate: string
-      financialPeriods: components['schemas']['FinancialPeriodDTO'][]
+      financialPeriods: components['schemas']['FinancialPeriod'][]
       /** Format: int32 */
       id: number
       industrySector: string
@@ -526,26 +537,34 @@ export interface components {
       /** Format: date */
       scrapingDate: string
       sirenNumber: string
-      socialMedia: components['schemas']['SocialMedia']
+      socialMedia: components['schemas']['SocialMediaDTO']
       tradeName: string
     }
-    CompanyDtoWithStatusDTO: {
-      companyDTO: components['schemas']['CompanyDTO']
-      userCompanyStatus: components['schemas']['UserCompanyStatus']
+    CompanyDetails: {
+      city: string
+      companyName: string
+      /** Format: int32 */
+      id: number
+      industrySector: string
+      region: string
     }
     CompanyFilterRequest: {
       cityNames: string[]
-      contacts: components['schemas']['Contact']
+      contacts: components['schemas']['ContactDTO']
       industrySectorNames: string[]
       isCompanySeen: boolean
       legalFormNames: string[]
-      numberOfEmployeeFilter: components['schemas']['NumberOfEmployeeFilter']
+      numberOfEmployeeFilter: components['schemas']['NumberOfEmployeeFilterDTO']
       /** Format: int32 */
       page: number
       regionNames: string[]
       /** Format: int32 */
       size: number
-      socials: components['schemas']['SocialMedia']
+      socials: components['schemas']['SocialMediaDTO']
+    }
+    CompanyWithStatus: {
+      companyDTO: components['schemas']['Company']
+      userCompanyStatus: components['schemas']['UserCompanyStatusModel']
     }
     Configuration: {
       oauthBaseUrl: string
@@ -560,7 +579,7 @@ export interface components {
       stripePriceIdFree: string
       stripePriceIdPremium: string
     }
-    Contact: {
+    ContactDTO: {
       email: string
       phoneNumber: string
       website: string
@@ -569,7 +588,7 @@ export interface components {
       value: string
       weak: boolean
     }
-    FinancialPeriodDTO: {
+    FinancialPeriod: {
       /** Format: date */
       closingDate: string
       /** @enum {string} */
@@ -586,7 +605,7 @@ export interface components {
       id: number
       name: string
     }
-    Leader: {
+    LeaderModel: {
       companyName: string
       eventName: string
       firstName: string
@@ -645,7 +664,7 @@ export interface components {
       /** Format: int32 */
       version: number
     }
-    NumberOfEmployeeFilter: {
+    NumberOfEmployeeFilterDTO: {
       /** Format: int32 */
       numberOfEmployee: number
       /** @enum {string} */
@@ -661,6 +680,24 @@ export interface components {
       pageSize: number
       sort: components['schemas']['SortObject'][]
       unpaged: boolean
+    }
+    PageCompany: {
+      content: components['schemas']['Company'][]
+      empty: boolean
+      first: boolean
+      last: boolean
+      /** Format: int32 */
+      number: number
+      /** Format: int32 */
+      numberOfElements: number
+      pageable: components['schemas']['PageableObject']
+      /** Format: int32 */
+      size: number
+      sort: components['schemas']['SortObject'][]
+      /** Format: int64 */
+      totalElements: number
+      /** Format: int32 */
+      totalPages: number
     }
     PageCompanyDetails: {
       content: components['schemas']['CompanyDetails'][]
@@ -680,8 +717,8 @@ export interface components {
       /** Format: int32 */
       totalPages: number
     }
-    PageCompanyDTO: {
-      content: components['schemas']['CompanyDTO'][]
+    PageCompanyWithStatus: {
+      content: components['schemas']['CompanyWithStatus'][]
       empty: boolean
       first: boolean
       last: boolean
@@ -698,26 +735,8 @@ export interface components {
       /** Format: int32 */
       totalPages: number
     }
-    PageCompanyDtoWithStatusDTO: {
-      content: components['schemas']['CompanyDtoWithStatusDTO'][]
-      empty: boolean
-      first: boolean
-      last: boolean
-      /** Format: int32 */
-      number: number
-      /** Format: int32 */
-      numberOfElements: number
-      pageable: components['schemas']['PageableObject']
-      /** Format: int32 */
-      size: number
-      sort: components['schemas']['SortObject'][]
-      /** Format: int64 */
-      totalElements: number
-      /** Format: int32 */
-      totalPages: number
-    }
-    PageLeader: {
-      content: components['schemas']['Leader'][]
+    PageLeaderModel: {
+      content: components['schemas']['LeaderModel'][]
       empty: boolean
       first: boolean
       last: boolean
@@ -792,7 +811,7 @@ export interface components {
         [key: string]: string[]
       }
     }
-    SocialMedia: {
+    SocialMediaDTO: {
       facebook: string
       instagram: string
       linkedin: string
@@ -820,7 +839,16 @@ export interface components {
       statusCode: number
     }
     UriBuilder: Record<string, never>
-    User: {
+    UserCompanyStatusModel: {
+      /** Format: int32 */
+      companyId: number
+      /** Format: int32 */
+      id: number
+      /** @enum {string} */
+      status: 'NOT_DONE' | 'TO_DO' | 'DONE'
+      userId: string
+    } | null
+    UserDTO: {
       country: string
       email: string
       firstName: string
@@ -838,15 +866,6 @@ export interface components {
       userName: string
       verified: boolean
     }
-    UserCompanyStatus: {
-      /** Format: int32 */
-      companyId: number
-      /** Format: int32 */
-      id: number
-      /** @enum {string} */
-      status: 'NOT_DONE' | 'TO_DO' | 'DONE'
-      userId: string
-    } | null
   }
   responses: never
   parameters: never
@@ -872,6 +891,30 @@ export interface operations {
         }
         content: {
           '*/*': components['schemas']['Configuration']
+        }
+      }
+    }
+  }
+  askAi: {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['AskRequest']
+      }
+    }
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          '*/*': string
         }
       }
     }
@@ -1158,7 +1201,7 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': components['schemas']['UserCompanyStatus']
+          '*/*': components['schemas']['UserCompanyStatusModel']
         }
       }
     }
@@ -1182,7 +1225,7 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': components['schemas']['PageCompanyDtoWithStatusDTO']
+          '*/*': components['schemas']['PageCompanyWithStatus']
         }
       }
     }
@@ -1204,7 +1247,7 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': components['schemas']['CompanyDtoWithStatusDTO']
+          '*/*': components['schemas']['CompanyWithStatus']
         }
       }
     }
@@ -1227,7 +1270,7 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': components['schemas']['PageCompanyDtoWithStatusDTO']
+          '*/*': components['schemas']['PageCompanyWithStatus']
         }
       }
     }
@@ -1250,7 +1293,7 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': components['schemas']['PageCompanyDTO']
+          '*/*': components['schemas']['PageCompany']
         }
       }
     }
@@ -1273,7 +1316,7 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': components['schemas']['PageCompanyDtoWithStatusDTO']
+          '*/*': components['schemas']['PageCompanyWithStatus']
         }
       }
     }
@@ -1295,7 +1338,7 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': components['schemas']['CompanyDTO']
+          '*/*': components['schemas']['Company']
         }
       }
     }
@@ -1364,7 +1407,7 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': components['schemas']['PageLeader']
+          '*/*': components['schemas']['PageLeaderModel']
         }
       }
     }
@@ -1386,7 +1429,7 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': components['schemas']['Leader']
+          '*/*': components['schemas']['LeaderModel']
         }
       }
     }
@@ -1408,7 +1451,7 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': components['schemas']['Leader'][]
+          '*/*': components['schemas']['LeaderModel'][]
         }
       }
     }
@@ -1464,7 +1507,7 @@ export interface operations {
   updateUser: {
     parameters: {
       query: {
-        user: components['schemas']['User']
+        user: components['schemas']['UserDTO']
       }
       header?: never
       path?: never
@@ -1498,7 +1541,7 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': components['schemas']['User']
+          '*/*': components['schemas']['UserDTO']
         }
       }
     }
@@ -1511,6 +1554,7 @@ export enum ApiPaths {
   completeOnboarding = '/v1/completeOnboarding',
   getCompaniesByFilters = '/v1/company/filter-by-parameters',
   updateStatus = '/v1/companies-status/update-status',
+  askAi = '/v1/ai',
   getUser = '/v1/user',
   getLeaderBySiren = '/v1/leader/get-by-siren/{siren}',
   getLeaderById = '/v1/leader/get-by-id/{id}',

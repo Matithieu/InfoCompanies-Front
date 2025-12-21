@@ -1,4 +1,4 @@
-import { FilterParams } from '@/stores/FiltersStore'
+import { FilterParams } from '@/stores/Filters/FiltersStore'
 import { useEffect } from 'react'
 
 export const useRemoveFilter = (

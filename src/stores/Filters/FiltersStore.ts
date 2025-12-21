@@ -2,6 +2,7 @@ import { SearchParams, SearchParamsNonNullable } from '@/types/index.types'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
+// This needs to be refactored.
 export type FilterParams = Omit<
   Required<
     SearchParams & {

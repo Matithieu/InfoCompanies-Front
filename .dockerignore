@@ -8,10 +8,6 @@ node_modules
 # Build directory
 dist
 
-# Test results
-/test-results/
-/playwright-report/
-
 # Environment files
 *.env.local
 
@@ -19,11 +15,6 @@ dist
 .vscode
 .idea
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
 
 # Git files
 .git

@@ -1,5 +1,8 @@
 import { formatMessage } from '@/services/intl/intl'
-import { FilterParams, useCompanyFilterStore } from '@/stores/FiltersStore'
+import {
+  FilterParams,
+  useCompanyFilterStore,
+} from '@/stores/Filters/FiltersStore'
 import { SearchParamsNonNullable } from '@/types/index.types'
 import { isNotNU } from '@/utils/assertion.util'
 import AddIcon from '@mui/icons-material/Add'
