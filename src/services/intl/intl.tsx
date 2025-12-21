@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   createIntl,
   createIntlCache,
   IntlFormatters,
   IntlShape,
+  MessageDescriptor,
 } from 'react-intl'
 
 import {
@@ -12,6 +12,9 @@ import {
 } from '../../containers/LocaleProvider/types'
 import { getLanguageAppLocale } from '../../containers/LocaleProvider/utils'
 import { isNotNU } from '../../utils/assertion.util'
+
+type IntlFormatMessageParams = Parameters<(typeof IntlService)['formatMessage']>
+type FormatMessageValuesParams = IntlFormatMessageParams['1']
 
 type IntlServiceType = {
   checkInstance: () => IntlShape
@@ -53,19 +56,28 @@ const IntlService: IntlServiceType = {
   get languageAppLocale() {
     return getLanguageAppLocale()
   },
-  formatMessage: (message: any, values: any) => {
+  formatMessage: (
+    message: MessageDescriptor,
+    values: FormatMessageValuesParams,
+  ) => {
     return IntlService.checkInstance().formatMessage(message, {
-      itemCount: values?.itemCount ?? 1,
+      itemCount: (values?.itemCount as number) ?? 1,
       ...values,
     })
   },
-  formatMessagePlural: (message: any, values: any) => {
+  formatMessagePlural: (
+    message: MessageDescriptor,
+    values: FormatMessageValuesParams,
+  ) => {
     return IntlService.checkInstance().formatMessage(message, {
       itemCount: 'many',
       ...values,
     })
   },
-  formatMessageSingle: (message: any, values: any) => {
+  formatMessageSingle: (
+    message: MessageDescriptor,
+    values: FormatMessageValuesParams,
+  ) => {
     return IntlService.checkInstance().formatMessage(message, {
       itemCount: 1,
       ...values,

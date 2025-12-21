@@ -118,5 +118,5 @@ export type Schedule = {
 
 export type Reviews = {
   stars: number
-  numberOfReviews: number
+  number_of_reviews: number
 }

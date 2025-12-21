@@ -13,7 +13,7 @@ import Filters from '../../components/parts/Filters/Filters'
 import ListOfLeaders from '../../components/parts/LeaderList/LeaderList'
 import TableCompany from '../../components/parts/TableCompany/TableCompany'
 import JoyRideOnboardingProvider from '../../containers/JoyRide/JoyRideProvider'
-import { useCompanyFilterStore } from '../../stores/FiltersStore'
+import { useCompanyFilterStore } from '../../stores/Filters/FiltersStore'
 import useUserStore from '../../stores/UserStore'
 import { updateUserOnboarding } from '../../utils/api/mutations'
 import { DashboardColumnGenerics } from './dashboard.types'
@@ -33,7 +33,7 @@ const DashboardPage: FC = () => {
   const { filterValues } = useCompanyFilterStore()
   const queryClient = useQueryClient()
 
-  // As we have the useEffect next, it re-trigger the query when pagination changes
+  // As we have the useEffect next, it re-triggers the query when pagination changes
   const { page } = pagination
   const { isLoading, data, error } = useQuery({
     queryKey: ['companies', filterValues, page],
@@ -45,10 +45,10 @@ const DashboardPage: FC = () => {
   const [tableData, setTableData, updateCompanyData] = useSetTableData(data)
 
   useEffect(() => {
-    if (data) {
-      setTableData(data)
-      setPagination((prev) => ({ ...prev, totalPages: data.totalPages }))
-    }
+    if (!data) return undefined
+
+    setTableData(data)
+    setPagination((prev) => ({ ...prev, totalPages: data.totalPages }))
   }, [data, setTableData, pagination.totalPages, setPagination])
 
   const onboardingMutation = useMutation({

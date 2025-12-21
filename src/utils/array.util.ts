@@ -1,4 +1,4 @@
-// Helper function to chunk the array into smaller arrays
+/** Helper function to chunk the array into smaller arrays  */
 export const chunkArray = <T>(array: T[], chunkSize: number): T[][] => {
   return array.reduce((resultArray: T[][], item: T, index: number) => {
     const chunkIndex = Math.floor(index / chunkSize)

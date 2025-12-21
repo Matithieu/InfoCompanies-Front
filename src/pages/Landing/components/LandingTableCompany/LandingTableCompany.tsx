@@ -5,7 +5,7 @@ import {
   handleCopyToClipboard,
   handleOpenInNewTab,
 } from '@/pages/Dashboard/dashboardPage.util'
-import { useCompanyFilterStore } from '@/stores/FiltersStore'
+import { useCompanyFilterStore } from '@/stores/Filters/FiltersStore'
 import { fetchCompanyOnLandingPage } from '@/utils/api/queries'
 import { useQuery } from '@tanstack/react-query'
 import { FC } from 'react'

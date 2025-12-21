@@ -4,7 +4,7 @@ import SocialsFilter from '@/components/common/Select/SocialMedia/SocialsFilter'
 import Switch from '@/components/common/Switch/Switch'
 import commonMessages from '@/services/intl/common.messages'
 import { formatMessage } from '@/services/intl/intl'
-import { FilterParams } from '@/stores/FiltersStore'
+import { FilterParams } from '@/stores/Filters/FiltersStore'
 import { SearchParamsNonNullable } from '@/types/index.types'
 import { Box, Typography } from '@mui/joy'
 
