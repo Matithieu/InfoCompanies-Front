@@ -73,11 +73,11 @@ export type Page = Pick<
 > & { page: number }
 export type PageCompanyDetails = components['schemas']['PageCompanyDetails']
 export type PageCompanyDtoWithStatusDTO =
-  components['schemas']['PageCompanyDtoWithStatusDTO']
-export type PageLeader = components['schemas']['PageLeader']
+  components['schemas']['PageCompanyWithStatus']
+export type PageLeader = components['schemas']['PageLeaderModel']
 
 // Main entity types
-export type Leader = components['schemas']['Leader']
+export type Leader = components['schemas']['LeaderModel']
 
 // Auto-complete types
 export type LegalForm = components['schemas']['LegalForm']
@@ -85,23 +85,22 @@ export type IndustrySector = components['schemas']['IndustrySector']
 export type City = components['schemas']['City']
 export type Region = components['schemas']['Region']
 
-export type User = components['schemas']['User']
+export type User = components['schemas']['UserDTO']
 
 // Combined types
-export type CompanyDtoWithStatusDTO =
-  components['schemas']['CompanyDtoWithStatusDTO']
-export type CompanyDTO = components['schemas']['CompanyDTO']
+export type CompanyDtoWithStatusDTO = components['schemas']['CompanyWithStatus']
+export type CompanyDTO = components['schemas']['Company']
 export type CompanyDetails = components['schemas']['CompanyDetails']
 
-export type UserCompanyStatus = components['schemas']['UserCompanyStatus']
+export type UserCompanyStatus = components['schemas']['UserCompanyStatusModel']
 export type NonNullableUserCompanyStatus = NonNullable<UserCompanyStatus>
 
 export type CheckStatus = NonNullable<
-  components['schemas']['UserCompanyStatus']
+  components['schemas']['UserCompanyStatusModel']
 >['status']
-export type Year = components['schemas']['FinancialPeriodDTO']['year']
-export type SocialMedia = components['schemas']['SocialMedia']
-export type Contact = components['schemas']['Contact']
+export type Year = components['schemas']['FinancialPeriod']['year']
+export type SocialMedia = components['schemas']['SocialMediaDTO']
+export type Contact = components['schemas']['ContactDTO']
 
 export type Configuration = components['schemas']['Configuration']
 

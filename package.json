@@ -15,7 +15,7 @@
     "postinstall": "tsc -p scripts/tsconfig.json",
     "get-token": "node ./scripts/build/get-token.mjs",
     "extract-types": "node ./scripts/build/generate-types.mjs extract-types-internal",
-    "extract-types-internal": "openapi-typescript http://localhost:8083/v3/api-docs -o src/types/codegen/api.d.ts --alphabetize --make-paths-enum --generate-path-params --properties-required-by-default && prettier --write src/types/codegen/api.d.ts && eslint src/types/codegen/api.d.ts --fix"
+    "extract-types-internal": "openapi-typescript http://localhost:8083/v3/api-docs --redocly='redocly.yaml' -o src/types/codegen/api.d.ts --alphabetize --make-paths-enum --generate-path-params --properties-required-by-default && prettier --write src/types/codegen/api.d.ts && eslint src/types/codegen/api.d.ts --fix"
   },
   "engines": {
     "node": ">20"

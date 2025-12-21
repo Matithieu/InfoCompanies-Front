@@ -1,4 +1,5 @@
-// scripts/fetch-openapi.ts
+import 'dotenv/config'
+
 import https from 'https'
 import fetch from 'node-fetch'
 
