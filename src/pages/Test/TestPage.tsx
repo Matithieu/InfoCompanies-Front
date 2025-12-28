@@ -1,3 +1,4 @@
+import JumpingDots from '@/components/common/JumpingDots/JumpingDots'
 import { useStreamAI } from '@/hooks/useStreamAI'
 import { Button, Input } from '@mui/joy'
 import { Typography } from '@mui/material'
@@ -42,7 +43,7 @@ const Test: FC = () => {
       </div>
 
       <Typography gutterBottom component="h1" variant="h4">
-        {response ? response : '...'}
+        {response ? response : <JumpingDots />}
       </Typography>
     </>
   )
