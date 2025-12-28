@@ -6,7 +6,7 @@ import {
   AutocompleteEndpointSingular,
 } from '@/types/index.types'
 
-import { fetchThroughProxy } from './config'
+import { fetchThroughProxy } from './network/fetchThroughProxy'
 
 /**
  *
