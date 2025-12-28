@@ -1,6 +1,6 @@
 import { operations } from '@/types/codegen/api'
 
-import { fetchThroughProxy } from './config'
+import { fetchThroughProxy } from './network/fetchThroughProxy'
 
 export async function updateUserOnboarding() {
   return await fetchThroughProxy('/v1/completeOnboarding', 'post')

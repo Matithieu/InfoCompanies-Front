@@ -1,8 +1,8 @@
 import { paths } from '@/types/codegen/api'
 
-import { CombinedParametersType } from './api.types'
-import handleStatusError from './errors/handleStatusError'
-import handleToastErrors from './errors/handleToastErrors'
+import { CombinedParametersType } from '../api.types'
+import handleStatusError from '../errors/handleStatusError'
+import handleToastErrors from '../errors/handleToastErrors'
 
 export const fetchThroughProxy = async <
   U extends keyof paths,
@@ -19,9 +19,8 @@ export const fetchThroughProxy = async <
   const { requestBody, parameters } = options || {}
 
   const baseUrl = import.meta.env.VITE_API_PREFIX ?? '/api'
-  if (!baseUrl) throw new Error('API prefix is not defined')
-
   let finalUrl = baseUrl + url
+
   const fetchOptions: RequestInit = {
     method: method.toString().toUpperCase(),
     headers: {
@@ -29,7 +28,6 @@ export const fetchThroughProxy = async <
     },
   }
 
-  // handle path params
   // handle path params
   if (
     parameters &&

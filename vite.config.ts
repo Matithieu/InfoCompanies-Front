@@ -18,8 +18,9 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'https://localhost:443',
+        target: process.env.API_BACKEND_URL || 'https://localhost:443',
         secure: false,
+        rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
   },
