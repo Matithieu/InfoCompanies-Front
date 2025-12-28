@@ -119,3 +119,6 @@ export type Reviews = {
   stars: number
   number_of_reviews: number
 }
+
+// AI
+export type ChatResponse = components['schemas']['ChatResponse']

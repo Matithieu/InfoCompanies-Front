@@ -1,36 +1,49 @@
-import { Button } from '@/components/ui/button copy'
-import AddIcon from '@mui/icons-material/Add'
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
+import { useStreamAI } from '@/hooks/useStreamAI'
+import { Button, Input } from '@mui/joy'
 import { Typography } from '@mui/material'
-import { FC } from 'react'
+import { FC, useState } from 'react'
 
 const Test: FC = () => {
+  const [userInput, setUserInput] = useState<string>('Hello, how are you?')
+
+  const { response, loading, streamAI, cancel, reset } = useStreamAI({
+    url: '/v1/stream-ai',
+  })
+
+  const handleSubmit = () => {
+    streamAI(userInput)
+  }
+
   return (
     <>
+      <Input
+        inputMode="text"
+        placeholder="Type something..."
+        value={userInput}
+        onChange={(event) => setUserInput(event.target.value)}
+      />
+
       <div>
-        <Button>
-          <AddIcon style={{ fontSize: '1.2rem' }} />
+        <Button
+          disabled={loading}
+          sx={{ marginTop: '1rem' }}
+          onClick={handleSubmit}
+        >
+          Submit
+        </Button>
+
+        <Button disabled={!loading} sx={{ marginTop: '1rem' }} onClick={cancel}>
+          Cancel
+        </Button>
+
+        <Button disabled={loading} sx={{ marginTop: '1rem' }} onClick={reset}>
+          Reset
         </Button>
       </div>
 
-      <div style={{ padding: 10 }} />
-
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}
-      >
-        <Button style={{ borderRadius: '50%' }}>
-          <KeyboardArrowLeftIcon />
-        </Button>
-        <Typography variant="body2"> 1 / 10 </Typography>
-        <Button style={{ borderRadius: '50%' }}>
-          <KeyboardArrowRightIcon />
-        </Button>
-      </div>
+      <Typography gutterBottom component="h1" variant="h4">
+        {response ? response : '...'}
+      </Typography>
     </>
   )
 }
