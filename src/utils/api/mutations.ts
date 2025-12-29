@@ -3,7 +3,7 @@ import { operations } from '@/types/codegen/api'
 import { fetchThroughProxy } from './network/fetchThroughProxy'
 
 export async function updateUserOnboarding() {
-  return await fetchThroughProxy('/v1/completeOnboarding', 'post')
+  return await fetchThroughProxy('/v1/user/complete-onboarding', 'post')
 }
 
 export async function updateSeenCompany(

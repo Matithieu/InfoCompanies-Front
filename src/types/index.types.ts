@@ -122,3 +122,6 @@ export type Reviews = {
 
 // AI
 export type ChatResponse = components['schemas']['ChatResponse']
+export type ChatStreamResponse = components['schemas']['ChatStreamResponseDTO']
+export type MessageHistory = components['schemas']['MessageDTO']
+export type ConversationHistory = components['schemas']['ConversationDTO']
