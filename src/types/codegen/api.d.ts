@@ -20,22 +20,6 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/v1/ask-ai': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get: operations['generation']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
   '/v1/autocomplete/cities': {
     parameters: {
       query?: never
@@ -228,6 +212,58 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/v1/chat/conversation/{conversationId}': {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        conversationId: string
+      }
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    post: operations['streamGeneration']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/v1/chat/conversation/all': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['getAllUserConversations']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/v1/chat/conversation/history/{conversationId}': {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        conversationId: string
+      }
+      cookie?: never
+    }
+    get: operations['getConversationHistory']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/v1/companies-status/update-status': {
     parameters: {
       query?: never
@@ -358,22 +394,6 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/v1/completeOnboarding': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post: operations['completeOnboarding']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
   '/v1/leader/get-by-first-and-last-name': {
     parameters: {
       query?: never
@@ -426,22 +446,6 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/v1/stream-ai': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get: operations['streamGeneration']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
   '/v1/stripe/subscriptions/trial': {
     parameters: {
       query?: never
@@ -474,7 +478,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/v1/update-user': {
+  '/v1/user/complete-onboarding': {
     parameters: {
       query?: never
       header?: never
@@ -482,15 +486,15 @@ export interface paths {
       cookie?: never
     }
     get?: never
-    put: operations['updateUser']
-    post?: never
+    put?: never
+    post: operations['completeOnboarding']
     delete?: never
     options?: never
     head?: never
     patch?: never
     trace?: never
   }
-  '/v1/user': {
+  '/v1/user/get-user': {
     parameters: {
       query?: never
       header?: never
@@ -499,6 +503,22 @@ export interface paths {
     }
     get: operations['getUser']
     put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/v1/user/update-user': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put: operations['updateUser']
     post?: never
     delete?: never
     options?: never
@@ -537,6 +557,12 @@ export interface components {
       promptMetadata: components['schemas']['PromptMetadata']
       rateLimit: components['schemas']['RateLimit']
       usage: components['schemas']['Usage']
+    }
+    ChatStreamResponseDTO: {
+      chatResponse: components['schemas']['ChatResponse']
+      conversationId: string
+      /** Format: int64 */
+      timestamp: number
     }
     City: {
       /** Format: int32 */
@@ -625,6 +651,9 @@ export interface components {
       phoneNumber: string
       website: string
     } | null
+    ConversationDTO: {
+      conversationId: string
+    }
     EntityTag: {
       value: string
       weak: boolean
@@ -683,8 +712,8 @@ export interface components {
       uri: string
       uriBuilder: components['schemas']['UriBuilder']
     }
-    LLMAnswerDTO: {
-      answer: string
+    LLMRequest: {
+      userInput: string
     }
     Media: {
       data: Record<string, never>
@@ -702,6 +731,13 @@ export interface components {
       type: string
       wildcardSubtype: boolean
       wildcardType: boolean
+    }
+    MessageDTO: {
+      message: string
+      /** @enum {string} */
+      messageType: 'USER' | 'ASSISTANT' | 'SYSTEM' | 'TOOL'
+      /** Format: date-time */
+      timestamp: string
     }
     MimeType: {
       charset: string
@@ -1017,28 +1053,6 @@ export interface operations {
       }
     }
   }
-  generation: {
-    parameters: {
-      query: {
-        userInput: string
-      }
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          '*/*': components['schemas']['LLMAnswerDTO']
-        }
-      }
-    }
-  }
   autocompleteCitiesByNames: {
     parameters: {
       query: {
@@ -1303,6 +1317,74 @@ export interface operations {
       }
     }
   }
+  streamGeneration: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        conversationId: string
+      }
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['LLMRequest']
+      }
+    }
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'text/event-stream': components['schemas']['ChatStreamResponseDTO'][]
+        }
+      }
+    }
+  }
+  getAllUserConversations: {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          '*/*': components['schemas']['ConversationDTO'][]
+        }
+      }
+    }
+  }
+  getConversationHistory: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        conversationId: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          '*/*': components['schemas']['MessageDTO'][]
+        }
+      }
+    }
+  }
   updateStatus: {
     parameters: {
       query: {
@@ -1487,26 +1569,6 @@ export interface operations {
       }
     }
   }
-  completeOnboarding: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          '*/*': components['schemas']['Response']
-        }
-      }
-    }
-  }
   getLeadersByName: {
     parameters: {
       query: {
@@ -1576,28 +1638,6 @@ export interface operations {
       }
     }
   }
-  streamGeneration: {
-    parameters: {
-      query: {
-        userInput: string
-      }
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'text/event-stream': components['schemas']['ChatResponse'][]
-        }
-      }
-    }
-  }
   newSubscriptionWithTrial: {
     parameters: {
       query?: never
@@ -1646,11 +1686,9 @@ export interface operations {
       }
     }
   }
-  updateUser: {
+  completeOnboarding: {
     parameters: {
-      query: {
-        user: components['schemas']['UserDTO']
-      }
+      query?: never
       header?: never
       path?: never
       cookie?: never
@@ -1688,16 +1726,38 @@ export interface operations {
       }
     }
   }
+  updateUser: {
+    parameters: {
+      query: {
+        user: components['schemas']['UserDTO']
+      }
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          '*/*': components['schemas']['Response']
+        }
+      }
+    }
+  }
 }
 export enum ApiPaths {
-  updateUser = '/v1/update-user',
+  updateUser = '/v1/user/update-user',
+  completeOnboarding = '/v1/user/complete-onboarding',
   handleStripeWebhook = '/v1/stripe/webhook',
   newSubscriptionWithTrial = '/v1/stripe/subscriptions/trial',
-  completeOnboarding = '/v1/completeOnboarding',
   getCompaniesByFilters = '/v1/company/filter-by-parameters',
   updateStatus = '/v1/companies-status/update-status',
-  getUser = '/v1/user',
-  streamGeneration = '/v1/stream-ai',
+  streamGeneration = '/v1/chat/conversation/{conversationId}',
+  getUser = '/v1/user/get-user',
   getLeaderBySiren = '/v1/leader/get-by-siren/{siren}',
   getLeaderById = '/v1/leader/get-by-id/{id}',
   getLeadersByName = '/v1/leader/get-by-first-and-last-name',
@@ -1707,6 +1767,8 @@ export enum ApiPaths {
   getCompaniesOnLandingByFilters = '/v1/company/landing-filter',
   getCompaniesSeenByUser = '/v1/company/get-seen-by-user',
   getCompanyById = '/v1/company/get-by-id/{id}',
+  getConversationHistory = '/v1/chat/conversation/history/{conversationId}',
+  getAllUserConversations = '/v1/chat/conversation/all',
   autocompleteRegionsByNames = '/v1/autocomplete/regions',
   autocompleteRegionsByName = '/v1/autocomplete/region',
   autocompleteRegionsByIds = '/v1/autocomplete/region/ids',
@@ -1719,6 +1781,5 @@ export enum ApiPaths {
   autocompleteCitiesByName = '/v1/autocomplete/city',
   autocompleteCitiesByIds = '/v1/autocomplete/city/ids',
   autocompleteCitiesByNames = '/v1/autocomplete/cities',
-  generation = '/v1/ask-ai',
   getEnv = '/configuration',
 }

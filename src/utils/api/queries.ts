@@ -14,7 +14,7 @@ import { fetchThroughProxy } from './network/fetchThroughProxy'
  *
  */
 export const fetchUser = async () => {
-  return await fetchThroughProxy('/v1/user', 'get')
+  return await fetchThroughProxy('/v1/user/get-user', 'get')
 }
 
 // Company
@@ -79,7 +79,7 @@ export async function fetchFavorites(
 export async function updateUser(
   query: operations['updateUser']['parameters']['query'],
 ) {
-  return await fetchThroughProxy('/v1/update-user', 'put', {
+  return await fetchThroughProxy('/v1/user/update-user', 'put', {
     parameters: { query },
   })
 }
@@ -145,4 +145,19 @@ export async function startStripeSubscription(
   return await fetchThroughProxy('/v1/stripe/subscriptions/trial', 'post', {
     parameters: { header },
   })
+}
+
+// AI
+export async function fetchCurrentConversationHistory(conversationId: string) {
+  return await fetchThroughProxy(
+    `/v1/chat/conversation/history/{conversationId}`,
+    'get',
+    {
+      parameters: { path: { conversationId } },
+    },
+  )
+}
+
+export async function fetchAllConversationsHistory() {
+  return await fetchThroughProxy('/v1/chat/conversation/all', 'get')
 }
