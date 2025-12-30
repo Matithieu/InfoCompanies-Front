@@ -8,7 +8,7 @@ import { FC, useEffect, useRef, useState } from 'react'
 
 import SearchAppBar from '../../../components/common/SearchBar'
 import { closeSidebar } from '../layout.util'
-import LayoutListItems from './LayoutListItems'
+import LayoutListItems from './LayoutListItem/LayoutListItems'
 
 const LayoutSidebar: FC = () => {
   const [open, setOpen] = useState(false)

@@ -12,7 +12,6 @@ const Message: FC<MessageHistory> = ({ message, messageType, timestamp }) => {
         textAlign: messageType === 'USER' ? 'right' : 'left',
         backgroundColor: messageType === 'USER' ? '#e0f7fa' : '#f1f8e9',
         padding: '8px',
-        borderRadius: '4px',
       }}
       onMouseEnter={() => setIsMessageHovered(true)}
       onMouseLeave={() => setIsMessageHovered(false)}

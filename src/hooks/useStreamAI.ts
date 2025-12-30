@@ -3,39 +3,34 @@ import { ChatStreamResponse } from '@/types/index.types'
 import { asserts, NNU } from '@/utils/assertion.util'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-type UseStreamAIProps = {
+type UseStreamAiProps = {
   url: keyof paths
   parameters?: {
     pathVariable?: Record<string, string>
   }
 }
 
-type UseStreamAIReturn = {
-  response: string
+type UseStreamAiReturn = {
+  streamAiResponse: string
   isLoading: boolean
   error: Error | null
   conversationId?: string
-  streamAI: (userInput: string) => Promise<void>
-  cancel: () => void
+  streamAi: (userInput: string) => Promise<void>
+  cancelStreamAi: () => void
 }
 
-export function useStreamAI({
+export function useStreamAi({
   url: receivedUrl,
   parameters,
-}: UseStreamAIProps): UseStreamAIReturn {
+}: UseStreamAiProps): UseStreamAiReturn {
   const baseUrl = import.meta.env.VITE_API_PREFIX ?? '/api'
 
   const [conversationId, setConversationId] = useState<string>()
-  const [response, setResponse] = useState('')
+  const [streamAiResponse, setResponse] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
 
   const abortControllerRef = useRef<AbortController | null>(null)
-  const conversationIdRef = useRef<string | undefined>(undefined)
-
-  useEffect(() => {
-    conversationIdRef.current = conversationId
-  }, [conversationId])
 
   const buildUrl = useCallback(() => {
     let endpoint = `${baseUrl}${receivedUrl}`
@@ -50,13 +45,13 @@ export function useStreamAI({
     return endpoint
   }, [baseUrl, receivedUrl, parameters])
 
-  const cancel = useCallback(() => {
+  const cancelStreamAi = useCallback(() => {
     abortControllerRef.current?.abort()
     abortControllerRef.current = null
     setIsLoading(false)
   }, [])
 
-  const streamAI = useCallback(
+  const streamAi = useCallback(
     async (userInput: string) => {
       setIsLoading(true)
       setResponse('')
@@ -104,10 +99,7 @@ export function useStreamAI({
 
           const conversationId = chunk.conversationId
 
-          if (!conversationIdRef.current && conversationId) {
-            conversationIdRef.current = conversationId
-            setConversationId(conversationId)
-          }
+          setConversationId(conversationId)
         }
 
         while (true) {
@@ -146,5 +138,12 @@ export function useStreamAI({
     return () => abortControllerRef.current?.abort()
   }, [])
 
-  return { response, isLoading, error, conversationId, streamAI, cancel }
+  return {
+    streamAiResponse,
+    isLoading,
+    error,
+    conversationId,
+    streamAi,
+    cancelStreamAi,
+  }
 }

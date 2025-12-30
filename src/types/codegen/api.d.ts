@@ -246,6 +246,24 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/v1/chat/conversation/delete/{conversationId}': {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        conversationId: string
+      }
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    post?: never
+    delete: operations['deleteConversation']
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/v1/chat/conversation/history/{conversationId}': {
     parameters: {
       query?: never
@@ -1363,6 +1381,26 @@ export interface operations {
       }
     }
   }
+  deleteConversation: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        conversationId: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content?: never
+      }
+    }
+  }
   getConversationHistory: {
     parameters: {
       query?: never
@@ -1782,4 +1820,5 @@ export enum ApiPaths {
   autocompleteCitiesByIds = '/v1/autocomplete/city/ids',
   autocompleteCitiesByNames = '/v1/autocomplete/cities',
   getEnv = '/configuration',
+  deleteConversation = '/v1/chat/conversation/delete/{conversationId}',
 }

@@ -3,6 +3,7 @@ export const routesPath = {
   base: '/ui',
   dashboard: '/ui/dashboard',
   favorites: '/ui/favorites',
+  ai: '/ui/ai',
   settings: '/ui/settings',
   account: '/ui/account',
   search: '/ui/search',
