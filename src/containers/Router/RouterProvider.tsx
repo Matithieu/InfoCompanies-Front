@@ -1,4 +1,5 @@
 import AccountPage from '@/pages/Account/AccountPage'
+import Ai from '@/pages/Ai/Ai'
 import Page404 from '@/pages/Error/404'
 import FavoritesPage from '@/pages/Favorites/FavoritesPage'
 import LandingPage from '@/pages/Landing/LandingPage'
@@ -43,6 +44,7 @@ const AppRouter: FC = () => {
             <Route element={<ProtectedRoutes />}>
               <Route element={<Layout />}>
                 <Route element={<Dashboard />} path="dashboard" />
+                <Route element={<Ai />} path="ai" />
                 <Route element={<FavoritesPage />} path="favorites" />
                 <Route element={<SettingsPage />} path="settings" />
                 <Route element={<AccountPage />} path="account" />

@@ -1,5 +1,5 @@
 import { EmployeeFilter, SignComparator } from '@/types/index.types'
-import { isNotNU } from '@/utils/assertion.util'
+import { isNotNullOrUndefined } from '@/utils/assertion.util'
 import ClearIcon from '@mui/icons-material/Clear'
 import {
   Dropdown,
@@ -37,8 +37,8 @@ const ComparatorInput: FC<ComparatorInputProps> = ({
 
     // Only call onValueChange if both values are defined
     if (
-      isNotNU(updatedFilter.numberOfEmployee) &&
-      isNotNU(updatedFilter.signComparator)
+      isNotNullOrUndefined(updatedFilter.numberOfEmployee) &&
+      isNotNullOrUndefined(updatedFilter.signComparator)
     ) {
       onValueChange({
         numberOfEmployee: updatedFilter.numberOfEmployee,

@@ -83,5 +83,22 @@ export const fetchThroughProxy = async <
     )
   }
 
+  // Check if response has content
+  const contentLength = response.headers.get('content-length')
+  const contentType = response.headers.get('content-type')
+
+  // Return null for empty responses (DELETE, 204, or no content)
+  if (
+    response.status === 204 ||
+    contentLength === '0' ||
+    !contentType?.includes('application/json')
+  ) {
+    return null as unknown as paths[U][M] extends {
+      responses: { 200: { content: { '*/*': infer R } } }
+    }
+      ? R
+      : unknown
+  }
+
   return await response.json()
 }

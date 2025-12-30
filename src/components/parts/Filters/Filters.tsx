@@ -4,7 +4,7 @@ import {
   useCompanyFilterStore,
 } from '@/stores/Filters/FiltersStore'
 import { SearchParamsNonNullable } from '@/types/index.types'
-import { isNotNU } from '@/utils/assertion.util'
+import { isNotNullOrUndefined } from '@/utils/assertion.util'
 import AddIcon from '@mui/icons-material/Add'
 import { Dropdown, ListDivider, Menu, MenuButton, MenuItem } from '@mui/joy'
 import { Box, Tooltip } from '@mui/material'
@@ -36,7 +36,7 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
       const filterKey = filterToShowToFilterKeyMapping[filter]
       const value = filterValues[filterKey]
       return (
-        isNotNU(value) &&
+        isNotNullOrUndefined(value) &&
         (!Array.isArray(value) || value.length > 0) &&
         value !== false
       )

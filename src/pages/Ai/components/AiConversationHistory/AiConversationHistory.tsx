@@ -1,17 +1,24 @@
 import Loading from '@/components/common/Loading/Loading'
 import { ConversationHistory as ConversationHistoryType } from '@/types/index.types'
-import { NNU } from '@/utils/assertion.util'
+import CreateIcon from '@mui/icons-material/Create'
+import { Button } from '@mui/joy'
 import { FC } from 'react'
 
-type ConversationHistoryProps = {
+import AiConversation from './components/AiConversations'
+
+type AiConversationHistoryProps = {
+  currentConversationId: string
   conversations: Array<ConversationHistoryType> | undefined
+  onDeleteConversation: (conversationId: string) => void
   onNewConversation: () => void
   onSelectConversation: (conversationId: string) => void
   isLoading: boolean
 }
 
-const ConversationHistory: FC<ConversationHistoryProps> = ({
+const AiConversationHistory: FC<AiConversationHistoryProps> = ({
+  currentConversationId,
   conversations,
+  onDeleteConversation,
   onNewConversation,
   onSelectConversation,
   isLoading,
@@ -23,6 +30,7 @@ const ConversationHistory: FC<ConversationHistoryProps> = ({
   return (
     <div
       style={{
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
         border: '1px solid #ccc',
         padding: '10px',
         width: '300px',
@@ -31,7 +39,7 @@ const ConversationHistory: FC<ConversationHistoryProps> = ({
         flexDirection: 'column',
       }}
     >
-      <h2>Conversation History</h2>
+      <h2 className="pb-2">Conversation History</h2>
 
       <div
         style={{
@@ -47,37 +55,29 @@ const ConversationHistory: FC<ConversationHistoryProps> = ({
               style={{
                 padding: '10px',
                 cursor: 'pointer',
-                border: '5px solid #eee',
+                marginBottom: '10px',
+                borderRadius: '4px',
               }}
               onClick={onNewConversation}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'lightgray'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'transparent'
-              }}
             >
-              + New Conversation
+              <Button
+                fullWidth
+                startDecorator={<CreateIcon />}
+                variant="outlined"
+              >
+                New Conversation
+              </Button>
             </li>
 
-            {NNU(conversations).map(({ conversationId }, index) => (
-              <li
+            {conversations.map(({ conversationId }, index) => (
+              <AiConversation
                 key={conversationId}
-                style={{
-                  cursor: 'pointer',
-                  borderBottom: '1px solid #eee',
-                  padding: '5px 0',
-                }}
-                onClick={() => onSelectConversation(conversationId)}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'lightgray'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'transparent'
-                }}
-              >
-                Conversation {index + 1}
-              </li>
+                conversationId={conversationId}
+                currentConversationId={currentConversationId}
+                index={index}
+                onDeleteConversation={onDeleteConversation}
+                onSelectConversation={onSelectConversation}
+              />
             ))}
           </ul>
         </Loading>
@@ -86,4 +86,4 @@ const ConversationHistory: FC<ConversationHistoryProps> = ({
   )
 }
 
-export default ConversationHistory
+export default AiConversationHistory

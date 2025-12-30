@@ -7,12 +7,12 @@ import { useParams } from 'react-router'
 import commonMessages from '../../services/intl/common.messages'
 import { formatMessage } from '../../services/intl/intl'
 import { fetchLeaderById } from '../../utils/api/queries'
-import { asserts, isNotNU } from '../../utils/assertion.util'
+import { asserts, isNotNullOrUndefined } from '../../utils/assertion.util'
 import LeaderTable from './components/LeaderTable'
 
 const LeaderPage: FC = () => {
   const { id } = useParams()
-  asserts(isNotNU(id))
+  asserts(isNotNullOrUndefined(id))
 
   const { data: leader, isLoading } = useQuery({
     queryKey: ['leader', id],
@@ -23,11 +23,11 @@ const LeaderPage: FC = () => {
     return formatMessage(commonMessages.loading)
   }
 
-  if (!isNotNU(leader)) {
+  if (!isNotNullOrUndefined(leader)) {
     return formatMessage(commonMessages.noAvailableData)
   }
 
-  if (isNotNU(leader)) {
+  if (isNotNullOrUndefined(leader)) {
     return (
       <Grid flexDirection="column" sx={{ px: { xs: 2, md: 6 } }}>
         <HeaderTitle text={leader.lastName + ' ' + leader.firstName} />

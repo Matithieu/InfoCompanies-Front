@@ -11,7 +11,7 @@ import {
   appLocaleToTranslationMessages,
 } from '../../containers/LocaleProvider/types'
 import { getLanguageAppLocale } from '../../containers/LocaleProvider/utils'
-import { isNotNU } from '../../utils/assertion.util'
+import { isNotNullOrUndefined } from '../../utils/assertion.util'
 
 type IntlFormatMessageParams = Parameters<(typeof IntlService)['formatMessage']>
 type FormatMessageValuesParams = IntlFormatMessageParams['1']
@@ -30,7 +30,7 @@ type IntlServiceType = {
 const IntlService: IntlServiceType = {
   instance: null,
   checkInstance: () => {
-    if (isNotNU(IntlService.instance)) {
+    if (isNotNullOrUndefined(IntlService.instance)) {
       return IntlService.instance
     }
 

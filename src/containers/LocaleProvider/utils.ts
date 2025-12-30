@@ -1,5 +1,5 @@
 import { StorageService } from '../../services/storage'
-import { isNotNU } from '../../utils/assertion.util'
+import { isNotNullOrUndefined } from '../../utils/assertion.util'
 import { DEFAULT_APP_LOCALE } from './locales'
 import { AppLocale, appLocales } from './types'
 
@@ -13,7 +13,7 @@ export const getLanguageAppLocale = (): AppLocale => {
     storage.getItem('language') || 'fr-FR'
 
   if (
-    isNotNU(possibleLanguageAppLocale) &&
+    isNotNullOrUndefined(possibleLanguageAppLocale) &&
     isValidAppLocale(possibleLanguageAppLocale)
   ) {
     return possibleLanguageAppLocale

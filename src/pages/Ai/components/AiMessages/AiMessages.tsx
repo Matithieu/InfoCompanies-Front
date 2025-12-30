@@ -3,12 +3,20 @@ import { FC } from 'react'
 
 import Message from './components/Message'
 
-type AiBodyProps = { messages: Array<MessageHistory> | undefined }
+type AIMessageProps = { messages: Array<MessageHistory> | undefined }
 
-const AiBody: FC<AiBodyProps> = ({ messages }) => {
+const AiMessages: FC<AIMessageProps> = ({ messages }) => {
   if (messages === undefined || null) {
     return (
-      <div style={{ color: 'gray', marginTop: 5, marginBottom: '40px' }}>
+      <div
+        style={{
+          color: 'gray',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '90%',
+        }}
+      >
         How is your day going ?
       </div>
     )
@@ -18,8 +26,8 @@ const AiBody: FC<AiBodyProps> = ({ messages }) => {
     <div
       style={{
         borderWidth: '1px',
-        borderColor: 'black',
         borderRadius: '5px',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
       }}
     >
       {messages.map(({ message, messageType, timestamp }, index) => (
@@ -34,4 +42,4 @@ const AiBody: FC<AiBodyProps> = ({ messages }) => {
   )
 }
 
-export default AiBody
+export default AiMessages

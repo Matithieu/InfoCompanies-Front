@@ -21,16 +21,18 @@ const LayoutAvatarItem: FC<LayoutAvatarItemProps> = ({ open }) => {
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
         minHeight: 60,
         maxHeight: 60,
+        gap: 1,
       }}
     >
       <IconButton
         style={{
           display: 'flex',
           gap: open ? 10 : 0,
-          justifyContent: open ? 'space-between' : 'center',
+          justifyContent: 'flex-start',
+          flex: open ? 1 : 0,
         }}
         onClick={(e) => {
           e.stopPropagation()
@@ -62,20 +64,19 @@ const LayoutAvatarItem: FC<LayoutAvatarItemProps> = ({ open }) => {
         )}
       </IconButton>
 
-      <IconButton
-        color="neutral"
-        size="lg"
-        sx={{
-          display: open ? 'flex' : 'none',
-        }}
-        variant="plain"
-        onClick={(e) => {
-          e.preventDefault()
-          authManager.signOut()
-        }}
-      >
-        <LogoutRoundedIcon />
-      </IconButton>
+      {open && (
+        <IconButton
+          color="neutral"
+          size="lg"
+          variant="plain"
+          onClick={(e) => {
+            e.preventDefault()
+            authManager.signOut()
+          }}
+        >
+          <LogoutRoundedIcon />
+        </IconButton>
+      )}
     </Box>
   )
 }

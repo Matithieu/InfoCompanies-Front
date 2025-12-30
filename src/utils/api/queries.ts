@@ -148,7 +148,7 @@ export async function startStripeSubscription(
 }
 
 // AI
-export async function fetchCurrentConversationHistory(conversationId: string) {
+export async function fetchCurrentConversation(conversationId: string) {
   return await fetchThroughProxy(
     `/v1/chat/conversation/history/{conversationId}`,
     'get',
@@ -160,4 +160,16 @@ export async function fetchCurrentConversationHistory(conversationId: string) {
 
 export async function fetchAllConversationsHistory() {
   return await fetchThroughProxy('/v1/chat/conversation/all', 'get')
+}
+
+export async function deleteConversationById(
+  path: operations['deleteConversation']['parameters']['path'],
+) {
+  return await fetchThroughProxy(
+    `/v1/chat/conversation/delete/{conversationId}`,
+    'delete',
+    {
+      parameters: { path },
+    },
+  )
 }

@@ -36,6 +36,7 @@ export const useAppNavigate = () => {
     toHome: () => navigateTo(routesPath.base),
     toDashboard: () => navigateTo(routesPath.dashboard),
     toFavorites: () => navigateTo(routesPath.favorites),
+    toAi: () => navigateTo(routesPath.ai),
     toSettings: () => navigateTo(routesPath.settings),
     toAccount: () => navigateTo(routesPath.account),
     toTerms: () => navigateTo(routesPath.terms),

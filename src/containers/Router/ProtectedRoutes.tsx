@@ -12,7 +12,7 @@ import {
 import useAuthManager from '../../hooks/useAuthManager'
 import useUserStore from '../../stores/UserStore'
 import { fetchUser } from '../../utils/api/queries'
-import { isNotNU } from '../../utils/assertion.util'
+import { isNotNullOrUndefined } from '../../utils/assertion.util'
 import { routesPath } from './routesPath'
 
 export const ProtectedRoutes = () => {
@@ -25,7 +25,7 @@ export const ProtectedRoutes = () => {
   })
 
   useEffect(() => {
-    if (isNotNU(data)) {
+    if (isNotNullOrUndefined(data)) {
       setUser(data)
     }
   }, [data, setUser])
@@ -59,7 +59,7 @@ export const ProtectedSimpleRoutes = () => {
   })
 
   useEffect(() => {
-    if (isNotNU(data)) {
+    if (isNotNullOrUndefined(data)) {
       setUser(data)
     }
   }, [data, setUser])

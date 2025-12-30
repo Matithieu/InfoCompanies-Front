@@ -4,7 +4,7 @@ import {
   CompanyDtoWithStatusDTO,
 } from '@/types/index.types'
 import { updateSeenCompany } from '@/utils/api/mutations'
-import { asserts, isNotNU } from '@/utils/assertion.util'
+import { asserts, isNotNullOrUndefined } from '@/utils/assertion.util'
 import { useMutation } from '@tanstack/react-query'
 
 type UseCompanyUpdateStatusProps = {
@@ -26,7 +26,7 @@ const useCompanyUpdateStatus = ({
       throw new Error(`Error updating recommendations: ${error.message}`)
     },
     onSuccess: (data, variables) => {
-      asserts(isNotNU(data), 'updateSeenCompany is undefined')
+      asserts(isNotNullOrUndefined(data), 'updateSeenCompany is undefined')
 
       const updatedCompany = {
         companyDTO: variables.companyDTO,
