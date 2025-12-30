@@ -1,6 +1,6 @@
 import { useAppNavigate } from '@/hooks/useAppNavigate'
 import usePagination from '@/hooks/usePagination'
-import { asserts, isNotNU } from '@/utils/assertion.util'
+import { asserts, isNotNullOrUndefined } from '@/utils/assertion.util'
 import { Box, Grid } from '@mui/joy'
 import { useQuery } from '@tanstack/react-query'
 import { FC, useEffect } from 'react'
@@ -17,7 +17,7 @@ import { SearchColumnGenerics } from './search.types'
 
 const SearchPage: FC = () => {
   const { searchTerm } = useParams()
-  asserts(isNotNU(searchTerm))
+  asserts(isNotNullOrUndefined(searchTerm))
 
   const [pagination, setPagination] = usePagination()
   const { navigation } = useAppNavigate()

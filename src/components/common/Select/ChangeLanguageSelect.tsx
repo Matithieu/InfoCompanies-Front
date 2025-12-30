@@ -7,7 +7,7 @@ import {
   appLocaleNames,
 } from '../../../containers/LocaleProvider/types'
 import { StorageService } from '../../../services/storage'
-import { isNotNU } from '../../../utils/assertion.util'
+import { isNotNullOrUndefined } from '../../../utils/assertion.util'
 
 const ChangeLanguageSelect: FC = () => {
   const storage = new StorageService<AppLocale>()
@@ -28,7 +28,7 @@ const ChangeLanguageSelect: FC = () => {
         placeholder="Language"
         value={languageAppLocale}
         onChange={(event, newValue) => {
-          if (isNotNU(newValue)) {
+          if (isNotNullOrUndefined(newValue)) {
             handleLanguageChange(event, newValue)
           }
         }}

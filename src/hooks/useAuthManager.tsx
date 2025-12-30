@@ -1,5 +1,5 @@
 import useConfigurationStore from '@/stores/ConfigurationStore'
-import { asserts, isNotNU } from '@/utils/assertion.util'
+import { asserts, isNotNullOrUndefined } from '@/utils/assertion.util'
 
 /**
  * Provides signIn and signOut functions to handle OAuth login and logout.
@@ -7,7 +7,7 @@ import { asserts, isNotNU } from '@/utils/assertion.util'
 export default function useAuthManager() {
   const { configuration } = useConfigurationStore()
   asserts(
-    isNotNU(configuration),
+    isNotNullOrUndefined(configuration),
     'Configuration must be set to use AuthManager',
   )
 

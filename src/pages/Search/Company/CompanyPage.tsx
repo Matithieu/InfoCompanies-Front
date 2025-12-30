@@ -18,12 +18,12 @@ import Chart from '../../../components/parts/Chart/Chart'
 import DetailsCompany from '../../../components/parts/DetailsCompany/index'
 import ListOfLeaders from '../../../components/parts/LeaderList/LeaderList'
 import { fetchCompanyById } from '../../../utils/api/queries'
-import { asserts, isNotNU } from '../../../utils/assertion.util'
+import { asserts, isNotNullOrUndefined } from '../../../utils/assertion.util'
 import CompanyHeader from './components/CompanyHeader'
 
 const CompanyPage: FC = () => {
   const { companyId } = useParams()
-  asserts(isNotNU(companyId), 'companyId is undefined')
+  asserts(isNotNullOrUndefined(companyId), 'companyId is undefined')
   const [companiesDtoWithStatusDTO, setCompaniesDtoWithStatusDTO] = useState<
     CompanyDtoWithStatusDTO | undefined
   >()

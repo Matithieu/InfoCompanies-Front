@@ -18,7 +18,7 @@ import { formatMessage } from '../../../services/intl/intl'
 import useUserStore from '../../../stores/UserStore'
 import { User } from '../../../types/index.types'
 import { fetchUser, updateUser } from '../../../utils/api/queries'
-import { isNotNU } from '../../../utils/assertion.util'
+import { isNotNullOrUndefined } from '../../../utils/assertion.util'
 import AccountMessages from '../account.messages'
 
 // ToDo: Migrate this to React Hook Form
@@ -37,7 +37,7 @@ const Account: FC = () => {
 
   const mutation = useMutation({
     mutationFn: () => {
-      if (isNotNU(editedUser)) return updateUser({ user: editedUser })
+      if (isNotNullOrUndefined(editedUser)) return updateUser({ user: editedUser })
       else throw new Error('No user to update')
     },
     mutationKey: ['updateUser' + editedUser?.email],
@@ -77,7 +77,7 @@ const Account: FC = () => {
     }
   }
 
-  if (isNotNU(editedUser)) {
+  if (isNotNullOrUndefined(editedUser)) {
     return (
       <Card
         sx={{

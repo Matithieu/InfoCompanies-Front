@@ -8,7 +8,13 @@ export function asserts(
   }
 }
 
-export function isNotNU<T>(value: T): value is NonNullable<T> {
+export function isNullOrUndefined<T>(
+  value: T,
+): value is Extract<T, null | undefined> {
+  return value === null || value === undefined
+}
+
+export function isNotNullOrUndefined<T>(value: T): value is NonNullable<T> {
   return value !== null && value !== undefined
 }
 
@@ -16,7 +22,7 @@ export function NNU<T extends Exclude<unknown, null | undefined>>(
   value: T | null | undefined,
   message = 'An unexpected null value has been provided!',
 ): NonNullable<T> {
-  asserts(isNotNU(value), message)
+  asserts(isNotNullOrUndefined(value), message)
   return value
 }
 
