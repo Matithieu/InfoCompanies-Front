@@ -37,7 +37,8 @@ const Account: FC = () => {
 
   const mutation = useMutation({
     mutationFn: () => {
-      if (isNotNullOrUndefined(editedUser)) return updateUser({ user: editedUser })
+      if (isNotNullOrUndefined(editedUser))
+        return updateUser({ user: editedUser })
       else throw new Error('No user to update')
     },
     mutationKey: ['updateUser' + editedUser?.email],
