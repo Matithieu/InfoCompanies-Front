@@ -1,18 +1,17 @@
+import { ConversationHistory } from '@/types/index.types'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { Tooltip, Typography } from '@mui/joy'
 import { FC, useState } from 'react'
 
 type AiConversationProps = {
-  index: number
-  conversationId: string
+  conversation: ConversationHistory
   currentConversationId: string | undefined
   onDeleteConversation: (conversationId: string) => void
   onSelectConversation: (conversationId: string) => void
 }
 
 const AiConversation: FC<AiConversationProps> = ({
-  index,
-  conversationId,
+  conversation: { conversationId, title },
   currentConversationId,
   onDeleteConversation,
   onSelectConversation,
@@ -50,7 +49,7 @@ const AiConversation: FC<AiConversationProps> = ({
           paddingLeft: '10px',
         }}
       >
-        <Typography>Conversation {index + 1}</Typography>
+        <Typography>{title}</Typography>
         <Tooltip placement="right" title="Delete Conversation">
           <DeleteIcon
             style={{

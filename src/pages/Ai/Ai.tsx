@@ -11,11 +11,13 @@ import {
   useConversationsHistoryQuery,
   useCurrentConversationQuery,
   useDeleteConversationMutation,
+  useSingleConversationHistoryQuery,
 } from './hooks/useAiQueries'
 
 const Ai: FC = () => {
   const conversationContainerRef = useRef<HTMLDivElement>(null)
   const scrollToBottom = () => scrollToBottomUtil(conversationContainerRef)
+  const [isNewConversation, setIsNewConversation] = useState<boolean>(false)
   const [currentConversation, setCurrentConversation] = useState<
     Array<MessageHistory> | undefined
   >(undefined)
@@ -54,10 +56,16 @@ const Ai: FC = () => {
     setCurrentConversationId,
   })
 
+  const { data: singleConversationData } = useSingleConversationHistoryQuery({
+    conversationId: currentConversationId!,
+    enabled: isNotNullOrUndefined(currentConversationId) && isNewConversation,
+  })
+
   // Synchronize the current conversation messages
   useEffect(() => {
     // Handle invalid conversation id
     if (isCurrentConversationError) {
+      setCurrentConversationId(undefined)
       setCurrentConversation([])
       window.location.search = ''
       return
@@ -77,35 +85,32 @@ const Ai: FC = () => {
     isCurrentConversationLoading,
   ])
 
-  // Synchronize the conversation id
+  // Synchronize the response conversation id with the current conversation id
   useEffect(() => {
+    if (isCurrentConversationError) return
     if (isNullOrUndefined(responseConversationId)) return
     setCurrentConversationId(responseConversationId)
+  }, [responseConversationId, isCurrentConversationError])
 
-    if (
-      !window.location.search.includes('conversationId=') ||
-      !isCurrentConversationError
-    ) {
-      // Synchronize the conversation history after creating a new conversation
-      const conversationExists = conversationHistoryData?.some(
-        (conv) => conv.conversationId === responseConversationId,
-      )
-
-      if (!conversationExists) {
-        conversationHistoryData?.push({
-          conversationId: responseConversationId,
-        })
-      }
-
-      // Update the URL with the new conversationId
-      const newUrl = `${window.location.pathname}?conversationId=${responseConversationId}`
-      window.history.replaceState(null, '', newUrl)
+  // Synchronize the current conversation id with the url
+  useEffect(() => {
+    if (isNullOrUndefined(currentConversationId)) {
+      window.history.replaceState(null, '', window.location.pathname)
+      return
     }
-  }, [
-    responseConversationId,
-    isCurrentConversationError,
-    conversationHistoryData,
-  ])
+
+    const newUrl = `${window.location.pathname}?conversationId=${currentConversationId}`
+    window.history.replaceState(null, '', newUrl)
+    scrollToBottom()
+  }, [currentConversationId])
+
+  // Synchronize the new conversation data with the conversation history
+  useEffect(() => {
+    if (!isNewConversation || !singleConversationData) return
+
+    setIsNewConversation(false)
+    conversationHistoryData?.push(singleConversationData)
+  }, [singleConversationData, isNewConversation, conversationHistoryData])
 
   // Synchronize streaming AI response in the current conversation
   useEffect(() => {
@@ -134,9 +139,15 @@ const Ai: FC = () => {
       timestamp: new Date().toISOString(),
     } satisfies MessageHistory
 
-    setCurrentConversation((prev) =>
-      isNotNullOrUndefined(prev) ? [...prev, newUserMessage] : [newUserMessage],
-    )
+    setCurrentConversation((prev) => {
+      const isNewConversation = isNullOrUndefined(prev)
+
+      if (isNewConversation) {
+        setIsNewConversation(true)
+      }
+
+      return isNewConversation ? [newUserMessage] : [...prev, newUserMessage]
+    })
 
     streamAi(userInput)
     scrollToBottom()
@@ -156,15 +167,12 @@ const Ai: FC = () => {
 
   const handleSelectConversation = (conversationId: string) => {
     // Avoid updating if the same conversation is selected
-    if (conversationId && conversationId === currentConversationId) return
+    if (conversationId === currentConversationId) return
 
     // Stop any ongoing streaming when switching conversations
     cancelStreamAi()
 
     setCurrentConversationId(conversationId)
-    const newUrl = `${window.location.pathname}?conversationId=${conversationId}`
-    window.history.replaceState(null, '', newUrl)
-    scrollToBottom()
   }
 
   return (

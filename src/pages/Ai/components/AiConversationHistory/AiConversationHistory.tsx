@@ -1,10 +1,7 @@
-import Loading from '@/components/common/Loading/Loading'
 import { ConversationHistory as ConversationHistoryType } from '@/types/index.types'
-import CreateIcon from '@mui/icons-material/Create'
-import { Button } from '@mui/joy'
 import { FC } from 'react'
 
-import AiConversation from './components/AiConversations'
+import AiConversationBody from './components/AiConversationBody'
 
 type AiConversationHistoryProps = {
   currentConversationId: string
@@ -49,38 +46,14 @@ const AiConversationHistory: FC<AiConversationHistoryProps> = ({
           paddingTop: '10px',
         }}
       >
-        <Loading isLoading={isLoading || conversations === undefined}>
-          <ul>
-            <li
-              style={{
-                padding: '10px',
-                cursor: 'pointer',
-                marginBottom: '10px',
-                borderRadius: '4px',
-              }}
-              onClick={onNewConversation}
-            >
-              <Button
-                fullWidth
-                startDecorator={<CreateIcon />}
-                variant="outlined"
-              >
-                New Conversation
-              </Button>
-            </li>
-
-            {conversations.map(({ conversationId }, index) => (
-              <AiConversation
-                key={conversationId}
-                conversationId={conversationId}
-                currentConversationId={currentConversationId}
-                index={index}
-                onDeleteConversation={onDeleteConversation}
-                onSelectConversation={onSelectConversation}
-              />
-            ))}
-          </ul>
-        </Loading>
+        <AiConversationBody
+          conversations={conversations}
+          currentConversationId={currentConversationId}
+          isLoading={isLoading}
+          onDeleteConversation={onDeleteConversation}
+          onNewConversation={onNewConversation}
+          onSelectConversation={onSelectConversation}
+        />
       </div>
     </div>
   )

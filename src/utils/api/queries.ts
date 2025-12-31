@@ -149,27 +149,25 @@ export async function startStripeSubscription(
 
 // AI
 export async function fetchCurrentConversation(conversationId: string) {
-  return await fetchThroughProxy(
-    `/v1/chat/conversation/history/{conversationId}`,
-    'get',
-    {
-      parameters: { path: { conversationId } },
-    },
-  )
+  return await fetchThroughProxy(`/v1/chat/history/{conversationId}`, 'get', {
+    parameters: { path: { conversationId } },
+  })
+}
+
+export async function fetchSingleConversationHistory(conversationId: string) {
+  return await fetchThroughProxy(`/v1/chat/single/{conversationId}`, 'get', {
+    parameters: { path: { conversationId } },
+  })
 }
 
 export async function fetchAllConversationsHistory() {
-  return await fetchThroughProxy('/v1/chat/conversation/all', 'get')
+  return await fetchThroughProxy('/v1/chat/all', 'get')
 }
 
 export async function deleteConversationById(
   path: operations['deleteConversation']['parameters']['path'],
 ) {
-  return await fetchThroughProxy(
-    `/v1/chat/conversation/delete/{conversationId}`,
-    'delete',
-    {
-      parameters: { path },
-    },
-  )
+  return await fetchThroughProxy(`/v1/chat/delete/{conversationId}`, 'delete', {
+    parameters: { path },
+  })
 }
