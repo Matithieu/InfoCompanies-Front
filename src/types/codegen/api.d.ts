@@ -212,7 +212,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/v1/chat/conversation/{conversationId}': {
+  '/v1/chat/{conversationId}': {
     parameters: {
       query?: never
       header?: never
@@ -230,7 +230,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/v1/chat/conversation/all': {
+  '/v1/chat/all': {
     parameters: {
       query?: never
       header?: never
@@ -246,7 +246,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/v1/chat/conversation/delete/{conversationId}': {
+  '/v1/chat/delete/{conversationId}': {
     parameters: {
       query?: never
       header?: never
@@ -264,7 +264,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/v1/chat/conversation/history/{conversationId}': {
+  '/v1/chat/history/{conversationId}': {
     parameters: {
       query?: never
       header?: never
@@ -274,6 +274,24 @@ export interface paths {
       cookie?: never
     }
     get: operations['getConversationHistory']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/v1/chat/single/{conversationId}': {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        conversationId: string
+      }
+      cookie?: never
+    }
+    get: operations['getSingleConversation']
     put?: never
     post?: never
     delete?: never
@@ -671,6 +689,7 @@ export interface components {
     } | null
     ConversationDTO: {
       conversationId: string
+      title: string
     }
     EntityTag: {
       value: string
@@ -1423,6 +1442,28 @@ export interface operations {
       }
     }
   }
+  getSingleConversation: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        conversationId: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          '*/*': components['schemas']['ConversationDTO']
+        }
+      }
+    }
+  }
   updateStatus: {
     parameters: {
       query: {
@@ -1794,7 +1835,7 @@ export enum ApiPaths {
   newSubscriptionWithTrial = '/v1/stripe/subscriptions/trial',
   getCompaniesByFilters = '/v1/company/filter-by-parameters',
   updateStatus = '/v1/companies-status/update-status',
-  streamGeneration = '/v1/chat/conversation/{conversationId}',
+  streamGeneration = '/v1/chat/{conversationId}',
   getUser = '/v1/user/get-user',
   getLeaderBySiren = '/v1/leader/get-by-siren/{siren}',
   getLeaderById = '/v1/leader/get-by-id/{id}',
@@ -1805,8 +1846,9 @@ export enum ApiPaths {
   getCompaniesOnLandingByFilters = '/v1/company/landing-filter',
   getCompaniesSeenByUser = '/v1/company/get-seen-by-user',
   getCompanyById = '/v1/company/get-by-id/{id}',
-  getConversationHistory = '/v1/chat/conversation/history/{conversationId}',
-  getAllUserConversations = '/v1/chat/conversation/all',
+  getSingleConversation = '/v1/chat/single/{conversationId}',
+  getConversationHistory = '/v1/chat/history/{conversationId}',
+  getAllUserConversations = '/v1/chat/all',
   autocompleteRegionsByNames = '/v1/autocomplete/regions',
   autocompleteRegionsByName = '/v1/autocomplete/region',
   autocompleteRegionsByIds = '/v1/autocomplete/region/ids',
@@ -1820,5 +1862,5 @@ export enum ApiPaths {
   autocompleteCitiesByIds = '/v1/autocomplete/city/ids',
   autocompleteCitiesByNames = '/v1/autocomplete/cities',
   getEnv = '/configuration',
-  deleteConversation = '/v1/chat/conversation/delete/{conversationId}',
+  deleteConversation = '/v1/chat/delete/{conversationId}',
 }

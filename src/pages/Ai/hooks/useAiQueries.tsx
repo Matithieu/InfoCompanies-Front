@@ -4,6 +4,7 @@ import {
   deleteConversationById,
   fetchAllConversationsHistory,
   fetchCurrentConversation,
+  fetchSingleConversationHistory,
 } from '@/utils/api/queries'
 import { isNotNullOrUndefined } from '@/utils/assertion.util'
 import { useMutation, useQuery } from '@tanstack/react-query'
@@ -12,6 +13,20 @@ export const useConversationsHistoryQuery = () =>
   useQuery({
     queryKey: ['conversationsHistory'],
     queryFn: () => fetchAllConversationsHistory(),
+  })
+
+type SingleConversationHistoryParams = {
+  conversationId: string
+  enabled: boolean
+}
+export const useSingleConversationHistoryQuery = ({
+  conversationId,
+  enabled,
+}: SingleConversationHistoryParams) =>
+  useQuery({
+    queryKey: ['singleConversationHistory', conversationId],
+    queryFn: () => fetchSingleConversationHistory(conversationId),
+    enabled,
   })
 
 export const useCurrentConversationQuery = (
@@ -27,7 +42,7 @@ export const useAiConversationStream = (
   currentConversationId: string | undefined,
 ) =>
   useStreamAi({
-    url: '/v1/chat/conversation/{conversationId}',
+    url: '/v1/chat/{conversationId}',
     parameters: {
       pathVariable: {
         conversationId: isNotNullOrUndefined(currentConversationId)
