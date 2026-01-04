@@ -2,47 +2,48 @@ import { useStreamAi } from '@/hooks/useStreamAi'
 import { MessageHistory } from '@/types/index.types'
 import {
   deleteConversationById,
-  fetchAllConversationsHistory,
-  fetchCurrentConversation,
-  fetchSingleConversationHistory,
+  fetchAllUserConversationsDetails,
+  fetchConversationDetails,
+  fetchConversationMessages,
 } from '@/utils/api/queries'
 import { isNotNullOrUndefined } from '@/utils/assertion.util'
 import { useMutation, useQuery } from '@tanstack/react-query'
 
-export const useConversationsHistoryQuery = () =>
+export const useAllConversationsDetailsQuery = () =>
   useQuery({
     queryKey: ['conversationsHistory'],
-    queryFn: () => fetchAllConversationsHistory(),
+    queryFn: () => fetchAllUserConversationsDetails(),
   })
 
 type SingleConversationHistoryParams = {
   conversationId: string
   enabled: boolean
 }
-export const useSingleConversationHistoryQuery = ({
+export const useConversationDetailsQuery = ({
   conversationId,
   enabled,
 }: SingleConversationHistoryParams) =>
   useQuery({
     queryKey: ['singleConversationHistory', conversationId],
-    queryFn: () => fetchSingleConversationHistory(conversationId),
+    queryFn: () => fetchConversationDetails({ conversationId }),
     enabled,
   })
 
-export const useCurrentConversationQuery = (
-  currentConversationId: string | undefined,
+export const useConversationMessagesQuery = (
+  conversationId: string | undefined,
 ) =>
   useQuery({
-    queryKey: ['conversation', currentConversationId],
-    queryFn: () => fetchCurrentConversation(currentConversationId!),
-    enabled: isNotNullOrUndefined(currentConversationId),
+    queryKey: ['conversation', conversationId],
+    queryFn: () =>
+      fetchConversationMessages({ conversationId: conversationId! }),
+    enabled: isNotNullOrUndefined(conversationId),
   })
 
 export const useAiConversationStream = (
   currentConversationId: string | undefined,
 ) =>
   useStreamAi({
-    url: '/v1/chat/{conversationId}',
+    url: '/v1/conversations/{conversationId}/messages',
     parameters: {
       pathVariable: {
         conversationId: isNotNullOrUndefined(currentConversationId)
@@ -58,7 +59,7 @@ type DeleteConversationMutationParams = {
   setCurrentConversation: (
     conversation: Array<MessageHistory> | undefined,
   ) => void
-  conversationHistoryData:
+  allConversationsDetails:
     | Array<{
         conversationId: string
       }>
@@ -66,7 +67,7 @@ type DeleteConversationMutationParams = {
 }
 
 export const useDeleteConversationMutation = ({
-  conversationHistoryData,
+  allConversationsDetails,
   currentConversationId,
   setCurrentConversation,
   setCurrentConversationId,
@@ -83,12 +84,12 @@ export const useDeleteConversationMutation = ({
       }
 
       // Remove the conversation from the history
-      if (conversationHistoryData) {
-        const updatedConversations = conversationHistoryData.filter(
+      if (allConversationsDetails) {
+        const updatedConversations = allConversationsDetails.filter(
           (conv) => conv.conversationId !== conversationId,
         )
-        conversationHistoryData.length = 0
-        conversationHistoryData.push(...updatedConversations)
+        allConversationsDetails.length = 0
+        allConversationsDetails.push(...updatedConversations)
       }
     },
   })

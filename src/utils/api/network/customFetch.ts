@@ -1,10 +1,11 @@
 import { paths } from '@/types/codegen/api'
+import { isNullOrUndefined } from '@/utils/assertion.util'
 
 import { CombinedParametersType } from '../api.types'
 import handleStatusError from '../errors/handleStatusError'
 import handleToastErrors from '../errors/handleToastErrors'
 
-export const fetchThroughProxy = async <
+export const customFetch = async <
   U extends keyof paths,
   M extends keyof paths[U],
 >(
@@ -36,12 +37,12 @@ export const fetchThroughProxy = async <
     parameters.path
   ) {
     Object.entries(parameters.path).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) {
-        finalUrl = finalUrl.replace(
-          new RegExp(`{${key}}`, 'g'),
-          encodeURIComponent(String(value)),
-        )
-      }
+      if (isNullOrUndefined(value)) return
+
+      finalUrl = finalUrl.replace(
+        new RegExp(`{${key}}`, 'g'),
+        encodeURIComponent(String(value)),
+      )
     })
   }
 
@@ -54,9 +55,9 @@ export const fetchThroughProxy = async <
   ) {
     const searchParams = new URLSearchParams()
     Object.entries(parameters.query).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) {
-        searchParams.append(key, String(value))
-      }
+      if (isNullOrUndefined(value)) return
+
+      searchParams.append(key, String(value))
     })
 
     if (searchParams.toString()) {

@@ -6,7 +6,7 @@ import {
 } from '@/types/index.types'
 import {
   fetchCompaniesWithFilters,
-  fetchRandomUnseenCompany,
+  fetchRandomUnseenCompanies,
 } from '@/utils/api/queries'
 import { toast } from 'react-toastify'
 
@@ -41,7 +41,7 @@ export const selectQueryForDashboard = ({
   })()
 
   if (areFiltersEmpty) {
-    return fetchRandomUnseenCompany({ page })
+    return fetchRandomUnseenCompanies({ page })
   } else {
     return fetchCompaniesWithFilters({
       cityNames: searchParams?.cityNames || [],

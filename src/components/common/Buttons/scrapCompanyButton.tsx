@@ -25,7 +25,7 @@ const ScrapCompanyButton: FC<ScrapCompanyButtonProps> = ({
 
   const { data, error, refetch, isFetching } = useQuery({
     queryKey: ['company-scrap', company.id],
-    queryFn: () => fetchCompanyScrap({ companyId: company.id }),
+    queryFn: () => fetchCompanyScrap({ id: company.id }),
     enabled: !isDisabled,
     staleTime: Infinity,
   })

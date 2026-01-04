@@ -1,16 +1,12 @@
 import FetchAutoComplete from '@/components/common/AutoComplete/FetchAutoComplete'
-import {
-  fetchAutoCompleteByName,
-  fetchAutoCompleteByNames,
-} from '@/utils/api/queries'
+import { fetchAutoCompleteByNames } from '@/utils/api/queries'
 import { Box } from '@mui/joy'
 
 import {
-  AutocompleteFilterFields,
-  autocompletePluralParamMapping,
-  autocompleteSingularParamMapping,
-  filterNamesMapping,
-} from '../filter.type'
+  mapAutocompleteParamsToEndpoints,
+  mapFilterNames,
+} from '../filter.constant'
+import { AutocompleteFilterFields } from '../filter.type'
 
 const buildAutocompleteComponent = <K extends keyof AutocompleteFilterFields>(
   autocompleteKey: K,
@@ -20,27 +16,19 @@ const buildAutocompleteComponent = <K extends keyof AutocompleteFilterFields>(
   return (
     <Box
       key={autocompleteKey}
-      aria-label={filterNamesMapping[autocompleteKey]}
+      aria-label={mapFilterNames[autocompleteKey]}
       sx={{ flexShrink: 0, maxWidth: '250px' }}
     >
       <FetchAutoComplete
         autocompleteItems={filterValueNames}
-        fetchAutocompleteByName={(query) =>
-          fetchAutoCompleteByName(
-            autocompleteSingularParamMapping[autocompleteKey],
-            {
-              ...query,
-            },
-          )
-        }
         fetchAutocompleteByNames={(query) =>
           fetchAutoCompleteByNames(
-            autocompletePluralParamMapping[autocompleteKey],
-            { ...query },
+            mapAutocompleteParamsToEndpoints[autocompleteKey],
+            query,
           )
         }
         handleSelectChange={handleSelectChange}
-        inputLabel={filterNamesMapping[autocompleteKey]}
+        inputLabel={mapFilterNames[autocompleteKey]}
         isLabelHidden={filterValueNames === undefined}
         queryKeyBase={autocompleteKey}
       />

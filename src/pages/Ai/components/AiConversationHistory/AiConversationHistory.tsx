@@ -20,9 +20,19 @@ const AiConversationHistory: FC<AiConversationHistoryProps> = ({
   onSelectConversation,
   isLoading,
 }) => {
-  if (!conversations || conversations.length === 0) {
-    return <div>No conversations available.</div>
-  }
+  const bodyContent =
+    !conversations || conversations.length === 0 ? (
+      <p>No conversations available.</p>
+    ) : (
+      <AiConversationBody
+        conversations={conversations}
+        currentConversationId={currentConversationId}
+        isLoading={isLoading}
+        onDeleteConversation={onDeleteConversation}
+        onNewConversation={onNewConversation}
+        onSelectConversation={onSelectConversation}
+      />
+    )
 
   return (
     <div
@@ -46,14 +56,7 @@ const AiConversationHistory: FC<AiConversationHistoryProps> = ({
           paddingTop: '10px',
         }}
       >
-        <AiConversationBody
-          conversations={conversations}
-          currentConversationId={currentConversationId}
-          isLoading={isLoading}
-          onDeleteConversation={onDeleteConversation}
-          onNewConversation={onNewConversation}
-          onSelectConversation={onSelectConversation}
-        />
+        {bodyContent}
       </div>
     </div>
   )

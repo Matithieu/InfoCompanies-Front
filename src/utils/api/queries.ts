@@ -1,35 +1,34 @@
 import { operations } from '@/types/codegen/api'
 import {
-  AutocompleteByNameQueries,
+  AutocompleteByIdsQueries,
   AutocompleteByNamesQueries,
-  AutocompleteEndpointPlural,
-  AutocompleteEndpointSingular,
+  AutocompleteEndpoint,
 } from '@/types/index.types'
 
-import { fetchThroughProxy } from './network/fetchThroughProxy'
+import { customFetch } from './network/customFetch'
 
 /**
  *
  * User
  *
  */
-export const fetchUser = async () => {
-  return await fetchThroughProxy('/v1/user/get-user', 'get')
+export async function fetchUser() {
+  return await customFetch('/v1/users/me', 'get')
 }
 
 // Company
-export async function fetchCompanyOnLandingPage(
+export async function fetchCompaniesOnLandingPage(
   query: operations['getCompaniesOnLandingByFilters']['parameters']['query'],
 ) {
-  return await fetchThroughProxy('/v1/company/landing-filter', 'get', {
+  return await customFetch('/v1/companies/landing', 'get', {
     parameters: { query },
   })
 }
 
-export async function fetchRandomUnseenCompany(
+export async function fetchRandomUnseenCompanies(
   query: operations['getRandomUnseenCompanies']['parameters']['query'],
 ) {
-  return await fetchThroughProxy('/v1/company/random-unseen', 'get', {
+  return await customFetch('/v1/companies/random', 'get', {
     parameters: { query },
   })
 }
@@ -39,15 +38,15 @@ export async function fetchCompaniesWithFilters(
     operations['getCompaniesByFilters']['requestBody']
   >['content']['application/json'],
 ) {
-  return await fetchThroughProxy('/v1/company/filter-by-parameters', 'post', {
+  return await customFetch('/v1/companies/filter', 'post', {
     requestBody,
   })
 }
 
-export async function fetchCompanyByCompanyName(
+export async function feetchCompaniesByName(
   query: operations['searchCompaniesByName']['parameters']['query'],
 ) {
-  return await fetchThroughProxy('/v1/company/search-by-name', 'get', {
+  return await customFetch('/v1/companies/', 'get', {
     parameters: { query },
   })
 }
@@ -55,23 +54,23 @@ export async function fetchCompanyByCompanyName(
 export async function fetchCompanyById(
   path: operations['getCompanyById']['parameters']['path'],
 ) {
-  return await fetchThroughProxy(`/v1/company/get-by-id/{id}`, 'get', {
+  return await customFetch(`/v1/companies/{id}`, 'get', {
     parameters: { path },
   })
 }
 
 export async function fetchCompanyScrap(
-  query: operations['scrapCompany']['parameters']['query'],
+  path: operations['scrapCompany']['parameters']['path'],
 ) {
-  return await fetchThroughProxy(`/v1/company/scrap`, 'get', {
-    parameters: { query },
+  return await customFetch('/v1/companies/{id}/scrap', 'get', {
+    parameters: { path },
   })
 }
 
-export async function fetchFavorites(
+export async function fetchFavoritesCompanies(
   query: operations['getCompaniesSeenByUser']['parameters']['query'],
 ) {
-  return await fetchThroughProxy(`/v1/company/get-seen-by-user`, 'get', {
+  return await customFetch('/v1/companies/seen', 'get', {
     parameters: { query },
   })
 }
@@ -79,95 +78,90 @@ export async function fetchFavorites(
 export async function updateUser(
   query: operations['updateUser']['parameters']['query'],
 ) {
-  return await fetchThroughProxy('/v1/user/update-user', 'put', {
+  return await customFetch('/v1/users/me', 'put', {
     parameters: { query },
   })
 }
 
 // Leader
-export const fetchLeadersBySiren = async (
+export async function fetchLeaderBySiren(
   path: operations['getLeaderBySiren']['parameters']['path'],
-) => {
-  return await fetchThroughProxy(`/v1/leader/get-by-siren/{siren}`, 'get', {
+) {
+  return await customFetch('/v1/leaders/by-siren/{siren}', 'get', {
     parameters: { path },
   })
 }
 
-export const fetchLeaderById = async (
+export async function fetchLeaderById(
   path: operations['getLeaderById']['parameters']['path'],
-) => {
-  return await fetchThroughProxy(`/v1/leader/get-by-id/{id}`, 'get', {
+) {
+  return await customFetch(`/v1/leaders/{id}`, 'get', {
     parameters: { path },
   })
 }
 
 // AutoComplete
-export async function fetchAutoCompleteByName(
-  autoComplete: AutocompleteEndpointSingular,
-  query: AutocompleteByNameQueries,
-) {
-  return await fetchThroughProxy(`/v1/autocomplete/${autoComplete}`, 'get', {
-    parameters: { query },
-  })
-}
-
 export async function fetchAutoCompleteByNames(
-  autoComplete: AutocompleteEndpointPlural,
-  query: AutocompleteByNamesQueries,
+  autoComplete: AutocompleteEndpoint,
+  requestBody: AutocompleteByNamesQueries,
 ) {
-  return await fetchThroughProxy(`/v1/autocomplete/${autoComplete}`, 'get', {
-    parameters: { query },
+  return await customFetch(`/v1/autocomplete/${autoComplete}/names`, 'post', {
+    requestBody,
   })
 }
 
 export async function fetchAutoCompleteByIds(
-  autoComplete: AutocompleteEndpointSingular,
-  ids: number[],
+  autoComplete: AutocompleteEndpoint,
+  requestBody: AutocompleteByIdsQueries,
 ) {
-  return await fetchThroughProxy(
-    `/v1/autocomplete/${autoComplete}/ids`,
-    'get',
-    {
-      parameters: { query: { query: ids } },
-    },
-  )
+  return await customFetch(`/v1/autocomplete/${autoComplete}/ids`, 'post', {
+    requestBody,
+  })
 }
 
 // Configuration
 export async function fetchConfiguration() {
-  return await fetchThroughProxy('/configuration', 'get')
+  return await customFetch('/v1/configuration/', 'get')
 }
 
 // Stripe
 export async function startStripeSubscription(
   header: operations['newSubscriptionWithTrial']['parameters']['header'],
 ) {
-  return await fetchThroughProxy('/v1/stripe/subscriptions/trial', 'post', {
+  return await customFetch('/v1/payments/subscriptions/trial', 'post', {
     parameters: { header },
   })
 }
 
 // AI
-export async function fetchCurrentConversation(conversationId: string) {
-  return await fetchThroughProxy(`/v1/chat/history/{conversationId}`, 'get', {
-    parameters: { path: { conversationId } },
+export async function fetchConversationDetails(
+  path: operations['getSingleConversation']['parameters']['path'],
+) {
+  return await customFetch(`/v1/conversations/{conversationId}`, 'get', {
+    parameters: { path },
   })
 }
 
-export async function fetchSingleConversationHistory(conversationId: string) {
-  return await fetchThroughProxy(`/v1/chat/single/{conversationId}`, 'get', {
-    parameters: { path: { conversationId } },
-  })
+export async function fetchConversationMessages(
+  path: operations['getConversationHistory']['parameters']['path'],
+) {
+  return await customFetch(
+    `/v1/conversations/{conversationId}/messages`,
+    'get',
+    {
+      parameters: { path },
+    },
+  )
 }
 
-export async function fetchAllConversationsHistory() {
-  return await fetchThroughProxy('/v1/chat/all', 'get')
+export async function fetchAllUserConversationsDetails() {
+  return await customFetch('/v1/conversations/', 'get')
 }
 
 export async function deleteConversationById(
   path: operations['deleteConversation']['parameters']['path'],
 ) {
-  return await fetchThroughProxy(`/v1/chat/delete/{conversationId}`, 'delete', {
+  return await customFetch(`/v1/conversations/{conversationId}`, 'delete', {
     parameters: { path },
   })
 }

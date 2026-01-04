@@ -6,7 +6,7 @@ import { FC } from 'react'
 
 import commonMessages from '../../../services/intl/common.messages'
 import { formatMessage } from '../../../services/intl/intl'
-import { fetchLeadersBySiren } from '../../../utils/api/queries'
+import { fetchLeaderBySiren } from '../../../utils/api/queries'
 import { PleaseSelectACompanyText } from '../../common/Texts/PleaseSelectACompanyText'
 import LeaderListRowRenderer from './components/LeaderListRowRenderer'
 import { removeLeadersWithSameName } from './leader.util'
@@ -20,7 +20,7 @@ const ListOfLeaders: FC<ListOfLeadersProps> = ({ siren }) => {
     queryKey: ['leader', siren],
     queryFn: async () => {
       if (siren) {
-        return await fetchLeadersBySiren({ siren })
+        return await fetchLeaderBySiren({ siren })
       }
 
       return Promise.resolve(null)

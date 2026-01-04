@@ -6,7 +6,7 @@ import {
   handleOpenInNewTab,
 } from '@/pages/Dashboard/dashboardPage.util'
 import { useCompanyFilterStore } from '@/stores/Filters/FiltersStore'
-import { fetchCompanyOnLandingPage } from '@/utils/api/queries'
+import { fetchCompaniesOnLandingPage } from '@/utils/api/queries'
 import { useQuery } from '@tanstack/react-query'
 import { FC } from 'react'
 
@@ -26,7 +26,7 @@ const LandingTableCompany: FC = () => {
   const { isPending, data, error } = useQuery({
     queryKey: ['companies', cityNames, industrySectorNames],
     queryFn: () =>
-      fetchCompanyOnLandingPage({ cityNames, industrySectorNames }),
+      fetchCompaniesOnLandingPage({ cityNames, industrySectorNames }),
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     refetchOnReconnect: false,

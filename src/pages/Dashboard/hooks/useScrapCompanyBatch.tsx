@@ -35,7 +35,7 @@ export const useScrapCompanyBatch = ({
               const scrapResult = await queryClient.fetchQuery({
                 staleTime: Infinity,
                 queryKey: ['company', company.id],
-                queryFn: () => fetchCompanyScrap({ companyId: company.id }),
+                queryFn: () => fetchCompanyScrap({ id: company.id }),
                 retry: 0,
               })
 

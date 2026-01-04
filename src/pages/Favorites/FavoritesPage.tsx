@@ -6,7 +6,7 @@ import { FC, useEffect, useState } from 'react'
 
 import HeaderTitle from '../../components/common/Texts/HeaderTitle'
 import { formatMessage } from '../../services/intl/intl'
-import { fetchFavorites } from '../../utils/api/queries'
+import { fetchFavoritesCompanies } from '../../utils/api/queries'
 import FavoritesBody from './components/FavoritesBody'
 import favoritesMessages from './favorites.messages'
 
@@ -16,7 +16,7 @@ const FavoritesPage: FC = () => {
 
   const { data, error, isPending } = useQuery({
     queryKey: ['favorites-companies', pagination.page],
-    queryFn: () => fetchFavorites({ page: pagination.page }),
+    queryFn: () => fetchFavoritesCompanies({ page: pagination.page }),
     refetchOnMount: true,
     staleTime: 0,
   })
