@@ -8,10 +8,10 @@ import { FC, useEffect, useRef, useState } from 'react'
 import { scrollToBottomUtil } from './Ai.utils'
 import {
   useAiConversationStream,
-  useConversationsHistoryQuery,
-  useCurrentConversationQuery,
+  useAllConversationsDetailsQuery,
+  useConversationDetailsQuery,
+  useConversationMessagesQuery,
   useDeleteConversationMutation,
-  useSingleConversationHistoryQuery,
 } from './hooks/useAiQueries'
 
 const Ai: FC = () => {
@@ -31,15 +31,15 @@ const Ai: FC = () => {
     )
   })
   const {
-    data: conversationHistoryData,
-    isLoading: isConversationHistoryLoading,
-  } = useConversationsHistoryQuery()
+    data: allConversationsDetails,
+    isLoading: areAllConversationsDetailsLoading,
+  } = useAllConversationsDetailsQuery()
 
   const {
     data: currentConversationData,
     isError: isCurrentConversationError,
     isLoading: isCurrentConversationLoading,
-  } = useCurrentConversationQuery(currentConversationId)
+  } = useConversationMessagesQuery(currentConversationId)
 
   const {
     streamAiResponse,
@@ -50,13 +50,13 @@ const Ai: FC = () => {
   } = useAiConversationStream(currentConversationId)
 
   const deleteConversationMutation = useDeleteConversationMutation({
-    conversationHistoryData,
+    allConversationsDetails,
     currentConversationId,
     setCurrentConversation,
     setCurrentConversationId,
   })
 
-  const { data: singleConversationData } = useSingleConversationHistoryQuery({
+  const { data: conversationDetails } = useConversationDetailsQuery({
     conversationId: currentConversationId!,
     enabled: isNotNullOrUndefined(currentConversationId) && isNewConversation,
   })
@@ -106,11 +106,11 @@ const Ai: FC = () => {
 
   // Synchronize the new conversation data with the conversation history
   useEffect(() => {
-    if (!isNewConversation || !singleConversationData) return
+    if (!isNewConversation || !conversationDetails) return
 
     setIsNewConversation(false)
-    conversationHistoryData?.push(singleConversationData)
-  }, [singleConversationData, isNewConversation, conversationHistoryData])
+    allConversationsDetails?.push(conversationDetails)
+  }, [conversationDetails, isNewConversation, allConversationsDetails])
 
   // Synchronize streaming AI response in the current conversation
   useEffect(() => {
@@ -185,9 +185,9 @@ const Ai: FC = () => {
       >
         <div style={{ paddingLeft: '20px' }}>
           <AiConversationHistory
-            conversations={conversationHistoryData}
+            conversations={allConversationsDetails}
             currentConversationId={currentConversationId!}
-            isLoading={isConversationHistoryLoading}
+            isLoading={areAllConversationsDetailsLoading}
             onDeleteConversation={handleDeleteConversation}
             onNewConversation={handleCreateNewConversation}
             onSelectConversation={handleSelectConversation}

@@ -21,7 +21,7 @@ export const useUpdateStatus = ({
     }: {
       companyDTO: CompanyDTO
       status: CheckStatus
-    }) => updateSeenCompany({ companyId: companyDTO.id, status }),
+    }) => updateSeenCompany({ id: companyDTO.id }, { status }),
     onError: (error) => {
       throw new Error(`Error updating recommendations: ${error.message}`)
     },

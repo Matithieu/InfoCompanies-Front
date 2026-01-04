@@ -9,7 +9,7 @@ import { useParams } from 'react-router'
 import HeaderTitle from '../../components/common/Texts/HeaderTitle'
 import TableCompany from '../../components/parts/TableCompany/TableCompany'
 import { formatMessage } from '../../services/intl/intl'
-import { fetchCompanyByCompanyName } from '../../utils/api/queries'
+import { feetchCompaniesByName } from '../../utils/api/queries'
 import { handleOpenInNewTab } from '../Dashboard/dashboardPage.util'
 import { useSearchColumnsDef } from './hooks/useSearchColumnDef'
 import searchMessages from './search.messages'
@@ -25,7 +25,7 @@ const SearchPage: FC = () => {
   const { isPending, data, error } = useQuery({
     queryKey: ['search-page', searchTerm, pagination.page],
     queryFn: () =>
-      fetchCompanyByCompanyName({
+      feetchCompaniesByName({
         companyName: searchTerm,
         page: pagination.page,
       }),

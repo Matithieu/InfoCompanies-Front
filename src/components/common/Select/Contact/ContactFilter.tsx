@@ -1,4 +1,4 @@
-import { contactFilterDescription } from '@/components/parts/Filters/filter.type'
+import { mapContactFilterDescriptionToTexts } from '@/components/parts/Filters/filter.constant'
 import { Contact } from '@/types/index.types'
 import { mapArrayToObject, mapObjectToArray } from '@/utils/object.util'
 import CloseRounded from '@mui/icons-material/CloseRounded'
@@ -60,7 +60,7 @@ const ContactFilter: React.FC<ContactsFilterProps> = ({ onChange, values }) => {
     >
       {contacts.map((contact) => (
         <Option key={contact} value={contact}>
-          {contactFilterDescription[contact]}
+          {mapContactFilterDescriptionToTexts[contact]}
         </Option>
       ))}
     </Select>

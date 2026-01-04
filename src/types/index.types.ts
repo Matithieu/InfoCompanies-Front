@@ -8,45 +8,24 @@ export type AutoCompleteItem = {
   name: string
 }
 
-// Autocomplete
-// Full endpoint without /ids
-// Base type (singular ↔ plural mapping)
-type AutocompleteEndpointMap = {
-  city: 'cities'
-  industrySector: 'industrySectors'
-  legalForm: 'legalForms'
-  region: 'regions'
-}
-
-// Singular endpoints
-export type AutocompleteEndpointSingular = keyof AutocompleteEndpointMap
-
-// Plural endpoints
-export type AutocompleteEndpointPlural =
-  AutocompleteEndpointMap[AutocompleteEndpointSingular]
-
-// Both
+// Autocomplete endpoint types
 export type AutocompleteEndpoint =
-  | AutocompleteEndpointSingular
-  | AutocompleteEndpointPlural
+  | 'cities'
+  | 'industry-sectors'
+  | 'legal-forms'
+  | 'regions'
 
 export type AutocompleteByIdsQueries = operations[
   | 'autocompleteCitiesByIds'
   | 'autocompleteIndustrySectorsByIds'
   | 'autocompleteLegalFormsByIds'
-  | 'autocompleteRegionsByIds']['parameters']['query']
-
-export type AutocompleteByNameQueries = operations[
-  | 'autocompleteRegionsByName'
-  | 'autocompleteIndustrySectorsByName'
-  | 'autocompleteLegalFormsByName'
-  | 'autocompleteRegionsByName']['parameters']['query']
+  | 'autocompleteRegionsByIds']['requestBody']['content']['application/json']
 
 export type AutocompleteByNamesQueries = operations[
   | 'autocompleteRegionsByNames'
   | 'autocompleteIndustrySectorsByNames'
   | 'autocompleteLegalFormsByNames'
-  | 'autocompleteRegionsByNames']['parameters']['query']
+  | 'autocompleteRegionsByNames']['requestBody']['content']['application/json']
 
 // Filters
 
@@ -80,10 +59,10 @@ export type PageLeader = components['schemas']['PageLeaderModel']
 export type Leader = components['schemas']['LeaderModel']
 
 // Auto-complete types
-export type LegalForm = components['schemas']['LegalForm']
-export type IndustrySector = components['schemas']['IndustrySector']
-export type City = components['schemas']['City']
-export type Region = components['schemas']['Region']
+export type LegalForm = components['schemas']['LegalFormModel']
+export type IndustrySector = components['schemas']['IndustrySectorModel']
+export type City = components['schemas']['CityModel']
+export type Region = components['schemas']['RegionModel']
 
 export type User = components['schemas']['UserDTO']
 

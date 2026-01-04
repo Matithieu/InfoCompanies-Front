@@ -13,16 +13,12 @@ import { FC, useEffect, useState } from 'react'
 import commonMessages from '../../../services/intl/common.messages'
 import { formatMessage } from '../../../services/intl/intl'
 import {
-  AutocompleteByNameQueries,
   AutocompleteByNamesQueries,
   AutoCompleteItem,
 } from '../../../types/index.types'
 
 type FetchAutoCompleteProps = {
   handleSelectChange: (items: Array<string>) => void
-  fetchAutocompleteByName: (
-    input: AutocompleteByNameQueries,
-  ) => Promise<AutoCompleteItem[]>
   fetchAutocompleteByNames: (
     input: AutocompleteByNamesQueries,
   ) => Promise<AutoCompleteItem[]>
@@ -34,7 +30,6 @@ type FetchAutoCompleteProps = {
 
 const FetchAutoComplete: FC<FetchAutoCompleteProps> = ({
   handleSelectChange,
-  fetchAutocompleteByName,
   fetchAutocompleteByNames,
   queryKeyBase,
   inputLabel,
@@ -49,7 +44,7 @@ const FetchAutoComplete: FC<FetchAutoCompleteProps> = ({
     ? autocompleteItems.filter(
         (name) => !selectedItems.map((item) => item.name).includes(name),
       )
-    : []
+    : ['']
 
   // As we receive only names in the filter, we need to fetch the full objects to display them as selected
   // Also, we don't want to refetch what's already selected
@@ -57,7 +52,7 @@ const FetchAutoComplete: FC<FetchAutoCompleteProps> = ({
     queryKey: [`autocomplete ${inputLabel}`, valuesToFetch],
     queryFn: () =>
       valuesToFetch
-        ? fetchAutocompleteByNames({ query: valuesToFetch })
+        ? fetchAutocompleteByNames(valuesToFetch)
         : Promise.resolve([]),
     enabled: valuesToFetch ? valuesToFetch?.length > 0 : false,
   })
@@ -68,7 +63,10 @@ const FetchAutoComplete: FC<FetchAutoCompleteProps> = ({
 
   const { data, refetch, isLoading } = useQuery({
     queryKey: [queryKeyBase, debouncedInputValue],
-    queryFn: () => fetchAutocompleteByName({ query: debouncedInputValue }),
+    queryFn: () =>
+      fetchAutocompleteByNames(
+        debouncedInputValue.length === 0 ? [''] : [debouncedInputValue],
+      ),
     enabled: false,
   })
 

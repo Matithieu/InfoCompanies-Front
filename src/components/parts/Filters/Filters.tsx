@@ -12,10 +12,8 @@ import { FC, useRef, useState } from 'react'
 
 import renderFilterComponents from './components'
 import { SearchFilter } from './components/SearchFilter'
-import {
-  filterNamesMapping,
-  filterToShowToFilterKeyMapping,
-} from './filter.type'
+import { mapFilterNames, mapFilterToShowToFilterKey } from './filter.constant'
+import {} from './filter.type'
 import filtersMessages from './filters.messages'
 import { useRemoveFilter } from './hooks/useRemoveFilter'
 
@@ -33,7 +31,7 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
     FiltersProps['filtersToShow']
   >(
     filtersToShow.filter((filter) => {
-      const filterKey = filterToShowToFilterKeyMapping[filter]
+      const filterKey = mapFilterToShowToFilterKey[filter]
       const value = filterValues[filterKey]
       return (
         isNotNullOrUndefined(value) &&
@@ -127,7 +125,7 @@ const Filters: FC<FiltersProps> = ({ filtersToShow, showAddFilterButton }) => {
               {availableFilters.map((filter, index) => (
                 <div key={index}>
                   <MenuItem onClick={() => addFilter(filter)}>
-                    {filterNamesMapping[filter]}
+                    {mapFilterNames[filter]}
                   </MenuItem>
                   {index < availableFilters.length - 1 && <ListDivider />}
                 </div>

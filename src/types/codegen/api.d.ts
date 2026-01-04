@@ -4,303 +4,7 @@
  */
 
 export interface paths {
-  '/configuration': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get: operations['getEnv']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/autocomplete/cities': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get: operations['autocompleteCitiesByNames']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/autocomplete/city': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get: operations['autocompleteCitiesByName']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/autocomplete/city/ids': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get: operations['autocompleteCitiesByIds']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/autocomplete/industrySector': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get: operations['autocompleteIndustrySectorsByName']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/autocomplete/industrySector/ids': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get: operations['autocompleteIndustrySectorsByIds']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/autocomplete/industrySectors': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get: operations['autocompleteIndustrySectorsByNames']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/autocomplete/legalForm': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get: operations['autocompleteLegalFormsByName']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/autocomplete/legalForm/ids': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get: operations['autocompleteLegalFormsByIds']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/autocomplete/legalForms': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get: operations['autocompleteLegalFormsByNames']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/autocomplete/region': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get: operations['autocompleteRegionsByName']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/autocomplete/region/ids': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get: operations['autocompleteRegionsByIds']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/autocomplete/regions': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get: operations['autocompleteRegionsByNames']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/chat/{conversationId}': {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        conversationId: string
-      }
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post: operations['streamGeneration']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/chat/all': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get: operations['getAllUserConversations']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/chat/delete/{conversationId}': {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        conversationId: string
-      }
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post?: never
-    delete: operations['deleteConversation']
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/chat/history/{conversationId}': {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        conversationId: string
-      }
-      cookie?: never
-    }
-    get: operations['getConversationHistory']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/chat/single/{conversationId}': {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        conversationId: string
-      }
-      cookie?: never
-    }
-    get: operations['getSingleConversation']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/companies-status/update-status': {
+  '/v1/autocomplete/cities/ids': {
     parameters: {
       query?: never
       header?: never
@@ -309,14 +13,14 @@ export interface paths {
     }
     get?: never
     put?: never
-    post: operations['updateStatus']
+    post: operations['autocompleteCitiesByIds']
     delete?: never
     options?: never
     head?: never
     patch?: never
     trace?: never
   }
-  '/v1/company/filter-by-parameters': {
+  '/v1/autocomplete/cities/names': {
     parameters: {
       query?: never
       header?: never
@@ -325,14 +29,126 @@ export interface paths {
     }
     get?: never
     put?: never
-    post: operations['getCompaniesByFilters']
+    post: operations['autocompleteCitiesByNames']
     delete?: never
     options?: never
     head?: never
     patch?: never
     trace?: never
   }
-  '/v1/company/get-by-id/{id}': {
+  '/v1/autocomplete/industry-sectors/ids': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    post: operations['autocompleteIndustrySectorsByIds']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/v1/autocomplete/industry-sectors/names': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    post: operations['autocompleteIndustrySectorsByNames']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/v1/autocomplete/legal-forms/ids': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    post: operations['autocompleteLegalFormsByIds']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/v1/autocomplete/legal-forms/names': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    post: operations['autocompleteLegalFormsByNames']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/v1/autocomplete/regions/ids': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    post: operations['autocompleteRegionsByIds']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/v1/autocomplete/regions/names': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    post: operations['autocompleteRegionsByNames']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/v1/companies/': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['searchCompaniesByName']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/v1/companies/{id}': {
     parameters: {
       query?: never
       header?: never
@@ -350,14 +166,16 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/v1/company/get-seen-by-user': {
+  '/v1/companies/{id}/scrap': {
     parameters: {
       query?: never
       header?: never
-      path?: never
+      path: {
+        id: string
+      }
       cookie?: never
     }
-    get: operations['getCompaniesSeenByUser']
+    get: operations['scrapCompany']
     put?: never
     post?: never
     delete?: never
@@ -366,7 +184,41 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/v1/company/landing-filter': {
+  '/v1/companies/{id}/status': {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        id: string
+      }
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    post: operations['updateStatus']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/v1/companies/filter': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    post: operations['getCompaniesByFilters']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/v1/companies/landing': {
     parameters: {
       query?: never
       header?: never
@@ -382,7 +234,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/v1/company/random-unseen': {
+  '/v1/companies/random': {
     parameters: {
       query?: never
       header?: never
@@ -398,14 +250,14 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/v1/company/scrap': {
+  '/v1/companies/seen': {
     parameters: {
       query?: never
       header?: never
       path?: never
       cookie?: never
     }
-    get: operations['scrapCompany']
+    get: operations['getCompaniesSeenByUser']
     put?: never
     post?: never
     delete?: never
@@ -414,14 +266,14 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/v1/company/search-by-name': {
+  '/v1/configuration/': {
     parameters: {
       query?: never
       header?: never
       path?: never
       cookie?: never
     }
-    get: operations['searchCompaniesByName']
+    get: operations['getEnv']
     put?: never
     post?: never
     delete?: never
@@ -430,14 +282,14 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/v1/leader/get-by-first-and-last-name': {
+  '/v1/conversations/': {
     parameters: {
       query?: never
       header?: never
       path?: never
       cookie?: never
     }
-    get: operations['getLeadersByName']
+    get: operations['getAllUserConversations']
     put?: never
     post?: never
     delete?: never
@@ -446,7 +298,43 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/v1/leader/get-by-id/{id}': {
+  '/v1/conversations/{conversationId}': {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        conversationId: string
+      }
+      cookie?: never
+    }
+    get: operations['getSingleConversation']
+    put?: never
+    post?: never
+    delete: operations['deleteConversation']
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/v1/conversations/{conversationId}/messages': {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        conversationId: string
+      }
+      cookie?: never
+    }
+    get: operations['getConversationHistory']
+    put?: never
+    post: operations['streamGeneration']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/v1/leaders/{id}': {
     parameters: {
       query?: never
       header?: never
@@ -464,7 +352,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/v1/leader/get-by-siren/{siren}': {
+  '/v1/leaders/by-siren/{siren}': {
     parameters: {
       query?: never
       header?: never
@@ -482,7 +370,23 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/v1/stripe/subscriptions/trial': {
+  '/v1/leaders/search': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['getLeadersByName']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/v1/payments/subscriptions/trial': {
     parameters: {
       query?: never
       header?: never
@@ -498,23 +402,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/v1/stripe/webhook': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post: operations['handleStripeWebhook']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/user/complete-onboarding': {
+  '/v1/users/complete-onboarding': {
     parameters: {
       query?: never
       header?: never
@@ -530,7 +418,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/v1/user/get-user': {
+  '/v1/users/me': {
     parameters: {
       query?: never
       header?: never
@@ -538,7 +426,7 @@ export interface paths {
       cookie?: never
     }
     get: operations['getUser']
-    put?: never
+    put: operations['updateUser']
     post?: never
     delete?: never
     options?: never
@@ -546,7 +434,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/v1/user/update-user': {
+  '/webhook/stripe': {
     parameters: {
       query?: never
       header?: never
@@ -554,8 +442,8 @@ export interface paths {
       cookie?: never
     }
     get?: never
-    put: operations['updateUser']
-    post?: never
+    put?: never
+    post: operations['handleStripeWebhook']
     delete?: never
     options?: never
     head?: never
@@ -600,7 +488,7 @@ export interface components {
       /** Format: int64 */
       timestamp: number
     }
-    City: {
+    CityModel: {
       /** Format: int32 */
       id: number
       name: string
@@ -711,7 +599,7 @@ export interface components {
       metadata: components['schemas']['ChatGenerationMetadata']
       output: components['schemas']['AssistantMessage']
     }
-    IndustrySector: {
+    IndustrySectorModel: {
       /** Format: int32 */
       id: number
       name: string
@@ -732,7 +620,7 @@ export interface components {
       type: string
       usageName: string
     }
-    LegalForm: {
+    LegalFormModel: {
       /** Format: int32 */
       id: number
       name: string
@@ -933,7 +821,7 @@ export interface components {
         zero: boolean
       }
     }
-    Region: {
+    RegionModel: {
       /** Format: int32 */
       id: number
       name: string
@@ -1042,7 +930,7 @@ export interface components {
       /** @enum {string} */
       status: 'NOT_DONE' | 'TO_DO' | 'DONE'
       userId: string
-    } | null
+    }
     UserDTO: {
       country: string
       email: string
@@ -1070,14 +958,18 @@ export interface components {
 }
 export type $defs = Record<string, never>
 export interface operations {
-  getEnv: {
+  autocompleteCitiesByIds: {
     parameters: {
       query?: never
       header?: never
       path?: never
       cookie?: never
     }
-    requestBody?: never
+    requestBody: {
+      content: {
+        'application/json': number[]
+      }
+    }
     responses: {
       /** @description OK */
       200: {
@@ -1085,21 +977,23 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': components['schemas']['Configuration']
+          '*/*': components['schemas']['CityModel'][]
         }
       }
     }
   }
   autocompleteCitiesByNames: {
     parameters: {
-      query: {
-        query: string[]
-      }
+      query?: never
       header?: never
       path?: never
       cookie?: never
     }
-    requestBody?: never
+    requestBody: {
+      content: {
+        'application/json': string[]
+      }
+    }
     responses: {
       /** @description OK */
       200: {
@@ -1107,87 +1001,23 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': components['schemas']['City'][]
-        }
-      }
-    }
-  }
-  autocompleteCitiesByName: {
-    parameters: {
-      query: {
-        query: string
-      }
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          '*/*': components['schemas']['City'][]
-        }
-      }
-    }
-  }
-  autocompleteCitiesByIds: {
-    parameters: {
-      query: {
-        query: number[]
-      }
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          '*/*': components['schemas']['City'][]
-        }
-      }
-    }
-  }
-  autocompleteIndustrySectorsByName: {
-    parameters: {
-      query: {
-        query: string
-      }
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          '*/*': components['schemas']['IndustrySector'][]
+          '*/*': components['schemas']['CityModel'][]
         }
       }
     }
   }
   autocompleteIndustrySectorsByIds: {
     parameters: {
-      query: {
-        query: number[]
-      }
+      query?: never
       header?: never
       path?: never
       cookie?: never
     }
-    requestBody?: never
+    requestBody: {
+      content: {
+        'application/json': number[]
+      }
+    }
     responses: {
       /** @description OK */
       200: {
@@ -1195,21 +1025,23 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': components['schemas']['IndustrySector'][]
+          '*/*': components['schemas']['IndustrySectorModel'][]
         }
       }
     }
   }
   autocompleteIndustrySectorsByNames: {
     parameters: {
-      query: {
-        query: string[]
-      }
+      query?: never
       header?: never
       path?: never
       cookie?: never
     }
-    requestBody?: never
+    requestBody: {
+      content: {
+        'application/json': string[]
+      }
+    }
     responses: {
       /** @description OK */
       200: {
@@ -1217,43 +1049,23 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': components['schemas']['IndustrySector'][]
-        }
-      }
-    }
-  }
-  autocompleteLegalFormsByName: {
-    parameters: {
-      query: {
-        query: string
-      }
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          '*/*': components['schemas']['LegalForm'][]
+          '*/*': components['schemas']['IndustrySectorModel'][]
         }
       }
     }
   }
   autocompleteLegalFormsByIds: {
     parameters: {
-      query: {
-        query: number[]
-      }
+      query?: never
       header?: never
       path?: never
       cookie?: never
     }
-    requestBody?: never
+    requestBody: {
+      content: {
+        'application/json': number[]
+      }
+    }
     responses: {
       /** @description OK */
       200: {
@@ -1261,21 +1073,23 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': components['schemas']['LegalForm'][]
+          '*/*': components['schemas']['LegalFormModel'][]
         }
       }
     }
   }
   autocompleteLegalFormsByNames: {
     parameters: {
-      query: {
-        query: string[]
-      }
+      query?: never
       header?: never
       path?: never
       cookie?: never
     }
-    requestBody?: never
+    requestBody: {
+      content: {
+        'application/json': string[]
+      }
+    }
     responses: {
       /** @description OK */
       200: {
@@ -1283,43 +1097,23 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': components['schemas']['LegalForm'][]
-        }
-      }
-    }
-  }
-  autocompleteRegionsByName: {
-    parameters: {
-      query: {
-        query: string
-      }
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          '*/*': components['schemas']['Region'][]
+          '*/*': components['schemas']['LegalFormModel'][]
         }
       }
     }
   }
   autocompleteRegionsByIds: {
     parameters: {
-      query: {
-        query: number[]
-      }
+      query?: never
       header?: never
       path?: never
       cookie?: never
     }
-    requestBody?: never
+    requestBody: {
+      content: {
+        'application/json': number[]
+      }
+    }
     responses: {
       /** @description OK */
       200: {
@@ -1327,45 +1121,21 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': components['schemas']['Region'][]
+          '*/*': components['schemas']['RegionModel'][]
         }
       }
     }
   }
   autocompleteRegionsByNames: {
     parameters: {
-      query: {
-        query: string[]
-      }
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          '*/*': components['schemas']['Region'][]
-        }
-      }
-    }
-  }
-  streamGeneration: {
-    parameters: {
       query?: never
       header?: never
-      path: {
-        conversationId: string
-      }
+      path?: never
       cookie?: never
     }
     requestBody: {
       content: {
-        'application/json': components['schemas']['LLMRequest']
+        'application/json': string[]
       }
     }
     responses: {
@@ -1375,14 +1145,18 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          'text/event-stream': components['schemas']['ChatStreamResponseDTO'][]
+          '*/*': components['schemas']['RegionModel'][]
         }
       }
     }
   }
-  getAllUserConversations: {
+  searchCompaniesByName: {
     parameters: {
-      query?: never
+      query: {
+        companyName: string
+        page?: number
+        size?: number
+      }
       header?: never
       path?: never
       cookie?: never
@@ -1395,37 +1169,17 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': components['schemas']['ConversationDTO'][]
+          '*/*': components['schemas']['PageCompanyDetails']
         }
       }
     }
   }
-  deleteConversation: {
+  getCompanyById: {
     parameters: {
       query?: never
       header?: never
       path: {
-        conversationId: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  getConversationHistory: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        conversationId: string
+        id: number
       }
       cookie?: never
     }
@@ -1437,17 +1191,17 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': components['schemas']['MessageDTO'][]
+          '*/*': components['schemas']['CompanyWithStatus']
         }
       }
     }
   }
-  getSingleConversation: {
+  scrapCompany: {
     parameters: {
       query?: never
       header?: never
       path: {
-        conversationId: string
+        id: number
       }
       cookie?: never
     }
@@ -1459,7 +1213,7 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': components['schemas']['ConversationDTO']
+          '*/*': components['schemas']['Company']
         }
       }
     }
@@ -1467,11 +1221,12 @@ export interface operations {
   updateStatus: {
     parameters: {
       query: {
-        companyId: number
         status: 'NOT_DONE' | 'TO_DO' | 'DONE'
       }
       header?: never
-      path?: never
+      path: {
+        id: number
+      }
       cookie?: never
     }
     requestBody?: never
@@ -1499,51 +1254,6 @@ export interface operations {
         'application/json': components['schemas']['CompanyFilterRequest']
       }
     }
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          '*/*': components['schemas']['PageCompanyWithStatus']
-        }
-      }
-    }
-  }
-  getCompanyById: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          '*/*': components['schemas']['CompanyWithStatus']
-        }
-      }
-    }
-  }
-  getCompaniesSeenByUser: {
-    parameters: {
-      query?: {
-        page?: number
-        size?: number
-      }
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
     responses: {
       /** @description OK */
       200: {
@@ -1602,32 +1312,9 @@ export interface operations {
       }
     }
   }
-  scrapCompany: {
+  getCompaniesSeenByUser: {
     parameters: {
-      query: {
-        companyId: number
-      }
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          '*/*': components['schemas']['Company']
-        }
-      }
-    }
-  }
-  searchCompaniesByName: {
-    parameters: {
-      query: {
-        companyName: string
+      query?: {
         page?: number
         size?: number
       }
@@ -1643,19 +1330,14 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': components['schemas']['PageCompanyDetails']
+          '*/*': components['schemas']['PageCompanyWithStatus']
         }
       }
     }
   }
-  getLeadersByName: {
+  getEnv: {
     parameters: {
-      query: {
-        firstName: string
-        lastName: string
-        page?: number
-        size?: number
-      }
+      query?: never
       header?: never
       path?: never
       cookie?: never
@@ -1668,7 +1350,117 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': components['schemas']['PageLeaderModel']
+          '*/*': components['schemas']['Configuration']
+        }
+      }
+    }
+  }
+  getAllUserConversations: {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          '*/*': components['schemas']['ConversationDTO'][]
+        }
+      }
+    }
+  }
+  getSingleConversation: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        conversationId: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          '*/*': components['schemas']['ConversationDTO']
+        }
+      }
+    }
+  }
+  deleteConversation: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        conversationId: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content?: never
+      }
+    }
+  }
+  getConversationHistory: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        conversationId: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          '*/*': components['schemas']['MessageDTO'][]
+        }
+      }
+    }
+  }
+  streamGeneration: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        conversationId: string
+      }
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['LLMRequest']
+      }
+    }
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'text/event-stream': components['schemas']['ChatStreamResponseDTO'][]
         }
       }
     }
@@ -1717,12 +1509,15 @@ export interface operations {
       }
     }
   }
-  newSubscriptionWithTrial: {
+  getLeadersByName: {
     parameters: {
-      query?: never
-      header: {
-        'X-priceId': string
+      query: {
+        firstName: string
+        lastName: string
+        page?: number
+        size?: number
       }
+      header?: never
       path?: never
       cookie?: never
     }
@@ -1734,25 +1529,21 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          '*/*': string
+          '*/*': components['schemas']['PageLeaderModel']
         }
       }
     }
   }
-  handleStripeWebhook: {
+  newSubscriptionWithTrial: {
     parameters: {
       query?: never
       header: {
-        'Stripe-Signature': string
+        'X-priceId': string
       }
       path?: never
       cookie?: never
     }
-    requestBody: {
-      content: {
-        'application/json': string
-      }
-    }
+    requestBody?: never
     responses: {
       /** @description OK */
       200: {
@@ -1827,40 +1618,30 @@ export interface operations {
       }
     }
   }
-}
-export enum ApiPaths {
-  updateUser = '/v1/user/update-user',
-  completeOnboarding = '/v1/user/complete-onboarding',
-  handleStripeWebhook = '/v1/stripe/webhook',
-  newSubscriptionWithTrial = '/v1/stripe/subscriptions/trial',
-  getCompaniesByFilters = '/v1/company/filter-by-parameters',
-  updateStatus = '/v1/companies-status/update-status',
-  streamGeneration = '/v1/chat/{conversationId}',
-  getUser = '/v1/user/get-user',
-  getLeaderBySiren = '/v1/leader/get-by-siren/{siren}',
-  getLeaderById = '/v1/leader/get-by-id/{id}',
-  getLeadersByName = '/v1/leader/get-by-first-and-last-name',
-  searchCompaniesByName = '/v1/company/search-by-name',
-  scrapCompany = '/v1/company/scrap',
-  getRandomUnseenCompanies = '/v1/company/random-unseen',
-  getCompaniesOnLandingByFilters = '/v1/company/landing-filter',
-  getCompaniesSeenByUser = '/v1/company/get-seen-by-user',
-  getCompanyById = '/v1/company/get-by-id/{id}',
-  getSingleConversation = '/v1/chat/single/{conversationId}',
-  getConversationHistory = '/v1/chat/history/{conversationId}',
-  getAllUserConversations = '/v1/chat/all',
-  autocompleteRegionsByNames = '/v1/autocomplete/regions',
-  autocompleteRegionsByName = '/v1/autocomplete/region',
-  autocompleteRegionsByIds = '/v1/autocomplete/region/ids',
-  autocompleteLegalFormsByNames = '/v1/autocomplete/legalForms',
-  autocompleteLegalFormsByName = '/v1/autocomplete/legalForm',
-  autocompleteLegalFormsByIds = '/v1/autocomplete/legalForm/ids',
-  autocompleteIndustrySectorsByNames = '/v1/autocomplete/industrySectors',
-  autocompleteIndustrySectorsByName = '/v1/autocomplete/industrySector',
-  autocompleteIndustrySectorsByIds = '/v1/autocomplete/industrySector/ids',
-  autocompleteCitiesByName = '/v1/autocomplete/city',
-  autocompleteCitiesByIds = '/v1/autocomplete/city/ids',
-  autocompleteCitiesByNames = '/v1/autocomplete/cities',
-  getEnv = '/configuration',
-  deleteConversation = '/v1/chat/delete/{conversationId}',
+  handleStripeWebhook: {
+    parameters: {
+      query?: never
+      header: {
+        'Stripe-Signature': string
+      }
+      path?: never
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': string
+      }
+    }
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          '*/*': string
+        }
+      }
+    }
+  }
 }
